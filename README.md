@@ -8,11 +8,11 @@ For citation please use this link (our manuscript is in preparation): https://gi
 ### Single Cell Sequencing R package (iCellR)
 
 <p align="center">
-  <img src="https://github.com/rezakj/iCellR/blob/dev/doc/first.gif" width="400"/>
-  <img src="https://github.com/rezakj/iCellR/blob/dev/doc/out2.gif" width="400"/>
-  <img src="https://github.com/rezakj/iCellR/blob/dev/doc/out3.gif" width="400"/>
-  <img src="https://github.com/rezakj/iCellR/blob/dev/doc/out4.gif" width="400"/> 
-<img src="https://github.com/rezakj/iCellR/blob/master/doc/out10.gif" /> 
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/first.gif" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out2.gif" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out3.gif" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out4.gif" width="400"/> 
+<img src="https://github.com/rezakj/scSeqR/blob/master/doc/out10.gif" /> 
 </p>
 
 ***
@@ -137,7 +137,7 @@ stats.plot(my.obj,
 ```
 
 <p align="center">
-  <img src="https://github.com/rezakj/iCellR/blob/dev/doc/stats.png" />
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/stats.png" />
 </p>
 
 ```r  
@@ -146,8 +146,8 @@ stats.plot(my.obj, plot.type = "point.mito.umi", out.name = "mito-umi-plot")
 stats.plot(my.obj, plot.type = "point.gene.umi", out.name = "gene-umi-plot")
 ```
 <p align="center">
-  <img src="https://github.com/rezakj/iCellR/blob/dev/doc/out5.gif" width="400"/>
-  <img src="https://github.com/rezakj/iCellR/blob/dev/doc/out6.gif" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out5.gif" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out6.gif" width="400"/>
 </p>
 
 - Filter cells. 
