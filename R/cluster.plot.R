@@ -91,10 +91,10 @@ cluster.plot <- function (x = NULL,
       col.legend <- factor(x@best.clust$clusters)
     }
   }
-  ## colonotype
-  if (col.by == "colonotype") {
+  ## clonotype
+  if (col.by == "clonotype") {
     if (is.null(x@vdj.data)) {
-      stop("Colonotype data is missing use add.vdj function to load them.")
+      stop("Clonotype data is missing use add.vdj function to load them.")
     } else {
       colono <- unique(x@vdj.data[1:2])
       row.names(colono) <- colono$barcode
