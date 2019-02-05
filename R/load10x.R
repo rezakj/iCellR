@@ -1,6 +1,6 @@
 #' Load 10X data as data.frame
 #'
-#' This function takes 10X data files barcodes.tsv, genes.tsv and matrix.mtx and converts them to proper matrix file for scSeqR.
+#' This function takes 10X data files barcodes.tsv, genes.tsv and matrix.mtx and converts them to proper matrix file for iCellR.
 #' @param dir.10x A directory that includes the 10X barcodes.tsv, genes.tsv and matrix.mtx files.
 #' @param gene.name Should be either geneSymbol or ensembleID.
 #' @return The data frame object
@@ -16,8 +16,8 @@ load10x <- function (dir.10x = NULL, gene.name = "geneSymbol") {
          that includes; barcodes.tsv, genes.tsv and matrix.mtx files")
   }
   if (dir.exists(dir.10x)) {
-    Standard10xInput <- paste(c("barcodes.tsv","genes.tsv","matrix.mtx"),collapse="")
-    InputFiles <- paste(list.files(dir.10x),collapse="")
+  Standard10xInput <- paste(c("barcodes.tsv","genes.tsv","matrix.mtx"),collapse="")
+  InputFiles <- paste(list.files(dir.10x),collapse="")
   }
   if (Standard10xInput != InputFiles) {
     stop("Provided directory does not have a standard 10x matrix directory
@@ -41,5 +41,5 @@ load10x <- function (dir.10x = NULL, gene.name = "geneSymbol") {
   data.10x <- as.data.frame(as.matrix(MTX10x))
   row.names(data.10x) <- make.names(row.names(data.10x), unique=TRUE)
   return(data.10x)
-  }
+}
 
