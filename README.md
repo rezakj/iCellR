@@ -5,7 +5,7 @@ We hope to have an official release with stable functions and complete documenta
 
 For citation please use this link (our manuscript is in preparation): https://github.com/rezakj/iCellR
 
-### Single Cell Sequencing R package (iCellR)
+### Single (i) Cell R package (iCellR)
 
 <p align="center">
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/first.gif" width="400"/>
