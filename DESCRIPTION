@@ -18,4 +18,4 @@ VignetteBuilder: knitr
 URL: https://github.com/rezakj/iCellR
 Suggests: rmarkdown
 NeedsCompilation: no
-Packaged: 2019-02-05 16:58:10 UTC; khodaa01
+Packaged: 2019-02-05 23:42:11 UTC; khodaa01
