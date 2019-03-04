@@ -47,7 +47,7 @@ clust.stats.plot <- function (x = NULL,
     geom_boxplot(fill = box.color, col = "green", notch = notch, outlier.shape = NA, alpha = cell.transparency) +
     xlab("clusters") + ylab("percent of mito genes per cell") +
     stat_summary(fun.y=mean, geom="point", size=2, color="black") +
-    theme_bw()
+    theme_bw() + theme(axis.text.x=element_text(angle=90))
   # nGenes
   nGenes.plot <- ggplot(DATA,aes(y=nGenes,x=as.factor(clusters))) +
     geom_jitter(color = cell.color, size = cell.size, alpha = cell.transparency) +
@@ -55,7 +55,7 @@ clust.stats.plot <- function (x = NULL,
     geom_boxplot(fill = box.color, col = box.line.col, notch = notch, outlier.shape = NA, alpha = cell.transparency) +
     xlab("clusters") + ylab("number of genes per cell") +
     stat_summary(fun.y=mean, geom="point", size=2, color="black") +
-    theme_bw()
+    theme_bw() + theme(axis.text.x=element_text(angle=90))
   # UMIs
   UMIsplot <- ggplot(DATA,aes(y=UMIs,x=as.factor(clusters))) +
     geom_jitter(color = cell.color, size = cell.size, alpha = cell.transparency) +
@@ -63,7 +63,7 @@ clust.stats.plot <- function (x = NULL,
     geom_boxplot(fill = box.color, col = box.line.col, notch = notch, outlier.shape = NA, alpha = cell.transparency) +
     xlab("clusters") + ylab("number of UMIs per cell") +
     stat_summary(fun.y=mean, geom="point", size=2, color="black") +
-    theme_bw()
+    theme_bw() + theme(axis.text.x=element_text(angle=90))
 # return
   if (plot.type == "box.umi") {
     if (interactive == T) {

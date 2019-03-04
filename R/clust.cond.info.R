@@ -28,7 +28,7 @@ clust.cond.info <- function (x = NULL, plot.type = "pie" ) {
 # as.data.frame(table(Conds))
   # bar
   myBP <- ggplot(DATA,aes(y=Freq, x=clusters, fill = conditions)) +
-   geom_bar(stat = "identity") + theme_bw()
+   geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90))
   # pie
   myPIE <- ggplot(DATA,aes(y=Freq, x="", fill = conditions)) +
     geom_bar(stat = "identity", position = "fill") + theme_bw() + facet_wrap(~ clusters) +

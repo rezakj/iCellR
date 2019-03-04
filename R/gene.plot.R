@@ -229,7 +229,7 @@ gene.plot <- function (x = NULL,
 #
   if (plot.type == "boxplot") {
   myPLOT <- ggplot(data.binary, aes(x = col.legend.box, y=Yaxis)) +
-    theme_bw() +
+    theme_bw() + theme(axis.text.x=element_text(angle=90))
     geom_jitter(color = box.cell.col, size = cell.size, alpha = cell.transparency) +
     ggtitle(gene) +
     geom_violin(trim=T, col = "black", alpha = cell.transparency) +
@@ -256,17 +256,36 @@ gene.plot <- function (x = NULL,
     myPLOT <- myPLOT + stat_compare_means(aes(label = paste0("p = ", ..p.format..)),ref.group = box.to.test)
   }
   }
-  # Bar plot
+  ############################ Bar plot
+  mydata=cbind(data.expr,Yaxis1,col.legend.box)
+  ## function to make sd
+  data_summary <- function(data, varname, groupnames){
+    require(plyr)
+    summary_func <- function(x, col){
+      c(mean = mean(x[[col]], na.rm=TRUE),
+        sd = sd(x[[col]], na.rm=TRUE))
+    }
+    data_sum<-ddply(data, groupnames, .fun=summary_func,
+                    varname)
+    data_sum <- rename(data_sum, c("mean" = varname))
+    return(data_sum)
+  }
+  ### get sd data ready
+  df2 <- data_summary(mydata, varname="Yaxis1",
+                      groupnames=c("col.legend.box"))
+  ### plot
   if (plot.type == "barplot") {
-  myPLOT <- ggplot(data.expr, aes(x = col.legend.box, y = Yaxis1, fill = col.legend.box)) +
+  myPLOT <- ggplot(df2, aes(x = col.legend.box, y = Yaxis1, fill = col.legend.box)) +
     stat_summary(fun.y="mean",
                  geom="bar",
                  alpha = cell.transparency,
                  show.legend = F) +
+    geom_errorbar(aes(ymin=Yaxis1-sd, ymax=Yaxis1+sd), width=.2,
+                  position=position_dodge(.9)) +
     ylab("avraged normalized expression") +
     xlab(".") +
     ggtitle(gene) +
-    theme_bw()
+    theme_bw() + theme(axis.text.x=element_text(angle=90))
   }
   # return
   if (interactive == T) {

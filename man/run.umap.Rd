@@ -4,7 +4,7 @@
 \alias{run.umap}
 \title{Run UMAP on PCA data (Computes a manifold approximation and projection)}
 \usage{
-run.umap(x = NULL, dims = 1:20, method = "naive")
+run.umap(x = NULL, dims = 1:10, method = "naive")
 }
 \arguments{
 \item{x}{An object of class iCellR.}

@@ -12,7 +12,7 @@
 #' @import umap
 #' @export
 run.umap <- function (x = NULL,
-                         dims = 1:20,
+                         dims = 1:10,
                       method = "naive") {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
@@ -28,10 +28,11 @@ run.umap <- function (x = NULL,
   # phate.data <- as.data.frame(DD$embedding)
   #### method 2
   #devtools::install_github("jlmelville/uwot")
-  #library(uwot)
-  # myUMAP <- umap(DATA, n_neighbors = 15, learning_rate = 0.5, init = "random")
+  # library(uwot)
+  # myUMAP <- umap(DATA)
   # row.names(myUMAP) <- row.names(DATA)
   # myUMAP <- as.data.frame(myUMAP)
+#  library(umap)
   myUMAP = umap(DATA, method = method)
   myUMAP = as.data.frame((myUMAP$layout))
   attributes(x)$umap.data <- myUMAP

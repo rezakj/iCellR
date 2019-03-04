@@ -42,12 +42,11 @@ pseudotime.tree <- function (x = NULL,
   }
   MyGenes <- marker.genes
   topGenes <- as.matrix(subset(DATA, rownames(DATA) %in% MyGenes))
-  DATA <- log2(topGenes + 0.1)
   DATA <- dist(scale(t(DATA)), method = dist.method)
   hc <- hclust(DATA, method = clust.method)
-
-
 ##### gitter plot
+#  DATA <- x@pca.data[1:5]
+#  DATA <- x@tsne.data.3d
   DATA <- x@tsne.data
   data <- data.matrix(DATA)
   data <- dist(data, method = dist.method)
@@ -63,12 +62,13 @@ pseudotime.tree <- function (x = NULL,
   ddata <- dendro_data(dhc)
   dend <- ddata$segments
   ##
-  P1 <- ggplot(MyGitterData,aes(y=scale(distance),x=clusters,col=clusters)) +
+  P1 <- ggplot(MyGitterData,aes(y=scale(distance),x=as.factor(clusters),col=clusters)) +
     geom_jitter() +
+#    geom_violin(trim=FALSE, alpha = 0.5) +
     theme(panel.background = element_rect(fill = "white", colour = "white"),
           panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
           legend.key = element_rect(fill = "white")) +
-    theme(legend.position = "none")
+    theme(legend.position = "none") + theme(axis.text.x=element_text(angle=90))
   ##
   P2 <- ggplot(dend) +
   geom_segment(aes(x = x,
