@@ -63,7 +63,7 @@ if (do == 2) {
     geom_boxplot( fill = box.color, col = "green", notch = F, outlier.shape = NA, alpha = cell.transparency) +
     xlab("mito.percent") + ylab("percent of mito genes per cell") +
     stat_summary(fun.y=mean, geom="point", size=2, color="black") +
-    theme_bw()
+    theme_bw() + theme(axis.text.x=element_text(angle=90))
     # nGenes
   nGenes.plot <- ggplot(DATA,aes(y=nGenes,x=col.legend)) +
     geom_jitter(color = cell.color, size = cell.size, alpha = cell.transparency) +
@@ -71,7 +71,7 @@ if (do == 2) {
     geom_boxplot( fill = box.color, col = box.line.col, notch = F, outlier.shape = NA, alpha = cell.transparency) +
     xlab("nGenes") + ylab("number of genes per cell") +
     stat_summary(fun.y=mean, geom="point", size=2, color="black") +
-    theme_bw()
+    theme_bw() + theme(axis.text.x=element_text(angle=90))
     # UMIs
   UMIsplot <- ggplot(DATA,aes(y=UMIs,x=col.legend)) +
     geom_jitter(color = cell.color, size = cell.size, alpha = cell.transparency) +
@@ -79,7 +79,7 @@ if (do == 2) {
     geom_boxplot( fill = box.color, col = box.line.col, notch = F, outlier.shape = NA, alpha = cell.transparency) +
     xlab("UMIs") + ylab("number of UMIs per cell") +
     stat_summary(fun.y=mean, geom="point", size=2, color="black") +
-    theme_bw()
+    theme_bw() + theme(axis.text.x=element_text(angle=90))
   # s.phase
   s.plot <- ggplot(DATA,aes(y=S.phase.probability,x=col.legend)) +
     geom_jitter(color = cell.color, size = cell.size, alpha = cell.transparency) +
@@ -87,7 +87,7 @@ if (do == 2) {
     geom_boxplot( fill = box.color, col = box.line.col, notch = F, outlier.shape = NA, alpha = cell.transparency) +
     xlab("S phase") + ylab("S phase probability") +
     stat_summary(fun.y=mean, geom="point", size=2, color="black") +
-    theme_bw()
+    theme_bw() + theme(axis.text.x=element_text(angle=90))
   # g2m.phase.probability
   g2m.plot <- ggplot(DATA,aes(y=g2m.phase.probability,x=col.legend)) +
     geom_jitter(color = cell.color, size = cell.size, alpha = cell.transparency) +
@@ -95,7 +95,7 @@ if (do == 2) {
     geom_boxplot( fill = box.color, col = box.line.col, notch = F, outlier.shape = NA, alpha = cell.transparency) +
     xlab("G2 and M phase") + ylab("G2 and M phase probability") +
     stat_summary(fun.y=mean, geom="point", size=2, color="black") +
-    theme_bw()
+    theme_bw() + theme(axis.text.x=element_text(angle=90))
 # scatter plots
   if (col.legend[1] == ".") {
     Mito.UMIs <- ggplot(DATA,aes(y=mito.percent,x=UMIs,

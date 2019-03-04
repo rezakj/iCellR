@@ -46,8 +46,8 @@ clono.plot <- function (x = NULL,
                        cell.transparency = 0.5,
                        interactive = TRUE,
                        out.name = "plot") {
-  if ("scSeqR" != class(x)[1]) {
-    stop("x should be an object of class scSeqR")
+  if ("iCellR" != class(x)[1]) {
+    stop("x should be an object of class iCellR")
   }
   ##### get cluster data
   # 2 dimentions
@@ -104,7 +104,8 @@ clono.plot <- function (x = NULL,
           geom_point(size = cell.size, alpha = cell.transparency) +
           xlab("Dim1") +
           ylab("Dim2") +
-          ggtitle(paste(MyTitle)) +
+          ggtitle(paste(MyTitle, "(clonotype",clono, ")")) +
+          theme(legend.position = "none") +
           scale_color_manual(values = cell.colors) +
           theme(panel.background = element_rect(fill = back.col, colour = "black"),
                 panel.grid.major = element_blank(), panel.grid.minor = element_blank(),

@@ -35,6 +35,10 @@ clust.rm <- function (x = NULL, clust.to.rm = "numeric") {
   DATA <- x@tsne.data
   DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
   attributes(x)$tsne.data <- DATA
+  # umap
+#  DATA <- x@umap.data
+#  DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
+#  attributes(x)$umap.data <- DATA
   #
   DATA <- x@tsne.data.3d
   DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
