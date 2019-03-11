@@ -1,10 +1,25 @@
 Package: iCellR
 Type: Package
-Title: iCellR: a toolkit to analyze single cell sequencing data types (i.e scRNA-seq, CITE-Seq, scVDJ-Seq) and large numeric matrix files.
+Title: iCellR; A Feature-rich Interactive R Package to Work with High-Throughput Single Cell Sequencing Technologies.
 Version: 0.99.0
-Author: Alireza Khodadadi-Jamayran
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: iCellR (Single Cell R package) is an R package with 2D and 3D interactive visualizations to works with high-throughput single cell sequencing technologies (i.e scRNA-seq, VDJ-seq and CITE-seq).
+Authors: Alireza Khodadadi-Jamayran, 
+  Joseph Pucella,
+  Hua Zhou,
+  Nicole Doudican,
+  John Carucci,
+  Adriana Heguy,
+  Boris Reizis,
+  Aristotelis Tsirigos 
+Maintainer: The package maintainer;
+  Alireza Khodadadi-Jamayran,
+  Applied Bioinformatics Laboratories (ABL),
+  Genome Technology Center (GTC),
+  Division of Advanced Research Technologies (DART),
+  NYU Langone Medical Center,
+  550 1st Ave, SB-604/MSB-304, New York, NY 10016,
+  <alireza.khodadadi-jamayran@nyumc.org>
+Description: Single (i) Cell R package (iCellR) is an interactive R package to work with high-throughput single cell sequencing technologies (i.e scRNA-seq, scVDJ-seq and CITE-seq). iCellR is an R package that allows scientists unprecedented flexibility at every step of the analysis pipeline, including normalization, clustering, dimensionality reduction, imputation, visualization, and so on. iCellR allows users to design both unsupervised and supervised models to best suit their research. In addition, iCellR provides 2D and 3D interactive visualizations, differential expression analysis, filters based on cells, genes and clusters, data merging, normalizing for dropouts and filling them with imputation methods, batch differences, pathway analysis and tools to find marker genes for clusters and conditions, predict cell types and pseudotime analysis.
+Keywords: PCA, UMAP, Diffusion Map, tSNE, high throughput, single cell, differential gene expression, analysis, clustering, PseudoTime, dimension reduction, normalization, spike-in, scRNA-Seq, CITE-Seq, scVDJ-Seq, data visualization, interactive plots, 3D plots, cell type prediction, pathway analysis, batch correction, cell cycle, cell gating, ADT, filtering,Clustering methods: ward.D, ward.D2, single, complete, average, mcquitty, median, centroid, kmeans, distance calculation methods: euclidean, maximum, "manhattan, canberra, binary, minkowski,indexing methods: kl, ch, hartigan, ccc, scott, marriot, trcovw, tracew, friedman, rubin, cindex, db, silhouette, duda, pseudot2, beale, ratkowsky, ball, ptbiserial, gap, frey, mcclain, gamma, gplus, tau, dunn, hubert, sdindex, dindex, sdbw, normalization methods: ranked.glsf, global.glsf, deseq, rpm, spike.in.
 Depends: R (>= 3.3.0), ggplot2, plotly
 Imports: Matrix,
   Rtsne,
@@ -25,4 +40,7 @@ RoxygenNote: 6.1.0
 VignetteBuilder: knitr
 URL: https://github.com/rezakj/iCellR
 Suggests: 
-    rmarkdown
+    rmarkdown,
+    Rmagic,
+    phateR
+

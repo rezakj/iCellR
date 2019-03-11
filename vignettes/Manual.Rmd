@@ -1,0 +1,1175 @@
+---
+title: "Analyzing singel cell data using iCellR"
+author: 'Alireza Khodadadi-Jamayran, Joseph Pucella, Hua Zhou, Nicole Doudican, John
+  Carucci, Adriana Heguy, Boris Reizis, Aristotelis Tsirigos '
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## iCellR
+
+Single (i) Cell R package (iCellR) is an interactive R package to work with high-throughput single cell sequencing technologies (i.e scRNA-seq, scVDJ-seq and CITE-seq). The package that allows scientists unprecedented flexibility at every step of the analysis pipeline, including normalization, clustering, dimensionality reduction, imputation, visualization, and so on. iCellR allows users to design both unsupervised and supervised models to best suit their research. In addition, iCellR provides 2D and 3D interactive visualizations, differential expression analysis, filters based on cells, genes and clusters, data merging, normalizing for dropouts and filling them with imputation methods, batch differences, pathway analysis and tools to find marker genes for clusters and conditions, predict cell types and pseudotime analysis.
+
+#### content
+* [How to install iCellR](#link1)
+* [How to analyze scRNA-seq data](#link2)
+    + [How to download sample data](#link3)
+    + [Read 10X files](#link4)
+    + [Merge samples or conditions into one file](#link5)
+    + [Make iCellR object](#link6)
+    + [Run QC](#link7)
+    + [Filter cells](#link8) 
+    + [Normalize data](#link9) 
+    + [Scale data](#link10)
+    + [Calculate gene stats](#link11) 
+    + [Make model genes](#link12)
+    + [Perform PCA](#link13)
+        - [Re-define model genes](#link13)
+        - [Second round PCA and batch correction](#link13)
+    + [Cluster the data](#link14)
+    + [Dimentionality reduction](#link15)
+        - [tSNE](#link15)
+        - [UMAP](#link15)
+        - [Diffusion map](#link15)
+    + [Create avarge expression per cluster](#link16)
+    + [Data imputaion](#link17)
+    + [Save object](#link18)
+    + [Visualizing custers and conditions](#link19)
+    + [Cell frequencies in clusters and conditions](#link20)
+    + [Find markers](#link21)
+    + [Visualizing gene expressions](#link22)
+        - [Scatter heat maps](#link23)
+        - [Box plots](#link24)
+        - [Bar plots](#link25)
+        - [Heat maps](#link26)
+        - [Multiple plots](#link27)
+    + [QC on clusters](#link28) 
+    + [Cell type prediction](#link29)
+        - [ImmGen](#link29)
+        - [Mouse atlas](#link30)
+    + [Differential Expression Analysis](#link31)
+        - [Between clusters](#link31)
+        - [Between conditions](#link31)
+        - [Between clusters in the same condition](#link31)
+        - [Betwen conditions in the same cluster](#link31)
+    + [Volcano and MA plots](#link32)
+    + [Data manipulation](#link33)
+        - [Renameing and merging clusters](#link33)
+        - [Reseting to default](#link33)
+        - [Removing clusters](#link33)
+    + [Cell gating](#link34)
+    + [Pseudotime analysis](#link35)
+* How to analyze CITE-seq data
+    + Read RNA data  
+    + Read ADT data 
+    + Make iCellR object
+    + Run RNA data analysis
+    + Normalize ADTs and merge with RNA data
+    + Clustering and dimentionality reduction 
+    + Visualize ADTs and genes
+    + Remaining analysis is the same as scRNA data 
+* How to analyze scVDJ-seq data 
+    + sub-item 1 
+    + sub-item 2  
+* How to analyze large scale bulk RNA-seq data 
+    + sub-item 1 
+    + sub-item 2      
+    
+
+## How to install iCellR {#link1}
+
+```{r eval=FALSE}
+library(devtools)
+install_github("rezakj/iCellR")
+```
+
+## How to use iCellR for analyzing scRNA-seq data {#link2}
+
+#### Download sample data {#link3}
+
+```{r eval=FALSE}
+# set your working directory 
+setwd("/your/download/directory")
+
+# save the URL as an object
+sample.file.url = "https://s3-us-west-2.amazonaws.com/10x.files/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz"
+
+# download the file
+download.file(url = sample.file.url, 
+     destfile = "pbmc3k_filtered_gene_bc_matrices.tar.gz", 
+     method = "auto")  
+
+# unzip the file. 
+untar("pbmc3k_filtered_gene_bc_matrices.tar.gz") 
+```
+
+Load iCellR package
+```{r load_iCellR, message=FALSE}
+library(iCellR)
+```
+
+#### Read 10x data{#link4}
+
+```{r eval=FALSE}
+my.data <- load10x("filtered_gene_bc_matrices/hg19/",gene.name = "geneSymbol")
+```
+
+```{r include=FALSE}
+my.data <- load10x("../../../../filtered_gene_bc_matrices/hg19/",gene.name = "geneSymbol")
+```
+
+Look at the first few lines and columns of the sample data. And count the rows and columns. 
+
+```{r }
+head(my.data)[1:5]
+dim(my.data)
+```
+
+You can devide the sample into 3 equal parts. Assuming that you have three samples.
+
+```{r }
+sample1 <- my.data[1:900]
+sample2 <- my.data[901:1800]
+sample3 <- my.data[1801:2700]
+```
+
+#### Merge samples{#link5}
+
+Conditions in iCellR are set in the header of the data and are separated by an underscore (_)
+
+```{r }
+my.data <- data.aggregation(samples = c("sample1","sample2","sample3"),
+                            condition.names = c("WT","KO","Ctrl"))
+head(my.data)[1:5]
+```
+
+#### Make an iCellR object{#link6}
+
+```{r }
+my.obj <- make.obj(my.data)
+```
+
+ Look at the object
+
+```{r }
+my.obj
+```
+
+#### Run basic QC{#link7}
+
+```{r }
+my.obj <- qc.stats(my.obj, 
+  which.data = "raw.data", 
+  mito.genes = "defult", 
+  s.phase.genes = s.phase, 
+  g2m.phase.genes = g2m.phase)
+```
+
+* Ploting QC results 
+
+```{r fig.width=10}
+stats.plot(my.obj,
+	plot.type = "all.in.one",
+	out.name = "UMI-plot",
+	interactive = FALSE,
+	cell.color = "slategray3", 
+	cell.size = 1, 
+	cell.transparency = 0.5,
+	box.color = "red",
+	box.line.col = "green")
+```
+
+```{r eval=FALSE}
+# Scatter plots
+stats.plot(my.obj, plot.type = "point.mito.umi", out.name = "mito-umi-plot",interactive = F)
+stats.plot(my.obj, plot.type = "point.gene.umi", out.name = "gene-umi-plot",interactive = F)
+```
+
+```{r echo=FALSE, fig.width=10, fig.align='center'}
+# Scatter plots
+A=stats.plot(my.obj, plot.type = "point.mito.umi", out.name = "mito-umi-plot",interactive = F)
+B=stats.plot(my.obj, plot.type = "point.gene.umi", out.name = "gene-umi-plot",interactive = F)
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+#### Filtering cells{#link8}
+
+iCellR allows you to filter based on library sizes (UMIs), number of genes per cell, percent mitochondrial content, one or more genes, and cell ids.
+
+```{r }
+my.obj <- cell.filter(my.obj,
+	min.mito = 0,
+	max.mito = 0.05,
+	min.genes = 200,
+	max.genes = 2400,
+	min.umis = 0,
+	max.umis = Inf)
+```
+
+* Down sampling
+
+This step is optional and is for having the same number of cells for each condition.
+
+```{r }
+# optional
+# my.obj <- down.sample(my.obj)
+#[1] "From"
+#[1] "Data conditions: Ctrl,KO,WT (877,877,883)"
+#[1] "to"
+#[1] "Data conditions: Ctrl,KO,WT (877,877,877)"
+```
+
+```{r include=FALSE}
+load("my.obj.Robj")
+```
+#### Normalizing data{#link9}
+
+You have a few options to normalize your data based on your study. You can also normalize your data using tools other than iCellR and import your data to iCellR. We recommend "ranked.glsf" normalization for most single cell studies. This normalization is great for fixing matrixes with lots of zeros and because it's geometric it is great for fixing for batch effects, as long as all the data is aggregated into one file (to aggregate your data see "aggregating data" section above).
+
+* Choose from the following methods: 
+    + deseq (best for bulk RNA-Seq) 
+    + ranked.deseq (best for scRNA-Seq)
+    + global.glsf (best for bulk RNA-Seq)
+    + ranked.glsf (best for scRNA-Seq)
+    + rpm (best for bulk RNA-Seq)
+    + spike.in 
+
+For spike.in normalization you need to provide the spike.in vlaues to normalize the data with. 
+
+```{r eval=FALSE}
+my.obj <- norm.data(my.obj, 
+     norm.method = "ranked.glsf",
+     top.rank = 500)
+```
+
+#### Scaling data{#link10}
+
+```{r eval=FALSE}
+my.obj <- data.scale(my.obj)
+```
+
+#### Calculating gene stats{#link11}
+
+```{r eval=FALSE}
+my.obj <- gene.stats(my.obj, which.data = "main.data")
+```
+
+#### Make gene model for clustering{#link12}
+
+It's best to always to avoid global clustering and use a set of model genes. In bulk RNA-seq data it is very common to cluster the samples based on top 500 genes ranked by base mean, this is to reduce the noise. In scRNA-seq data, it's great to do so as well. 
+
+```{r , fig.width=10, fig.align='center'}
+make.gene.model(my.obj, 
+	dispersion.limit = 1.5, 
+	base.mean.rank = 500, 
+	no.mito.model = T,
+	no.cell.cycle = T,
+	mark.mito = T, 
+	interactive = F,
+	out.name = "gene.model")
+```
+
+#### Run PCA {#link13}
+
+```{r eval=FALSE}
+my.obj <- run.pca(my.obj, 
+                  clust.method = "gene.model", 
+                  gene.list = readLines("my_model_genes.txt"), 
+                  batch.norm = F)
+
+# Re-define model genes (run this if you have real samples)
+# find.dim.genes(my.obj, dims = 1:10, top.pos = 20, top.neg = 10)
+ 
+# Second round PCA and batch correction (run this if you have real sample)
+#my.obj <- run.pca(my.obj, 
+#                  clust.method = "gene.model", 
+#                  gene.list = readLines("my_model_PC_genes.txt"),
+#                  batch.norm = T)
+```
+```{r , fig.width=10, fig.align='center'}
+# Visualize standard deviations for PCs 
+opt.pcs.plot(my.obj)
+```
+
+#### Cluster the data {#link14}
+
+Here we cluster the first 10 PC dimensions of the data. You have the option of clustering your data based on the following methods.
+
+* Clustering methods: 
+    + ward.D
+    + ward.D2
+    + single
+    + complete
+    + average
+    + mcquitty
+    + median
+    + centroid
+    + kmeans
+
+
+* Distance methods:
+    + euclidean
+    + maximum
+    + manhattan
+    + canberra
+    + binary
+    + minkowski
+
+
+* Indexing methods
+    + kl
+    + ch
+    + hartigan
+    + ccc
+    + scott
+    + marriot
+    + trcovw
+    + tracew
+    + friedman
+    + rubin
+    + cindex
+    + db
+    + silhouette
+    + duda
+    + pseudot2
+    + beale
+    + ratkowsky
+    + ball
+    + ptbiserial
+    + gap
+    + frey
+    + mcclain
+    + gamma
+    + gplus
+    + tau
+    + dunn
+    + hubert
+    + sdindex
+    + dindex
+    + sdbw
+    + all
+
+```{r eval=FALSE}
+my.obj <- run.clustering(my.obj, 
+	clust.method = "kmeans", 
+	dist.method = "euclidean",
+	index.method = "silhouette",
+	max.clust = 25,
+	min.clust = 2,
+	dims = 1:10)
+```
+
+#### Dimentionality reduction {#link15} 
+
+```{r eval=FALSE}
+# tSNE
+my.obj <- run.pc.tsne(my.obj, dims = 1:10)
+
+# UMAP
+my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
+
+# Diffusion map
+ my.obj <- run.diffusion.map(my.obj, dims = 1:10)
+```    
+        
+#### Create avarge expression per cluster {#link16}
+
+```{r eval=FALSE}
+my.obj <- clust.avg.exp(my.obj)
+```
+
+#### Data imputaion {#link17}
+
+```{r eval=FALSE}
+my.obj <- run.impute(my.obj)
+```
+
+#### Save object {#link18}
+```{r eval=FALSE}
+save(my.obj, file = "my.obj.Robj")
+```
+
+
+#### Visualizing clusters and conditions{#link19}
+
+* tSNE
+
+```{r eval=FALSE}
+# clusters (tSNE)
+cluster.plot(my.obj,
+	plot.type = "tsne",
+	interactive = F)
+
+# Conditions (tSNE)
+cluster.plot(my.obj,
+	plot.type = "tsne",
+	col.by = "conditions",
+	interactive = F)
+```
+```{r echo=FALSE, fig.width=10, fig.align='center'}
+# clusters (tSNE)
+A = cluster.plot(my.obj,
+	plot.type = "tsne",
+	interactive = F)
+
+# Conditions (tSNE)
+B = cluster.plot(my.obj,
+	plot.type = "tsne",
+	col.by = "conditions",
+	interactive = F)
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+* UMAP
+
+```{r eval=FALSE}
+# clusters (UMAP)
+cluster.plot(my.obj,
+	plot.type = "umap",
+	interactive = F)
+
+# Conditions (UMAP)
+cluster.plot(my.obj,
+	plot.type = "umap",
+	col.by = "conditions",
+	interactive = F)
+```
+```{r echo=FALSE, fig.width=10, fig.align='center'}
+# clusters (UMAP)
+A = cluster.plot(my.obj,
+	plot.type = "umap",
+	interactive = F)
+
+# Conditions (UMAP)
+B = cluster.plot(my.obj,
+	plot.type = "umap",
+	col.by = "conditions",
+	interactive = F)
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+* Diffusion map
+
+```{r eval=FALSE}
+# clusters (diffusion)
+cluster.plot(my.obj,
+	plot.type = "diffusion",
+	interactive = F)
+
+# Conditions (diffusion)
+cluster.plot(my.obj,
+	plot.type = "diffusion",
+	col.by = "conditions",
+	interactive = F)
+```
+```{r echo=FALSE, fig.width=10, fig.align='center'}
+# clusters (diffusion)
+A = cluster.plot(my.obj,
+	plot.type = "diffusion",
+	interactive = F)
+
+# Conditions (diffusion)
+B = cluster.plot(my.obj,
+	plot.type = "diffusion",
+	col.by = "conditions",
+	interactive = F)
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+#### Cell frequencies in clusters and conditions{#link20}
+
+```{r eval=FALSE}
+# bar
+clust.cond.info(my.obj, plot.type = "bar", normalize = T)
+
+# pie
+clust.cond.info(my.obj, plot.type = "pie", normalize = T)
+```
+
+```{r echo=FALSE, fig.width=10, fig.align='center', message=FALSE}
+A = clust.cond.info(my.obj, plot.type = "bar")
+B = clust.cond.info(my.obj, plot.type = "pie")
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+#### Find marker genes for clusters {#link21}
+
+```{r eval=FALSE}
+marker.genes <- findMarkers(my.obj,
+	fold.change = 2,
+	padjval = 0.1)
+```
+
+```{r include=FALSE}
+marker.genes <- read.delim("marker.genes.tsv",header=TRUE)
+rownames(marker.genes) <- marker.genes$row
+marker.genes <- marker.genes[,-1]
+```
+
+```{r }
+head(marker.genes)
+```
+
+#### Visualizing gene expressions {#link22}
+
+```{r }
+MyGenes <- unique(top.markers(marker.genes, topde = 10, min.base.mean = 0.2))
+MyGenes
+```
+
+# {#link23}
+
+* Scatter heatmap
+
+```{r eval=FALSE}
+# main data 
+gene.plot(my.obj, gene = "MS4A1", 
+   	plot.type = "scatterplot",
+   	interactive = F,
+    data.type = "main")
+
+# imputed data 
+gene.plot(my.obj, gene = "MS4A1", 
+   	plot.type = "scatterplot",
+   	interactive = F,
+    data.type = "imputed")
+```
+
+```{r echo=FALSE, fig.width=10, fig.align='center', message=FALSE}
+# main data 
+A = gene.plot(my.obj, gene = "MS4A1", 
+   	plot.type = "scatterplot",
+   	interactive = F,
+    data.type = "main")
+
+# imputed data 
+B = gene.plot(my.obj, gene = "MS4A1", 
+   	plot.type = "scatterplot",
+   	interactive = F,
+    data.type = "imputed")
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+# {#link24}
+
+* Box plots 
+
+```{r eval=FALSE}
+# imputed data clusters
+gene.plot(my.obj, gene = "MS4A1", 
+	box.pval = "sig.signs",
+	col.by = "clusters",
+	plot.type = "boxplot",
+	interactive = F,
+	data.type = "imputed")
+
+# imputed data conditions
+gene.plot(my.obj, gene = "MS4A1", 
+	box.pval = "sig.values",
+	col.by = "conditions",
+	plot.type = "boxplot",
+	interactive = F,
+	data.type = "imputed")
+```
+
+```{r echo=FALSE, fig.width=10, fig.align='center', message=FALSE}
+# imputed data clusters
+A = gene.plot(my.obj, gene = "MS4A1", 
+	box.pval = "sig.signs",
+	col.by = "clusters",
+	plot.type = "boxplot",
+	interactive = F,
+	data.type = "imputed")
+
+# imputed data conditions
+B = gene.plot(my.obj, gene = "MS4A1", 
+	box.pval = "sig.values",
+	col.by = "conditions",
+	plot.type = "boxplot",
+	interactive = F,
+	data.type = "imputed")
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+# {#link25}
+
+* Bar plots
+
+```{r eval=FALSE}
+# imputed data clusters
+gene.plot(my.obj, gene = "MS4A1", 
+	col.by = "clusters",
+	plot.type = "barplot",
+	interactive = F,
+	out.name = "bar_plot", 
+	data.type = "imputed")
+
+# imputed data conditions
+gene.plot(my.obj, gene = "MS4A1", 
+	col.by = "conditions",
+	plot.type = "barplot",
+	interactive = F,
+	out.name = "bar_plot",
+	data.type = "imputed")
+```
+
+```{r echo=FALSE, fig.width=10, fig.align='center', message=FALSE}
+# imputed data clusters
+A = gene.plot(my.obj, gene = "MS4A1", 
+	col.by = "clusters",
+	plot.type = "barplot",
+	interactive = F,
+	out.name = "bar_plot", 
+	data.type = "imputed")
+
+# imputed data conditions
+B = gene.plot(my.obj, gene = "MS4A1", 
+	col.by = "conditions",
+	plot.type = "barplot",
+	interactive = F,
+	out.name = "bar_plot",
+	data.type = "imputed")
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+# {#link26}
+
+* Heatmaps 
+
+```{r eval=FALSE}
+# Heat map on main data (gene list as in MyGenes object made above)
+heatmap.gg.plot(my.obj, gene = MyGenes, 
+                interactive = F, 
+                cluster.by = "clusters")
+
+# Heat map on imputed data 
+heatmap.gg.plot(my.obj, gene = MyGenes, 
+                interactive = F, 
+                cluster.by = "clusters",
+                data.type = "imputed")
+```
+
+```{r echo=FALSE, fig.width=10, fig.align='center', message=FALSE, fig.height=10}
+# Heat map on main data (gene list as in MyGenes object made above)
+A = heatmap.gg.plot(my.obj, gene = MyGenes, 
+                interactive = F, 
+                cluster.by = "clusters")
+
+# Heat map on imputed data 
+B = heatmap.gg.plot(my.obj, gene = MyGenes, 
+                interactive = F, 
+                cluster.by = "clusters",
+                data.type = "imputed")
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+# {#link27}
+
+*  Multiple plots
+    + UMAP
+    
+```{r eval=FALSE}
+genelist = c("PPBP","LYZ","MS4A1","GNLY","LTB","NKG7","IFITM2","CD14","S100A9")
+
+for(i in genelist){
+	MyPlot <- gene.plot(my.obj, gene = i, 
+		interactive = F,
+		plot.data.type = "umap",
+		cell.transparency = 1)
+	i <- gsub("-",".",i)
+	eval(call("<-", as.name(i), MyPlot))
+}
+
+## 
+library(gridExtra)
+grid.arrange(PPBP,LYZ,MS4A1,GNLY,LTB,NKG7,IFITM2,CD14,S100A9)
+```    
+ 
+```{r echo=FALSE, fig.width=10, fig.align='center', message=FALSE, fig.height=10}
+genelist = c("PPBP","LYZ","MS4A1","GNLY","LTB","NKG7","IFITM2","CD14","S100A9")
+
+for(i in genelist){
+	MyPlot <- gene.plot(my.obj, gene = i, 
+		interactive = F,
+		plot.data.type = "umap",
+		cell.transparency = 1)
+	i <- gsub("-",".",i)
+	eval(call("<-", as.name(i), MyPlot))
+}
+
+## 
+library(gridExtra)
+grid.arrange(PPBP,LYZ,MS4A1,GNLY,LTB,NKG7,IFITM2,CD14,S100A9)
+```
+
+*  Multiple plots
+    + tSNE
+    
+```{r eval=FALSE}
+genelist = c("PPBP","LYZ","MS4A1","GNLY","LTB","NKG7","IFITM2","CD14","S100A9")
+
+for(i in genelist){
+	MyPlot <- gene.plot(my.obj, gene = i, 
+		interactive = F,
+		plot.data.type = "tsne",
+		cell.transparency = 1)
+	i <- gsub("-",".",i)
+	eval(call("<-", as.name(i), MyPlot))
+}
+
+## 
+library(gridExtra)
+grid.arrange(PPBP,LYZ,MS4A1,GNLY,LTB,NKG7,IFITM2,CD14,S100A9)
+```    
+ 
+```{r echo=FALSE, fig.width=10, fig.align='center', message=FALSE, fig.height=10}
+genelist = c("PPBP","LYZ","MS4A1","GNLY","LTB","NKG7","IFITM2","CD14","S100A9")
+
+for(i in genelist){
+	MyPlot <- gene.plot(my.obj, gene = i, 
+		interactive = F,
+		plot.data.type = "tsne",
+		cell.transparency = 1)
+	i <- gsub("-",".",i)
+	eval(call("<-", as.name(i), MyPlot))
+}
+
+## 
+library(gridExtra)
+grid.arrange(PPBP,LYZ,MS4A1,GNLY,LTB,NKG7,IFITM2,CD14,S100A9)
+```
+
+#### QC on clusters {#link28}
+
+```{r eval=FALSE}
+clust.stats.plot(my.obj, plot.type = "box.mito", interactive = F)
+clust.stats.plot(my.obj, plot.type = "box.gene", interactive = F)
+```
+
+```{r echo=FALSE, fig.width=10, fig.align='center', message=FALSE}
+A = clust.stats.plot(my.obj, plot.type = "box.mito", interactive = F)
+B = clust.stats.plot(my.obj, plot.type = "box.gene", interactive = F)
+## 
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+#### Cell type prediction using ImmGen {#link29}
+
+```{r }
+## get marker genes for cluster 2
+Cluster = 2
+MyGenes <- unique(top.markers(marker.genes, topde = 40, min.base.mean = 0.2, cluster = Cluster))
+MyGenes
+```
+```{r eval=FALSE}
+# ImmGen dot plot
+imm.gen(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot")
+imm.gen(immgen.data = "uli.rna", gene = MyGenes, plot.type = "point.plot", top.cell.types = 50)
+```
+
+As seen in the dot plots the B cells are in the top, suggesting that cluster 2 is B cells. 
+
+```{r echo=FALSE, fig.width=15, fig.align='center', message=FALSE, fig.height=7}
+Cluster = 2
+MyGenes <- unique(top.markers(marker.genes, topde = 40, min.base.mean = 0.2, cluster = Cluster))
+A= imm.gen(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot")
+B= imm.gen(immgen.data = "uli.rna", gene = MyGenes, plot.type = "point.plot", top.cell.types = 50)
+## 
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+```{r eval=FALSE}
+# ImmGen dot plot
+imm.gen(immgen.data = "rna", gene = MyGenes, plot.type = "heatmap")
+imm.gen(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
+```
+
+As seen in the heatmaps the B cells are more expressed for these genes. 
+
+```{r echo=FALSE,fig.width=20, fig.align='center', message=FALSE, fig.height=10}
+Cluster = 2
+MyGenes <- unique(top.markers(marker.genes, topde = 40, min.base.mean = 0.2, cluster = Cluster))
+# ImmGen heatmap
+imm.gen(immgen.data = "rna", gene = MyGenes, plot.type = "heatmap")
+imm.gen(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
+```
+
+#### Differential Expression Analysis {#link31}
+
+```{r }
+# Between clusters 
+diff.res <- diff.exp(my.obj, de.by = "clusters", cond.1 = c(1,4), cond.2 = c(2))
+diff.res1 <- as.data.frame(diff.res)
+diff.res1 <- subset(diff.res1, padj < 0.05)
+head(diff.res1)
+
+## Between conditions  
+# diff.res <- diff.exp(my.obj, de.by = "conditions", cond.1 = c("WT"), cond.2 = c("KO"))
+
+## Betwen conditions in the same cluster
+# diff.res <- diff.exp(my.obj, de.by = "clustBase.condComp", cond.1 = c("WT"), cond.2 = c("KO"), base.cond = 1)
+
+## Between clusters in the same condition
+# diff.res <- diff.exp(my.obj, de.by = "condBase.clustComp", cond.1 = c(1), cond.2 = c(2), base.cond = "WT")
+```
+
+#### Volcano and MA plots {#link32}
+
+```{r eval=FALSE}
+# Volcano Plot 
+volcano.ma.plot(diff.res,
+	sig.value = "pval",
+	sig.line = 0.05,
+	plot.type = "volcano",
+	interactive = F)
+
+# MA Plot
+volcano.ma.plot(diff.res,
+	sig.value = "pval",
+	sig.line = 0.05,
+	plot.type = "ma",
+	interactive = F)
+```
+
+
+```{r echo=FALSE, fig.width=15, fig.align='center', message=FALSE, fig.height=7}
+# Volcano Plot 
+A = volcano.ma.plot(diff.res,
+	sig.value = "pval",
+	sig.line = 0.05,
+	plot.type = "volcano",
+	interactive = F)
+
+# MA Plot
+B = volcano.ma.plot(diff.res,
+	sig.value = "pval",
+	sig.line = 0.05,
+	plot.type = "ma",
+	interactive = F)
+## 
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+#### Data manipulation {#link33}
+
+```{r eval=FALSE}
+# let's say you  want to merge cluster 3 and 2.
+my.obj <- change.clust(my.obj, change.clust = 3, to.clust = 2)
+
+# to reset to the original clusters run this.
+my.obj <- change.clust(my.obj, clust.reset = T)
+
+# you can also re-name the cluster numbers to cell types. Remember to reset after this so you can ran other analysis. 
+my.obj <- change.clust(my.obj, change.clust = 7, to.clust = "B Cell")
+
+# Let's say for what ever reason you want to remove acluster, to do so run this.
+my.obj <- clust.rm(my.obj, clust.to.rm = 1)
+```
+
+#### Cell gating {#link34}
+
+```{r eval=FALSE}
+# first make a plot to gate 
+my.plot <- gene.plot(my.obj, gene = "GNLY", 
+  plot.type = "scatterplot",
+  clust.dim = 2,
+  interactive = F)
+
+# gate and download cell ids. 
+cell.gating(my.obj, my.plot = my.plot)
+
+# once the cell ids are download (cellGating.txt), you can assign a cluster number to them. 
+my.obj <- gate.to.clust(my.obj, my.gate = "cellGating.txt", to.clust = 10)
+```
+
+```{r echo=FALSE, fig.cap="", out.width = '100%'}
+knitr::include_graphics("gate2.png")
+```
+
+```{r echo=FALSE, fig.cap="", out.width = '100%'}
+knitr::include_graphics("gate3.png")
+```
+
+#### Pseudotime analysis {#link35}
+
+```{r eval=FALSE}
+MyGenes <-  unique(top.markers(marker.genes, topde = 10, min.base.mean = 0.2))
+#
+pseudotime.tree(my.obj,
+   marker.genes = MyGenes,
+   type = "unrooted",
+   clust.method = "complete")
+# 
+pseudotime.tree(my.obj,
+   marker.genes = MyGenes,
+   type = "jitter",
+   clust.method = "complete")
+```
+
+```{r echo=FALSE, fig.cap="", fig.show='hold',fig.align='center', out.width='50%'}
+knitr::include_graphics(c("psudo1.png","psudo2.png"))
+```
+
+## CITE-Seq 
+
+Read RNA data 
+
+```{r include=FALSE}
+load("my.CITE.obj.Robj")
+```
+
+```{r eval=FALSE}
+RNA.data <- read.delim("CITE_RNA.tsv",header=TRUE)
+rownames(RNA.data) <- RNA.data$gene
+RNA.data <- RNA.data[,-1]
+# if you had multiple data you can marge them like this
+#RNA.data <- data.aggregation(samples = c("sample1","sample2"), condition.names = c("KO","WT"))
+```
+
+Read ADT data
+
+```{r eval=FALSE}
+adt.data <- read.delim("CITE_ADT.tsv",header=TRUE)
+rownames(adt.data) <- adt.data$gene
+adt.data <- adt.data[,-1]
+# if you had multiple data you can marge them like this
+#adt.data <- data.aggregation(samples = c("sample1","sample2"), condition.names = c("KO","WT"))
+```
+
+Make iCellR object
+```{r eval=FALSE}
+my.obj <- make.obj(RNA.data)
+my.obj <- add.adt(my.obj, adt.data = adt.data)
+```
+
+```{r}
+# look at your object
+my.obj
+# look at ADTs
+head(my.obj@adt.raw)[1:5]
+```
+
+#### Perform RNA data analysis as above
+
+```{r eval=FALSE}
+my.obj <- qc.stats(my.obj, 
+  which.data = "raw.data", 
+  mito.genes = "defult", 
+  s.phase.genes = s.phase, 
+  g2m.phase.genes = g2m.phase)
+
+# 
+stats.plot(my.obj,
+	plot.type = "all.in.one",
+	out.name = "UMI-plot",
+	interactive = FALSE,
+	cell.color = "slategray3", 
+	cell.size = 1, 
+	cell.transparency = 0.5,
+	box.color = "red",
+	box.line.col = "green")
+# 
+my.obj <- cell.filter(my.obj,
+  min.mito = 0,
+  max.mito = 0.80,
+  min.genes = 200,
+  max.genes = 4000,
+  min.umis = 0,
+  max.umis = Inf)
+#
+my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500)
+# 
+my.obj <- gene.stats(my.obj, which.data = "main.data")
+#
+make.gene.model(my.obj, 
+	dispersion.limit = 1.5, 
+	base.mean.rank = 500, 
+	no.mito.model = T, 
+	mark.mito = T, 
+	interactive = F,
+	out.name = "gene.model")
+```
+
+Normalize and merge ADTs with the main data to include them in the analysis 
+
+```{r eval=FALSE}
+# my.obj <- norm.adt(my.obj) (fix this)
+my.obj <- adt.rna.merge(my.obj)
+
+my.obj <- run.pca(my.obj, clust.method = "gene.model", gene.list = readLines("my_model_genes.txt"), batch.norm = F)
+#
+my.obj <- run.clustering(my.obj, 
+	clust.method = "ward.D", 
+	dist.method = "euclidean",
+	index.method = "kl",
+	max.clust = 25,
+	min.clust = 2,
+	dims = 1:10)
+#
+my.obj <- run.pc.tsne(my.obj, dims = 1:10)
+#
+my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
+#
+my.obj <- clust.avg.exp(my.obj)
+#
+save(my.obj, file = "my.CITE.obj.Robj")
+```
+
+#### Visualize ADTs and genes 
+
+```{r eval=FALSE}
+genelist = c("ADT_CD3","CD3E","ADT_CD11c","ITGAX","ADT_CD16","FCGR3A")
+
+for(i in genelist){
+	MyPlot <- gene.plot(my.obj, gene = i, 
+		interactive = F,
+		plot.data.type = "tsne",
+		cell.transparency = 1)
+	i <- gsub("-",".",i)
+	eval(call("<-", as.name(i), MyPlot))
+}
+
+## 
+library(gridExtra)
+grid.arrange(ADT_CD3,CD3E,ADT_CD11c,ITGAX,ADT_CD16,FCGR3A, ncol = 2)
+``` 
+
+```{r echo=FALSE, fig.width=10, fig.align='center', message=FALSE, fig.height=10}
+genelist = c("ADT_CD3","CD3E","ADT_CD11c","ITGAX","ADT_CD16","FCGR3A")
+
+for(i in genelist){
+	MyPlot <- gene.plot(my.obj, gene = i, 
+		interactive = F,
+		plot.data.type = "tsne",
+		cell.transparency = 1)
+	i <- gsub("-",".",i)
+	eval(call("<-", as.name(i), MyPlot))
+}
+
+## 
+library(gridExtra)
+grid.arrange(ADT_CD3,CD3E,ADT_CD11c,ITGAX,ADT_CD16,FCGR3A, ncol = 2)
+```
+
+#### The rest of the analysis is as scRNA-Seq
+
+# scVDJ-Seq
+
+
+
+# Large Scale Bulk RNA-Seq 
+
+#### Read data 
+
+This data is already normalized 
+
+```{r include=FALSE}
+load("my.TCGA.obj.Robj")
+```
+
+```{r eval=FALSE}
+tcga.data <- read.delim("TCGA.BRCA.tsv",header=TRUE)
+rownames(tcga.data) <- tcga.data$gene
+tcga.data <- tcga.data[,-1]
+```
+
+#### Make iCellR object 
+
+```{r eval=FALSE}
+my.obj <- make.obj(tcga.data)
+my.obj@main.data <- my.obj@raw.data
+```
+
+```{r eval=FALSE}
+#
+my.obj <- gene.stats(my.obj, which.data = "main.data")
+#
+make.gene.model(my.obj, 
+	dispersion.limit = 1000, 
+	base.mean.rank = 500, 
+	no.mito.model = T, 
+	mark.mito = T, 
+	interactive = F,
+	out.name = "gene.model")
+#
+my.obj <- run.pca(my.obj, 
+                  clust.method = "gene.model", 
+                  gene.list = readLines("my_model_genes.txt"), 
+                  batch.norm = F)
+#
+my.obj <- run.clustering(my.obj, 
+	clust.method = "kmeans", 
+	dist.method = "euclidean",
+	index.method = "silhouette",
+	max.clust = 25,
+	min.clust = 2,
+	dims = 1:10)
+#
+my.obj <- run.pc.tsne(my.obj, dims = 1:10)
+#
+my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
+#
+save(my.obj, file = "my.TCGA.obj.Robj")
+```
+
+#### visualize conditions 
+
+```{r eval=FALSE}
+cluster.plot(my.obj,
+                 plot.type = "tsne",
+                 col.by = "conditions",
+                 cell.size = 2,
+                 cell.transparency = 1,
+                 interactive = F)
+#
+cluster.plot(my.obj,
+                 plot.type = "umap",
+                 col.by = "conditions",
+                 cell.size = 2,
+                 cell.transparency = 1,
+                 interactive = F)
+```
+
+
+```{r echo=FALSE, fig.width=10, fig.align='center'}
+# clusters (UMAP)
+A = cluster.plot(my.obj,
+                 plot.type = "tsne",
+                 col.by = "conditions",
+                 cell.size = 2,
+                 cell.transparency = 1,
+                 interactive = F)
+
+# Conditions (UMAP)
+B = cluster.plot(my.obj,
+                 plot.type = "umap",
+                 col.by = "conditions",
+                 cell.size = 2,
+                 cell.transparency = 1,
+                 interactive = F)
+library(gridExtra)
+grid.arrange(A,B,ncol = 2)
+```
+
+
+
+
+
