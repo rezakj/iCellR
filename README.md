@@ -747,18 +747,21 @@ Note that ImmGen is mouse genome data and the sample data here is human. For 157
 Cluster = 7
 MyGenes <- top.markers(marker.genes, topde = 40, min.base.mean = 0.2, cluster = Cluster)
 # plot 
-imm.gen(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot")
+cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot")
 # and
-imm.gen(immgen.data = "uli.rna", gene = MyGenes, plot.type = "point.plot", top.cell.types = 50)
+cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "point.plot", top.cell.types = 50)
 # or 
-imm.gen(immgen.data = "rna", gene = MyGenes, plot.type = "heatmap")
+cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "heatmap")
 # and
-imm.gen(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
+cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
 
 # And finally check the genes in the cells and find the common ones to predict
 heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
 
-# As you can see cluster 7 is most likely to be B-cells.   
+# As you can see cluster 7 is most likely to be B-cells.  
+
+# for tissue type prediction use this:
+#cell.type.pred(immgen.data = "mca", gene = MyGenes, plot.type = "point.plot")
 ```
 
 <p align="center">
