@@ -28,6 +28,8 @@ R
 install.packages('iCellR/', repos = NULL, type="source")
 ```
 
+## [Manual](https://github.com/rezakj/iCellR/blob/dev/vignettes/Manual_iCellR.pdf) and [Vignttes](rezakj/iCellR/blob/dev/vignettes/Manual.html) 
+
 ## Download a sample data
 
 - Download and unzip a publicly available sample [PBMC](https://en.wikipedia.org/wiki/Peripheral_blood_mononuclear_cell) scRNA-Seq data.
