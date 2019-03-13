@@ -33,6 +33,8 @@ run.clustering <- function (x = NULL,
   }
   #  cluster
   DATA <- (x@pca.data)[dims]
+#  DATA <- x@umap.data
+#  DATA <- x@tsne.data.3d
       nb <- NbClust(DATA,
                   distance = dist.method,
                   min.nc = min.clust,

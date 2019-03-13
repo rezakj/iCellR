@@ -74,7 +74,7 @@ run.tsne <- function (x = NULL,
 #  2 dimention
 #  if (clust.dim == 2) {
       TransPosed <- t(TopNormLogScale)
-      tsne <- Rtsne(TransPosed, check_duplicates = FALSE, dims = 2,
+      tsne <- Rtsne(TransPosed, dims = 2,
                     initial_dims = initial_dims, perplexity = perplexity,
                     theta = theta, check_duplicates = check_duplicates, pca = pca, max_iter = max_iter,
                     verbose = verbose, is_distance = is_distance, Y_init = Y_init,
@@ -91,7 +91,7 @@ run.tsne <- function (x = NULL,
 # choose 3 demention
   # tSNE
       TransPosed <- t(TopNormLogScale)
-      tsne <- Rtsne(TransPosed, check_duplicates = FALSE, dims = 3,
+      tsne <- Rtsne(TransPosed, dims = 3,
                     initial_dims = initial_dims, perplexity = perplexity,
                     theta = theta, check_duplicates = check_duplicates, pca = pca, max_iter = max_iter,
                     verbose = verbose, is_distance = is_distance, Y_init = Y_init,

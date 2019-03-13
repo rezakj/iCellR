@@ -13,6 +13,7 @@
 #' }
 #' @export
 run.pca <- function (x = NULL,
+                          data.type = "main",
                           clust.method = "base.mean.rank",
                           top.rank = 500,
                           plus.log.value = 0.1,
@@ -22,7 +23,13 @@ run.pca <- function (x = NULL,
     stop("x should be an object of class iCellR")
   }
   # geth the genes and scale them based on model
-  DATA <- x@main.data
+  ## get main data
+  if (data.type == "main") {
+    DATA <- x@main.data
+  }
+  if (data.type == "imputed") {
+    DATA <- x@imputed.data
+  }
   # model base mean rank
   if (clust.method == "base.mean.rank") {
     raw.data.order <- DATA[ order(rowMeans(DATA), decreasing = T), ]
