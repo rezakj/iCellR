@@ -28,8 +28,6 @@ R
 install.packages('iCellR/', repos = NULL, type="source")
 ```
 
-## [Manual](https://github.com/rezakj/iCellR/blob/dev/vignettes/Manual_iCellR.pdf)
-
 ## Download a sample data
 
 - Download and unzip a publicly available sample [PBMC](https://en.wikipedia.org/wiki/Peripheral_blood_mononuclear_cell) scRNA-Seq data.
@@ -119,6 +117,40 @@ my.obj
 ```r
 my.obj <- qc.stats(my.obj)
 ``` 
+
+
+- Cell cycle prediction 
+
+```r
+my.obj <- cc(my.obj, s.genes = s.phase, g2m.genes = g2m.phase)
+head(my.obj@stats)
+
+#                                CellIds nGenes UMIs mito.percent
+#WT_AAACATACAACCAC.1 WT_AAACATACAACCAC.1    781 2421  0.030152829
+#WT_AAACATTGAGCTAC.1 WT_AAACATTGAGCTAC.1   1352 4903  0.037935958
+#WT_AAACATTGATCAGC.1 WT_AAACATTGATCAGC.1   1131 3149  0.008891712
+#WT_AAACCGTGCTTCCG.1 WT_AAACCGTGCTTCCG.1    960 2639  0.017430845
+#WT_AAACCGTGTATGCG.1 WT_AAACCGTGTATGCG.1    522  981  0.012232416
+#WT_AAACGCACTGGTAC.1 WT_AAACGCACTGGTAC.1    782 2164  0.016635860
+#                    S.phase.probability g2m.phase.probability      S.Score
+#WT_AAACATACAACCAC.1        0.0012391574          0.0004130525  0.030569081
+#WT_AAACATTGAGCTAC.1        0.0002039568          0.0004079135 -0.077860621
+#WT_AAACATTGATCAGC.1        0.0003175611          0.0019053668 -0.028560560
+#WT_AAACCGTGCTTCCG.1        0.0007578628          0.0011367942  0.001917225
+#WT_AAACCGTGTATGCG.1        0.0000000000          0.0020387360 -0.020085210
+#WT_AAACGCACTGGTAC.1        0.0000000000          0.0000000000 -0.038953135
+#                        G2M.Score Phase
+#WT_AAACATACAACCAC.1 -0.0652390011     S
+#WT_AAACATTGAGCTAC.1 -0.1277015099    G1
+#WT_AAACATTGATCAGC.1 -0.0036505733    G1
+#WT_AAACCGTGCTTCCG.1 -0.0499511543     S
+#WT_AAACCGTGTATGCG.1  0.0009426363   G2M
+#WT_AAACGCACTGGTAC.1 -0.0680240629    G1
+
+
+# plot cell cycle rate
+pie(table(my.obj@stats$Phase))
+```
 
 - Plot QC
 
@@ -282,18 +314,22 @@ To view an the html intractive plot click on this links: [Dispersion plot](https
 </p>
 
 
-- Perform PCA
+- Perform PCA and batch correction 
 
 ```r
-# PCA
-my.obj <- run.pca(my.obj, clust.method = "gene.model", gene.list = readLines("my_model_genes.txt"))
+my.obj <- run.pca(my.obj, 
+                  clust.method = "gene.model", 
+                  gene.list = readLines("my_model_genes.txt"), 
+                  batch.norm = F)
 
-# If you have conditions, you can normalize the model genes so that you get as little batch difference as possible by correction for normalization. 
-# to do this, use this command:
-
-# my.obj <- run.pca(my.obj, clust.method = "gene.model", gene.list = readLines("my_model_genes.txt"), batch.norm = T)
-
-# Another approach is to run CCA (CCA will be added soon).
+# Re-define model genes (run this if you have real samples)
+# find.dim.genes(my.obj, dims = 1:10, top.pos = 20, top.neg = 10)
+ 
+# Second round PCA and batch correction (run this if you have real samples)
+#my.obj <- run.pca(my.obj, 
+#                  clust.method = "gene.model", 
+#                  gene.list = readLines("my_model_PC_genes.txt"),
+#                  batch.norm = T)
 
 opt.pcs.plot(my.obj)
 my.obj@opt.pcs
@@ -577,19 +613,6 @@ head(marker.genes)
 #ANKRD55   0.003482284 0.00000000 0.000000000
 #LINC00176 0.013798598 0.00910279 0.003420015
 #MAL       0.041585770 0.03214897 0.026263849
-```
-
-- Markers Batch Spacing Correction (MBSC)
-
-We believe that batch correction should be done at the normalization level and iCellR uses a geometric normalization for doing so as well as correcting for drop outs by excluding the genes with low count reads in the normalization step. However, in some cases one might need to also perform a cell spacing correction. This helps the same cell types in different samples come closer together in tSNE or lay on top of each other. For example, B cell in two sets of samples would be closer to each other and won't look like as if they should be two separate clusters. This step is optional.
-
-```r
-# optional
-# MyGenes <- top.markers(marker.genes, topde = 50, min.base.mean = 0.2)
-# MyGenes <- unique(MyGenes)
-# write.table((MyGenes),file="my_DE_model_genes.txt", row.names =F, quote = F, col.names = F)
-# you can run tSNE angain or use "my_DE_model_genes.txt" for another PCA and clustering round. 
-# my.obj <- run.tsne(my.obj, clust.method = "gene.model", gene.list = "my_DE_model_genes.txt")
 ```
 
 - Plot genes
