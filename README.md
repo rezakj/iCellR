@@ -705,13 +705,31 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters"
 
 ```r
 # this function is being improved and soon will be available. 
-my.obj <- run.imputation(my.obj, method = "dist.based")
+my.obj <- run.impute(my.obj)
 
-# heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
- 
-# gene.plot(my.obj, gene = "MS4A1", plot.type = "scatterplot", plot.data.type = "tsne", clust.dim = 2, interactive = F)
+# save after imputation 
+save(my.obj, file = "my.obj.Robj")
 
-# gene.plot(my.obj, gene = "MS4A1", col.by = "clusters", plot.type = "boxplot", interactive = F)
+heatmap.gg.plot(my.obj, gene = MyGenes, 
+                interactive = F, 
+                cluster.by = "clusters")
+
+# Heat map on imputed data 
+heatmap.gg.plot(my.obj, gene = MyGenes, 
+                interactive = F, 
+                cluster.by = "clusters",
+                data.type = "imputed")
+# main data 
+gene.plot(my.obj, gene = "MS4A1", 
+    plot.type = "scatterplot",
+    interactive = F,
+    data.type = "main")
+
+# imputed data 
+gene.plot(my.obj, gene = "MS4A1", 
+    plot.type = "scatterplot",
+    interactive = F,
+    data.type = "imputed")		
 ```
 
 <p align="center">
@@ -1010,5 +1028,6 @@ head(my.vdj.data)
 # add it to iCellR object
 add.vdj(my.obj, vdj.data = my.vdj.data)
  ```
+
 
 
