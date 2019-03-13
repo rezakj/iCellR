@@ -118,6 +118,40 @@ my.obj
 my.obj <- qc.stats(my.obj)
 ``` 
 
+
+- Cell cycle prediction 
+
+```r
+my.obj <- cc(my.obj, s.genes = s.phase, g2m.genes = g2m.phase)
+head(my.obj@stats)
+
+#                                CellIds nGenes UMIs mito.percent
+#WT_AAACATACAACCAC.1 WT_AAACATACAACCAC.1    781 2421  0.030152829
+#WT_AAACATTGAGCTAC.1 WT_AAACATTGAGCTAC.1   1352 4903  0.037935958
+#WT_AAACATTGATCAGC.1 WT_AAACATTGATCAGC.1   1131 3149  0.008891712
+#WT_AAACCGTGCTTCCG.1 WT_AAACCGTGCTTCCG.1    960 2639  0.017430845
+#WT_AAACCGTGTATGCG.1 WT_AAACCGTGTATGCG.1    522  981  0.012232416
+#WT_AAACGCACTGGTAC.1 WT_AAACGCACTGGTAC.1    782 2164  0.016635860
+#                    S.phase.probability g2m.phase.probability      S.Score
+#WT_AAACATACAACCAC.1        0.0012391574          0.0004130525  0.030569081
+#WT_AAACATTGAGCTAC.1        0.0002039568          0.0004079135 -0.077860621
+#WT_AAACATTGATCAGC.1        0.0003175611          0.0019053668 -0.028560560
+#WT_AAACCGTGCTTCCG.1        0.0007578628          0.0011367942  0.001917225
+#WT_AAACCGTGTATGCG.1        0.0000000000          0.0020387360 -0.020085210
+#WT_AAACGCACTGGTAC.1        0.0000000000          0.0000000000 -0.038953135
+#                        G2M.Score Phase
+#WT_AAACATACAACCAC.1 -0.0652390011     S
+#WT_AAACATTGAGCTAC.1 -0.1277015099    G1
+#WT_AAACATTGATCAGC.1 -0.0036505733    G1
+#WT_AAACCGTGCTTCCG.1 -0.0499511543     S
+#WT_AAACCGTGTATGCG.1  0.0009426363   G2M
+#WT_AAACGCACTGGTAC.1 -0.0680240629    G1
+
+
+# plot cell cycle rate
+pie(table(my.obj@stats$Phase))
+```
+
 - Plot QC
 
 By default all the plotting functions would create interactive html files unless you set this parameter: interactive = FALSE.
