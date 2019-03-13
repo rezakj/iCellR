@@ -4,7 +4,8 @@
 \alias{run.pca}
 \title{Run PCA on the main data}
 \usage{
-run.pca(x = NULL, clust.method = "base.mean.rank", top.rank = 500,
+run.pca(x = NULL, data.type = "main",
+  clust.method = "base.mean.rank", top.rank = 500,
   plus.log.value = 0.1, batch.norm = F, gene.list = "character")
 }
 \arguments{

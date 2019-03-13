@@ -6,7 +6,7 @@
 #' @param plot.type Choose between "tsne" and "pca", default = "tsne".
 #' @param cell.color Choose cell color if col.by = "monochrome", default = "black".
 #' @param back.col Choose background color, default = "black".
-#' @param col.by Choose between "clusters", "conditions" or "monochrome", default = "clusters".
+#' @param col.by Choose between "clusters", "conditions", "cc" (cell cycle) or "monochrome", default = "clusters".
 #' @param cell.transparency A numeric value between 0 to 1, default = 0.5.
 #' @param clust.dim A numeric value for plot dimensions. Choose either 2 or 3, default = 2.
 #' @param interactive If TRUE an html interactive file will be made, default = TRUE.
@@ -76,6 +76,10 @@ cluster.plot <- function (x = NULL,
       MyTitle = "3D Diffusion Map Plot"
         DATA <- x@diffusion.data
     }
+  }
+  # cell cycle
+  if (col.by == "cc") {
+  col.legend <- factor(x@stats$Phase)
   }
   # conditions
   if (col.by == "conditions") {

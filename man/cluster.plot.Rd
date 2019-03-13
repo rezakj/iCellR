@@ -21,7 +21,7 @@ cluster.plot(x = NULL, cell.size = 1, plot.type = "tsne",
 
 \item{back.col}{Choose background color, default = "black".}
 
-\item{col.by}{Choose between "clusters", "conditions" or "monochrome", default = "clusters".}
+\item{col.by}{Choose between "clusters", "conditions", "cc" (cell cycle) or "monochrome", default = "clusters".}
 
 \item{cell.transparency}{A numeric value between 0 to 1, default = 0.5.}
 
