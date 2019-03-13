@@ -615,19 +615,6 @@ head(marker.genes)
 #MAL       0.041585770 0.03214897 0.026263849
 ```
 
-- Markers Batch Spacing Correction (MBSC)
-
-We believe that batch correction should be done at the normalization level and iCellR uses a geometric normalization for doing so as well as correcting for drop outs by excluding the genes with low count reads in the normalization step. However, in some cases one might need to also perform a cell spacing correction. This helps the same cell types in different samples come closer together in tSNE or lay on top of each other. For example, B cell in two sets of samples would be closer to each other and won't look like as if they should be two separate clusters. This step is optional.
-
-```r
-# optional
-# MyGenes <- top.markers(marker.genes, topde = 50, min.base.mean = 0.2)
-# MyGenes <- unique(MyGenes)
-# write.table((MyGenes),file="my_DE_model_genes.txt", row.names =F, quote = F, col.names = F)
-# you can run tSNE angain or use "my_DE_model_genes.txt" for another PCA and clustering round. 
-# my.obj <- run.tsne(my.obj, clust.method = "gene.model", gene.list = "my_DE_model_genes.txt")
-```
-
 - Plot genes
 
 ```r
