@@ -48,6 +48,7 @@ pseudotime.tree <- function (x = NULL,
 #  DATA <- x@pca.data[1:5]
 #  DATA <- x@tsne.data.3d
   DATA <- x@tsne.data
+#  DATA <- x@diffusion.data
   data <- data.matrix(DATA)
   data <- dist(data, method = dist.method)
 #  hcgg <- hclust(data, method = clust.method)
