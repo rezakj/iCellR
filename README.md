@@ -118,6 +118,40 @@ my.obj
 my.obj <- qc.stats(my.obj)
 ``` 
 
+
+- Cell cycle prediction 
+
+```r
+my.obj <- cc(my.obj, s.genes = s.phase, g2m.genes = g2m.phase)
+head(my.obj@stats)
+
+#                                CellIds nGenes UMIs mito.percent
+#WT_AAACATACAACCAC.1 WT_AAACATACAACCAC.1    781 2421  0.030152829
+#WT_AAACATTGAGCTAC.1 WT_AAACATTGAGCTAC.1   1352 4903  0.037935958
+#WT_AAACATTGATCAGC.1 WT_AAACATTGATCAGC.1   1131 3149  0.008891712
+#WT_AAACCGTGCTTCCG.1 WT_AAACCGTGCTTCCG.1    960 2639  0.017430845
+#WT_AAACCGTGTATGCG.1 WT_AAACCGTGTATGCG.1    522  981  0.012232416
+#WT_AAACGCACTGGTAC.1 WT_AAACGCACTGGTAC.1    782 2164  0.016635860
+#                    S.phase.probability g2m.phase.probability      S.Score
+#WT_AAACATACAACCAC.1        0.0012391574          0.0004130525  0.030569081
+#WT_AAACATTGAGCTAC.1        0.0002039568          0.0004079135 -0.077860621
+#WT_AAACATTGATCAGC.1        0.0003175611          0.0019053668 -0.028560560
+#WT_AAACCGTGCTTCCG.1        0.0007578628          0.0011367942  0.001917225
+#WT_AAACCGTGTATGCG.1        0.0000000000          0.0020387360 -0.020085210
+#WT_AAACGCACTGGTAC.1        0.0000000000          0.0000000000 -0.038953135
+#                        G2M.Score Phase
+#WT_AAACATACAACCAC.1 -0.0652390011     S
+#WT_AAACATTGAGCTAC.1 -0.1277015099    G1
+#WT_AAACATTGATCAGC.1 -0.0036505733    G1
+#WT_AAACCGTGCTTCCG.1 -0.0499511543     S
+#WT_AAACCGTGTATGCG.1  0.0009426363   G2M
+#WT_AAACGCACTGGTAC.1 -0.0680240629    G1
+
+
+# plot cell cycle rate
+pie(table(my.obj@stats$Phase))
+```
+
 - Plot QC
 
 By default all the plotting functions would create interactive html files unless you set this parameter: interactive = FALSE.
@@ -280,18 +314,22 @@ To view an the html intractive plot click on this links: [Dispersion plot](https
 </p>
 
 
-- Perform PCA
+- Perform PCA and batch correction 
 
 ```r
-# PCA
-my.obj <- run.pca(my.obj, clust.method = "gene.model", gene.list = readLines("my_model_genes.txt"))
+my.obj <- run.pca(my.obj, 
+                  clust.method = "gene.model", 
+                  gene.list = readLines("my_model_genes.txt"), 
+                  batch.norm = F)
 
-# If you have conditions, you can normalize the model genes so that you get as little batch difference as possible by correction for normalization. 
-# to do this, use this command:
-
-# my.obj <- run.pca(my.obj, clust.method = "gene.model", gene.list = readLines("my_model_genes.txt"), batch.norm = T)
-
-# Another approach is to run CCA (CCA will be added soon).
+# Re-define model genes (run this if you have real samples)
+# find.dim.genes(my.obj, dims = 1:10, top.pos = 20, top.neg = 10)
+ 
+# Second round PCA and batch correction (run this if you have real samples)
+#my.obj <- run.pca(my.obj, 
+#                  clust.method = "gene.model", 
+#                  gene.list = readLines("my_model_PC_genes.txt"),
+#                  batch.norm = T)
 
 opt.pcs.plot(my.obj)
 my.obj@opt.pcs
@@ -577,19 +615,6 @@ head(marker.genes)
 #MAL       0.041585770 0.03214897 0.026263849
 ```
 
-- Markers Batch Spacing Correction (MBSC)
-
-We believe that batch correction should be done at the normalization level and iCellR uses a geometric normalization for doing so as well as correcting for drop outs by excluding the genes with low count reads in the normalization step. However, in some cases one might need to also perform a cell spacing correction. This helps the same cell types in different samples come closer together in tSNE or lay on top of each other. For example, B cell in two sets of samples would be closer to each other and won't look like as if they should be two separate clusters. This step is optional.
-
-```r
-# optional
-# MyGenes <- top.markers(marker.genes, topde = 50, min.base.mean = 0.2)
-# MyGenes <- unique(MyGenes)
-# write.table((MyGenes),file="my_DE_model_genes.txt", row.names =F, quote = F, col.names = F)
-# you can run tSNE angain or use "my_DE_model_genes.txt" for another PCA and clustering round. 
-# my.obj <- run.tsne(my.obj, clust.method = "gene.model", gene.list = "my_DE_model_genes.txt")
-```
-
 - Plot genes
 
 ```r
@@ -680,13 +705,31 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters"
 
 ```r
 # this function is being improved and soon will be available. 
-my.obj <- run.imputation(my.obj, method = "dist.based")
+my.obj <- run.impute(my.obj)
 
-# heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
- 
-# gene.plot(my.obj, gene = "MS4A1", plot.type = "scatterplot", plot.data.type = "tsne", clust.dim = 2, interactive = F)
+# save after imputation 
+save(my.obj, file = "my.obj.Robj")
 
-# gene.plot(my.obj, gene = "MS4A1", col.by = "clusters", plot.type = "boxplot", interactive = F)
+heatmap.gg.plot(my.obj, gene = MyGenes, 
+                interactive = F, 
+                cluster.by = "clusters")
+
+# Heat map on imputed data 
+heatmap.gg.plot(my.obj, gene = MyGenes, 
+                interactive = F, 
+                cluster.by = "clusters",
+                data.type = "imputed")
+# main data 
+gene.plot(my.obj, gene = "MS4A1", 
+    plot.type = "scatterplot",
+    interactive = F,
+    data.type = "main")
+
+# imputed data 
+gene.plot(my.obj, gene = "MS4A1", 
+    plot.type = "scatterplot",
+    interactive = F,
+    data.type = "imputed")		
 ```
 
 <p align="center">
@@ -704,18 +747,21 @@ Note that ImmGen is mouse genome data and the sample data here is human. For 157
 Cluster = 7
 MyGenes <- top.markers(marker.genes, topde = 40, min.base.mean = 0.2, cluster = Cluster)
 # plot 
-imm.gen(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot")
+cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot")
 # and
-imm.gen(immgen.data = "uli.rna", gene = MyGenes, plot.type = "point.plot", top.cell.types = 50)
+cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "point.plot", top.cell.types = 50)
 # or 
-imm.gen(immgen.data = "rna", gene = MyGenes, plot.type = "heatmap")
+cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "heatmap")
 # and
-imm.gen(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
+cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
 
 # And finally check the genes in the cells and find the common ones to predict
 heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
 
-# As you can see cluster 7 is most likely to be B-cells.   
+# As you can see cluster 7 is most likely to be B-cells.  
+
+# for tissue type prediction use this:
+#cell.type.pred(immgen.data = "mca", gene = MyGenes, plot.type = "point.plot")
 ```
 
 <p align="center">
@@ -985,5 +1031,6 @@ head(my.vdj.data)
 # add it to iCellR object
 add.vdj(my.obj, vdj.data = my.vdj.data)
  ```
+
 
 
