@@ -544,15 +544,13 @@ cluster.plot(my.obj,
 	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/diffiusion3D.gif" width="400"/>
 </p>
 
-- Cell frequencies in clusters and conditions
-
-Remember that these are not normalized for the total number of cells in each condition. You can normalize based on the number of the cells in each condition using the clust_cond_freq_info.tsv file that is generated and re-plot them in R or in excel sheet.
+- Normalized cell frequencies in clusters and conditions
 
 ```r
-clust.cond.info(my.obj, plot.type = "bar")
+clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = TRUE)
 # [1] "clust_cond_freq_info.txt file has beed generated."
 
-clust.cond.info(my.obj, plot.type = "pie")
+clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE)
 # [1] "clust_cond_freq_info.txt file has beed generated."
 ```
 <p align="center">
