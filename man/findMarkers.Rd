@@ -28,7 +28,7 @@ This function takes an object of class iCellR and performs differential expressi
 }
 \examples{
 \dontrun{
-marker.genes <- find.markers(my.obj,fold.change = 2,padjval = 0.1,uniq = T)
+marker.genes <- findMarkers(my.obj,fold.change = 2,padjval = 0.1,uniq = T)
 }
 
 }

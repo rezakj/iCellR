@@ -83,6 +83,11 @@ cluster.plot <- function (x = NULL,
   }
   # conditions
   if (col.by == "conditions") {
+    Cells <- colnames(x@main.data)
+    MYConds <- as.character((unique(data.frame(do.call('rbind', strsplit(as.character(Cells),'_',fixed=TRUE)))[1]))$X1)
+    if (length(MYConds) == 1) {
+      stop("You need more then one condition/sample to run this")
+    }
     col.legend <- data.frame(do.call('rbind', strsplit(as.character(rownames(DATA)),'_',fixed=TRUE)))[1]
     col.legend <- factor(as.matrix(col.legend))
     }

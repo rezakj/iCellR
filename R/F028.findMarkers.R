@@ -11,7 +11,7 @@
 #' @return An object of class iCellR
 #' @examples
 #' \dontrun{
-#' marker.genes <- find.markers(my.obj,fold.change = 2,padjval = 0.1,uniq = T)
+#' marker.genes <- findMarkers(my.obj,fold.change = 2,padjval = 0.1,uniq = T)
 #' }
 #'
 #' @export
@@ -115,7 +115,13 @@ findMarkers <- function (x = NULL,
   df <- subset(df, gene != "NA")
 ####
   if (uniq == T) {
-    df <- df[!duplicated(df$gene), ]
+    data <- (as.data.frame(table(df$gene)))
+    datanew <- (data[order(data$Freq, decreasing = T),])
+    datanew <- subset(datanew, datanew$Freq == 1)
+    datanew <- as.character(datanew$Var1)
+    myDATA = df
+    myDATA <- subset(myDATA, myDATA$gene %in% datanew)
+    df <- myDATA
   }
   if (Inf.FCs == FALSE) {
     df <- subset(df, log2FoldChange != Inf)

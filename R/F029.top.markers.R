@@ -11,9 +11,23 @@
 #' }
 #' @import Matrix
 #' @export
-top.markers <- function (x = NULL, topde = 10, min.base.mean = 0.2, cluster = 0) {
+top.markers <- function (x = NULL, topde = 10,
+                         min.base.mean = 0.2,
+                         filt.ambig = T,
+                         cluster = 0) {
   if (cluster == 0) {
+    # get all clusters
   MyClusts <- (unique(x$clusters))
+  # get rid of ambig genes (more than 1 cluster)
+  data <- (as.data.frame(table(x$gene)))
+  datanew <- (data[order(data$Freq, decreasing = T),])
+  datanew <- subset(datanew, datanew$Freq == 1)
+  datanew <- as.character(datanew$Var1)
+  myDATA = x
+  myDATA <- subset(myDATA, myDATA$gene %in% datanew)
+  if(filt.ambig == T) {
+    x = myDATA
+  }
 #  x <- x[order(x$baseMean,decreasing = T),]
   for (i in MyClusts) {
     DATA <- subset(x, x$clusters == i)
@@ -34,6 +48,4 @@ top.markers <- function (x = NULL, topde = 10, min.base.mean = 0.2, cluster = 0)
     topGenes <- as.character(head(DATA,topde)$gene)
   }
     return(topGenes)
-  }
-
-
+}
