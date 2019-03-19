@@ -127,6 +127,10 @@ gene.plot <- function (x = NULL,
       MyTitle = "UMAP Plot"
       DATA <- x@umap.data
     }
+    if (plot.data.type == "diffusion") {
+      MyTitle = "Diffusion Map Plot"
+      DATA <- x@diffusion.data
+    }
   }
   # 3 dimentions
   if (clust.dim == 3) {
@@ -141,6 +145,10 @@ gene.plot <- function (x = NULL,
     if (plot.data.type == "dst") {
       MyTitle = "3D DST Plot"
       DATA <- x@diff.st.data
+    }
+    if (plot.data.type == "diffusion") {
+      MyTitle = "Diffusion Map Plot"
+      DATA <- x@diffusion.data
     }
   }
   # conditions

@@ -13,6 +13,13 @@ down.sample <- function (x = NULL) {
     stop("x should be an object of class iCellR")
   }
   DATA <- x@main.data
+  ###
+  Cells <- colnames(x@main.data)
+  MYConds <- as.character((unique(data.frame(do.call('rbind', strsplit(as.character(Cells),'_',fixed=TRUE)))[1]))$X1)
+  if (length(MYConds) == 1) {
+    stop("You need more then one condition/sample to run this function")
+  }
+  ###
   CellIds <- colnames(DATA)
   My.Conds.data <- data.frame(do.call('rbind', strsplit(as.character(CellIds),'_',fixed=TRUE)))
   My.Conds.data <- cbind(My.Conds.data,CellIds)
