@@ -4,7 +4,7 @@
 \alias{clust.cond.info}
 \title{Calculate cluster and conditions frequencies}
 \usage{
-clust.cond.info(x = NULL, plot.type = "pie")
+clust.cond.info(x = NULL, plot.type = "pie", normalize.ncell = TRUE)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

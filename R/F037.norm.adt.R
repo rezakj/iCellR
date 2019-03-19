@@ -13,7 +13,13 @@ norm.adt <- function (x = NULL) {
     stop("x should be an object of class iCellR")
   }
   DATA <- x@adt.raw
-  DATA <- log2(DATA + 1)
+  DATA <- as.data.frame(t(DATA))
+  libSiz <- colSums(DATA)
+  norm.facts <- as.numeric(libSiz) / mean(as.numeric(libSiz))
+  dataMat <- as.matrix(DATA)
+  normalized <- as.data.frame(sweep(dataMat, 2, norm.facts, `/`))
+  normalized <- as.data.frame(t(normalized))
+#  DATA <- log2(DATA + 1)
   attributes(x)$adt.main <- DATA
   return(x)
 }

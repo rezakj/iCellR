@@ -10,21 +10,42 @@
 #' clust.cond.info(my.obj, plot.type = "bar")
 #' }
 #' @export
-clust.cond.info <- function (x = NULL, plot.type = "pie" ) {
+clust.cond.info <- function (x = NULL, plot.type = "pie", normalize.ncell = TRUE) {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
   ###################
-  if (my.obj@data.conditions == "Data conditions: no conditions/single sample") {
-    stop("This function only runs when there are conditions/more than one sample")
+  Cells <- colnames(x@main.data)
+  MYConds <- as.character((unique(data.frame(do.call('rbind', strsplit(as.character(Cells),'_',fixed=TRUE)))[1]))$X1)
+  if (length(MYConds) == 1) {
+    stop("You need more then one condition/sample to run this function")
   }
   ###################
   DATA <- (x@best.clust)
   Conds <- (as.data.frame(do.call("rbind", strsplit(row.names(DATA), "_")))[1])
+  ForNorm1 <- as.data.frame(table(Conds))
+  ForNorm <- min(ForNorm1$Freq)
   clusts <- (as.data.frame(DATA$clusters))
   cond.clust <- cbind(Conds, clusts)
   colnames(cond.clust) <- c("conditions","clusters")
+  Conds <- as.character(ForNorm1$Conds)
+  My.Conds.data <- cond.clust
+  for (i in Conds) {
+    NameCol <- paste("My_Cond",i,sep="_")
+    myDATA <- head(subset(My.Conds.data, My.Conds.data$conditions == i),ForNorm)
+    eval(call("<-", as.name(NameCol), myDATA))
+  }
+  filenames <- ls(pattern="My_Cond_")
+  datalist <- mget(filenames)
+  NormDATA <- do.call(rbind.data.frame,datalist)
+  if (normalize.ncell == T) {
+    cond.clust <- NormDATA
+  }
   DATA <- as.data.frame(table(cond.clust))
+  Freq <- DATA$Freq
+  if (normalize.ncell == T) {
+    colnames(DATA) <- c("conditions","clusters","NormalizedFreq")
+  }
 # as.data.frame(table(Conds))
   # bar
   myBP <- ggplot(DATA,aes(y=Freq, x=clusters, fill = conditions)) +
