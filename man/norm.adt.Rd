@@ -19,7 +19,7 @@ This function takes data frame and Normalizes ADT data.
 }
 \examples{
 \dontrun{
-my.obj <- make.obj(my.obj)
+my.obj <- norm.adt(my.obj)
 }
 
 }

@@ -6,7 +6,7 @@
 #' @return An object of class iCellR.
 #' @examples
 #' \dontrun{
-#' clust.cond.info(my.obj, plot.type = "pie")
+#' clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE)
 #' clust.cond.info(my.obj, plot.type = "bar")
 #' }
 #' @export
