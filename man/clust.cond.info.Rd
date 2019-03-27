@@ -19,7 +19,7 @@ This function takes an object of class iCellR and calculates cluster and conditi
 }
 \examples{
 \dontrun{
-clust.cond.info(my.obj, plot.type = "pie")
+clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE)
 clust.cond.info(my.obj, plot.type = "bar")
 }
 }

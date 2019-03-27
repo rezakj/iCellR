@@ -4,7 +4,7 @@
 #' @return An object of class iCellR
 #' @examples
 #' \dontrun{
-#' my.obj <- make.obj(my.obj)
+#' my.obj <- norm.adt(my.obj)
 #' }
 #'
 #' @export
