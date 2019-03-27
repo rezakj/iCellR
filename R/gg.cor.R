@@ -14,8 +14,6 @@ gg.cor <- function (x = NULL,
                     gene2 = NULL,
                     conds = NULL,
                     cell.size = 1,
-                    ab.size = 1,
-                    ab.col = "darkred",
                     cell.transparency = 0.5,
                     interactive = TRUE,
                     out.name = "plot") {
@@ -78,12 +76,14 @@ gg.cor <- function (x = NULL,
   PVal <- paste("P value:", PVal)
   Sub <- paste(PVal, MyCorelation, sep= " | ")
   # plot
-  myPLOT <- ggplot(DATA, aes(x=DATA[,1], y=DATA[,2], text = row.names(DATA), color = conditions)) +
+  myPLOT <- ggplot(DATA, aes(x=log2(DATA[,1] +1 ), y=log2(DATA[,2] + 1), text = row.names(DATA), color = conditions)) +
     geom_point(size = cell.size, alpha = cell.transparency) +
-    xlab(gene1) +
-    ylab(gene2) +
-    geom_abline(color= ab.col, linetype="dashed", size = ab.size) +
+    xlab(paste("log2 expression (", gene1,")", sep="")) +
+    ylab(paste("log2 expression (", gene2,")", sep="")) +
+#    geom_abline(color= ab.col, linetype="dashed", size = ab.size) +
     ggtitle("gene gene correlation", subtitle = Sub) +
+    scale_y_continuous(trans = "log1p") +
+    scale_x_continuous(trans = "log1p") +
     theme_bw()
 ##
   if (interactive == T) {
