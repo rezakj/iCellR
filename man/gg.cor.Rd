@@ -6,8 +6,8 @@
 This function takes data frame and Normalizes ADT data.}
 \usage{
 gg.cor(x = NULL, data.type = "imputed", gene1 = NULL, gene2 = NULL,
-  conds = NULL, cell.size = 1, ab.size = 1, ab.col = "darkred",
-  cell.transparency = 0.5, interactive = TRUE, out.name = "plot")
+  conds = NULL, cell.size = 1, cell.transparency = 0.5,
+  interactive = TRUE, out.name = "plot")
 }
 \arguments{
 \item{x}{An object of class iCellR.}
