@@ -33,11 +33,12 @@ top.markers <- function (x = NULL, topde = 10,
     DATA <- subset(x, x$clusters == i)
     DATA <- subset(DATA, DATA$baseMean >= min.base.mean)
     DATA <- as.character(head(DATA,topde)$gene)
-    DatNmaes=paste("topgenes",i,sep="_")
+    DatNmaes <- paste("mytopgenes", i, sep = "_")
     eval(call("<-", as.name(DatNmaes), DATA))
   }
   # cat them
-  filenames <- ls(pattern="topgenes_")
+  filenames <- ls(pattern="mytopgenes_")
+  filenames <- filenames[order(nchar(filenames), filenames)]
   datalist <- mget(filenames)
   topGenes <- as.character(do.call("c", datalist))
   }

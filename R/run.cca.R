@@ -34,7 +34,7 @@ run.cca <- function (x = NULL,
   if (length(Conds) == 1) {
     stop("You need more then one condition/sample to run this function")
   }
-  if (length(Conds) > 1) {
+## get data
     Patt <- paste(Conds[1], "_",sep="")
     FistCond = grep(Patt, Cells, value = T)
     DATA1 <- DATA[ , which(names(DATA) %in% FistCond)]
@@ -79,7 +79,6 @@ run.cca <- function (x = NULL,
                                      dims.align = dims.align)
     # Get CCA
     ToCCA <- as.data.frame(combined@dr$cca.aligned@cell.embeddings)
-  }
   # object
   attributes(x)$cca.data <- ToCCA
   return(x)
