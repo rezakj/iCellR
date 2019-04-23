@@ -36,9 +36,9 @@ Imports: Matrix, Rtsne, gridExtra, ggpubr, scatterplot3d, RColorBrewer,
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 VignetteBuilder: knitr
 URL: https://github.com/rezakj/iCellR
 Suggests: rmarkdown, Rmagic, phateR
 NeedsCompilation: no
-Packaged: 2019-03-27 19:19:37 UTC; khodaa01
+Packaged: 2019-04-23 18:43:25 UTC; khodaa01
