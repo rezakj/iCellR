@@ -77,6 +77,8 @@ gene.plot <- function (x = NULL,
                        box.to.test = 0,
                        box.pval = "sig.signs",
                        plot.data.type = "tsne",
+                       min.scale = -1,
+                       max.scale = 1,
                        clust.dim = 2,
                        col.by = "clusters",
                        plot.type = "scatterplot",
@@ -177,25 +179,33 @@ gene.plot <- function (x = NULL,
 #### make heamap
   col.legend = log2(data.expr + 1)
   col.legend <- as.numeric(as.matrix(col.legend))
+# fix scale
+  FixScale <- function (mydata, min, max){
+    Mydat <- mydata
+    Mydat[Mydat > max] <- max
+    Mydat[Mydat < min] <- min
+    return(Mydat)
+  }
+  col.legend <- FixScale(mydata = col.legend, min = min.scale, max = max.scale)
 # fix color for ADTs
-      if ( length(grep("^ADT_", gene, value = T)) == 1) {
-        Lo3=(quantile(col.legend,0.05)) # 1
-        Lo2=(quantile(col.legend,0.10)) # 2
-        Lo1=(quantile(col.legend,0.25)) # 3
-        MID=(quantile(col.legend,0.50)) # 4
-        Up1=(quantile(col.legend,0.75)) # 5
-        Up2=(quantile(col.legend,0.90)) # 6
-        Up3=(quantile(col.legend,0.95)) # 7
-        col.legend <- replace(col.legend, col.legend > Up3, Up3)
-        col.legend <- replace(col.legend, col.legend > Up2 & col.legend < Up3 ,Up2)
-        col.legend <- replace(col.legend, col.legend > Up1 & col.legend < Up2 ,Up1)
-        col.legend <- replace(col.legend, col.legend > MID & col.legend < Up1 ,MID)
-        col.legend <- replace(col.legend, col.legend > Lo1 & col.legend < MID ,Lo1)
-        col.legend <- replace(col.legend, col.legend < Lo2 ,Lo1)
-      }
-      if ( length(grep("^ADT_", gene, value = T)) == 0) {
-        col.legend = col.legend
-      }
+#      if ( length(grep("^ADT_", gene, value = T)) == 1) {
+#        Lo3=(quantile(col.legend,0.05)) # 1
+#        Lo2=(quantile(col.legend,0.10)) # 2
+#        Lo1=(quantile(col.legend,0.25)) # 3
+#        MID=(quantile(col.legend,0.50)) # 4
+#        Up1=(quantile(col.legend,0.75)) # 5
+#        Up2=(quantile(col.legend,0.90)) # 6
+#        Up3=(quantile(col.legend,0.95)) # 7
+#        col.legend <- replace(col.legend, col.legend > Up3, Up3)
+#        col.legend <- replace(col.legend, col.legend > Up2 & col.legend < Up3 ,Up2)
+#        col.legend <- replace(col.legend, col.legend > Up1 & col.legend < Up2 ,Up1)
+#        col.legend <- replace(col.legend, col.legend > MID & col.legend < Up1 ,MID)
+#        col.legend <- replace(col.legend, col.legend > Lo1 & col.legend < MID ,Lo1)
+#        col.legend <- replace(col.legend, col.legend < Lo2 ,Lo1)
+#      }
+#      if ( length(grep("^ADT_", gene, value = T)) == 0) {
+#        col.legend = col.legend
+#      }
 ###
   if (plot.type == "scatterplot") {
   # plot 2d

@@ -6,11 +6,11 @@
 \usage{
 gene.plot(x = NULL, gene = "NULL", data.type = "main",
   box.to.test = 0, box.pval = "sig.signs", plot.data.type = "tsne",
-  clust.dim = 2, col.by = "clusters", plot.type = "scatterplot",
-  cell.size = 1, cell.colors = c("gray", "red"),
-  box.cell.col = "black", box.color = "red", box.line.col = "green",
-  back.col = "white", cell.transparency = 0.5, interactive = TRUE,
-  out.name = "plot")
+  min.scale = -1, max.scale = 1, clust.dim = 2,
+  col.by = "clusters", plot.type = "scatterplot", cell.size = 1,
+  cell.colors = c("gray", "red"), box.cell.col = "black",
+  box.color = "red", box.line.col = "green", back.col = "white",
+  cell.transparency = 0.5, interactive = TRUE, out.name = "plot")
 }
 \arguments{
 \item{x}{An object of class iCellR.}

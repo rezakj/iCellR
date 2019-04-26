@@ -19,6 +19,9 @@ add.adt <- function (x = NULL, adt.data = "data.frame") {
   }
   # Add ADT to gene names
   row.names(adt.data) <- paste("ADT", row.names(adt.data), sep = "_")
+  row.names(adt.data) <- gsub("-",".",row.names(adt.data))
+  row.names(adt.data) <- gsub("/","_or_",row.names(adt.data))
+  row.names(adt.data) <- gsub(" ","_",row.names(adt.data))
   #
   attributes(x)$adt.raw <- adt.data
   return(x)

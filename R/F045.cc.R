@@ -14,6 +14,19 @@ cc <- function (object = NULL, s.genes = s.phase, g2m.genes = g2m.phase) {
   if ("iCellR" != class(object)[1]) {
     stop("object should be an object of class iCellR")
   }
+  ##### get genes case insensetive
+  ALLgenes = row.names(object@raw.data)
+  s.phase.genes <- s.genes
+  s.phase.genes <- paste("^",s.phase.genes,"$", sep="")
+  s.phase.genes <- paste(s.phase.genes,collapse="|")
+  s.phase.genes <- grep(s.phase.genes, x = ALLgenes, value = T, ignore.case = TRUE)
+  s.genes <- s.phase.genes
+  #
+  g2m.phase.genes <- g2m.genes
+  g2m.phase.genes <- paste("^",g2m.phase.genes,"$", sep="")
+  g2m.phase.genes <- paste(g2m.phase.genes,collapse="|")
+  g2m.phase.genes <- grep(g2m.phase.genes, x = ALLgenes, value = T, ignore.case = TRUE)
+  g2m.genes <- g2m.phase.genes
   #####
   Table <-  object@stats
   row.names(Table) <- Table$CellIds
