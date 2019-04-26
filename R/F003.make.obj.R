@@ -39,6 +39,7 @@ make.obj <- function (x = NULL) {
 INFO.to.show <- paste(INFO, Data.Dim, My.Conds, Col.n, Row.n, sep="\n")
 INFO.to.show <- capture.output(cat(INFO.to.show))
 # make object
+row.names(x) <- gsub("-",".",row.names(x))
   object <- new(Class = "iCellR", obj.info = INFO.to.show, raw.data = x, data.conditions = My.Conds)
 # return
   return(object)
