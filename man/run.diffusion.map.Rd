@@ -2,7 +2,7 @@
 % Please edit documentation in R/F019.run.diffusion.map.R
 \name{run.diffusion.map}
 \alias{run.diffusion.map}
-\title{Run PHATE on PCA data (PHATE - Potential of Heat-Diffusion for Affinity-Based Transition Embedding)}
+\title{Run diffusion map on PCA data (PHATE - Potential of Heat-Diffusion for Affinity-Based Transition Embedding)}
 \usage{
 run.diffusion.map(x = NULL, dims = 1:10, method = "phate",
   ndim = 3, k = 5, alpha = 40, n.landmark = 2000, gamma = 1,
@@ -72,7 +72,7 @@ run.diffusion.map(x = NULL, dims = 1:10, method = "phate",
 An object of class iCellR.
 }
 \description{
-This function takes an object of class iCellR and runs PHATE on PCA data.
+This function takes an object of class iCellR and runs diffusion map on PCA data.
 }
 \examples{
 \dontrun{

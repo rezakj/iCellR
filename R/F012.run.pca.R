@@ -2,10 +2,11 @@
 #'
 #' This function takes an object of class iCellR and runs PCA on the main data.
 #' @param x An object of class iCellR.
-#' @param clust.method Choose from "base.mean.rank" or "gene.model", default is "base.mean.rank".
+#' @param method Choose from "base.mean.rank" or "gene.model", default is "base.mean.rank". If gene.model is chosen you need to provide gene.list.
 #' @param top.rank A number taking the top genes ranked by base mean, default = 500.
 #' @param plus.log.value A number to add to each value in the matrix before log transformasion to aviond Inf numbers, default = 0.1.
-#' @param gene.list A list of genes to be used for PCA. If "clust.method" is set to "gene.model", default = "my_model_genes.txt".
+#' @param gene.list A charactor vector of genes to be used for PCA. If "clust.method" is set to "gene.model", default = "my_model_genes.txt".
+#' @param batch.norm If TRUE the data will be normalized based on the genes in gene.list or top ranked genes.
 #' @return An object of class iCellR.
 #' @examples
 #' \dontrun{
@@ -14,7 +15,7 @@
 #' @export
 run.pca <- function (x = NULL,
                           data.type = "main",
-                          clust.method = "base.mean.rank",
+                          method = "base.mean.rank",
                           top.rank = 500,
                           plus.log.value = 0.1,
                           batch.norm = F,
@@ -31,7 +32,7 @@ run.pca <- function (x = NULL,
     DATA <- x@imputed.data
   }
   # model base mean rank
-  if (clust.method == "base.mean.rank") {
+  if (method == "base.mean.rank") {
     raw.data.order <- DATA[ order(rowMeans(DATA), decreasing = T), ]
     topGenes <- head(raw.data.order,top.rank)
     TopNormLogScale <- log(topGenes + plus.log.value)
@@ -40,7 +41,7 @@ run.pca <- function (x = NULL,
 #    TopNormLogScale <- as.data.frame(t(scale(TopNormLogScale)))
   }
   # gene model
-  if (clust.method == "gene.model") {
+  if (method == "gene.model") {
     if (gene.list[1] == "character") {
       stop("please provide gene names for clustering")
     } else {

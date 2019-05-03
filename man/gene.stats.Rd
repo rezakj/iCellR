@@ -10,6 +10,8 @@ gene.stats(x = NULL, which.data = "raw.data", each.cond = F)
 \item{x}{An object of class iCellR.}
 
 \item{which.data}{Choose from "raw.data" or "main.data", default = "raw.data".}
+
+\item{each.cond}{If TRUE each condition will be calculated, default = F.}
 }
 \value{
 An object of class iCellR.

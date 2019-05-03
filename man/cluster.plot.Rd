@@ -23,6 +23,8 @@ cluster.plot(x = NULL, cell.size = 1, plot.type = "tsne",
 
 \item{col.by}{Choose between "clusters", "conditions", "cc" (cell cycle) or "monochrome", default = "clusters".}
 
+\item{cond.shape}{If TRUE the conditions will be shown in shapes.}
+
 \item{cell.transparency}{A numeric value between 0 to 1, default = 0.5.}
 
 \item{clust.dim}{A numeric value for plot dimensions. Choose either 2 or 3, default = 2.}
@@ -32,6 +34,8 @@ cluster.plot(x = NULL, cell.size = 1, plot.type = "tsne",
 \item{density}{If TRUE the density plots for PCA/tSNE second dimension will be created, default = FALSE.}
 
 \item{interactive}{If TRUE an html interactive file will be made, default = TRUE.}
+
+\item{static3D}{If TRUE a non-interactive 3D plot will be made.}
 
 \item{out.name}{Output name for html file if interactive = TRUE, default = "plot".}
 }

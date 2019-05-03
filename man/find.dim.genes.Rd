@@ -2,7 +2,7 @@
 % Please edit documentation in R/F014.find.dim.genes.R
 \name{find.dim.genes}
 \alias{find.dim.genes}
-\title{Find best model genes from PCA data}
+\title{Find model genes from PCA data}
 \usage{
 find.dim.genes(x = NULL, dims = 1:10, top.pos = 15, top.neg = 5)
 }
@@ -19,7 +19,7 @@ find.dim.genes(x = NULL, dims = 1:10, top.pos = 15, top.neg = 5)
 An object of class iCellR.
 }
 \description{
-This function takes an object of class iCellR finds the best model genes to run a second round of PCA..
+This function takes an object of class iCellR finds the model genes to run a second round of PCA.
 }
 \examples{
 \dontrun{

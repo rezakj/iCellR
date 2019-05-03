@@ -2,7 +2,7 @@
 % Please edit documentation in R/F045.cc.R
 \name{cc}
 \alias{cc}
-\title{Calculate Cell cycle phases}
+\title{Calculate Cell cycle phase prediction}
 \usage{
 cc(object = NULL, s.genes = s.phase, g2m.genes = g2m.phase)
 }

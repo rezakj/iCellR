@@ -57,7 +57,9 @@ To run a test sample follow these steps:
 
 ```r
 library("iCellR")
-my.data <- load10x("filtered_gene_bc_matrices/hg19/",gene.name = "geneSymbol")
+my.data <- load10x("filtered_gene_bc_matrices/hg19/")
+
+# This directory includes; barcodes.tsv, genes.tsv/features.tsv and matrix.mtx files (data could be zipped or unzipped).
 ```
 
 To see the help page for each function use question mark as: 
@@ -105,11 +107,19 @@ head(my.data)[1:2]
 ```r
 my.obj <- make.obj(my.data)
 my.obj
-#[1] "An object of class iCellR version: 0.99.0"                                     
-#[2] "Raw/original data dimentions (rows,columns): 32738,2700"                       
-#[3] "Data conditions in raw data: Ctrl,KO,WT (900,900,900)"                         
-#[4] "Columns names: WT_AAACATACAACCAC.1,WT_AAACATTGAGCTAC.1,WT_AAACATTGATCAGC.1 ..."
-#[5] "Row names: A1BG,A1BG.AS1,A1CF ..."   
+################################### 
+,--. ,-----.       ,--.,--.,------.  
+`--''  .--./ ,---. |  ||  ||  .--. '  
+,--.|  |    | .-. :|  ||  ||  '--'.'  
+|  |'  '--'\   --. |  ||  ||  |    
+`--' `-----' `----'`--'`--'`--' '--'  
+################################### 
+An object of class iCellR version: 0.99.0 
+    Raw/original data dimentions (rows,columns): 32738,2700 
+    Data conditions in raw data: Ctrl,KO,WT (900,900,900) 
+    Row names: A1BG,A1BG.AS1,A1CF ... 
+    Columns names: WT_AAACATACAACCAC.1,WT_AAACATTGAGCTAC.1,WT_AAACATTGATCAGC.1 ... 
+###################################   
 ```
 
 - Perform some QC 
@@ -318,7 +328,7 @@ To view an the html intractive plot click on this links: [Dispersion plot](https
 
 ```r
 my.obj <- run.pca(my.obj, 
-                  clust.method = "gene.model", 
+                  method = "gene.model", 
                   gene.list = readLines("my_model_genes.txt"), 
                   batch.norm = F)
 
@@ -352,10 +362,11 @@ We recomand to use the defult options as below:
 
 ```r
 my.obj <- run.clustering(my.obj, 
-	clust.method = "ward.D",
+	clust.method = "ward.D", 
 	dist.method = "euclidean",
 	index.method = "kl",
 	max.clust = 25,
+	min.clust = 2,
 	dims = 1:10)
 	
 # If you want to manually set the number of clusters, and not used the predicted optimal number, set the minimum and maximum to the number you want:
@@ -665,16 +676,18 @@ gene.plot(my.obj, gene = "MS4A1",
 ```r
 genelist = c("PPBP","LYZ","MS4A1","GNLY","LTB","NKG7","IFITM2","CD14","S100A9")
 ###
-library(gridExtra)
 for(i in genelist){
 	MyPlot <- gene.plot(my.obj, gene = i, 
-		plot.type = "scatterplot",
 		interactive = F,
-		out.name = "Cebpb_scatter_plot")
-	eval(call("<-", as.name(i), MyPlot))
+		plot.data.type = "umap",
+		cell.transparency = 1)
+	NameCol=paste("PL",i,sep="_")
+	eval(call("<-", as.name(NameCol), MyPlot))
 }
-### plot 
-grid.arrange(PPBP,LYZ,MS4A1,GNLY,LTB,NKG7,IFITM2,CD14,S100A9)
+###
+library(cowplot)
+filenames <- ls(pattern="PL_")
+plot_grid(plotlist=mget(filenames[1:9]))
 ```
 
 <p align="center">

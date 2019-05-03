@@ -4,18 +4,21 @@
 \alias{gene.plot}
 \title{Make scatter, box and bar plots for genes}
 \usage{
-gene.plot(x = NULL, gene = "NULL", data.type = "main",
-  box.to.test = 0, box.pval = "sig.signs", plot.data.type = "tsne",
-  min.scale = -1, max.scale = 1, clust.dim = 2,
-  col.by = "clusters", plot.type = "scatterplot", cell.size = 1,
-  cell.colors = c("gray", "red"), box.cell.col = "black",
-  box.color = "red", box.line.col = "green", back.col = "white",
-  cell.transparency = 0.5, interactive = TRUE, out.name = "plot")
+gene.plot(x = NULL, gene = "NULL", cond.shape = F,
+  data.type = "main", box.to.test = 0, box.pval = "sig.signs",
+  plot.data.type = "tsne", min.scale = -1, max.scale = 1,
+  clust.dim = 2, col.by = "clusters", plot.type = "scatterplot",
+  cell.size = 1, cell.colors = c("gray", "red"),
+  box.cell.col = "black", box.color = "red", box.line.col = "green",
+  back.col = "white", cell.transparency = 0.5, interactive = TRUE,
+  out.name = "plot")
 }
 \arguments{
 \item{x}{An object of class iCellR.}
 
 \item{gene}{A gene name to be plotted.}
+
+\item{cond.shape}{If TRUE the conditions will be shown in shapes.}
 
 \item{box.to.test}{A cluster number so that all the boxes in the box plot would be compared to. If set to "0" the cluster with the highest avrage would be choosen, default = 0.}
 

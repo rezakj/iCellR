@@ -4,12 +4,12 @@
 \alias{load10x}
 \title{Load 10X data as data.frame}
 \usage{
-load10x(dir.10x = NULL, gene.name = "geneSymbol")
+load10x(dir.10x = NULL, gene.name = 2)
 }
 \arguments{
 \item{dir.10x}{A directory that includes the 10X barcodes.tsv, genes.tsv and matrix.mtx files.}
 
-\item{gene.name}{Should be either geneSymbol or ensembleID.}
+\item{gene.name.column}{Gene names or ids column number, default = 2.}
 }
 \value{
 The data frame object

@@ -1,6 +1,6 @@
-#' Run PHATE on PCA data (PHATE - Potential of Heat-Diffusion for Affinity-Based Transition Embedding)
+#' Run diffusion map on PCA data (PHATE - Potential of Heat-Diffusion for Affinity-Based Transition Embedding)
 #'
-#' This function takes an object of class iCellR and runs PHATE on PCA data.
+#' This function takes an object of class iCellR and runs diffusion map on PCA data.
 #' @param x An object of class iCellR.
 #' @param dims PC dimentions to be used for UMAP analysis.
 #' @param ndim int, optional, default: 2 number of dimensions in which the data will be embedded

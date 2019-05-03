@@ -1,4 +1,4 @@
-#' Calculate Cell cycle phases
+#' Calculate Cell cycle phase prediction
 #'
 #' This function takes an object of class iCellR and assignes cell cycle stage for the cells.
 #' @param object A data frame containing gene counts for cells.

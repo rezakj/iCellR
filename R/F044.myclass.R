@@ -29,5 +29,18 @@ setClass("iCellR", representation (raw.data = "data.frame",
 setMethod("show",
           "iCellR",
           function(object){
-            show(object@obj.info)
+            cat("###################################","\n")
+            cat(",--. ,-----.       ,--.,--.,------. ","\n")
+            cat("`--''  .--./ ,---. |  ||  ||  .--. ' ","\n")
+            cat(",--.|  |    | .-. :|  ||  ||  '--'.' ","\n")
+            cat("|  |'  '--'\\   --. |  ||  ||  |\  \ ","\n")
+            cat("`--' `-----' `----'`--'`--'`--' '--' ","\n")
+            cat("###################################","\n")
+            cat(object@obj.info[1],"\n")
+            cat("   ",object@obj.info[2],"\n")
+            cat("   ",object@obj.info[3],"\n")
+            cat("   ",object@obj.info[4],"\n")
+            cat("   ",object@obj.info[5],"\n")
+            cat("###################################","\n")
+            #show(object@obj.info)
           })

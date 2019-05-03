@@ -7,12 +7,14 @@
 #' @param cell.color Choose cell color if col.by = "monochrome", default = "black".
 #' @param back.col Choose background color, default = "black".
 #' @param col.by Choose between "clusters", "conditions", "cc" (cell cycle) or "monochrome", default = "clusters".
+#' @param cond.shape If TRUE the conditions will be shown in shapes.
 #' @param cell.transparency A numeric value between 0 to 1, default = 0.5.
 #' @param clust.dim A numeric value for plot dimensions. Choose either 2 or 3, default = 2.
 #' @param interactive If TRUE an html interactive file will be made, default = TRUE.
 #' @param out.name Output name for html file if interactive = TRUE, default = "plot".
 #' @param angle A number to rotate the non-interactive 3D plot.
 #' @param density If TRUE the density plots for PCA/tSNE second dimension will be created, default = FALSE.
+#' @param static3D If TRUE a non-interactive 3D plot will be made.
 #' @return An object of class iCellR.
 #' @examples
 #' \dontrun{
