@@ -354,9 +354,9 @@ We recomand to use the defult options as below:
 
 ```r
 my.obj <- run.clustering(my.obj, 
-	clust.method = "ward.D",
+	clust.method = "kmeans", 
 	dist.method = "euclidean",
-	index.method = "kl",
+	index.method = "silhouette",
 	max.clust = 25,
 	dims = 1:10)
 	
@@ -371,9 +371,9 @@ my.obj <- run.clustering(my.obj,
 
 # more examples 
 #my.obj <- run.clustering(my.obj, 
-#	clust.method = "kmeans", 
+#	clust.method = "ward.D",
 #	dist.method = "euclidean",
-#	index.method = "silhouette",
+#	index.method = "kl",
 #	max.clust = 25,
 #	dims = 1:10)
 
