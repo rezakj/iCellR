@@ -57,7 +57,9 @@ To run a test sample follow these steps:
 
 ```r
 library("iCellR")
-my.data <- load10x("filtered_gene_bc_matrices/hg19/",gene.name = "geneSymbol")
+my.data <- load10x("filtered_gene_bc_matrices/hg19/")
+
+# This directory includes; barcodes.tsv, genes.tsv/features.tsv and matrix.mtx files (data could be zipped or unzipped).
 ```
 
 To see the help page for each function use question mark as: 
@@ -318,7 +320,7 @@ To view an the html intractive plot click on this links: [Dispersion plot](https
 
 ```r
 my.obj <- run.pca(my.obj, 
-                  clust.method = "gene.model", 
+                  method = "gene.model", 
                   gene.list = readLines("my_model_genes.txt"), 
                   batch.norm = F)
 
