@@ -1,7 +1,7 @@
 # iCellR
 iCellR is an interactive R package to works with high-throughput single cell sequencing technologies (i.e scRNA-seq, scVDJ-seq and CITE-seq).
 
-We hope to have an official release with stable functions and complete documentation soon!
+Link to manual: [Manual](https://github.com/rezakj/iCellR/blob/master/vignettes/iCellR.pdf)
 
 For citation please use this link (our manuscript is in preparation): https://github.com/rezakj/iCellR
 
