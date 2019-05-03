@@ -668,16 +668,18 @@ gene.plot(my.obj, gene = "MS4A1",
 ```r
 genelist = c("PPBP","LYZ","MS4A1","GNLY","LTB","NKG7","IFITM2","CD14","S100A9")
 ###
-library(gridExtra)
 for(i in genelist){
 	MyPlot <- gene.plot(my.obj, gene = i, 
-		plot.type = "scatterplot",
 		interactive = F,
-		out.name = "Cebpb_scatter_plot")
-	eval(call("<-", as.name(i), MyPlot))
+		plot.data.type = "umap",
+		cell.transparency = 1)
+	NameCol=paste("PL",i,sep="_")
+	eval(call("<-", as.name(NameCol), MyPlot))
 }
-### plot 
-grid.arrange(PPBP,LYZ,MS4A1,GNLY,LTB,NKG7,IFITM2,CD14,S100A9)
+###
+library(cowplot)
+filenames <- ls(pattern="PL_")
+plot_grid(plotlist=mget(filenames[1:9]))
 ```
 
 <p align="center">
