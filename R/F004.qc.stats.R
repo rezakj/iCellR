@@ -1,7 +1,11 @@
-#' Calculate the number of UMIs and genes per cell and percentage of mitochondrial genes per cell.
+#' Calculate the number of UMIs and genes per cell and percentage of mitochondrial genes per cell and cell cycle genes.
 #'
-#' This function takes data frame and calculates the number of UMIs, genes per cell and percentage of mitochondrial genes per cell.
+#' This function takes data frame and calculates the number of UMIs, genes per cell and percentage of mitochondrial genes per cell and cell cycle genes.
 #' @param x A data frame containing gene counts for cells.
+#' @param which.data Choose from raw data or main data, default = "raw.data".
+#' @param mito.genes A character vector of mitochondrial  genes names , default is the genes starting with mt.
+#' @param s.phase.genes A character vector of gene names for S phase, default = s.phase.
+#' @param g2m.phase.genes A character vector of gene names for G2 and M phase, default = g2m.phase.
 #' @return The data frame object
 #' @examples
 #' \dontrun{
@@ -10,7 +14,7 @@
 #' @export
 qc.stats <- function (x = NULL,
                       which.data = "raw.data",
-                      mito.genes = "defult",
+                      mito.genes = "default",
                       s.phase.genes = s.phase,
                       g2m.phase.genes = g2m.phase) {
   if ("iCellR" != class(x)[1]) {
@@ -28,13 +32,13 @@ qc.stats <- function (x = NULL,
   # get nGENEs
   nGenes <- sapply(DATA, function(DATA) length(as.numeric(subset(DATA, DATA != 0))))
   # get mito gene names
-  if (mito.genes == "defult") {
+  if (mito.genes == "default") {
     mito.genes <- grep(pattern = "^mt\\-", x = rownames(DATA), value = TRUE, ignore.case = TRUE)
     if ( length(mito.genes) == 0 ) {
       mito.genes <- grep(pattern = "^mt\\.", x = rownames(DATA), value = TRUE, ignore.case = TRUE)
     }
   }
-  if (mito.genes[1] != "defult") {
+  if (mito.genes[1] != "default") {
     mito.genes = mito.genes
   }
   # get mito percent

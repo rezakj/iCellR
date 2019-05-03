@@ -8,6 +8,7 @@
 #' @param plot.data.type Choose from "tsne" and "pca", default = "tsne".
 #' @param clust.dim 2 for 2D plots and 3 for 3D plots, default = 2.
 #' @param col.by Choose from "clusters" and "conditions", default = "clusters".
+#' @param cond.shape If TRUE the conditions will be shown in shapes.
 #' @param plot.type Choose from "scatterplot", "boxplot" and "barplot", default = "scatterplot".
 #' @param cell.size A number for the size of the points in the plot, default = 1.
 #' @param cell.colors Colors for heat mapping the points in "scatterplot", default = c("gray","red").
@@ -73,6 +74,7 @@
 #' @export
 gene.plot <- function (x = NULL,
                        gene = "NULL",
+                       cond.shape = F,
                        data.type = "main",
                        box.to.test = 0,
                        box.pval = "sig.signs",
@@ -186,7 +188,7 @@ gene.plot <- function (x = NULL,
     Mydat[Mydat < min] <- min
     return(Mydat)
   }
-  col.legend <- FixScale(mydata = col.legend, min = min.scale, max = max.scale)
+  col.legend.scaled <- FixScale(mydata = col.legend, min = min.scale, max = max.scale)
 # fix color for ADTs
 #      if ( length(grep("^ADT_", gene, value = T)) == 1) {
 #        Lo3=(quantile(col.legend,0.05)) # 1
@@ -209,18 +211,33 @@ gene.plot <- function (x = NULL,
 ###
   if (plot.type == "scatterplot") {
   # plot 2d
+    Conditions = col.legend.box
   if (clust.dim == 2) {
     if (interactive == F) {
-      myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
-                                 text = row.names(DATA), color = col.legend)) +
-        geom_point(size = cell.size, alpha = cell.transparency) +
-        scale_colour_gradient(low = cell.colors[1], high = cell.colors[2], name="") +
-        xlab("Dim1") +
-        ylab("Dim2") +
-        ggtitle(paste(MyTitle,"for (",gene,")")) +
-        theme(panel.background = element_rect(fill = back.col, colour = "black"),
-              panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-              legend.key = element_rect(fill = back.col))
+      if (cond.shape == F) {
+        myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
+                                   text = row.names(DATA), color = col.legend.scaled)) +
+          geom_point(size = cell.size, alpha = cell.transparency) +
+          scale_colour_gradient(low = cell.colors[1], high = cell.colors[2], name="") +
+          xlab("Dim1") +
+          ylab("Dim2") +
+          ggtitle(paste(MyTitle,"for (",gene,")")) +
+          theme(panel.background = element_rect(fill = back.col, colour = "black"),
+                panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                legend.key = element_rect(fill = back.col))
+      }
+        if (cond.shape == T) {
+          myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
+                                     text = row.names(DATA), shape = Conditions,color = col.legend.scaled)) +
+            geom_point(size = cell.size, alpha = cell.transparency) +
+            scale_colour_gradient(low = cell.colors[1], high = cell.colors[2], name="") +
+            xlab("Dim1") +
+            ylab("Dim2") +
+            ggtitle(paste(MyTitle,"for (",gene,")")) +
+            theme(panel.background = element_rect(fill = back.col, colour = "black"),
+                  panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                  legend.key = element_rect(fill = back.col))
+        }
     } else {
       myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
                                  text = row.names(DATA), color = col.legend)) +

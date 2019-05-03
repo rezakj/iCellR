@@ -3,6 +3,7 @@
 #' This function takes an object of class iCellR and provides some statistical information for the genes.
 #' @param x An object of class iCellR.
 #' @param which.data Choose from "raw.data" or "main.data", default = "raw.data".
+#' @param each.cond If TRUE each condition will be calculated, default = F.
 #' @return An object of class iCellR.
 #' @examples
 #' \dontrun{

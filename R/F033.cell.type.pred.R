@@ -1,7 +1,7 @@
 #' Create heatmaps or dot plots for genes in clusters to find thier cell types using ImmGen data.
 #'
 #' This function takes an object of class iCellR and genes and provides a heatmap.
-#' @param immgen.data Choose from "rna" od "uli.rna", default = "rna"
+#' @param immgen.data Choose from "rna", "uli.rna" or "mca", default = "rna"
 #' @param gene A set of gene names to used to predict cell type.
 #' @param plot.type Choose from "heatmap" od "point.plot", default = "heatmap"
 #' @param top.cell.types Top cell types sorted by cumulative expression, default = 25.

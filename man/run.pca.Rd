@@ -4,20 +4,22 @@
 \alias{run.pca}
 \title{Run PCA on the main data}
 \usage{
-run.pca(x = NULL, data.type = "main",
-  clust.method = "base.mean.rank", top.rank = 500,
-  plus.log.value = 0.1, batch.norm = F, gene.list = "character")
+run.pca(x = NULL, data.type = "main", method = "base.mean.rank",
+  top.rank = 500, plus.log.value = 0.1, batch.norm = F,
+  gene.list = "character")
 }
 \arguments{
 \item{x}{An object of class iCellR.}
 
-\item{clust.method}{Choose from "base.mean.rank" or "gene.model", default is "base.mean.rank".}
+\item{method}{Choose from "base.mean.rank" or "gene.model", default is "base.mean.rank". If gene.model is chosen you need to provide gene.list.}
 
 \item{top.rank}{A number taking the top genes ranked by base mean, default = 500.}
 
 \item{plus.log.value}{A number to add to each value in the matrix before log transformasion to aviond Inf numbers, default = 0.1.}
 
-\item{gene.list}{A list of genes to be used for PCA. If "clust.method" is set to "gene.model", default = "my_model_genes.txt".}
+\item{batch.norm}{If TRUE the data will be normalized based on the genes in gene.list or top ranked genes.}
+
+\item{gene.list}{A charactor vector of genes to be used for PCA. If "clust.method" is set to "gene.model", default = "my_model_genes.txt".}
 }
 \value{
 An object of class iCellR.

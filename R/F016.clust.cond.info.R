@@ -3,6 +3,7 @@
 #' This function takes an object of class iCellR and calculates cluster and conditions frequencies.
 #' @param x An object of class iCellR.
 #' @param plot.type Choose from pie or bar, defult = pie.
+#' @param normalize.ncell If TRUE the values will be normalized to the number of cells by downsampling.
 #' @return An object of class iCellR.
 #' @examples
 #' \dontrun{

@@ -10,6 +10,8 @@ clust.cond.info(x = NULL, plot.type = "pie", normalize.ncell = TRUE)
 \item{x}{An object of class iCellR.}
 
 \item{plot.type}{Choose from pie or bar, defult = pie.}
+
+\item{normalize.ncell}{If TRUE the values will be normalized to the number of cells by downsampling.}
 }
 \value{
 An object of class iCellR.

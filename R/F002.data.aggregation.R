@@ -33,27 +33,5 @@ if (length(samples) != length(condition.names)) {
   mymrgd <- Reduce(merge, lapply(datalist, function(x) data.frame(x, Row.names = row.names(x))))
   row.names(mymrgd) <- mymrgd$Row.names
   mymrgd <- mymrgd[,-1]
-# mege 2 samples
-#  if (length(samples) == 2) {
-#    mymrgd <- merge(get(samples[1]), get(samples[2]), by="row.names")
-#    row.names(mymrgd) <- mymrgd$Row.names
-#    mymrgd <- mymrgd[,-1]
-#  } else {
-    # mrge more than 2 samples
-#    mrgd <- merge(get(samples[1]), get(samples[2]), by="row.names")
-#    row.names(mrgd) <- mrgd$Row.names
-#    mrgd <- mrgd[,-1]
-#    for(i in 3:length(samples)){
-#      if (i==3) {
-#        data <- mrgd
-#      }
-#      if (i > 3) {
-#        data <- mymrgd
-#      }
-#      mymrgd <- merge(data, get(samples[i]), by="row.names")
-#      row.names(mymrgd) <- mymrgd$Row.names
-#      mymrgd <- mymrgd[,-1]
-#    }
-#  }
       return(mymrgd)
 }

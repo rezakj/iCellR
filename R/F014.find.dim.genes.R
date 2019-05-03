@@ -1,6 +1,6 @@
-#' Find best model genes from PCA data
+#' Find model genes from PCA data
 #'
-#' This function takes an object of class iCellR finds the best model genes to run a second round of PCA..
+#' This function takes an object of class iCellR finds the model genes to run a second round of PCA.
 #' @param x An object of class iCellR.
 #' @param dims PC dimentions to be used.
 #' @param top.pos Number of top positive marker genes to be taken from each PC, default = 15.
