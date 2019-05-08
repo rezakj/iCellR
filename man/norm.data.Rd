@@ -11,7 +11,7 @@ norm.data(x = NULL, norm.method = "ranked.glsf", top.rank = 500,
 \item{x}{An object of class iCellR.}
 
 \item{norm.method}{Choose a normalization method, there are three option currently.
-Choose from "global.glsf", "ranked.glsf", "rpm","spike.in" or no.norm, default = "ranked.glsf".}
+Choose from "global.glsf", "ranked.glsf", "ranked.deseq", "deseq", "rpm","spike.in" or no.norm, default = "ranked.glsf".}
 
 \item{top.rank}{If the method is set to "ranked.glsf", you need to set top number of genes sorted based on global base mean, default = 500.}
 
