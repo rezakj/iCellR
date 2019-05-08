@@ -107,19 +107,33 @@ head(my.data)[1:2]
 ```r
 my.obj <- make.obj(my.data)
 my.obj
-################################### 
-,--. ,-----.       ,--.,--.,------.  
-`--''  .--./ ,---. |  ||  ||  .--. '  
-,--.|  |    | .-. :|  ||  ||  '--'.'  
-|  |'  '--'\   --. |  ||  ||  |    
-`--' `-----' `----'`--'`--'`--' '--'  
-################################### 
-An object of class iCellR version: 0.99.0 
-    Raw/original data dimentions (rows,columns): 32738,2700 
-    Data conditions in raw data: Ctrl,KO,WT (900,900,900) 
-    Row names: A1BG,A1BG.AS1,A1CF ... 
-    Columns names: WT_AAACATACAACCAC.1,WT_AAACATTGAGCTAC.1,WT_AAACATTGATCAGC.1 ... 
-###################################   
+###################################
+,--. ,-----.       ,--.,--.,------.
+`--''  .--./ ,---. |  ||  ||  .--. '
+,--.|  |    | .-. :|  ||  ||  '--'.'
+|  |'  '--'\   --. |  ||  ||  |
+`--' `-----' `----'`--'`--'`--' '--'
+###################################
+An object of class iCellR version: 0.99.0
+    Raw/original data dimentions (rows,columns): 32738,4482
+    Data conditions: no conditions/single sample
+    Row names: MIR1302.10,FAM138A,OR4F5 ...
+    Columns names: AAACCTGAGAATAGGG-1,AAACCTGCATGTCGAT-1,AAACCTGGTGCACCAC-1 ...
+###################################
+   QC stats performed: FALSE , PCA performed: FALSE , CCA performed: FALSE
+   Clustering performed: FALSE , Number of clusters: 0
+   tSNE performed: FALSE , UMAP performed: FALSE , DiffMap performed: FALSE
+   Main data dimentions (rows,columns): 0 0
+   Normalization factors:  ...
+   Imputed data dimentions (rows,columns): 0 0
+############## scVDJ-Seq ###########
+   VDJ data dimentions (rows,columns): 0 0
+############## CITE-Seq ############
+   ADT raw data dimentions (rows,columns): 0 0
+   ADT main data dimentions (rows,columns): 0 0
+   ADT columns names:  ...
+   ADT row names:  ...
+######## iCellR object made ########
 ```
 
 - Perform some QC 
