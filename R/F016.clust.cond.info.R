@@ -21,6 +21,9 @@ clust.cond.info <- function (x = NULL, plot.type = "pie", normalize.ncell = TRUE
   if (length(MYConds) == 1) {
     stop("You need more then one condition/sample to run this function")
   }
+  if (length(MYConds) == 0) {
+    stop("You need more then one condition/sample to run this function")
+  }
   ###################
   DATA <- (x@best.clust)
   Conds <- (as.data.frame(do.call("rbind", strsplit(row.names(DATA), "_")))[1])

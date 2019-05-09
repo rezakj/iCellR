@@ -51,39 +51,39 @@ gg.cor <- function (x = NULL,
   DATA <- subset(DATA, row.names(DATA) %in% genes)
   DATA <- as.data.frame(t(DATA))
 #  head(DATA)
-  ################################### conditions
-    col.legend <- data.frame(do.call('rbind', strsplit(as.character(row.names(DATA)),'_',fixed=TRUE)))[1]
-    colnames(col.legend) <- "conditions"
-####
+##### clusters
+  col.legend <- as.data.frame(x@best.clust)
   DATA <- cbind(DATA, col.legend)
+###### conditions
   ####### Subset 2
   if (is.null(conds)) {
     DATA <- DATA
   } else {
-    DATA <- subset(DATA, DATA[,3] %in% conds)
+    TAKE = grep(conds,row.names(DATA), value = T)
+    DATA <- subset(DATA, row.names(DATA) %in% TAKE)
   }
 ########
-#  LowessLine <- as.data.frame(lowess(DATA[1:2]))
-#  DATA <- cbind(DATA, LowessLine)
-#  X <- DATA$x
-#  Y <- DATA$y
   # cor
   MyCorelation <- as.numeric(cor(DATA[1],DATA[2]))
   MyCorelation <- round(MyCorelation, digits = 3)
   MyCorelation <-paste("correlation value:",MyCorelation)
   # pvalue
   PVal <- cor.test(as.numeric(as.matrix(DATA[1])),as.numeric(as.matrix(DATA[2])))$p.value
+  if(PVal == 0) {
+    PVal = "2.2e-16"
+  }
   PVal <- paste("P value:", PVal)
   Sub <- paste(PVal, MyCorelation, sep= " | ")
   # plot
-  myPLOT <- ggplot(DATA, aes(x=log2(DATA[,1] +1 ), y=log2(DATA[,2] + 1), text = row.names(DATA), color = conditions)) +
+  Clusters <- factor(DATA$clusters)
+  myPLOT <- ggplot(DATA, aes(x=log2(DATA[,1] +1 ), y=log2(DATA[,2] + 1), text = row.names(DATA), color = Clusters)) +
     geom_point(size = cell.size, alpha = cell.transparency) +
     xlab(paste("log2 expression (", gene1,")", sep="")) +
     ylab(paste("log2 expression (", gene2,")", sep="")) +
 #    geom_abline(color= ab.col, linetype="dashed", size = ab.size) +
-    ggtitle("gene gene correlation", subtitle = Sub) +
-    scale_y_continuous(trans = "log1p") +
-    scale_x_continuous(trans = "log1p") +
+    ggtitle("gene gene correlation and cell gating", subtitle = Sub) +
+#    scale_y_continuous(trans = "log1p") +
+#    scale_x_continuous(trans = "log1p") +
     theme_bw()
 ##
   if (interactive == T) {
