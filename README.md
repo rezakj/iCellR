@@ -3,7 +3,7 @@ iCellR is an interactive R package to work with high-throughput single cell sequ
 
 Link to manual: [Manual](https://github.com/rezakj/iCellR/blob/master/vignettes/iCellR.pdf)
 
-Link to a video tutorial for CITE-Seq and scRNA: [Video](https://vimeo.com/337822487)
+Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
 
 For citation please use this link (our manuscript is in preparation): https://github.com/rezakj/iCellR
 
