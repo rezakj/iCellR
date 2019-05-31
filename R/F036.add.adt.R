@@ -24,6 +24,7 @@ add.adt <- function (x = NULL, adt.data = "data.frame") {
   row.names(adt.data) <- gsub(" ","_",row.names(adt.data))
   colnames(adt.data) <- gsub("-",".",colnames(adt.data))
   #
+  adt.data[is.na(adt.data)] <- 0
   attributes(x)$adt.raw <- adt.data
   return(x)
 }

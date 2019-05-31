@@ -11,6 +11,22 @@ gg.cor(x = NULL, data.type = "imputed", gene1 = NULL, gene2 = NULL,
 }
 \arguments{
 \item{x}{An object of class iCellR.}
+
+\item{data.type}{Choose from imputed and main, default = "imputed".}
+
+\item{gene1}{First gene name.}
+
+\item{gene2}{Second gene name.}
+
+\item{conds}{Filter only one condition (only one), default is all conditions.}
+
+\item{cell.size}{A numeric value for the size of the cells, default = 1.}
+
+\item{cell.transparency}{A numeric value between 0 to 1, default = 0.5.}
+
+\item{interactive}{If TRUE an html interactive file will be made, default = TRUE.}
+
+\item{out.name}{Output name for html file if interactive = TRUE, default = "plot".}
 }
 \value{
 An object of class iCellR

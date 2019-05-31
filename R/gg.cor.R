@@ -1,6 +1,14 @@
 #' Normalize ADT data.
 #' This function takes data frame and Normalizes ADT data.
 #' @param x An object of class iCellR.
+#' @param data.type Choose from imputed and main, default = "imputed".
+#' @param gene1 First gene name.
+#' @param gene2 Second gene name.
+#' @param conds Filter only one condition (only one), default is all conditions.
+#' @param cell.size A numeric value for the size of the cells, default = 1.
+#' @param cell.transparency A numeric value between 0 to 1, default = 0.5.
+#' @param interactive If TRUE an html interactive file will be made, default = TRUE.
+#' @param out.name Output name for html file if interactive = TRUE, default = "plot".
 #' @return An object of class iCellR
 #' @examples
 #' \dontrun{

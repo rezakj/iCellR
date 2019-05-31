@@ -79,7 +79,7 @@ gene.plot <- function (x = NULL,
                        box.to.test = 0,
                        box.pval = "sig.signs",
                        plot.data.type = "tsne",
-                       scaleValue = T,
+                       scaleValue = F,
                        min.scale = -2.5,
                        max.scale = 2.5,
                        clust.dim = 2,
@@ -167,8 +167,9 @@ gene.plot <- function (x = NULL,
       stop("Clusters are not assigend yet")
     } else {
       col.legend.box <- x@best.clust
-      col.legend.box$clusters <- sub("^", "cl.",col.legend.box$clusters)
-      col.legend.box <- factor(col.legend.box$clusters)
+      col.legend.box <- factor(x@best.clust$clusters)
+#      col.legend.box$clusters <- sub("^", "cl.",col.legend.box$clusters)
+#      col.legend.box <- factor(col.legend.box$clusters)
     }
   }
 ###### make binary

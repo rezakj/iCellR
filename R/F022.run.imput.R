@@ -36,6 +36,7 @@ run.impute <- function (x = NULL,
   require(phateR)
   # get data
   DATA <- x@main.data
+  DATA <- DATA[ rowSums(DATA) > 0, ]
   DATA <- as.data.frame(t(DATA))
   data_MAGIC <- magic(DATA,
                       genes = genes, k = k, alpha = alpha, t = t,
