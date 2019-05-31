@@ -43,7 +43,7 @@ sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/filtered_g
 
 # download the file
 download.file(url = sample.file.url, 
-     destfile = "pbmc3k_filtered_gene_bc_matrices.tar.gz", 
+     destfile = "filtered_gene_bc_matrices.tar.gz", 
      method = "auto")  
 
 # unzip the file. 
