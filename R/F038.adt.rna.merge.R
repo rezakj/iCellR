@@ -22,9 +22,13 @@ adt.rna.merge <- function (x = NULL, adt.data = "raw") {
   DATA <- as.data.frame(t(x@adt.main))
   }
   ### get RNA data
-  DATArna <- as.data.frame(t(x@main.data))
+  MainData <- x@main.data
+  RmADTs <- grep("^ADT_", row.names(MainData), value = T)
+  MainData <- subset(MainData,! row.names(MainData) %in% RmADTs)
+  DATArna <- as.data.frame(t(MainData))
   ### merge
   merged.data <- merge(DATA, DATArna, by="row.names", all.x=F, all.y=T)
+  merged.data[is.na(merged.data)] <- 0
   rownames(merged.data) <- merged.data$Row.names
   merged.data <- merged.data[,-1]
   merged.data <- as.data.frame(t(merged.data))
