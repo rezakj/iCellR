@@ -178,6 +178,10 @@ head(my.obj@stats)
 pie(table(my.obj@stats$Phase))
 ```
 
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/iCellR_1.png" width="400"/>
+</p>
+
 - Plot QC
 
 By default all the plotting functions would create interactive html files unless you set this parameter: interactive = FALSE.
