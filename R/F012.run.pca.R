@@ -48,8 +48,8 @@ run.pca <- function (x = NULL,
       genesForClustering <- gene.list
       topGenes <- subset(DATA, rownames(DATA) %in% genesForClustering)
       if (batch.norm == F){
-         TopNormLogScale <- log(topGenes + plus.log.value)
-        # TopNormLogScale <- scale(topGenes)
+         TopNormLogScale <- log2(topGenes + plus.log.value)
+         # TopNormLogScale <- scale(topGenes)
       }
       if (batch.norm == T){
         ## new method
@@ -57,14 +57,14 @@ run.pca <- function (x = NULL,
         norm.facts <- as.numeric(libSiz) / mean(as.numeric(libSiz))
         dataMat <- as.matrix(topGenes)
         normalized <- as.data.frame(sweep(dataMat, 2, norm.facts, `/`))
-         TopNormLogScale <- log(normalized + plus.log.value)
+         TopNormLogScale <- log2(normalized + plus.log.value)
         TopNormLogScale <- normalized
       }
     }
   }
 # Returns
   # info
-    counts.pca <- prcomp(TopNormLogScale, center = T, scale. = T)
+    counts.pca <- prcomp(TopNormLogScale, center = F, scale. = F)
     attributes(x)$pca.info <- counts.pca
     # DATA
     dataPCA = data.frame(counts.pca$rotation) # [1:max.dim]

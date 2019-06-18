@@ -6,7 +6,7 @@
 \usage{
 gene.plot(x = NULL, gene = "NULL", cond.shape = F,
   data.type = "main", box.to.test = 0, box.pval = "sig.signs",
-  plot.data.type = "tsne", scaleValue = T, min.scale = -2.5,
+  plot.data.type = "tsne", scaleValue = F, min.scale = -2.5,
   max.scale = 2.5, clust.dim = 2, col.by = "clusters",
   plot.type = "scatterplot", cell.size = 1, cell.colors = c("gray",
   "red"), box.cell.col = "black", box.color = "red",

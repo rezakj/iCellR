@@ -29,8 +29,8 @@ pseudotime <- function (x = NULL, marker.genes = "NULL", dim = 1:10) {
   myUMAP = umap(DATA, method = "umap-learn")
   myUMAP = as.data.frame((myUMAP$layout))
 ### return
-#attributes(x)$pca.data <- myUMAP
-attributes(x)$pca.data <- dataPCA
+attributes(x)$pca.data <- myUMAP
+#attributes(x)$pca.data <- dataPCA
 #cluster.plot(my.obj,plot.type = "pca",cell.color = "black",cell.transparency = 1,interactive = F)
 #  attributes(x)$pseudo.mapA <- dataPCA
 #  attributes(x)$pseudo.mapB <- myUMAP
