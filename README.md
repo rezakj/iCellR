@@ -541,6 +541,9 @@ cluster.plot(my.obj,
 my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
 # this requires python packge phate 
 # pip install --user phate
+# Install phateR version 2.9
+# wget https://cran.r-project.org/src/contrib/Archive/phateR/phateR_0.2.9.tar.gz
+# install.packages('phateR/', repos = NULL, type="source")
 
 # plot 
 cluster.plot(my.obj,
