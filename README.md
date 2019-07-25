@@ -368,7 +368,7 @@ To view an the html intractive plot click on this links: [Dispersion plot](https
 </p>
 
 
-- Perform PCA and batch correction 
+- Perform Principal component analysis (PCA)
 
 ```r
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
@@ -432,39 +432,47 @@ my.obj <- run.clustering(my.obj,
 #	dims = 1:10)
 ```
 
-- Perform tSNE
-
-You have two options here. One is to run tSNE on PCs (faster) and the other is to run it based on main data. They both should look similar if they are running in default mode, however, they each can each be very useful in different study designs. For example if you decide to run tSNE on a different gene set to change the spacing of the cells the second option might be useful. 
+- Perform Dimensionality reduction
 
 ```r
 # tSNE
 my.obj <- run.pc.tsne(my.obj, dims = 1:10)
+
+# UMAP
+my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
 # or 
-# my.obj <- run.tsne(my.obj, clust.method = "gene.model", gene.list = readLines("my_model_genes.txt"))
+# my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
+
+# diffusion map
+library(phateR)
+my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
 ```
 
-- Visualize conditions
-
-As we artificially made 3 conditions by randomly dividing the sample into 3. All the conditions should be looking similar.
+- Visualize data
 
 ```r
-# tSNE
-cluster.plot(my.obj,
-	plot.type = "tsne",
-	col.by = "conditions",
-	clust.dim = 2,
-	interactive = F)
-# pca 
-cluster.plot(my.obj,
-	plot.type = "pca",
-	col.by = "conditions",
-	clust.dim = 2,
-	interactive = F)
+# clusters
+A= cluster.plot(my.obj,plot.type = "pca",interactive = F)
+B= cluster.plot(my.obj,plot.type = "umap",interactive = F)
+C= cluster.plot(my.obj,plot.type = "tsne",interactive = F) 
+D= cluster.plot(my.obj,plot.type = "diffusion",interactive = F)
+
+library(gridExtra)
+grid.arrange(A,B,C,D)
+
+# conditions 
+A= cluster.plot(my.obj,plot.type = "pca",col.by = "conditions",interactive = F)
+B= cluster.plot(my.obj,plot.type = "umap",col.by = "conditions",interactive = F)
+C= cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F)
+D= cluster.plot(my.obj,plot.type = "diffusion",col.by = "conditions",interactive = F)
+
+library(gridExtra)
+grid.arrange(A,B,C,D)
 ```
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_conds.png" width="400"/>
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/PCA_conds.png" width="400"/>      
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/1_AllClusts.png"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/2_AllConds.png"/>      
 </p>
 
 - Visualize clusters
