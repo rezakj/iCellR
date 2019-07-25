@@ -24,6 +24,8 @@ stats.plot(x = NULL, plot.type = "box.umi",
 
 \item{box.line.col}{A color for the lines around the "boxplot", default = "green".}
 
+\item{back.col}{Background color, default = "white"}
+
 \item{interactive}{If set to TRUE an interactive HTML file will be created, default = TRUE.}
 
 \item{out.name}{If "interactive" is set to TRUE, the out put name for HTML, default = "plot".}
@@ -35,20 +37,13 @@ An object of class iCellR.
 This function takes an object of class iCellR and creates QC plot.
 }
 \examples{
-\dontrun{
-stats.plot(my.obj,
-          plot.type = "box.gene.umi.mito",
+stats.plot(demo.obj,
+          plot.type = "all.in.one",
           out.name = "UMI-plot",
-          interactive = F,
+          interactive = FALSE,
           cell.color = "slategray3",
           cell.size = 1,
           cell.transparency = 0.5,
           box.color = "red",
-          box.line.col = "green",
-          back.col = "white")
-
-stats.plot(my.obj, plot.type = "point.gene.umi", interactive = T, out.name = "scatter.gene.umi")
-
-stats.plot(my.obj, plot.type = "point.mito.umi", interactive = T, out.name = "scatter.mito.umi")
-}
+          box.line.col = "green")
 }

@@ -6,9 +6,9 @@
 #' @param method Character, implementation. Available methods are 'naive' (an implementation written in pure R) and 'umap-learn' (requires python package 'umap-learn'). Choose from "naive" and "umap-learn", default = "naive".
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' my.obj <- run.umap(my.obj, dims = 1:10)
-#' }
+#' demo.obj <- run.umap(demo.obj, dims = 1:10)
+#' head(demo.obj@umap.data)
+#'
 #' @import umap
 #' @export
 run.umap <- function (x = NULL,

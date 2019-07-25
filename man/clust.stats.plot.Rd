@@ -7,7 +7,7 @@
 clust.stats.plot(x = NULL, plot.type = "box.mito",
   cell.color = "slategray3", cell.size = 1, cell.transparency = 0.5,
   box.color = "red", box.line.col = "green", back.col = "white",
-  notch = F, interactive = TRUE, out.name = "plot")
+  notch = FALSE, interactive = TRUE, out.name = "plot")
 }
 \arguments{
 \item{x}{An object of class iCellR.}
@@ -24,7 +24,9 @@ clust.stats.plot(x = NULL, plot.type = "box.mito",
 
 \item{box.line.col}{A color for the lines around the "boxplot", default = "green".}
 
-\item{notch}{Notch the box plots, default = F.}
+\item{back.col}{Background color, default = "white"}
+
+\item{notch}{Notch the box plots, default = FALSE.}
 
 \item{interactive}{If set to TRUE an interactive HTML file will be created, default = TRUE.}
 
@@ -37,7 +39,8 @@ An object of class iCellR.
 This function takes an object of class iCellR and creates QC plot.
 }
 \examples{
-\dontrun{
-clust.stats.plot(my.obj, plot.type = "box.mito", interactive = F, out.name = "box.mito.clusters")
-}
+clust.stats.plot(demo.obj,
+                   plot.type = "box.mito",
+                   interactive = FALSE,
+                   out.name = "box.mito.clusters")
 }

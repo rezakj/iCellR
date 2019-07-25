@@ -12,28 +12,31 @@
 #' @param cell.size A number for the size of the points in the plot, default = 1.75.
 #' @param no.mito.model If set to TRUE, mitochondrial genes would be excluded from the gene list made for clustering, default = TRUE.
 #' @param mark.mito Mark mitochondrial genes in the plot, default = TRUE.
+#' @param my.out.put Chose from "data" or "plot", default = "data".
+#' @param no.cell.cycle If TRUE the cell cycle genes will be removed (s.phase and g2m.phase), default = TRUE.
 #' @param cell.transparency Color transparency for the points in the plot, default = 0.5.
 #' @param interactive If set to TRUE an interactive HTML file will be created, default = TRUE.
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' make.gene.model(my.obj,
+#' make.gene.model(demo.obj,
 #'                dispersion.limit = 1.5,
 #'                base.mean.rank = 500,
-#'                no.mito.model = T,
-#'                mark.mito = T,
-#'                interactive = T,
+#'                no.mito.model = TRUE,
+#'                mark.mito = TRUE,
+#'                interactive = FALSE,
+#'                my.out.put = "plot",
 #'                out.name = "gene.model")
 #'
-#' make.gene.model(my.obj,
-#'              dispersion.limit = 1.5,
-#'              base.mean.rank = 500,
-#'              no.mito.model = T,
-#'              mark.mito = T,
-#'              interactive = F,
-#'              out.name = "gene.model")
-#' }
+#' demo.obj <- make.gene.model(demo.obj,
+#'                            dispersion.limit = 1.5,
+#'                            base.mean.rank = 500,
+#'                            no.mito.model = TRUE,
+#'                            mark.mito = TRUE,
+#'                            interactive = FALSE,
+#'                            out.name = "gene.model")
+#'
+#' head(demo.obj@gene.model)
 #'
 #' @import ggrepel
 #' @export
@@ -45,11 +48,12 @@ make.gene.model <- function (x = NULL,
                              left.sig.col = "cadetblue3",
                              disp.line.col = "black",
                              rank.line.col = "red",
+                             my.out.put = "data",
                              cell.size = 1.75,
                              cell.transparency = 0.5,
-                             no.mito.model = T,
-                             no.cell.cycle = T,
-                             mark.mito = T,
+                             no.mito.model = TRUE,
+                             no.cell.cycle = TRUE,
+                             mark.mito = TRUE,
                              interactive = TRUE,
                              out.name = "plot") {
   if ("iCellR" != class(x)[1]) {
@@ -74,7 +78,7 @@ make.gene.model <- function (x = NULL,
   sg2m <- (unique(sort(sg2m)))
   sg2m <- paste("^",sg2m,"$", sep="")
   sg2m <- paste(sg2m,collapse="|")
-  Cell.Cycle <- grep(sg2m, x = data$genes, value = T, ignore.case = TRUE)
+  Cell.Cycle <- grep(sg2m, x = data$genes, value = TRUE, ignore.case = TRUE)
  # variables
   cellCountLimit = as.numeric(tail(head(data[order(data$meanExp, decreasing = T),],base.mean.rank)[2],1))
   top.rank.line = as.numeric(log2(cellCountLimit))
@@ -101,8 +105,8 @@ make.gene.model <- function (x = NULL,
                                   "none" = non.sig.col)) +
     scale_y_continuous(trans = "log1p")
   # geom_text(aes(label=ifelse(genes  %in% mito.genes ,as.character(mito.genes),'')))
-  if (mark.mito == T) {
-    myPlot <- myPlot + geom_text_repel(data = top_labelled,
+  if (mark.mito == TRUE) {
+    myPlotGG <- myPlot + geom_text_repel(data = top_labelled,
                                        mapping = aes(label = genes),
                                        size = 3,
                                        fontface = 'bold',
@@ -114,11 +118,11 @@ make.gene.model <- function (x = NULL,
 # get model genes
   my.clust.genes = subset(data, color != "none")[1]
 # exclude mito genes from model genes
-  if (no.mito.model == T) {
+  if (no.mito.model == TRUE) {
     my.clust.genes <- subset(my.clust.genes, !(genes %in% mito.genes))
   }
   # exclude cell cycle genes from model genes
-  if (no.cell.cycle == T) {
+  if (no.cell.cycle == TRUE) {
     my.clust.genes <- subset(my.clust.genes, !(genes %in% Cell.Cycle))
   }
   ######## if conditions
@@ -128,14 +132,14 @@ make.gene.model <- function (x = NULL,
       data <- subset(DATA, DATA$condition == i)
       data1 <- subset(data, data$SDs > dispersion.limit)
       data1 <- as.character(data1$genes)
-      data2 <- head(data[order(data$meanExp, decreasing = T),],base.mean.rank)
+      data2 <- head(data[order(data$meanExp, decreasing = TRUE),],base.mean.rank)
       data2 <- as.character(data2$genes)
       bestGenes <- unique(sort(c(data2,data1)))
-      if (no.mito.model == T) {
+      if (no.mito.model == TRUE) {
         bestGenes <- subset(bestGenes, !(bestGenes %in% mito.genes))
       }
       # exclude cell cycle genes from model genes
-      if (no.cell.cycle == T) {
+      if (no.cell.cycle == TRUE) {
         bestGenes <- subset(bestGenes, !(bestGenes %in% Cell.Cycle))
       }
       # name
@@ -157,15 +161,20 @@ make.gene.model <- function (x = NULL,
   }
   # retrun
   # write out gene model
-  write.table((my.clust.genes),file="my_model_genes.txt", row.names =F, quote = F, col.names = F)
+#  write.table((my.clust.genes),file="my_model_genes.txt", row.names =FALSE, quote = FALSE, col.names = FALSE)
   gene.counts <- dim(my.clust.genes)[1]
-  print("my_model_genes.txt file is generated, which can be used for clustering.")
-  #attributes(x)$gene.model <- my.clust.genes
-if (interactive == T) {
+#  print("my_model_genes.txt file is generated, which can be used for clustering.")
+if (my.out.put == "plot") {
+if (interactive == TRUE) {
   OUT.PUT <- paste(out.name, ".html", sep="")
   htmlwidgets::saveWidget(ggplotly(myPlot),OUT.PUT)
 }
-if (interactive == F) {
-  return(myPlot)
+if (interactive == FALSE) {
+  return(myPlotGG)
+ }
+}
+  if (my.out.put == "data") {
+    attributes(x)$gene.model <- as.character(as.matrix(my.clust.genes))
+    return(x)
   }
 }

@@ -9,7 +9,7 @@ load10x(dir.10x = NULL, gene.name = 2)
 \arguments{
 \item{dir.10x}{A directory that includes the 10X barcodes.tsv, genes.tsv and matrix.mtx files.}
 
-\item{gene.name.column}{Gene names or ids column number, default = 2.}
+\item{gene.name}{Gene names or ids column number, default = 2.}
 }
 \value{
 The data frame object
@@ -19,6 +19,7 @@ This function takes 10X data files barcodes.tsv, genes.tsv and matrix.mtx and co
 }
 \examples{
 \dontrun{
-load10x("/hg19", gene.name = "geneSymbol")
+# The directory should have barcodes.tsv, genes.tsv, and matrix.mtx files.
+load10x('path/to/data/directory')
 }
 }

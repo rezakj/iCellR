@@ -5,7 +5,7 @@
 \title{Change the cluster number or re-name them}
 \usage{
 change.clust(x = NULL, change.clust = 0, to.clust = 0,
-  clust.reset = F)
+  clust.reset = FALSE)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
@@ -23,9 +23,12 @@ An object of class iCellR.
 This function re-names the clusters in the best.clust slot of the iCellR object.
 }
 \examples{
-\dontrun{
-my.obj <- change.clust(my.obj, change.clust = 3, to.clust = 1)
-my.obj <- change.clust(my.obj, change.clust = 2, to.clust = "B Cell")
-my.obj <- change.clust(my.obj, clust.reset = T)
-}
+demo.obj <- change.clust(demo.obj, change.clust = 1, to.clust = 3)
+cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
+
+demo.obj <- change.clust(demo.obj, change.clust = 3, to.clust = "B Cell")
+cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
+
+demo.obj <- change.clust(demo.obj, clust.reset = TRUE)
+cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
 }

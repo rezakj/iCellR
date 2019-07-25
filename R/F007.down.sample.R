@@ -4,7 +4,7 @@
 #' @param x An object of class iCellR.
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' my.obj <- down.sample(my.obj)
 #' }
 #' @export

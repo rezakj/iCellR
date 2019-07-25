@@ -5,7 +5,7 @@
 \title{Choose top marker genes}
 \usage{
 top.markers(x = NULL, topde = 10, min.base.mean = 0.2,
-  filt.ambig = T, cluster = 0)
+  filt.ambig = TRUE, cluster = 0)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
@@ -13,6 +13,10 @@ top.markers(x = NULL, topde = 10, min.base.mean = 0.2,
 \item{topde}{Number of top differentially expressed genes to be choosen from each cluster, default = 10.}
 
 \item{min.base.mean}{Minimum base mean of the genes to be chosen, default = 0.5.}
+
+\item{filt.ambig}{Filter markers that are seen for more than one cluster, default = TRUE.}
+
+\item{cluster}{Choose a cluster to find markers for. If 0, it would find markers for all clusters, , default = 0.}
 }
 \value{
 A set of gene names
@@ -21,7 +25,6 @@ A set of gene names
 This function takes the marker genes info if chooses marker gene names for plots.
 }
 \examples{
-\dontrun{
-MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
-}
+marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
+top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
 }

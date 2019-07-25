@@ -2,24 +2,30 @@
 % Please edit documentation in R/F042vdj.stats.R
 \name{vdj.stats}
 \alias{vdj.stats}
-\title{Add CITE-seq antibody-derived tags (ADT)}
+\title{VDJ stats}
 \usage{
-vdj.stats(vdj.data = "VDJ_analysis_ready.tsv")
+vdj.stats(vdj.data = "data.frame")
 }
 \arguments{
-\item{x}{An object of class iCellR.}
-
-\item{adt.data}{A data frame containing ADT counts for cells.}
+\item{vdj.data}{A data frame containing VDJ data for cells.}
 }
 \value{
 An object of class iCellR
 }
 \description{
-This function takes a data frame of ADT values per cell and adds it to the iCellR object.
+This function takes a data frame of VDJ info per cell and dose QC.
 }
 \examples{
 \dontrun{
-my.obj <- add.adt(my.obj, adt.data = adt.data)
+Read your VDJ data (in this case in VDJ.tsv file) and add to your object as below
+
+my.vdj.data <- read.table("VDJ.tsv")
+
+VDJ <- prep.vdj(my.obj, adt.data = my.vdj.data)
+
+head(VDJ)
+
+vdj.stats(vdj.data = VDJ)
 }
 
 }

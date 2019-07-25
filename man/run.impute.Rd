@@ -2,7 +2,7 @@
 % Please edit documentation in R/F022.run.imput.R
 \name{run.impute}
 \alias{run.impute}
-\title{Run MAGIC on Main Data.}
+\title{Impute the main data}
 \usage{
 run.impute(x = NULL, genes = "all_genes", k = 10, alpha = 15,
   t = "auto", npca = 100, init = NULL, t.max = 20,
@@ -38,10 +38,10 @@ run.impute(x = NULL, genes = "all_genes", k = 10, alpha = 15,
 An object of class iCellR.
 }
 \description{
-This function takes an object of class iCellR and runs MAGIC on main data. Markov Affinity-based Graph Imputation of Cells (MAGIC) is an algorithm for denoising and transcript recover of single cells applied to single-cell RNA sequencing data, as described in van Dijk et al, 2018.
+This function takes an object of class iCellR and runs imputation on the main data. MAGIC as one of the methods: Markov Affinity-based Graph Imputation of Cells (MAGIC) is an algorithm for denoising and transcript recover of single cells applied to single-cell RNA sequencing data, as described in van Dijk et al, 2018.
 }
 \examples{
-\dontrun{
-my.obj <- run.impute(my.obj)
+\donttest{
+demo.obj <- run.impute(demo.obj)
 }
 }

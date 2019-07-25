@@ -16,7 +16,7 @@ An object of class iCellR.
 This function takes an object of class iCellR and scales the normalized data.
 }
 \examples{
-\dontrun{
+\donttest{
 my.obj <- data.scale(my.obj)
 }
 

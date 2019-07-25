@@ -3,16 +3,16 @@
 #' This function takes an object of class iCellR and provides some statistical information for the genes.
 #' @param x An object of class iCellR.
 #' @param which.data Choose from "raw.data" or "main.data", default = "raw.data".
-#' @param each.cond If TRUE each condition will be calculated, default = F.
+#' @param each.cond If TRUE each condition will be calculated, default = FALSE.
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' my.obj <- gene.stats(my.obj, which.data = "main.data")
-#' }
+#' demo.obj <- gene.stats(demo.obj, which.data = "main.data")
+#' head(demo.obj@gene.data)
+#'
 #' @export
 gene.stats <- function (x = NULL,
                         which.data = "raw.data",
-                        each.cond = F) {
+                        each.cond = FALSE) {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
@@ -24,7 +24,7 @@ gene.stats <- function (x = NULL,
     DATA <- x@main.data
   }
   # get conditions
-  if (each.cond == T) {
+  if (each.cond == TRUE) {
     do <- data.frame(do.call('rbind', strsplit(as.character(colnames(DATA)),'_',fixed=TRUE)))[1]
     Myconds <- as.character(as.matrix(unique(do)))
     if (length(Myconds) > 1) {

@@ -22,6 +22,8 @@ clono.plot(x = NULL, plot.data.type = "tsne", clono = 1,
 
 \item{cell.colors}{Colors for heat mapping the points in "scatterplot", default = c("gray","red").}
 
+\item{box.cell.col}{Choose a color for box default =  "black".}
+
 \item{back.col}{A color for the plot background, default = "black".}
 
 \item{cell.transparency}{Color transparency for points, default = 0.5.}
@@ -46,7 +48,7 @@ clono.plot(my.obj,
             cell.colors = c("red","gray"),
             cbox.cell.col = "black",
             back.col = "white",
-            interactive = T,
+            interactive = TRUE,
             cell.transparency = 0.5,
             out.name = "tSNE_3D_clusters")
 }

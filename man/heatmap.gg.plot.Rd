@@ -6,7 +6,7 @@
 \usage{
 heatmap.gg.plot(x = NULL, gene = "NULL", data.type = "main",
   cluster.by = "clusters", min.scale = -2.5, max.scale = 2.5,
-  interactive = T, cex.col = 10, cex.row = 10, no.key = FALSE,
+  interactive = TRUE, cex.col = 10, cex.row = 10, no.key = FALSE,
   out.name = "plot", heat.colors = c("blue", "white", "red"))
 }
 \arguments{
@@ -14,9 +14,19 @@ heatmap.gg.plot(x = NULL, gene = "NULL", data.type = "main",
 
 \item{gene}{A set of gene names to be heatmapped.}
 
+\item{data.type}{Choose from "main" and "imputed", default = "main".}
+
 \item{cluster.by}{Choose from "clusters" or "conditions", default = "clusters".}
 
+\item{min.scale}{Set a minimum color scale, default = -2.5.}
+
+\item{max.scale}{Set a maximum color scale, default = 2.5.}
+
 \item{interactive}{If TRUE an html interactive file will be made, default = TRUE.}
+
+\item{cex.col}{Chhose a size, default = 10.}
+
+\item{cex.row}{Choose a size, default = 10.}
 
 \item{no.key}{If you want a color legend key, default = FALSE.}
 
@@ -31,7 +41,13 @@ An object of class iCellR
 This function takes an object of class iCellR and genes and provides a heatmap.
 }
 \examples{
-\dontrun{
-heatmap.gg.plot(my.obj, gene = MyGenes, interactive = T, out.name = "plot", cluster.by = "clusters")
-}
+marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
+
+MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
+
+heatmap.gg.plot(demo.obj,
+               gene = MyGenes,
+               out.name = "plot",
+               cluster.by = "clusters",
+               interactive = FALSE)
 }

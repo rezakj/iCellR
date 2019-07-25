@@ -10,16 +10,15 @@
 #'
 #' @return An object of class iCellR
 #' @examples
-#' \dontrun{
-#' marker.genes <- findMarkers(my.obj,fold.change = 2,padjval = 0.1,uniq = T)
-#' }
+#' marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
 #'
+#' head(marker.genes)
 #' @export
 findMarkers <- function (x = NULL,
           fold.change = 2,
           padjval = 0.1,
-          Inf.FCs = F,
-          uniq = F,
+          Inf.FCs = FALSE,
+          uniq = FALSE,
           positive = TRUE) {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
@@ -60,7 +59,7 @@ findMarkers <- function (x = NULL,
     Cond2_Start <- dim(cond1)[2] + 1
     Cond2_End <- dim(cond1)[2] + dim(cond2)[2]
     # filter
-    if (positive == T) {
+    if (positive == TRUE) {
       FiltData <- subset(FC.log2, FC.log2 > log2(fold.change))
     } else {
       FiltData <- subset(FC.log2, FC.log2 < -log2(fold.change) | FC.log2 > log2(fold.change))
@@ -114,9 +113,9 @@ findMarkers <- function (x = NULL,
   row.names(df) <- make.names(df$gene, unique=TRUE)
   df <- subset(df, gene != "NA")
 ####
-  if (uniq == T) {
+  if (uniq == TRUE) {
     data <- (as.data.frame(table(df$gene)))
-    datanew <- (data[order(data$Freq, decreasing = T),])
+    datanew <- (data[order(data$Freq, decreasing = TRUE),])
     datanew <- subset(datanew, datanew$Freq == 1)
     datanew <- as.character(datanew$Var1)
     myDATA = df
@@ -127,7 +126,7 @@ findMarkers <- function (x = NULL,
     df <- subset(df, log2FoldChange != Inf)
     df <- subset(df, log2FoldChange != Inf & log2FoldChange != -Inf)
   }
-  df <- df[order(df$log2FoldChange,decreasing = T),]
-  df <- df[order(df$clusters,decreasing = F),]
+  df <- df[order(df$log2FoldChange,decreasing = TRUE),]
+  df <- df[order(df$clusters,decreasing = FALSE),]
   return(df)
 }

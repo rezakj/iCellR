@@ -60,10 +60,11 @@ run.tsne(x = NULL, clust.method = "base.mean.rank", top.rank = 500,
 An object of class iCellR.
 }
 \description{
-This function takes an object of class iCellR and runs tSNE on PCA data. Wrapper for the C++ implementation of Barnes-Hut t-Distributed Stochastic Neighbor Embedding. t-SNE is a method for constructing a low dimensional embedding of high-dimensional data, distances or similarities. Exact t-SNE can be computed by setting theta=0.0.
+This function takes an object of class iCellR and runs tSNE on main data. Wrapper for the C++ implementation of Barnes-Hut t-Distributed Stochastic Neighbor Embedding. t-SNE is a method for constructing a low dimensional embedding of high-dimensional data, distances or similarities. Exact t-SNE can be computed by setting theta=0.0.
 }
 \examples{
-\dontrun{
-my.obj <- run.tsne(my.obj, clust.method = "gene.model", gene.list = "my_model_genes.txt")
-}
+demo.obj <- run.tsne(demo.obj, perplexity = 20)
+
+head(demo.obj@tsne.data)
+
 }

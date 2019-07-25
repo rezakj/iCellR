@@ -2,11 +2,21 @@
 #'
 #' This function takes a data frame of VDJ information per cell and adds it to the iCellR object.
 #' @param x An object of class iCellR.
-#' @param adt.data A data frame containing VDJ information for cells.
+#' @param vdj.data A data frame containing VDJ information for cells.
 #' @return An object of class iCellR
 #' @examples
 #' \dontrun{
-#' my.obj <- add.adt(my.obj, adt.data = adt.data)
+#' Read your VDJ data (in this case in VDJ.tsv file) and add to your object as below
+#'
+#' my.vdj.data <- read.table("VDJ.tsv")
+#'
+#' VDJ <- prep.vdj(my.obj, adt.data = my.vdj.data)
+#'
+#' head(VDJ)
+#'
+#' my.obj <- add.vdj(my.obj, vdj.data = VDJ)
+#'
+#' head(my.obj@vdj.data)
 #' }
 #'
 #' @export

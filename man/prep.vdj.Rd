@@ -2,24 +2,30 @@
 % Please edit documentation in R/F039.prep.vdj.R
 \name{prep.vdj}
 \alias{prep.vdj}
-\title{Add CITE-seq antibody-derived tags (ADT)}
+\title{Prepare VDJ data}
 \usage{
 prep.vdj(vdj.data = "all_contig_annotations.csv", cond.name = "NULL")
 }
 \arguments{
-\item{x}{An object of class iCellR.}
+\item{vdj.data}{A data frame containing vdj information.}
 
-\item{adt.data}{A data frame containing ADT counts for cells.}
+\item{cond.name}{Conditions.}
 }
 \value{
 An object of class iCellR
 }
 \description{
-This function takes a data frame of ADT values per cell and adds it to the iCellR object.
+This function takes a data frame of VDJ data per cell and prepares it to adds it to the iCellR object.
 }
 \examples{
 \dontrun{
-my.obj <- add.adt(my.obj, adt.data = adt.data)
+Read your VDJ data (in this case in VDJ.tsv file) and add to your object as below
+
+my.vdj.data <- read.table("VDJ.tsv")
+
+VDJ <- prep.vdj(my.obj, adt.data = my.vdj.data)
+
+head(VDJ)
 }
 
 }

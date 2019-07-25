@@ -30,13 +30,14 @@ An object of class iCellR.
 This function takes an object of class iCellR and finds optimal number of clusters and clusters the data.
 }
 \examples{
-\dontrun{
-my.obj <- run.clustering(my.obj,
-                        clust.method = "kmeans",
-                        dist.method = "euclidean",
-                        index.method = "silhouette",
-                        max.clust = 25,
-                        min.clust = 2,
-                        dims = 1:10)
-}
+demo.obj <- run.clustering(demo.obj,
+                          clust.method = "kmeans",
+                          dist.method = "euclidean",
+                          index.method = "silhouette",
+                          max.clust = 2,
+                          min.clust = 2,
+                          dims = 1:10)
+
+ head(demo.obj@best.clust)
+
 }

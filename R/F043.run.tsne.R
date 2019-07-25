@@ -1,6 +1,6 @@
 #' Run tSNE on the Main Data. Barnes-Hut implementation of t-Distributed Stochastic Neighbor Embedding
 #'
-#' This function takes an object of class iCellR and runs tSNE on PCA data. Wrapper for the C++ implementation of Barnes-Hut t-Distributed Stochastic Neighbor Embedding. t-SNE is a method for constructing a low dimensional embedding of high-dimensional data, distances or similarities. Exact t-SNE can be computed by setting theta=0.0.
+#' This function takes an object of class iCellR and runs tSNE on main data. Wrapper for the C++ implementation of Barnes-Hut t-Distributed Stochastic Neighbor Embedding. t-SNE is a method for constructing a low dimensional embedding of high-dimensional data, distances or similarities. Exact t-SNE can be computed by setting theta=0.0.
 #' @param x An object of class iCellR.
 #' @param clust.method Choose from "base.mean.rank" or "gene.model", defult is "base.mean.rank".
 #' @param top.rank A number taking the top genes ranked by base mean, defult = 500.
@@ -24,9 +24,10 @@
 #' @param exaggeration_factor numeric; Exaggeration factor used to multiply the P matrix in the first part of the optimization (default: 12.0)
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' my.obj <- run.tsne(my.obj, clust.method = "gene.model", gene.list = "my_model_genes.txt")
-#' }
+#' demo.obj <- run.tsne(demo.obj, perplexity = 20)
+#'
+#' head(demo.obj@tsne.data)
+#'
 #' @import Rtsne
 #' @export
 run.tsne <- function (x = NULL,
@@ -53,7 +54,7 @@ run.tsne <- function (x = NULL,
   DATA <- x@main.data
   # model base mean rank
   if (clust.method == "base.mean.rank") {
-    raw.data.order <- DATA[ order(rowMeans(DATA), decreasing = T), ]
+    raw.data.order <- DATA[ order(rowMeans(DATA), decreasing = TRUE), ]
     topGenes <- head(raw.data.order,top.rank)
     TopNormLogScale <- log(topGenes + 0.1)
 #    TopNormLogScale <- t(TopNormLogScale)

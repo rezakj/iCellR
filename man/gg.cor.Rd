@@ -2,8 +2,8 @@
 % Please edit documentation in R/gg.cor.R
 \name{gg.cor}
 \alias{gg.cor}
-\title{Normalize ADT data.
-This function takes data frame and Normalizes ADT data.}
+\title{Gene-gene correlation.
+This function helps to visulaize and calculate gene-gene correlations.}
 \usage{
 gg.cor(x = NULL, data.type = "imputed", gene1 = NULL, gene2 = NULL,
   conds = NULL, cell.size = 1, cell.transparency = 0.5,
@@ -32,11 +32,11 @@ gg.cor(x = NULL, data.type = "imputed", gene1 = NULL, gene2 = NULL,
 An object of class iCellR
 }
 \description{
-Normalize ADT data.
-This function takes data frame and Normalizes ADT data.
+Gene-gene correlation.
+This function helps to visulaize and calculate gene-gene correlations.
 }
 \examples{
-\dontrun{
+\donttest{
 gg.cor(my.obj, interactive = F, gene1 = "NKG7",gene2 = "GNLY", conds=c("WT"))
 }
 

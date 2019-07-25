@@ -1,5 +1,5 @@
-#' Normalize ADT data.
-#' This function takes data frame and Normalizes ADT data.
+#' Gene-gene correlation.
+#' This function helps to visulaize and calculate gene-gene correlations.
 #' @param x An object of class iCellR.
 #' @param data.type Choose from imputed and main, default = "imputed".
 #' @param gene1 First gene name.
@@ -11,7 +11,7 @@
 #' @param out.name Output name for html file if interactive = TRUE, default = "plot".
 #' @return An object of class iCellR
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' gg.cor(my.obj, interactive = F, gene1 = "NKG7",gene2 = "GNLY", conds=c("WT"))
 #' }
 #'
@@ -39,10 +39,10 @@ gg.cor <- function (x = NULL,
   AllGenes = row.names(DATA)
   check1 = gene1 %in% AllGenes
   check2 =gene2 %in% AllGenes
-  if (check1 == F) {
+  if (check1 == FALSE) {
     stop("gene 1 is not in the data")
   }
-  if (check2 == F) {
+  if (check2 == FALSE) {
     stop("gene 2 is not in the data")
   }
   ####### Subset 1
@@ -67,7 +67,7 @@ gg.cor <- function (x = NULL,
   if (is.null(conds)) {
     DATA <- DATA
   } else {
-    TAKE = grep(conds,row.names(DATA), value = T)
+    TAKE = grep(conds,row.names(DATA), value = TRUE)
     DATA <- subset(DATA, row.names(DATA) %in% TAKE)
   }
 ########
@@ -94,7 +94,7 @@ gg.cor <- function (x = NULL,
 #    scale_x_continuous(trans = "log1p") +
     theme_bw()
 ##
-  if (interactive == T) {
+  if (interactive == TRUE) {
     OUT.PUT <- paste(out.name, ".html", sep="")
     htmlwidgets::saveWidget(ggplotly(myPLOT), OUT.PUT)
   } else {

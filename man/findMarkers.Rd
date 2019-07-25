@@ -4,8 +4,8 @@
 \alias{findMarkers}
 \title{Find marker genes for each cluster}
 \usage{
-findMarkers(x = NULL, fold.change = 2, padjval = 0.1, Inf.FCs = F,
-  uniq = F, positive = TRUE)
+findMarkers(x = NULL, fold.change = 2, padjval = 0.1,
+  Inf.FCs = FALSE, uniq = FALSE, positive = TRUE)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
@@ -27,8 +27,7 @@ An object of class iCellR
 This function takes an object of class iCellR and performs differential expression (DE) analysis to find marker genes for each cluster.
 }
 \examples{
-\dontrun{
-marker.genes <- findMarkers(my.obj,fold.change = 2,padjval = 0.1,uniq = T)
-}
+marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
 
+head(marker.genes)
 }

@@ -4,8 +4,9 @@
 \alias{qc.stats}
 \title{Calculate the number of UMIs and genes per cell and percentage of mitochondrial genes per cell and cell cycle genes.}
 \usage{
-qc.stats(x = NULL, which.data = "raw.data", mito.genes = "default",
-  s.phase.genes = s.phase, g2m.phase.genes = g2m.phase)
+qc.stats(x = NULL, which.data = "raw.data",
+  mito.genes = "default.genes", s.phase.genes = s.phase,
+  g2m.phase.genes = g2m.phase)
 }
 \arguments{
 \item{x}{A data frame containing gene counts for cells.}
@@ -25,7 +26,8 @@ The data frame object
 This function takes data frame and calculates the number of UMIs, genes per cell and percentage of mitochondrial genes per cell and cell cycle genes.
 }
 \examples{
-\dontrun{
-UMIs.genes.mit(my.data)
+\donttest{
+New.demo.obj <- qc.stats(demo.obj)
+head(New.demo.obj@stats)
 }
 }

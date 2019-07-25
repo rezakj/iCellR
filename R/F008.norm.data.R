@@ -9,7 +9,10 @@
 #' @param rpm.factor If the norm.method is set to "rpm" the library sizes would be diveded by this number, default = 1000 (higher numbers recomanded for bulk RNA-Seq).
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
+#'
+#' demo.obj <- norm.data(demo.obj, norm.method = "ranked.glsf", top.rank = 500)
+#'
+#' \donttest{
 #' my.obj <- norm.data(my.obj,
 #'                    norm.method = "ranked.glsf",
 #'                    top.rank = 500) # best for scRNA-Seq
@@ -43,29 +46,29 @@ norm.data <- function (x = NULL,
     dataMat <- as.matrix(DATA)
     normalized <- as.data.frame(sweep(dataMat, 2, norm.facts, `/`))
   }
-  if (norm.method == "deseq") {
-    require(DESeq)
-    CondAnum <- length(colnames(DATA)) - 1
-    conds <- factor( c( rep("CondA", CondAnum) , rep("CondB", 1)))
-    cds <- newCountDataSet(DATA, conds )
-    cds <- estimateSizeFactors( cds )
-    norm.facts <- as.numeric(sizeFactors(cds))
-    normalized <- as.data.frame(counts(cds,normalized=TRUE))
-  }
-  if (norm.method == "ranked.deseq") {
-    require(DESeq)
-    raw.data.order <- DATA[ order(rowMeans(DATA), decreasing = T), ]
-    CondAnum <- length(colnames(DATA)) - 1
-    conds <- factor( c( rep("CondA", CondAnum) , rep("CondB", 1)))
-    cds <- newCountDataSet(raw.data.order, conds )
-    cds <- estimateSizeFactors( cds )
-    norm.facts <- as.numeric(sizeFactors(cds))
-    cds1 <- newCountDataSet(DATA, conds)
-    sizeFactors(cds1) = sizeFactors(cds)
-    rm("cds")
-    normalized <- as.data.frame(counts(cds1, normalized=TRUE))
-    rm("cds1")
-  }
+#  if (norm.method == "deseq") {
+#    require(DESeq)
+#    CondAnum <- length(colnames(DATA)) - 1
+#    conds <- factor( c( rep("CondA", CondAnum) , rep("CondB", 1)))
+#    cds <- newCountDataSet(DATA, conds )
+#    cds <- estimateSizeFactors( cds )
+#    norm.facts <- as.numeric(sizeFactors(cds))
+#    normalized <- as.data.frame(counts(cds,normalized=TRUE))
+#  }
+#  if (norm.method == "ranked.deseq") {
+#    require(DESeq)
+#    raw.data.order <- DATA[ order(rowMeans(DATA), decreasing = T), ]
+#    CondAnum <- length(colnames(DATA)) - 1
+#    conds <- factor( c( rep("CondA", CondAnum) , rep("CondB", 1)))
+#    cds <- newCountDataSet(raw.data.order, conds )
+#    cds <- estimateSizeFactors( cds )
+#    norm.facts <- as.numeric(sizeFactors(cds))
+#    cds1 <- newCountDataSet(DATA, conds)
+#    sizeFactors(cds1) = sizeFactors(cds)
+#    rm("cds")
+#    normalized <- as.data.frame(counts(cds1, normalized=TRUE))
+#    rm("cds1")
+#  }
   if (norm.method == "spike.in") {
     norm.facts <- spike.in.factors
     norm.facts <- as.numeric(norm.facts)

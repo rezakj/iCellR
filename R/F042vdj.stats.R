@@ -1,18 +1,24 @@
-#' Add CITE-seq antibody-derived tags (ADT)
+#' VDJ stats
 #'
-#' This function takes a data frame of ADT values per cell and adds it to the iCellR object.
-#' @param x An object of class iCellR.
-#' @param adt.data A data frame containing ADT counts for cells.
+#' This function takes a data frame of VDJ info per cell and dose QC.
+#' @param vdj.data A data frame containing VDJ data for cells.
 #' @return An object of class iCellR
 #' @examples
 #' \dontrun{
-#' my.obj <- add.adt(my.obj, adt.data = adt.data)
+#' Read your VDJ data (in this case in VDJ.tsv file) and add to your object as below
+#'
+#' my.vdj.data <- read.table("VDJ.tsv")
+#'
+#' VDJ <- prep.vdj(my.obj, adt.data = my.vdj.data)
+#'
+#' head(VDJ)
+#'
+#' vdj.stats(vdj.data = VDJ)
 #' }
 #'
 #' @export
-vdj.stats <- function (vdj.data = "VDJ_analysis_ready.tsv") {
+vdj.stats <- function (vdj.data = "data.frame") {
   # read VDJ data
-  my.vdj <- read.table(vdj.data, header = T, sep="\t")
   # chin A
   my.vdj.data <- data.frame(my.vdj$clonotype.Freq,my.vdj$raw_clonotype_id,my.vdj$chain,my.vdj$cdr3)
   my.vdj.data <- subset(my.vdj.data, my.vdj.chain == "TRA")
@@ -55,11 +61,11 @@ vdj.stats <- function (vdj.data = "VDJ_analysis_ready.tsv") {
           axis.ticks.y=element_blank()) + coord_polar(theta="y") + facet_wrap(~ chain, ncol =1)
 #
   data <- (unique(subset(ChainB, ChainB$Quantile == "Q3")))
-  data <- (data[order(data$my.vdj.clonotype.Freq, decreasing = T),])
+  data <- (data[order(data$my.vdj.clonotype.Freq, decreasing = TRUE),])
   data1 <- (unique(subset(ChainA, ChainA$Quantile == "Q3")))
-  data1 <- (data1[order(data1$my.vdj.clonotype.Freq, decreasing = T),])
+  data1 <- (data1[order(data1$my.vdj.clonotype.Freq, decreasing = TRUE),])
   DATA <- rbind(data,data1)
-  DATA <- (DATA[order(DATA$my.vdj.clonotype.Freq, decreasing = T),])
+  DATA <- (DATA[order(DATA$my.vdj.clonotype.Freq, decreasing = TRUE),])
   colnames(DATA) <- c("freq","colonotype","chain","cdr3","Q")
   DATA$cdr3 <- factor(DATA$cdr3, levels = rev(unique(DATA$cdr3)))
   freq = log2(DATA$freq)

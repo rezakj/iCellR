@@ -8,15 +8,21 @@
 #' @param base.cond A base condition or cluster if de.by is either cond.clust or clust.cond
 #' @return An object of class iCellR
 #' @examples
+#' diff.res <- run.diff.exp(demo.obj, de.by = "clusters", cond.1 = c(1), cond.2 = c(2))
+#'
+#' head(diff.res)
+#'
 #' \dontrun{
-#' diff.res <- diff.exp(my.obj, de.by = "clusters", cond.1 = c(1,4), cond.2 = c(2))
-#' diff.res <- diff.exp(my.obj, de.by = "conditions", cond.1 = c("WT"), cond.2 = c("KO"))
-#' diff.res <- diff.exp(my.obj, de.by = "clustBase.condComp", cond.1 = c("WT"), cond.2 = c("KO"), base.cond = 1)
-#' diff.res <- diff.exp(my.obj, de.by = "condBase.clustComp", cond.1 = c(1), cond.2 = c(2), base.cond = "WT")
+#' diff.res <- run.diff.exp(my.obj, de.by = "clusters", cond.1 = c(1,4), cond.2 = c(2))
+#' diff.res <- run.diff.exp(my.obj, de.by = "conditions", cond.1 = c("WT"), cond.2 = c("KO"))
+#' diff.res <- run.diff.exp(my.obj, de.by = "clustBase.condComp",
+#' cond.1 = c("WT"), cond.2 = c("KO"), base.cond = 1)
+#' diff.res <- run.diff.exp(my.obj, de.by = "condBase.clustComp",
+#' cond.1 = c(1), cond.2 = c(2), base.cond = "WT")
 #' }
 #'
 #' @export
-diff.exp <- function (x = NULL,
+run.diff.exp <- function (x = NULL,
                       de.by = "clusters",
                       cond.1 = "array",
                       cond.2 = "array",

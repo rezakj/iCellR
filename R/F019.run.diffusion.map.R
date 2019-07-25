@@ -2,6 +2,7 @@
 #'
 #' This function takes an object of class iCellR and runs diffusion map on PCA data.
 #' @param x An object of class iCellR.
+#' @param method diffusion map method, default = "phate".
 #' @param dims PC dimentions to be used for UMAP analysis.
 #' @param ndim int, optional, default: 2 number of dimensions in which the data will be embedded
 #' @param k int, optional, default: 5 number of nearest neighbors on which to build kernel
@@ -15,7 +16,7 @@
 #' @param mds.dist.method string, optional, default: 'euclidean' recommended values: 'euclidean' and 'cosine'
 #' @param t.max int, optional, default: 100. Maximum value of t to test for automatic t selection.
 #' @param npca int, optional, default: 100 Number of principal components to use for calculating neighborhoods. For extremely large datasets, using n_pca < 20 allows neighborhoods to be calculated in log(n_samples) time.
-#' @param plot.optimal.t boolean, optional, default: FALSE If TRUE, produce a plot showing the Von Neumann Entropy curve for automatic t selection.
+#' @param plot.optimal.t boolean, optional, if TRUE, produce a plot showing the Von Neumann Entropy curve for automatic t selection.
 #' @param verbose int or boolean, optional (default : 1) If TRUE or > 0, print verbose updates.
 #' @param n.jobs int, optional (default: 1) The number of jobs to use for the computation. If -1 all CPUs are used. If 1 is given, no parallel computing code is used at all, which is useful for debugging. For n_jobs below -1, (n.cpus + 1 + n.jobs) are used. Thus for n_jobs = -2, all CPUs but one are used
 #' @param seed int or NULL, random state (default: NULL)
@@ -30,8 +31,9 @@
 #' @param dist.method Deprecated.
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
+#' \donttest{
+#' demo.obj <- run.diffusion.map(demo.obj, dims = 1:10, method = "phate")
+#' head(demo.obj@diffusion.data)
 #' }
 #' @export
 run.diffusion.map <- function (x = NULL,
@@ -49,9 +51,13 @@ run.diffusion.map <- function (x = NULL,
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
+  ###########
+  if(!"phateR" %in% (.packages())){
+    stop("Please load phateR package: library(phateR)")
+  }
+  ##########
   # https://github.com/lmcinnes/umap
   # get PCA data
-  require(phateR)
   DATA <- x@pca.data
   DATA <- DATA[dims]
   #  2 dimention

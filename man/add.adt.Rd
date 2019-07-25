@@ -19,7 +19,13 @@ This function takes a data frame of ADT values per cell and adds it to the iCell
 }
 \examples{
 \dontrun{
-my.obj <- add.adt(my.obj, adt.data = adt.data)
+# Read your ADT data (in this case in ADT.tsv file) and add to your object as below
+my.adt.data <- read.table("ADT.tsv")
+
+my.obj <- add.adt(my.obj, adt.data = my.adt.data)
+
+head(my.obj@adt.raw)[1:5]
+
 }
 
 }

@@ -16,7 +16,7 @@ An object of class iCellR.
 This function takes an object of class iCellR and creates an average gene expression for every cluster.
 }
 \examples{
-\dontrun{
-my.obj <- clust.avg.exp(my.obj)
-}
+demo.obj <- clust.avg.exp(demo.obj)
+
+head(demo.obj@clust.avg)
 }

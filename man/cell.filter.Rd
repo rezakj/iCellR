@@ -39,13 +39,14 @@ An object of class iCellR.
 This function takes an object of class iCellR and filters the raw data based on the number of UMIs, genes per cell, percentage of mitochondrial genes per cell, genes, gene expression and cell ids.
 }
 \examples{
-\dontrun{
-cell.filter(my.obj,
-   min.mito = 0,
-   max.mito = 1,
-   min.genes = 0,
-   max.genes = Inf,
-   min.umis = 0,
-   max.umis = Inf)
-}
+demo.obj <- cell.filter(demo.obj,
+                       min.mito = 0,
+                       max.mito = 0.05 ,
+                       min.genes = 100,
+                       max.genes = 2500,
+                       min.umis = 0,
+                       max.umis = Inf)
+
+message(demo.obj@my.filters)
+
 }

@@ -5,10 +5,10 @@
 \title{Create MA and Volcano plots.}
 \usage{
 volcano.ma.plot(x = NULL, sig.value = "padj", sig.line = 0.1,
-  plot.type = "volcano", x.limit = 2, y.limit = 2, limit.force = F,
-  scale.ax = T, dot.size = 1.75, dot.transparency = 0.5,
-  dot.col = c("#E64B35", "#3182bd", "#636363"), interactive = TRUE,
-  out.name = "plot")
+  plot.type = "volcano", x.limit = 2, y.limit = 2,
+  limit.force = FALSE, scale.ax = TRUE, dot.size = 1.75,
+  dot.transparency = 0.5, dot.col = c("#E64B35", "#3182bd", "#636363"),
+  interactive = TRUE, out.name = "plot")
 }
 \arguments{
 \item{x}{A data frame containing differential expression (DE) analysis results.}
@@ -44,21 +44,19 @@ Plots
 This function takes the result of differential expression (DE) analysis and provides MA and volcano plots.
 }
 \examples{
-\dontrun{
+
+diff.res <- run.diff.exp(demo.obj, de.by = "clusters", cond.1 = c(1), cond.2 = c(2))
+
 volcano.ma.plot(diff.res,
               sig.value = "pval",
               sig.line = 0.05,
               plot.type = "volcano",
-              interactive = T,
-              out.name = "Volcano.plot-Control2_vs_Treated3")
-
+              interactive = FALSE)
 
 volcano.ma.plot(diff.res,
              sig.value = "pval",
              sig.line = 0.05,
              plot.type = "ma",
-             interactive = T,
-             out.name = "MA.plot-Control2_vs_Treated3")
-}
+             interactive = FALSE)
 
 }

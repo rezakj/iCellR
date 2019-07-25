@@ -4,28 +4,29 @@
 #' @param x An object of class iCellR.
 #' @param topde Number of top differentially expressed genes to be choosen from each cluster, default = 10.
 #' @param min.base.mean Minimum base mean of the genes to be chosen, default = 0.5.
+#' @param filt.ambig Filter markers that are seen for more than one cluster, default = TRUE.
+#' @param cluster Choose a cluster to find markers for. If 0, it would find markers for all clusters, , default = 0.
 #' @return A set of gene names
 #' @examples
-#' \dontrun{
-#' MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
-#' }
+#' marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
+#' top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
 #' @import Matrix
 #' @export
 top.markers <- function (x = NULL, topde = 10,
                          min.base.mean = 0.2,
-                         filt.ambig = T,
+                         filt.ambig = TRUE,
                          cluster = 0) {
   if (cluster == 0) {
     # get all clusters
   MyClusts <- (unique(x$clusters))
   # get rid of ambig genes (more than 1 cluster)
   data <- (as.data.frame(table(x$gene)))
-  datanew <- (data[order(data$Freq, decreasing = T),])
+  datanew <- (data[order(data$Freq, decreasing = TRUE),])
   datanew <- subset(datanew, datanew$Freq == 1)
   datanew <- as.character(datanew$Var1)
   myDATA = x
   myDATA <- subset(myDATA, myDATA$gene %in% datanew)
-  if(filt.ambig == T) {
+  if(filt.ambig == TRUE) {
     x = myDATA
   }
 #  x <- x[order(x$baseMean,decreasing = T),]

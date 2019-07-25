@@ -26,7 +26,10 @@ An object of class iCellR.
 This function takes an object of class iCellR and normalized the data based on "global.glsf", "ranked.glsf" or "spike.in" methods.
 }
 \examples{
-\dontrun{
+
+demo.obj <- norm.data(demo.obj, norm.method = "ranked.glsf", top.rank = 500)
+
+\donttest{
 my.obj <- norm.data(my.obj,
                    norm.method = "ranked.glsf",
                    top.rank = 500) # best for scRNA-Seq

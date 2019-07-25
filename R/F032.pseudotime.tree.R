@@ -7,14 +7,24 @@
 #' @param clust.names A list of names for clusters.
 #' @param marker.genes A list of marker genes for clusters.
 #' @param label.offset Space between names and tree, default = 0.5.
+#' @param hang Hang, default = 1.
 #' @param type Choose from "classic", "jitter", "unrooted", "fan", "cladogram", "radial", default = "classic".
 #' @param cex Text size, default = 1.
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' my.obj <- run.pca(my.obj, clust.method = "gene.model", gene.list = "my_model_genes.txt")
-#' }
+#' marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
+#'
+#' MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
+#'
+#' pseudotime.tree(demo.obj,
+#'                marker.genes = MyGenes,
+#'                type = "unrooted",
+#'                clust.method = "complete")
+#'
 #' @import gridExtra
+#' @import ggdendro
+#' @import ape
+#' @importFrom ggplot2 ggplot theme_classic geom_segment geom_violin guide_colorbar guide_legend guides scale_color_discrete scale_colour_gradient scale_fill_gradient2 scale_x_continuous scale_y_continuous scale_y_discrete stat_summary coord_polar element_rect element_text element_blank facet_wrap scale_color_manual geom_hline geom_jitter geom_vline ylab xlab ggtitle theme_bw aes theme geom_bar geom_point geom_boxplot geom_errorbar position_dodge geom_tile geom_density geom_line
 #' @export
 pseudotime.tree <- function (x = NULL,
                              marker.genes = "NULL",
@@ -29,8 +39,6 @@ pseudotime.tree <- function (x = NULL,
     stop("x should be an object of class iCellR")
   }
   # geth the genes and scale them based on model
-  require("ggdendro")
-  require("ape")
   DATA <- x@clust.avg
   row.names(DATA) <- DATA$gene
   DATA <- DATA[,-1]
