@@ -1071,21 +1071,7 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/14_monocol.png" />
 </p>
 
-
- - Optional manual clustering or renaming the clusters 
- 
- You also have the option of manual hirarchical clustering or renaming the clusters. It is highly recomanded to not use this method as the above method is much more accurate. 
-
-```r
-##### Find optimal number of clusters for hierarchical clustering
-#opt.clust.num(my.obj, max.clust = 10, clust.type = "tsne", opt.method = "silhouette")
-##### Manual clustering 
-#my.obj <- man.assign.clust(my.obj, clust.num = 7)
-```
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/optim_clust_num1.png" width="800" />
-</p>
+# How to perform CCA (Coming soon)
 
 # How to analyze CITE-seq data using iCellR
 
