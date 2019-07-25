@@ -587,8 +587,8 @@ my.obj <- clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = F)
 #6         WT        2  113
 ```
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/bar.png" width="400"/>
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pie.png" width="400"/> 	
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/3_clust_cond_freq_info_bar.png" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/4_clust_cond_freq_info_pie.png" width="400"/> 	
 </p>
 
 - Avrage expression per cluster
@@ -676,46 +676,39 @@ head(marker.genes)
 
 ```r
 # tSNE 2D
-gene.plot(my.obj, gene = "MS4A1", 
+A <- gene.plot(my.obj, gene = "MS4A1", 
 	plot.type = "scatterplot",
 	interactive = F,
 	out.name = "scatter_plot")
 # PCA 2D	
-gene.plot(my.obj, gene = "MS4A1", 
+B <- gene.plot(my.obj, gene = "MS4A1", 
 	plot.type = "scatterplot",
 	interactive = F,
 	out.name = "scatter_plot",
 	plot.data.type = "pca")
 	
-# tSNE 3D	
-gene.plot(my.obj, gene = "MS4A1", 
-	plot.type = "scatterplot",
-	interactive = F,
-	out.name = "scatter_plot",
-	clust.dim = 3)
-	
 # Box Plot
-gene.plot(my.obj, gene = "MS4A1", 
+C <- gene.plot(my.obj, gene = "MS4A1", 
 	box.to.test = 0, 
-	box.pval = "sig.values",
+	box.pval = "sig.signs",
 	col.by = "clusters",
 	plot.type = "boxplot",
 	interactive = F,
 	out.name = "box_plot")
 	
 # Bar plot (to visualize fold changes)	
-gene.plot(my.obj, gene = "MS4A1", 
+D <- gene.plot(my.obj, gene = "MS4A1", 
 	col.by = "clusters",
 	plot.type = "barplot",
 	interactive = F,
 	out.name = "bar_plot")
+	
+library(gridExtra)
+grid.arrange(A,B,C,D)	
 ```
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/MS4A1_tSNE.png" width="400"/>
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/MS4A1_PCA.png" width="400"/> 
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/MS4A1_box.png" width="400"/> 
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/MS4A1_bar.png" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/7_genePlots.png"/>
 </p>
 
 
@@ -739,7 +732,7 @@ plot_grid(plotlist=mget(filenames[1:9]))
 ```
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/list1.png" width="800" height="800" />
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/8_genePlots.png" />
 </p>
 
 - Heatmap
