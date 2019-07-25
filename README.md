@@ -374,9 +374,10 @@ To view an the html intractive plot click on this links: [Dispersion plot](https
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
 
 # 2 round PCA (to find top genes in the first 10 PCs and re-run PCA for better clustering
+## This is optional and might not be good in some cases
 length(my.obj@gene.model)
 # 585
-my.obj <- find.dim.genes(my.obj, dims = 1:10,top.pos = 20, top.neg = 20)
+my.obj <- find.dim.genes(my.obj, dims = 1:10,top.pos = 20, top.neg = 20) # (optional)
 
 length(my.obj@gene.model)
 # 208
