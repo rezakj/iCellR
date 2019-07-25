@@ -984,7 +984,6 @@ MyGenes <- unique(MyGenes)
 
 pseudotime.tree(my.obj,
 	marker.genes = MyGenes,
-	clust.names = c("1.T.CD4","2.Mon.CD14","3.Mon.FCGR3A","4.Megak","5.T.CD8","6.NK","7.B"),
 	type = "unrooted",
 	clust.method = "complete")
 
@@ -992,7 +991,6 @@ pseudotime.tree(my.obj,
 
 pseudotime.tree(my.obj,
 	marker.genes = MyGenes,
-	clust.names = c("1.T.CD4","2.Mon.CD14","3.Mon.FCGR3A","4.Megak","5.T.CD8","6.NK","7.B"),
 	type = "classic",
 	clust.method = "complete")
 	
