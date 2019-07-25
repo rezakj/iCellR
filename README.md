@@ -748,12 +748,10 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters"
 ```
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/heatmap.png" />
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/9_heatmap_gg.png" />
 </p>
 
- - Run data imputation (soon will be available)
- 
-  See the plots before and after data imputation. This helps to fill for drop-outs. 
+ - Run data imputation
 
 ```r
 library(Rmagic)
@@ -763,6 +761,8 @@ my.obj <- run.impute(my.obj)
 
 # save after imputation 
 save(my.obj, file = "my.obj.Robj")
+
+# some more plots from another analysis 
 
 heatmap.gg.plot(my.obj, gene = MyGenes, 
                 interactive = F, 
@@ -798,7 +798,7 @@ gene.plot(my.obj, gene = "MS4A1",
 Note that ImmGen is mouse genome data and the sample data here is human. For 157 ULI-RNA-Seq samples use this meta data: [metadata](https://github.com/rezakj/scSeqR/blob/dev/doc/uli_RNA_metadat.txt). 
 
 ```r
-Cluster = 7
+Cluster = 8
 MyGenes <- top.markers(marker.genes, topde = 40, min.base.mean = 0.2, cluster = Cluster)
 # plot 
 cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot")
@@ -810,9 +810,9 @@ cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "heatmap")
 cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
 
 # And finally check the genes in the cells and find the common ones to predict
-heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
+# heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
 
-# As you can see cluster 7 is most likely to be B-cells.  
+# As you can see cluster 8 is most likely to be B-cells.  
 
 # for tissue type prediction use this:
 #cell.type.pred(immgen.data = "mca", gene = MyGenes, plot.type = "point.plot")
@@ -822,8 +822,7 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters"
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_pointPlot_RNA_Cluster_7.png" />
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_pointPlot_ULI-RNA_Cluster_7.png" /> 
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_heatmap_RNA_Cluster_7.png" /> 
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_heatmap_ULI-RNA_Cluster_7.png" />
-<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/heatmap_Cluster_7.png" /> 	
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_heatmap_ULI-RNA_Cluster_7.png" />	
 </p>
 
 
@@ -847,8 +846,8 @@ clust.stats.plot(my.obj, plot.type = "box.gene", interactive = F)
 ```
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/box.mito.clusters.png" width="400"/>
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/box.gene.clusters.png" width="400"/>      
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/6_cluster_mito_ratio.png" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/5_cluster_gene_cov.png" width="400"/>      
 </p>
 
 
@@ -979,7 +978,7 @@ my.obj <- gate.to.clust(my.obj, my.gate = "cellGating.txt", to.clust = 10)
  - Pseudotime analysis
  
  ```r
-MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.2)
+MyGenes <- top.markers(marker.genes, topde = 50, min.base.mean = 0.2)
 MyGenes <- unique(MyGenes)
 
 pseudotime.tree(my.obj,
@@ -996,7 +995,7 @@ pseudotime.tree(my.obj,
 	type = "classic",
 	clust.method = "complete")
 	
-# UMAP and DiffMAP plots to come soon. 	
+# New pseudotime maps coming soon see plots below
 
  ```
 <p align="center">
@@ -1005,6 +1004,71 @@ pseudotime.tree(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_unrooted.png" width="400" />
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_classic.png" width="400" />
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_jitter.png" width="400"/>
+	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/12_pseudotime.png"/>
+</p>
+
+
+ - Pseudotime analysis using monocle
+ 
+  ```r
+library(monocle)
+
+MyMTX <- my.obj@main.data
+GeneAnno <- as.data.frame(row.names(MyMTX))
+colnames(GeneAnno) <- "gene_short_name"
+row.names(GeneAnno) <- GeneAnno$gene_short_name
+cell.cluster <- (my.obj@best.clust)
+Ha <- data.frame(do.call('rbind', strsplit(as.character(row.names(cell.cluster)),'_',fixed=TRUE)))[1]
+clusts <- paste("cl.",as.character(cell.cluster$clusters),sep="")
+cell.cluster <- cbind(cell.cluster,Ha,clusts)
+colnames(cell.cluster) <- c("Clusts","iCellR.Conds","iCellR.Clusts")
+Samp <- new("AnnotatedDataFrame", data = cell.cluster)
+Anno <- new("AnnotatedDataFrame", data = GeneAnno)
+my.monoc.obj <- newCellDataSet(as.matrix(MyMTX),phenoData = Samp, featureData = Anno)
+
+## find disperesedgenes 
+my.monoc.obj <- estimateSizeFactors(my.monoc.obj)
+my.monoc.obj <- estimateDispersions(my.monoc.obj)
+disp_table <- dispersionTable(my.monoc.obj)
+
+unsup_clustering_genes <- subset(disp_table, mean_expression >= 0.1)
+my.monoc.obj <- setOrderingFilter(my.monoc.obj, unsup_clustering_genes$gene_id)
+
+# tSNE
+my.monoc.obj <- reduceDimension(my.monoc.obj, max_components = 2, num_dim = 10,reduction_method = 'tSNE', verbose = T)
+# cluster 
+my.monoc.obj <- clusterCells(my.monoc.obj, num_clusters = 10)
+
+## plot conditions and clusters based on iCellR analysis 
+A <- plot_cell_clusters(my.monoc.obj, 1, 2, color = "iCellR.Conds")
+B <- plot_cell_clusters(my.monoc.obj, 1, 2, color = "iCellR.Clusts")
+
+## plot clusters based monocle analysis 
+C <- plot_cell_clusters(my.monoc.obj, 1, 2, color = "Cluster")
+
+# get marker genes from iCellR analysis
+MyGenes <- top.markers(marker.genes, topde = 30, min.base.mean = 0.2)
+my.monoc.obj <- setOrderingFilter(my.monoc.obj, MyGenes)
+
+my.monoc.obj <- reduceDimension(my.monoc.obj, max_components = 2,method = 'DDRTree')
+# order cells 
+my.monoc.obj <- orderCells(my.monoc.obj)
+
+# plot based on iCellR analysis and marker genes from iCellR
+D <- plot_cell_trajectory(my.monoc.obj, color_by = "iCellR.Clusts")
+
+## heatmap genes from iCellR
+
+plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
+	cores = 1,
+	cluster_rows = F,
+	use_gene_short_name = T,
+	show_rownames = T)
+ ```
+ 
+ <p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/13_monocol.png" />
+	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/14_monocol.png" />
 </p>
 
 
