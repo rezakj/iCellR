@@ -444,6 +444,12 @@ my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
 # my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
 
 # diffusion map
+# this requires python packge phate 
+# pip install --user phate
+# Install phateR version 2.9
+# wget https://cran.r-project.org/src/contrib/Archive/phateR/phateR_0.2.9.tar.gz
+# install.packages('phateR/', repos = NULL, type="source")
+
 library(phateR)
 my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
 ```
@@ -475,7 +481,7 @@ grid.arrange(A,B,C,D)
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/2_AllConds.png"/>      
 </p>
 
-- Visualize clusters
+- 3D plots, density plots and intractive plots 
 
 ```r
 # 2D
@@ -488,15 +494,6 @@ cluster.plot(my.obj,
 	cell.transparency = 0.5,
 	clust.dim = 2,
 	interactive = F)
-
-# 3D
-cluster.plot(my.obj,
-	plot.type = "tsne",
-	col.by = "clusters",
-	clust.dim = 3,
-	interactive = F,
-	density = F,
-	angle = 100)
 	
 # intractive 2D
 cluster.plot(my.obj,
@@ -537,45 +534,9 @@ cluster.plot(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/density_clusters.png" width="400"/> 	
 </p>
 
-- Uniform Manifold Approximation and Projection (UMAP)
-
-```r
-my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
-
-# or 
-
-my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
-# this requires python package umap-learn
-# pip install --user umap-learn
-
-# plot 
-cluster.plot(my.obj,
-	cell.size = 1,
-	plot.type = "umap",
-	cell.color = "black",
-	back.col = "white",
-	col.by = "clusters",
-	cell.transparency = 0.5,
-	clust.dim = 2,
-	interactive = F)
-	
-```
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/umap-naive.png" width="400"/>
-	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/umap-learn.png" width="400"/>
-</p>
-
 - Diffusion Map
 
 ```r
-my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
-# this requires python packge phate 
-# pip install --user phate
-# Install phateR version 2.9
-# wget https://cran.r-project.org/src/contrib/Archive/phateR/phateR_0.2.9.tar.gz
-# install.packages('phateR/', repos = NULL, type="source")
-
 # plot 
 cluster.plot(my.obj,
 	cell.size = 1,
@@ -607,11 +568,23 @@ cluster.plot(my.obj,
 - Normalized cell frequencies in clusters and conditions
 
 ```r
-clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = TRUE)
-# [1] "clust_cond_freq_info.txt file has beed generated."
+# If normalize.ncell = TRUE it would down sample the conditions randomly so all the conditions have equal number of cells, if FALSE it would output the raw cell counts.
 
-clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE)
-# [1] "clust_cond_freq_info.txt file has beed generated."
+# bar plot
+clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = FALSE, my.out.put = "plot")
+# Pie chart 
+clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = FALSE, ,my.out.put = "plot")
+
+# data 
+my.obj <- clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = F)
+#head(my.obj@my.freq)
+#  conditions clusters Freq
+#1       ctrl        1  199
+#2         KO        1  170
+#3         WT        1  182
+#4       ctrl        2  106
+#5         KO        2  116
+#6         WT        2  113
 ```
 <p align="center">
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/bar.png" width="400"/>
