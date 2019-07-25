@@ -4,9 +4,9 @@
 #' @param x An object of class iCellR.
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' my.obj <- clust.avg.exp(my.obj)
-#' }
+#' demo.obj <- clust.avg.exp(demo.obj)
+#'
+#' head(demo.obj@clust.avg)
 #' @export
 clust.avg.exp <- function (x = NULL) {
   if ("iCellR" != class(x)[1]) {

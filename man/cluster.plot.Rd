@@ -6,16 +6,16 @@
 \usage{
 cluster.plot(x = NULL, cell.size = 1, plot.type = "tsne",
   cell.color = "black", back.col = "white", col.by = "clusters",
-  cond.shape = F, cell.transparency = 0.5, clust.dim = 2,
-  angle = 20, clonotype.max = 10, density = F, interactive = TRUE,
-  static3D = F, out.name = "plot")
+  cond.shape = FALSE, cell.transparency = 0.5, clust.dim = 2,
+  angle = 20, clonotype.max = 10, density = FALSE,
+  interactive = TRUE, static3D = FALSE, out.name = "plot")
 }
 \arguments{
 \item{x}{An object of class iCellR.}
 
 \item{cell.size}{A numeric value for the size of the cells, default = 1.}
 
-\item{plot.type}{Choose between "tsne" and "pca", default = "tsne".}
+\item{plot.type}{Choose between "tsne", "pca", "umap", "diffusion", "pseudo.A" and "pseudo.B", default = "tsne".}
 
 \item{cell.color}{Choose cell color if col.by = "monochrome", default = "black".}
 
@@ -31,6 +31,8 @@ cluster.plot(x = NULL, cell.size = 1, plot.type = "tsne",
 
 \item{angle}{A number to rotate the non-interactive 3D plot.}
 
+\item{clonotype.max}{Number of clonotype to plot, default = 10.}
+
 \item{density}{If TRUE the density plots for PCA/tSNE second dimension will be created, default = FALSE.}
 
 \item{interactive}{If TRUE an html interactive file will be made, default = TRUE.}
@@ -43,10 +45,18 @@ cluster.plot(x = NULL, cell.size = 1, plot.type = "tsne",
 An object of class iCellR.
 }
 \description{
-This function takes an object of class iCellR and creates plot.
+This function takes an object of class iCellR and creates plots to see the clusters.
 }
 \examples{
-\dontrun{
-tsne.plot(my.obj)
-}
+cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
+
+cluster.plot(demo.obj,plot.type = "tsne",interactive = FALSE)
+
+cluster.plot(demo.obj,plot.type = "pca",interactive = FALSE)
+
+cluster.plot(demo.obj,plot.type = "pca",col.by = "conditions",interactive = FALSE)
+
+cluster.plot(demo.obj,plot.type = "umap",col.by = "conditions",interactive = FALSE)
+
+cluster.plot(demo.obj,plot.type = "tsne",col.by = "conditions",interactive = FALSE)
 }

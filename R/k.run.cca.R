@@ -1,16 +1,17 @@
-#' Run PCA on the main data
+#' Run CCA on the main data
 #'
-#' This function takes an object of class iCellR and runs PCA on the main data.
+#' This function takes an object of class iCellR and runs CCA using Seurat.
 #' @param x An object of class iCellR.
-#' @param clust.method Choose from "base.mean.rank" or "gene.model", default is "base.mean.rank".
-#' @param top.rank A number taking the top genes ranked by base mean, default = 500.
-#' @param plus.log.value A number to add to each value in the matrix before log transformasion to aviond Inf numbers, default = 0.1.
-#' @param gene.list A list of genes to be used for PCA. If "clust.method" is set to "gene.model", default = "my_model_genes.txt".
+#' @param top.vari.genes Chose top genes to use for CCA, default = 1000.
+#' @param cc.number Choose a number, default = 30.
+#' @param dims.align Choose the CCA dimentions to align, default = 1:20.
+#' @param scale.data TRUE or FALSE, default = TRUE.
+#' @param normalize.data TRUE or FALSE, default = TRUE.
+#' @param normalization.method Choose a method, default = "LogNormalize".
+#' @param scale.factor Scaling factor, default = 10000.
+#' @param display.progress Show progress, default = TRUE.
 #' @return An object of class iCellR.
-#' @examples
-#' \dontrun{
-#' my.obj <- run.pca(my.obj, clust.method = "gene.model", gene.list = "my_model_genes.txt")
-#' }
+#' @importFrom htmlwidgets saveWidget
 #' @export
 run.cca <- function (x = NULL,
                      top.vari.genes = 1000,
@@ -25,7 +26,12 @@ run.cca <- function (x = NULL,
     stop("x should be an object of class iCellR")
   }
   #
-  require(Seurat)
+  ###########
+  if(!"Seurat" %in% (.packages())){
+    stop("Please load Seurat package: library(Seurat)")
+  }
+  ##########
+#  require(Seurat)
   # Get data
   DATA <- x@main.data
   # Get conds
@@ -36,7 +42,7 @@ run.cca <- function (x = NULL,
   }
 ## get data
     Patt <- paste(Conds[1], "_",sep="")
-    FistCond = grep(Patt, Cells, value = T)
+    FistCond = grep(Patt, Cells, value = TRUE)
     DATA1 <- DATA[ , which(names(DATA) %in% FistCond)]
     DATA2 <- DATA[ , -which(names(DATA) %in% FistCond)]
     # make Seurat objects
@@ -51,7 +57,7 @@ run.cca <- function (x = NULL,
     if (scale.data == TRUE) {
       ctrl <- ScaleData(ctrl, display.progress = display.progress)
     }
-    ctrl <- FindVariableGenes(ctrl, do.plot = F)
+    ctrl <- FindVariableGenes(ctrl, do.plot = FALSE)
     # Set up DATA2
     stim <- CreateSeuratObject(raw.data = DATA2, project = "IMMUNE_STIM")
     stim@meta.data$stim <- "STIM"
@@ -63,7 +69,7 @@ run.cca <- function (x = NULL,
     if (scale.data == TRUE) {
       stim <- ScaleData(stim, display.progress = display.progress)
     }
-    stim <- FindVariableGenes(stim, do.plot = F)
+    stim <- FindVariableGenes(stim, do.plot = FALSE)
     # get variable genes
     g.1 <- head(rownames(ctrl@hvg.info), top.vari.genes)
     g.2 <- head(rownames(stim@hvg.info), top.vari.genes)

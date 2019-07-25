@@ -9,6 +9,7 @@
 #' \dontrun{
 #' my.obj <- cc(my.obj, s.genes = s.phase, g2m.genes = g2m.phase)
 #' }
+#' @importFrom Hmisc cut2
 #' @export
 cc <- function (object = NULL, s.genes = s.phase, g2m.genes = g2m.phase) {
   if ("iCellR" != class(object)[1]) {
@@ -19,13 +20,13 @@ cc <- function (object = NULL, s.genes = s.phase, g2m.genes = g2m.phase) {
   s.phase.genes <- s.genes
   s.phase.genes <- paste("^",s.phase.genes,"$", sep="")
   s.phase.genes <- paste(s.phase.genes,collapse="|")
-  s.phase.genes <- grep(s.phase.genes, x = ALLgenes, value = T, ignore.case = TRUE)
+  s.phase.genes <- grep(s.phase.genes, x = ALLgenes, value = TRUE, ignore.case = TRUE)
   s.genes <- s.phase.genes
   #
   g2m.phase.genes <- g2m.genes
   g2m.phase.genes <- paste("^",g2m.phase.genes,"$", sep="")
   g2m.phase.genes <- paste(g2m.phase.genes,collapse="|")
-  g2m.phase.genes <- grep(g2m.phase.genes, x = ALLgenes, value = T, ignore.case = TRUE)
+  g2m.phase.genes <- grep(g2m.phase.genes, x = ALLgenes, value = TRUE, ignore.case = TRUE)
   g2m.genes <- g2m.phase.genes
   #####
   Table <-  object@stats

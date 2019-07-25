@@ -14,15 +14,16 @@
 #' @param filter.by.gene.exp.min Minimum gene expression to be filtered by the genes set in filter.by.gene, default = 1.
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' cell.filter(my.obj,
-#'    min.mito = 0,
-#'    max.mito = 1,
-#'    min.genes = 0,
-#'    max.genes = Inf,
-#'    min.umis = 0,
-#'    max.umis = Inf)
-#' }
+#' demo.obj <- cell.filter(demo.obj,
+#'                        min.mito = 0,
+#'                        max.mito = 0.05 ,
+#'                        min.genes = 100,
+#'                        max.genes = 2500,
+#'                        min.umis = 0,
+#'                        max.umis = Inf)
+#'
+#' message(demo.obj@my.filters)
+#'
 #' @export
 cell.filter <- function (x = NULL,
                          min.mito = 0,
@@ -152,10 +153,11 @@ cell.filter <- function (x = NULL,
   - In addition the following cell ids were set to keep/filter (user input):
   ",FiltCellIds)
 # write filter parameters
-  write.table((FilterFile),file="filters_set.txt", row.names =F, quote = F, col.names = F)
-  print("filters_set.txt file has beed generated and includes the filters set for this experiment.")
-# return data
+#  write.table((FilterFile),file="filters_set.txt", row.names =F, quote = F, col.names = F)
+#  print("filters_set.txt file has beed generated and includes the filters set for this experiment.")
+  # return data
   row.names(DATA) <- gsub("-",".", row.names(DATA))
   attributes(x)$main.data <- DATA
+  attributes(x)$my.filters <- FilterFile
   return(x)
 }

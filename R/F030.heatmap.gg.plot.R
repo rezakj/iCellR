@@ -8,13 +8,32 @@
 #' @param interactive If TRUE an html interactive file will be made, default = TRUE.
 #' @param out.name Output name for html file if interactive = TRUE, default = "plot".
 #' @param no.key If you want a color legend key, default = FALSE.
+#' @param data.type Choose from "main" and "imputed", default = "main".
+#' @param min.scale Set a minimum color scale, default = -2.5.
+#' @param max.scale Set a maximum color scale, default = 2.5.
+#' @param cex.col Chhose a size, default = 10.
+#' @param cex.row Choose a size, default = 10.
 #' @return An object of class iCellR
 #' @examples
-#' \dontrun{
-#' heatmap.gg.plot(my.obj, gene = MyGenes, interactive = T, out.name = "plot", cluster.by = "clusters")
-#' }
+#' marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
+#'
+#' MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
+#'
+#' heatmap.gg.plot(demo.obj,
+#'                gene = MyGenes,
+#'                out.name = "plot",
+#'                cluster.by = "clusters",
+#'                interactive = FALSE)
 #' @import pheatmap
 #' @importFrom reshape melt
+#' @importFrom htmlwidgets saveWidget
+#' @importFrom plotly ggplotly layout plot_ly
+#' @importFrom grDevices col2rgb colorRampPalette rgb
+#' @importFrom methods new
+#' @importFrom stats aggregate as.dendrogram cor cor.test dist hclust p.adjust prcomp quantile sd t.test
+#' @importFrom utils capture.output packageVersion read.table write.table
+#' @importFrom graphics legend par plot
+#' @importFrom ggplot2 ggplot geom_segment geom_violin guide_colorbar guide_legend guides scale_color_discrete scale_colour_gradient scale_fill_gradient2 scale_x_continuous scale_y_continuous scale_y_discrete stat_summary coord_polar element_rect element_text element_blank facet_wrap scale_color_manual geom_hline geom_jitter geom_vline ylab xlab ggtitle theme_bw aes theme geom_bar geom_point geom_boxplot geom_errorbar position_dodge geom_tile geom_density geom_line
 #' @export
 heatmap.gg.plot <- function (x = NULL,
                           gene = "NULL",
@@ -22,7 +41,7 @@ heatmap.gg.plot <- function (x = NULL,
                           cluster.by = "clusters",
                           min.scale = -2.5,
                           max.scale = 2.5,
-                          interactive = T,
+                          interactive = TRUE,
                           cex.col = 10,
                           cex.row = 10,
                           no.key = FALSE,
@@ -39,7 +58,7 @@ heatmap.gg.plot <- function (x = NULL,
     DATAmain <- x@imputed.data
   }
   AllGenes = row.names(DATAmain)
-  absent = which((gene %in% AllGenes) == F)
+  absent = which((gene %in% AllGenes) == FALSE)
   absentgenes = gene[absent]
   if(length(absentgenes) != 0)
   {
@@ -54,7 +73,7 @@ heatmap.gg.plot <- function (x = NULL,
   ## order by cluster
   if (cluster.by == "clusters") {
 #  MYord <- (MYord[order(MYord$Row, decreasing = F),])
-  MYord <- (MYord[order(MYord$clusters, decreasing = F),])
+  MYord <- (MYord[order(MYord$clusters, decreasing = FALSE),])
   clustOrd <- unique(MYord$clusters)
   z = as.data.frame(MYord$clusters)
   # make break lines
@@ -67,7 +86,7 @@ heatmap.gg.plot <- function (x = NULL,
   MyLines <- MyLines[1:length(MyLines)-1]
 }
   if (cluster.by == "conditions") {
-    MYord <- (MYord[order(MYord$Row, decreasing = F),])
+    MYord <- (MYord[order(MYord$Row, decreasing = FALSE),])
     z = as.data.frame(MYord$Row)
   }
   # order
@@ -97,7 +116,6 @@ heatmap.gg.plot <- function (x = NULL,
   col.high = heat.colors[3]
   ############ ggplot 2
   # fix order
-  library(reshape)
   data <- melt(data)
 #  head(data)
   names(x = data)[names(x = data) == "X1"] <- "cell"
@@ -143,7 +161,7 @@ heatmap.gg.plot <- function (x = NULL,
   clusters <- cbind(cell = rownames(clusters),clusters)
   data <- cbind(Myord = row.names(data), data)
   mrgd <- merge(data, clusters, by="cell")
-  mrgd <- (mrgd[order(as.numeric(as.character(mrgd$Myord)), decreasing = T),])
+  mrgd <- (mrgd[order(as.numeric(as.character(mrgd$Myord)), decreasing = TRUE),])
   data <- mrgd
   data$gene <- factor(data$gene, levels = rev(gene))
   data$cell <- factor(data$cell, levels = MYord)
@@ -198,13 +216,13 @@ heatmap.gg.plot <- function (x = NULL,
 #  panel.spacing <- unit(x = 0.15, units = "lines")
 #  heatmap <- heatmap + theme(strip.background = element_blank(),panel.spacing = panel.spacing)
   # rmove key
-  if (no.key == T) {
+  if (no.key == TRUE) {
     heatmap <- heatmap + theme(legend.position = "none")
   }
 #
 #  htmlwidgets::saveWidget(ggplotly(heatmap), "fix.html")
   # return
-  if (interactive == T) {
+  if (interactive == TRUE) {
     OUT.PUT <- paste(out.name, ".html", sep="")
     htmlwidgets::saveWidget(ggplotly(heatmap), OUT.PUT)
   } else {

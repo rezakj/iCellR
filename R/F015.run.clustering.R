@@ -10,15 +10,16 @@
 #' @param dims PCA dimentions to be use for clustering, default = 1:10.
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' my.obj <- run.clustering(my.obj,
-#'                         clust.method = "kmeans",
-#'                         dist.method = "euclidean",
-#'                         index.method = "silhouette",
-#'                         max.clust = 25,
-#'                         min.clust = 2,
-#'                         dims = 1:10)
-#' }
+#' demo.obj <- run.clustering(demo.obj,
+#'                           clust.method = "kmeans",
+#'                           dist.method = "euclidean",
+#'                           index.method = "silhouette",
+#'                           max.clust = 2,
+#'                           min.clust = 2,
+#'                           dims = 1:10)
+#'
+#'  head(demo.obj@best.clust)
+#'
 #' @import NbClust
 #' @export
 run.clustering <- function (x = NULL,

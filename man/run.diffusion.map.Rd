@@ -18,6 +18,8 @@ run.diffusion.map(x = NULL, dims = 1:10, method = "phate",
 
 \item{dims}{PC dimentions to be used for UMAP analysis.}
 
+\item{method}{diffusion map method, default = "phate".}
+
 \item{ndim}{int, optional, default: 2 number of dimensions in which the data will be embedded}
 
 \item{k}{int, optional, default: 5 number of nearest neighbors on which to build kernel}
@@ -42,7 +44,7 @@ run.diffusion.map(x = NULL, dims = 1:10, method = "phate",
 
 \item{npca}{int, optional, default: 100 Number of principal components to use for calculating neighborhoods. For extremely large datasets, using n_pca < 20 allows neighborhoods to be calculated in log(n_samples) time.}
 
-\item{plot.optimal.t}{boolean, optional, default: FALSE If TRUE, produce a plot showing the Von Neumann Entropy curve for automatic t selection.}
+\item{plot.optimal.t}{boolean, optional, if TRUE, produce a plot showing the Von Neumann Entropy curve for automatic t selection.}
 
 \item{verbose}{int or boolean, optional (default : 1) If TRUE or > 0, print verbose updates.}
 
@@ -75,7 +77,8 @@ An object of class iCellR.
 This function takes an object of class iCellR and runs diffusion map on PCA data.
 }
 \examples{
-\dontrun{
-my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
+\donttest{
+demo.obj <- run.diffusion.map(demo.obj, dims = 1:10, method = "phate")
+head(demo.obj@diffusion.data)
 }
 }

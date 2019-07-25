@@ -19,8 +19,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and assigns cluster number to a vector of cell ids.
 }
-\examples{
-\dontrun{
-my.obj <- gate.to.clust(my.obj,  my.gate = readLines("ids.txt"), to.clust = 1)
-}
-}

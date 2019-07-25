@@ -24,6 +24,8 @@ pseudotime.tree(x = NULL, marker.genes = "NULL",
 
 \item{type}{Choose from "classic", "jitter", "unrooted", "fan", "cladogram", "radial", default = "classic".}
 
+\item{hang}{Hang, default = 1.}
+
 \item{cex}{Text size, default = 1.}
 }
 \value{
@@ -33,7 +35,13 @@ An object of class iCellR.
 This function takes an object of class iCellR and marker genes for clusters and performs pseudotime for differentiation or time course analysis.
 }
 \examples{
-\dontrun{
-my.obj <- run.pca(my.obj, clust.method = "gene.model", gene.list = "my_model_genes.txt")
-}
+marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
+
+MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
+
+pseudotime.tree(demo.obj,
+               marker.genes = MyGenes,
+               type = "unrooted",
+               clust.method = "complete")
+
 }

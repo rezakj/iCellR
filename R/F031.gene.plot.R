@@ -5,9 +5,13 @@
 #' @param gene A gene name to be plotted.
 #' @param box.to.test A cluster number so that all the boxes in the box plot would be compared to. If set to "0" the cluster with the highest avrage would be choosen, default = 0.
 #' @param box.pval Choose from "sig.values" and "sig.signs". If set to "sig.signs" p values would be replaced with signs ("na", "*", "**", "***"), default = "sig.signs".
-#' @param plot.data.type Choose from "tsne" and "pca", default = "tsne".
+#' @param plot.data.type Choose between "tsne", "pca", "umap", "diffusion", "pseudo.A" and "pseudo.B", default = "tsne".
 #' @param clust.dim 2 for 2D plots and 3 for 3D plots, default = 2.
 #' @param col.by Choose from "clusters" and "conditions", default = "clusters".
+#' @param data.type Choose from "main" or "imputed", default = "main".
+#' @param scaleValue Scale the colors, default = FALSE.
+#' @param min.scale If scaleValue = TRUE, set a number for min, default = -2.5.
+#' @param max.scale If scaleValue = TRUE, set a number for max, default = 2.5.
 #' @param cond.shape If TRUE the conditions will be shown in shapes.
 #' @param plot.type Choose from "scatterplot", "boxplot" and "barplot", default = "scatterplot".
 #' @param cell.size A number for the size of the points in the plot, default = 1.
@@ -21,65 +25,39 @@
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' cluster.plot(my.obj,
-#'             cell.size = 1,
-#'             plot.type = "tsne",
-#'             cell.color = "black",
-#'             back.col = "white",
-#'             col.by = "clusters",
-#'             cell.transparency = 0.5,
-#'             clust.dim = 3,
-#'             interactive = T,
-#'             density = F,
-#'             out.name = "tSNE_3D_clusters")
+#' gene.plot(demo.obj, gene = "CD74",interactive = FALSE)
 #'
-#' cluster.plot(my.obj, cell.size = 1,
-#'             plot.type = "tsne",
-#'             col.by = "clusters",
-#'             cell.transparency = 0.5,
-#'             clust.dim = 2,
-#'             interactive = T,
-#'             density = F,
-#'             out.name = "tSNE_2D_clusters")
+#' gene.plot(demo.obj, gene = "CD74",plot.data.type = "umap",interactive = FALSE)
 #'
-#'cluster.plot(my.obj,
-#'            cell.size = 2,
-#'            plot.type = "tsne",
-#'            clust.dim = 2,
-#'            interactive = F)
+#' gene.plot(demo.obj, gene = "CD74",
+#'           plot.data.type = "umap",
+#'           interactive = FALSE,
+#'           plot.type = "barplot")
 #'
-#'cluster.plot(my.obj,
-#'            cell.size = 1,
-#'            plot.type = "tsne",
-#'            col.by = "clusters",
-#'            clust.dim = 3,
-#'            interactive = F,
-#'            angle = 45)
+#' gene.plot(demo.obj, gene = "CD74",
+#'           plot.data.type = "umap",
+#'           interactive = FALSE,
+#'           plot.type = "boxplot")
 #'
-#'
-#'cluster.plot(my.obj,
-#'           cell.size = 1,
-#'           plot.type = "pca",
-#'           cell.color = "black",
-#'           back.col = "white",
-#'           col.by = "conditions",
-#'           cell.transparency = 0.5,
-#'           clust.dim = 3,
-#'           interactive = T,
-#'           density = F,
-#'           out.name = "PCA_3D_conditions")
-#' }
-#' @import ggpubr
+#' @importFrom ggpubr stat_compare_means
+#' @import plyr
+#' @importFrom htmlwidgets saveWidget
+#' @importFrom plotly ggplotly layout plot_ly
+#' @importFrom grDevices col2rgb colorRampPalette rgb
+#' @importFrom methods new
+#' @importFrom stats aggregate as.dendrogram cor cor.test dist hclust p.adjust prcomp quantile sd t.test
+#' @importFrom utils capture.output packageVersion read.table write.table
+#' @importFrom graphics legend par plot
+#' @importFrom ggplot2 ggplot geom_segment geom_violin guide_colorbar guide_legend guides scale_color_discrete scale_colour_gradient scale_fill_gradient2 scale_x_continuous scale_y_continuous scale_y_discrete stat_summary coord_polar element_rect element_text element_blank facet_wrap scale_color_manual geom_hline geom_jitter geom_vline ylab xlab ggtitle theme_bw aes theme geom_bar geom_point geom_boxplot geom_errorbar position_dodge geom_tile geom_density geom_line
 #' @export
 gene.plot <- function (x = NULL,
                        gene = "NULL",
-                       cond.shape = F,
+                       cond.shape = FALSE,
                        data.type = "main",
                        box.to.test = 0,
                        box.pval = "sig.signs",
                        plot.data.type = "tsne",
-                       scaleValue = F,
+                       scaleValue = FALSE,
                        min.scale = -2.5,
                        max.scale = 2.5,
                        clust.dim = 2,
@@ -136,6 +114,14 @@ gene.plot <- function (x = NULL,
       MyTitle = "Diffusion Map Plot"
       DATA <- x@diffusion.data
     }
+    if (plot.type == "pseudo.A") {
+      MyTitle = "Pseudo Map A Plot"
+      DATA <- x@pseudo.mapA
+    }
+    if (plot.type == "pseudo.B") {
+      MyTitle = "Pseudo Map B Plot"
+      DATA <- x@pseudo.mapB
+    }
   }
   # 3 dimentions
   if (clust.dim == 3) {
@@ -190,13 +176,9 @@ gene.plot <- function (x = NULL,
     Mydat[Mydat < min] <- min
     return(Mydat)
   }
-  if (scaleValue == T) {
-    if (length(grep("^ADT_", gene, value = T)) == 0) {
-      col.legend <- FixScale(mydata = col.legend, min = min.scale, max = max.scale)
-    }
-  }
 # fix color for ADTs
-      if ( length(grep("^ADT_", gene, value = T)) == 1) {
+  if (scaleValue == FALSE) {
+      if ( length(grep("^ADT_", gene, value = TRUE)) == 1) {
         Lo3=(quantile(col.legend,0.05)) # 1
         Lo2=(quantile(col.legend,0.10)) # 2
         Lo1=(quantile(col.legend,0.25)) # 3
@@ -211,16 +193,22 @@ gene.plot <- function (x = NULL,
         col.legend <- replace(col.legend, col.legend > Lo1 & col.legend < MID ,Lo1)
         col.legend <- replace(col.legend, col.legend < Lo2 ,Lo1)
       }
+  }
 #      if ( length(grep("^ADT_", gene, value = T)) == 0) {
 #        col.legend = col.legend
 #      }
+###
+  if (scaleValue == TRUE) {
+    col.legend <- scale(col.legend)
+    col.legend <- FixScale(mydata = col.legend, min = min.scale, max = max.scale)
+  }
 ###
   if (plot.type == "scatterplot") {
   # plot 2d
     Conditions = col.legend.box
   if (clust.dim == 2) {
-    if (interactive == F) {
-      if (cond.shape == F) {
+    if (interactive == FALSE) {
+      if (cond.shape == FALSE) {
         myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
                                    text = row.names(DATA), color = col.legend)) +
           geom_point(size = cell.size, alpha = cell.transparency) +
@@ -232,7 +220,7 @@ gene.plot <- function (x = NULL,
                 panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                 legend.key = element_rect(fill = back.col))
       }
-        if (cond.shape == T) {
+        if (cond.shape == TRUE) {
           myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
                                      text = row.names(DATA), shape = Conditions,color = col.legend)) +
             geom_point(size = cell.size, alpha = cell.transparency) +
@@ -279,10 +267,10 @@ gene.plot <- function (x = NULL,
     theme_bw() + theme(axis.text.x=element_text(angle=90)) +
     geom_jitter(color = box.cell.col, size = cell.size, alpha = cell.transparency) +
     ggtitle(gene) +
-    geom_violin(trim=T, col = "black", alpha = cell.transparency) +
+    geom_violin(trim=TRUE, col = "black", alpha = cell.transparency) +
     geom_boxplot(fill = box.color,
                  col = "green",
-                 notch = F,
+                 notch = FALSE,
                  outlier.shape = NA,
                  alpha = cell.transparency) +
     ylab("scaled normalized expression") +
@@ -307,7 +295,6 @@ gene.plot <- function (x = NULL,
   mydata=cbind(data.expr,Yaxis1,col.legend.box)
   ## function to make sd
   data_summary <- function(data, varname, groupnames){
-    require(plyr)
     summary_func <- function(x, col){
       c(mean = mean(x[[col]], na.rm=TRUE),
         sd = sd(x[[col]], na.rm=TRUE))
@@ -326,7 +313,7 @@ gene.plot <- function (x = NULL,
     stat_summary(fun.y="mean",
                  geom="bar",
                  alpha = cell.transparency,
-                 show.legend = F) +
+                 show.legend = FALSE) +
     geom_errorbar(aes(ymin=Yaxis1-sd, ymax=Yaxis1+sd), width=.2,
                   position=position_dodge(.9)) +
     ylab("avraged normalized expression") +
@@ -335,7 +322,7 @@ gene.plot <- function (x = NULL,
     theme_bw() + theme(axis.text.x=element_text(angle=90))
   }
   # return
-  if (interactive == T) {
+  if (interactive == TRUE) {
     OUT.PUT <- paste(out.name, ".html", sep="")
     htmlwidgets::saveWidget(ggplotly(myPLOT), OUT.PUT)
   } else {

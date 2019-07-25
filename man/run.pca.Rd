@@ -5,11 +5,13 @@
 \title{Run PCA on the main data}
 \usage{
 run.pca(x = NULL, data.type = "main", method = "base.mean.rank",
-  top.rank = 500, plus.log.value = 0.1, batch.norm = F,
+  top.rank = 500, plus.log.value = 0.1, batch.norm = FALSE,
   gene.list = "character")
 }
 \arguments{
 \item{x}{An object of class iCellR.}
+
+\item{data.type}{Choose from "main" and "imputed", default = "main"}
 
 \item{method}{Choose from "base.mean.rank" or "gene.model", default is "base.mean.rank". If gene.model is chosen you need to provide gene.list.}
 
@@ -28,7 +30,8 @@ An object of class iCellR.
 This function takes an object of class iCellR and runs PCA on the main data.
 }
 \examples{
-\dontrun{
-my.obj <- run.pca(my.obj, clust.method = "gene.model", gene.list = "my_model_genes.txt")
-}
+demo.obj <- run.pca(demo.obj, method = "gene.model", gene.list = demo.obj@gene.model)
+
+head(demo.obj@pca.data)[1:5]
+
 }

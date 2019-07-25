@@ -21,16 +21,25 @@ cell.type.pred <- function (immgen.data = "rna",
                      heat.colors = c("blue","white", "red")) {
   ## get main data
 if (immgen.data == "rna") {
+  if (!exists("immgen.rna")) {
+    stop("Please download the 'immgen.rna.rda' file from 'https://github.com/rezakj/iCellR/tree/master/data' and load it like: load('immgen.rna.rda')")
+  }
   my.data <- immgen.rna
   MyTitle = "Top 23 out of 23 (ImmGen RNA-seq)"
   }
   if (immgen.data == "uli.rna") {
+    if (!exists("immgen.uli.rna")) {
+      stop("Please download the 'immgen.uli.rna.rda' file from 'https://github.com/rezakj/iCellR/tree/master/data' and load it like: load('immgen.uli.rna.rda')")
+    }
     my.data <- immgen.uli.rna
     MyTitle = paste("Top", top.cell.types, "out of 157 (ImmGen ultra-low-input RNA-seq)")
   }
   if (immgen.data == "mca") {
+    if (!exists("mouse.cell.atlas")) {
+      stop("Please download the 'mouse.cell.atlas.rda' file from 'https://github.com/rezakj/iCellR/tree/master/data' and load it like: load('mouse.cell.atlas.rda')")
+    }
     my.data <- mouse.cell.atlas
-    MyTitle = paste("Top", top.cell.types, "out of 157 (ImmGen ultra-low-input RNA-seq)")
+    MyTitle = paste("Top", top.cell.types, "Mouse Cell Atlas")
   }
   # fix row names
   MyRows <- toupper(row.names(my.data))
@@ -42,7 +51,7 @@ if (immgen.data == "rna") {
   # scale
   my.data <- log2(my.data + 1)
   # gg plot
-  MYdf <- as.data.frame(sort(colSums(my.data),decreasing = F))
+  MYdf <- as.data.frame(sort(colSums(my.data),decreasing = FALSE))
   colnames(MYdf) <- c("MyLev")
   MYdf <- cbind(cells = rownames(MYdf),MYdf)
   MYdf <- tail(MYdf, top.cell.types)
@@ -65,10 +74,10 @@ if (immgen.data == "rna") {
   # return
   if (plot.type == "heatmap") {
     return(pheatmap(as.matrix(my.data),
-                    col = mycol,
-                    show_colnames = T,
-                    cluster_rows = T,
-                    cluster_cols = T,
+                    color = mycol,
+                    show_colnames = TRUE,
+                    cluster_rows = TRUE,
+                    cluster_cols = TRUE,
                     scale = "row"))
   }
 }

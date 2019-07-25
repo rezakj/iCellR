@@ -20,7 +20,7 @@ An object of class iCellR.
 This function takes an object of class iCellR and runs UMAP on PCA data.
 }
 \examples{
-\dontrun{
-my.obj <- run.umap(my.obj, dims = 1:10)
-}
+demo.obj <- run.umap(demo.obj, dims = 1:10)
+head(demo.obj@umap.data)
+
 }

@@ -7,9 +7,10 @@
 make.gene.model(x = NULL, dispersion.limit = 1.5,
   base.mean.rank = 500, non.sig.col = "darkgray",
   right.sig.col = "chartreuse3", left.sig.col = "cadetblue3",
-  disp.line.col = "black", rank.line.col = "red", cell.size = 1.75,
-  cell.transparency = 0.5, no.mito.model = T, no.cell.cycle = T,
-  mark.mito = T, interactive = TRUE, out.name = "plot")
+  disp.line.col = "black", rank.line.col = "red",
+  my.out.put = "data", cell.size = 1.75, cell.transparency = 0.5,
+  no.mito.model = TRUE, no.cell.cycle = TRUE, mark.mito = TRUE,
+  interactive = TRUE, out.name = "plot")
 }
 \arguments{
 \item{x}{An object of class iCellR.}
@@ -28,11 +29,15 @@ make.gene.model(x = NULL, dispersion.limit = 1.5,
 
 \item{rank.line.col}{Color of the line for rank limit, default = "red".}
 
+\item{my.out.put}{Chose from "data" or "plot", default = "data".}
+
 \item{cell.size}{A number for the size of the points in the plot, default = 1.75.}
 
 \item{cell.transparency}{Color transparency for the points in the plot, default = 0.5.}
 
 \item{no.mito.model}{If set to TRUE, mitochondrial genes would be excluded from the gene list made for clustering, default = TRUE.}
+
+\item{no.cell.cycle}{If TRUE the cell cycle genes will be removed (s.phase and g2m.phase), default = TRUE.}
 
 \item{mark.mito}{Mark mitochondrial genes in the plot, default = TRUE.}
 
@@ -47,22 +52,23 @@ An object of class iCellR.
 This function takes an object of class iCellR and provides a gene list for clustering based on the parameters set in the model.
 }
 \examples{
-\dontrun{
-make.gene.model(my.obj,
+make.gene.model(demo.obj,
                dispersion.limit = 1.5,
                base.mean.rank = 500,
-               no.mito.model = T,
-               mark.mito = T,
-               interactive = T,
+               no.mito.model = TRUE,
+               mark.mito = TRUE,
+               interactive = FALSE,
+               my.out.put = "plot",
                out.name = "gene.model")
 
-make.gene.model(my.obj,
-             dispersion.limit = 1.5,
-             base.mean.rank = 500,
-             no.mito.model = T,
-             mark.mito = T,
-             interactive = F,
-             out.name = "gene.model")
-}
+demo.obj <- make.gene.model(demo.obj,
+                           dispersion.limit = 1.5,
+                           base.mean.rank = 500,
+                           no.mito.model = TRUE,
+                           mark.mito = TRUE,
+                           interactive = FALSE,
+                           out.name = "gene.model")
+
+head(demo.obj@gene.model)
 
 }

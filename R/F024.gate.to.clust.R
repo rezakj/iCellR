@@ -5,10 +5,6 @@
 #' @param my.gate A vector of cell ids.
 #' @param to.clust A cluster id to be assigned to the provided cell ids.
 #' @return An object of class iCellR.
-#' @examples
-#' \dontrun{
-#' my.obj <- gate.to.clust(my.obj,  my.gate = readLines("ids.txt"), to.clust = 1)
-#' }
 #' @export
 gate.to.clust <- function(x = NULL,
                         my.gate = NULL,

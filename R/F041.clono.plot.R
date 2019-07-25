@@ -5,6 +5,7 @@
 #' @param clono A clonotype name to be plotted, default = 1.
 #' @param plot.data.type Choose from "tsne" and "pca", default = "tsne".
 #' @param clust.dim 2 for 2D plots and 3 for 3D plots, default =  2.
+#' @param box.cell.col Choose a color for box default =  "black".
 #' @param cell.size A number for the size of the points in the plot, default = 1.
 #' @param cell.colors Colors for heat mapping the points in "scatterplot", default = c("gray","red").
 #' @param back.col A color for the plot background, default = "black".
@@ -22,11 +23,10 @@
 #'             cell.colors = c("red","gray"),
 #'             cbox.cell.col = "black",
 #'             back.col = "white",
-#'             interactive = T,
+#'             interactive = TRUE,
 #'             cell.transparency = 0.5,
 #'             out.name = "tSNE_3D_clusters")
 #' }
-#' @import ggpubr
 #' @export
 clono.plot <- function (x = NULL,
                        plot.data.type = "tsne",
@@ -79,7 +79,7 @@ clono.plot <- function (x = NULL,
       colono$raw_clonotype_id <- gsub("clonotype"," ", colono$raw_clonotype_id)
       colono <- colono[1]
       colnames(colono) <- c("Clonotypes")
-      colonoData <- merge(DATA,colono, by="row.names", all.x=T, all.y=F)
+      colonoData <- merge(DATA,colono, by="row.names", all.x=TRUE, all.y=FALSE)
       colonoData$Clonotypes <- gsub( " ", "", colonoData$Clonotypes)
       colonoData$Clonotypes[is.na(colonoData$Clonotypes)] <- "NA"
       colonoData$Clonotypes[colonoData$Clonotypes != clono] <- "NA"
@@ -87,11 +87,11 @@ clono.plot <- function (x = NULL,
       DATA <- colonoData
       row.names(DATA) <- DATA$Row.names
       DATA <- DATA[,-1]
-      DATA <- (DATA[order(DATA$Clonotypes, decreasing = T),])
+      DATA <- (DATA[order(DATA$Clonotypes, decreasing = TRUE),])
       clonotype <- factor(DATA$Clonotypes)
     # plot 2d
     if (clust.dim == 2) {
-      if (interactive == F) {
+      if (interactive == FALSE) {
         myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],col=clonotype,
                                    text = row.names(DATA))) +
           geom_point(size = cell.size, alpha = cell.transparency) +
@@ -127,7 +127,7 @@ clono.plot <- function (x = NULL,
                             zaxis = list(title = "Dim3")))
     }
   # return
-  if (interactive == T) {
+  if (interactive == TRUE) {
     OUT.PUT <- paste(out.name, ".html", sep="")
     htmlwidgets::saveWidget(ggplotly(myPLOT), OUT.PUT)
   } else {

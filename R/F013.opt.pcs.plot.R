@@ -5,9 +5,7 @@
 #' @param pcs.in.plot Number of PCs to show in plot, defult = 50.
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' find.opt.pcs(my.obj)
-#' }
+#' opt.pcs.plot(demo.obj)
 #'
 #' @export
 opt.pcs.plot <- function (x = NULL, pcs.in.plot = 50) {

@@ -18,8 +18,6 @@ An object of class iCellR.
 This function takes an object of class iCellR and finds optimal number of PCs for clustering.
 }
 \examples{
-\dontrun{
-find.opt.pcs(my.obj)
-}
+opt.pcs.plot(demo.obj)
 
 }

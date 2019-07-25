@@ -4,12 +4,15 @@
 \alias{clust.cond.info}
 \title{Calculate cluster and conditions frequencies}
 \usage{
-clust.cond.info(x = NULL, plot.type = "pie", normalize.ncell = TRUE)
+clust.cond.info(x = NULL, plot.type = "pie", my.out.put = "data",
+  normalize.ncell = TRUE)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
 
 \item{plot.type}{Choose from pie or bar, defult = pie.}
+
+\item{my.out.put}{Chose from "data" or "plot", default = "data".}
 
 \item{normalize.ncell}{If TRUE the values will be normalized to the number of cells by downsampling.}
 }
@@ -20,8 +23,9 @@ An object of class iCellR.
 This function takes an object of class iCellR and calculates cluster and conditions frequencies.
 }
 \examples{
-\dontrun{
-clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE)
-clust.cond.info(my.obj, plot.type = "bar")
-}
+clust.cond.info(demo.obj, plot.type = "pie", normalize.ncell = TRUE, my.out.put = "data")
+
+head(demo.obj@my.freq)
+
+clust.cond.info(demo.obj, plot.type = "pie", normalize.ncell = TRUE, my.out.put = "plot")
 }

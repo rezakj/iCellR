@@ -4,14 +4,14 @@
 \alias{gene.stats}
 \title{Make statistical information for each gene across all the cells (SD, mean, expression, etc.)}
 \usage{
-gene.stats(x = NULL, which.data = "raw.data", each.cond = F)
+gene.stats(x = NULL, which.data = "raw.data", each.cond = FALSE)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
 
 \item{which.data}{Choose from "raw.data" or "main.data", default = "raw.data".}
 
-\item{each.cond}{If TRUE each condition will be calculated, default = F.}
+\item{each.cond}{If TRUE each condition will be calculated, default = FALSE.}
 }
 \value{
 An object of class iCellR.
@@ -20,7 +20,7 @@ An object of class iCellR.
 This function takes an object of class iCellR and provides some statistical information for the genes.
 }
 \examples{
-\dontrun{
-my.obj <- gene.stats(my.obj, which.data = "main.data")
-}
+demo.obj <- gene.stats(demo.obj, which.data = "main.data")
+head(demo.obj@gene.data)
+
 }

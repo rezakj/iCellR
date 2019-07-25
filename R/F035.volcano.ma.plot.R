@@ -16,23 +16,28 @@
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
 #' @return Plots
 #' @examples
-#' \dontrun{
+#'
+#' diff.res <- run.diff.exp(demo.obj, de.by = "clusters", cond.1 = c(1), cond.2 = c(2))
+#'
 #' volcano.ma.plot(diff.res,
 #'               sig.value = "pval",
 #'               sig.line = 0.05,
 #'               plot.type = "volcano",
-#'               interactive = T,
-#'               out.name = "Volcano.plot-Control2_vs_Treated3")
-#'
+#'               interactive = FALSE)
 #'
 #' volcano.ma.plot(diff.res,
 #'              sig.value = "pval",
 #'              sig.line = 0.05,
 #'              plot.type = "ma",
-#'              interactive = T,
-#'              out.name = "MA.plot-Control2_vs_Treated3")
-#' }
+#'              interactive = FALSE)
 #'
+#' @importFrom grDevices col2rgb colorRampPalette rgb
+#' @importFrom methods new
+#' @importFrom stats aggregate as.dendrogram cor cor.test dist hclust p.adjust prcomp quantile sd t.test
+#' @importFrom utils capture.output packageVersion read.table write.table
+#' @importFrom graphics legend par plot
+#' @importFrom plotly layout
+#' @importFrom ggplot2 ggplot scale_color_discrete scale_colour_gradient scale_fill_gradient2 scale_x_continuous scale_y_continuous scale_y_discrete stat_summary coord_polar element_rect element_text element_blank facet_wrap scale_color_manual geom_hline geom_jitter geom_vline ylab xlab ggtitle theme_bw aes theme geom_bar geom_point geom_boxplot geom_line
 #' @export
 volcano.ma.plot <- function (x = NULL,
                           sig.value = "padj",
@@ -40,8 +45,8 @@ volcano.ma.plot <- function (x = NULL,
                           plot.type = "volcano",
                           x.limit = 2,
                           y.limit = 2,
-                          limit.force = F,
-                          scale.ax = T,
+                          limit.force = FALSE,
+                          scale.ax = TRUE,
                           dot.size = 1.75,
                           dot.transparency = 0.5,
                           dot.col = c("#E64B35","#3182bd","#636363"),
@@ -77,7 +82,7 @@ volcano.ma.plot <- function (x = NULL,
                                       no = "none")))
   # Color corresponds to fold change directionality
   myPLOT <- ggplot(data, aes(x = lfc, y = pvalue, text = gene)) +
-    geom_point(aes(color = factor(color)), size = dot.size, alpha = dot.transparency, na.rm = T) + # add gene points
+    geom_point(aes(color = factor(color)), size = dot.size, alpha = dot.transparency, na.rm = TRUE) + # add gene points
     theme_bw(base_size = 16) + # clean up theme
     theme(legend.position = "none") + # remove legend
     ggtitle(label = "Volcano Plot", subtitle = "Colored by directionality") +  # add title
@@ -93,13 +98,13 @@ volcano.ma.plot <- function (x = NULL,
   ww = c(1:100)
   zz = log1p(1:100)
   # finish plot
-  if (limit.force == T) {
+  if (limit.force == TRUE) {
     myPLOT <- myPLOT + scale_x_continuous(limits = c(-XaxiS, XaxiS))
   }
-  if (scale.ax == T){
+  if (scale.ax == TRUE){
     myPLOT <- myPLOT + scale_y_continuous(trans = "log1p")
   }
-  if (scale.ax == F){
+  if (scale.ax == FALSE){
     myPLOT <- myPLOT + scale_y_continuous(limits = c(YaxiS))
   }
 }
@@ -133,7 +138,7 @@ volcano.ma.plot <- function (x = NULL,
                                       no = "none")))
   # Color corresponds to fold change directionality
   myPLOT <- ggplot(data, aes(x = baseMean, y = lfc, text = gene)) +
-    geom_point(aes(color = factor(color)), size = dot.size, alpha = dot.transparency, na.rm = T) + # add gene points
+    geom_point(aes(color = factor(color)), size = dot.size, alpha = dot.transparency, na.rm = TRUE) + # add gene points
     theme_bw(base_size = 16) + # clean up theme
     theme(legend.position = "none") + # remove legend
     ggtitle(label = "MA Plot", subtitle = "Colored by directionality") +  # add title
@@ -148,18 +153,18 @@ volcano.ma.plot <- function (x = NULL,
   ww = c(1:100)
   zz = log1p(1:100)
   # finish plot
-  if (limit.force == T) {
+  if (limit.force == TRUE) {
     myPLOT <- myPLOT + scale_y_continuous(limits = c(-YaxiS, YaxiS))
   }
-  if (scale.ax == T){
+  if (scale.ax == TRUE){
     myPLOT <- myPLOT + scale_x_continuous(trans = "log1p")
   }
-  if (scale.ax == F){
+  if (scale.ax == FALSE){
     myPLOT <- myPLOT + scale_x_continuous(limits = c(XaxiS))
   }
   }
   # return
-  if (interactive == T) {
+  if (interactive == TRUE) {
     OUT.PUT <- paste(out.name, ".html", sep="")
     htmlwidgets::saveWidget(ggplotly(myPLOT), OUT.PUT)
   } else {

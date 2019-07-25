@@ -2,11 +2,12 @@
 #'
 #' This function takes 10X data files barcodes.tsv, genes.tsv and matrix.mtx and converts them to proper matrix file for iCellR.
 #' @param dir.10x A directory that includes the 10X barcodes.tsv, genes.tsv and matrix.mtx files.
-#' @param gene.name.column Gene names or ids column number, default = 2.
+#' @param gene.name Gene names or ids column number, default = 2.
 #' @return The data frame object
 #' @examples
 #' \dontrun{
-#' load10x("/hg19", gene.name = "geneSymbol")
+#' # The directory should have barcodes.tsv, genes.tsv, and matrix.mtx files.
+#' load10x('path/to/data/directory')
 #' }
 #' @import Matrix
 #' @export

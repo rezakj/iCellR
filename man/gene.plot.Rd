@@ -4,9 +4,9 @@
 \alias{gene.plot}
 \title{Make scatter, box and bar plots for genes}
 \usage{
-gene.plot(x = NULL, gene = "NULL", cond.shape = F,
+gene.plot(x = NULL, gene = "NULL", cond.shape = FALSE,
   data.type = "main", box.to.test = 0, box.pval = "sig.signs",
-  plot.data.type = "tsne", scaleValue = F, min.scale = -2.5,
+  plot.data.type = "tsne", scaleValue = FALSE, min.scale = -2.5,
   max.scale = 2.5, clust.dim = 2, col.by = "clusters",
   plot.type = "scatterplot", cell.size = 1, cell.colors = c("gray",
   "red"), box.cell.col = "black", box.color = "red",
@@ -20,11 +20,19 @@ gene.plot(x = NULL, gene = "NULL", cond.shape = F,
 
 \item{cond.shape}{If TRUE the conditions will be shown in shapes.}
 
+\item{data.type}{Choose from "main" or "imputed", default = "main".}
+
 \item{box.to.test}{A cluster number so that all the boxes in the box plot would be compared to. If set to "0" the cluster with the highest avrage would be choosen, default = 0.}
 
 \item{box.pval}{Choose from "sig.values" and "sig.signs". If set to "sig.signs" p values would be replaced with signs ("na", "*", "**", "***"), default = "sig.signs".}
 
-\item{plot.data.type}{Choose from "tsne" and "pca", default = "tsne".}
+\item{plot.data.type}{Choose between "tsne", "pca", "umap", "diffusion", "pseudo.A" and "pseudo.B", default = "tsne".}
+
+\item{scaleValue}{Scale the colors, default = FALSE.}
+
+\item{min.scale}{If scaleValue = TRUE, set a number for min, default = -2.5.}
+
+\item{max.scale}{If scaleValue = TRUE, set a number for max, default = 2.5.}
 
 \item{clust.dim}{2 for 2D plots and 3 for 3D plots, default = 2.}
 
@@ -57,53 +65,18 @@ An object of class iCellR.
 This function takes an object of class iCellR and provides plots for genes.
 }
 \examples{
-\dontrun{
-cluster.plot(my.obj,
-            cell.size = 1,
-            plot.type = "tsne",
-            cell.color = "black",
-            back.col = "white",
-            col.by = "clusters",
-            cell.transparency = 0.5,
-            clust.dim = 3,
-            interactive = T,
-            density = F,
-            out.name = "tSNE_3D_clusters")
+gene.plot(demo.obj, gene = "CD74",interactive = FALSE)
 
-cluster.plot(my.obj, cell.size = 1,
-            plot.type = "tsne",
-            col.by = "clusters",
-            cell.transparency = 0.5,
-            clust.dim = 2,
-            interactive = T,
-            density = F,
-            out.name = "tSNE_2D_clusters")
+gene.plot(demo.obj, gene = "CD74",plot.data.type = "umap",interactive = FALSE)
 
-cluster.plot(my.obj,
-           cell.size = 2,
-           plot.type = "tsne",
-           clust.dim = 2,
-           interactive = F)
+gene.plot(demo.obj, gene = "CD74",
+          plot.data.type = "umap",
+          interactive = FALSE,
+          plot.type = "barplot")
 
-cluster.plot(my.obj,
-           cell.size = 1,
-           plot.type = "tsne",
-           col.by = "clusters",
-           clust.dim = 3,
-           interactive = F,
-           angle = 45)
+gene.plot(demo.obj, gene = "CD74",
+          plot.data.type = "umap",
+          interactive = FALSE,
+          plot.type = "boxplot")
 
-
-cluster.plot(my.obj,
-          cell.size = 1,
-          plot.type = "pca",
-          cell.color = "black",
-          back.col = "white",
-          col.by = "conditions",
-          cell.transparency = 0.5,
-          clust.dim = 3,
-          interactive = T,
-          density = F,
-          out.name = "PCA_3D_conditions")
-}
 }

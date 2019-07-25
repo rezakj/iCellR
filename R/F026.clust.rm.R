@@ -5,9 +5,7 @@
 #' @param clust.to.rm The name of the cluster to be removed.
 #' @return An object of class iCellR
 #' @examples
-#' \dontrun{
-#' my.obj <- clust.rm(my.obj, clust.to.rm = 5)
-#' }
+#' demo.obj <- clust.rm(demo.obj, clust.to.rm = 1)
 #'
 #' @export
 clust.rm <- function (x = NULL, clust.to.rm = "numeric") {
@@ -24,24 +22,35 @@ clust.rm <- function (x = NULL, clust.to.rm = "numeric") {
   DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
   attributes(x)$best.clust <- DATA
   # main data
-  DATA <- x@main.data
-  DATA <- DATA[ , -which(names(DATA) %in% clustersToGo)]
-  attributes(x)$main.data <- DATA
+  if (dim(x@main.data)[1] != 0) {
+    DATA <- x@main.data
+    DATA <- DATA[ , -which(names(DATA) %in% clustersToGo)]
+    attributes(x)$main.data <- DATA
+  }
   # PCA
-  DATA <- x@pca.data
-  DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
-  attributes(x)$pca.data <- DATA
+  if (dim(x@pca.data)[1] != 0) {
+    DATA <- x@pca.data
+    DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
+    attributes(x)$pca.data <- DATA
+  }
   # tSNE
-  DATA <- x@tsne.data
-  DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
-  attributes(x)$tsne.data <- DATA
+  if (dim(x@tsne.data)[1] != 0) {
+    DATA <- x@tsne.data
+    DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
+    attributes(x)$tsne.data <- DATA
+  }
   # umap
-#  DATA <- x@umap.data
-#  DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
-#  attributes(x)$umap.data <- DATA
+  if (dim(x@umap.data)[1] != 0) {
+    DATA <- x@umap.data
+    DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
+    attributes(x)$umap.data <- DATA
+  }
   #
-  DATA <- x@tsne.data.3d
-  DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
-  attributes(x)$tsne.data.3d <- DATA
+  if (dim(x@tsne.data.3d)[1] != 0) {
+    DATA <- x@tsne.data.3d
+    DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
+    attributes(x)$tsne.data.3d <- DATA
+  }
+  print("The cells in the cluster of your choice are removed from: main.data, pca.data, tsne.data, tsne.data.3d and umap.data.")
   return(x)
 }

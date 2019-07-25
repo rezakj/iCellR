@@ -1,6 +1,6 @@
-#' Run MAGIC on Main Data.
+#' Impute the main data
 #'
-#' This function takes an object of class iCellR and runs MAGIC on main data. Markov Affinity-based Graph Imputation of Cells (MAGIC) is an algorithm for denoising and transcript recover of single cells applied to single-cell RNA sequencing data, as described in van Dijk et al, 2018.
+#' This function takes an object of class iCellR and runs imputation on the main data. MAGIC as one of the methods: Markov Affinity-based Graph Imputation of Cells (MAGIC) is an algorithm for denoising and transcript recover of single cells applied to single-cell RNA sequencing data, as described in van Dijk et al, 2018.
 #' @param x An object of class iCellR.
 #' @param genes character or integer vector, default: NULL vector of column names or column indices for which to return smoothed data If 'all_genes' or NULL, the entire smoothed matrix is returned
 #' @param k int, optional, default: 10 number of nearest neighbors on which to build kernel
@@ -15,10 +15,9 @@
 #' @param seed int or 'NULL', random state (default: 'NULL')
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' my.obj <- run.impute(my.obj)
+#' \donttest{
+#' demo.obj <- run.impute(demo.obj)
 #' }
-#' @import umap
 #' @export
 run.impute <- function (x = NULL,
                        genes = "all_genes", k = 10, alpha = 15, t = "auto",
@@ -28,12 +27,24 @@ run.impute <- function (x = NULL,
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
+  ###########
+  if(!"phateR" %in% (.packages())){
+    stop("Please load phateR package: library(phateR). This function requires 'phateR','Rmagic'and'viridis'.")
+  }
+  ##########
+  ###########
+  if(!"Rmagic" %in% (.packages())){
+    stop("Please load Rmagic package: library(Rmagic). This function requires 'phateR','Rmagic'and'viridis'.")
+  }
+  ##########
+  ###########
+  if(!"viridis" %in% (.packages())){
+    stop("Please load viridis package: library(viridis). This function requires 'phateR','Rmagic'and'viridis'.")
+  }
+  ##########
 ### load packages
   # https://github.com/KrishnaswamyLab/MAGIC/tree/master/Rmagic
   # https://www.analyticsvidhya.com/blog/2016/03/tutorial-powerful-packages-imputing-missing-values/
-  require(Rmagic)
-  require(viridis)
-  require(phateR)
   # get data
   DATA <- x@main.data
   DATA <- DATA[ rowSums(DATA) > 0, ]

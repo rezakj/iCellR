@@ -1,14 +1,8 @@
-#' Merge RNA and ADT data
+#' Impute data
 #'
-#' This function is to merge the RNA and ADT data to the main.data slot of the iCellR object.
+#' This function imputes data.
 #' @param x An object of class iCellR.
-#' @param adt.data Choose from raw or main (normalized) ADT data, default = "raw".
 #' @return An object of class iCellR
-#' @examples
-#' \dontrun{
-#' my.obj <- myImp(my.obj)
-#' }
-#'
 #' @export
 myImp <- function (x = NULL) {
   if ("iCellR" != class(x)[1]) {
@@ -22,7 +16,7 @@ myImp <- function (x = NULL) {
     dists = as.data.frame(as.matrix(dist(t(data), method = "euclidean")))[1]
     colnames(dists) <- "myDist"
     mydata <- as.data.frame(cbind(dists,DATA))
-    mydata <- (mydata[order(mydata$myDist, decreasing = T),])
+    mydata <- (mydata[order(mydata$myDist, decreasing = TRUE),])
     mydata <-  mydata[,-1]
     LG <- length(row.names(mydata))
     PRCENT = round((LG/100) * 4)

@@ -16,8 +16,9 @@ An object of class iCellR
 This function takes data frame and makes an object of class iCellR.
 }
 \examples{
-\dontrun{
-my.obj <- make.obj(my.data)
-}
-
+     demo <- read.table(
+     file = system.file('extdata', 'demo_data.txt', package = 'iCellR'),
+     as.is = TRUE)
+     myDemo.obj <- make.obj(demo)
+     myDemo.obj
 }

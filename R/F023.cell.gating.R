@@ -10,6 +10,7 @@
 #' cell.gating(my.obj, my.plot = PLOT, plot.type = "tsne")
 #' }
 #' @import shiny
+#' @importFrom plotly ggplotly layout plot_ly
 #' @export
 cell.gating <- function(x = NULL,
                          my.plot = NULL,
@@ -70,7 +71,7 @@ cell.gating <- function(x = NULL,
     output$downloadData <- downloadHandler(
       filename = "cellGating.txt",
       content = function(file) {
-        write.table(gr(),file, row.names =F, quote = F, col.names = F)
+        write.table(gr(),file, row.names =FALSE, quote = FALSE, col.names = FALSE)
       })
   }
   #########################################

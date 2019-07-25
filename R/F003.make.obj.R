@@ -4,10 +4,11 @@
 #' @param x A data frame containing gene counts for cells.
 #' @return An object of class iCellR
 #' @examples
-#' \dontrun{
-#' my.obj <- make.obj(my.data)
-#' }
-#'
+#'      demo <- read.table(
+#'      file = system.file('extdata', 'demo_data.txt', package = 'iCellR'),
+#'      as.is = TRUE)
+#'      myDemo.obj <- make.obj(demo)
+#'      myDemo.obj
 #' @export
 make.obj <- function (x = NULL) {
   # get info
@@ -37,7 +38,7 @@ make.obj <- function (x = NULL) {
   }
 # paste
 INFO.to.show <- paste(INFO, Data.Dim, My.Conds, Row.n, Col.n, sep="\n")
-INFO.to.show <- capture.output(cat(INFO.to.show))
+#INFO.to.show <- capture.output(message(INFO.to.show))
 # make object
 row.names(x) <- gsub("-",".",row.names(x))
 colnames(x) <- gsub("-",".",colnames(x))

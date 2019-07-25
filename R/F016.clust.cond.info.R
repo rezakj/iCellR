@@ -3,15 +3,20 @@
 #' This function takes an object of class iCellR and calculates cluster and conditions frequencies.
 #' @param x An object of class iCellR.
 #' @param plot.type Choose from pie or bar, defult = pie.
+#' @param my.out.put Chose from "data" or "plot", default = "data".
 #' @param normalize.ncell If TRUE the values will be normalized to the number of cells by downsampling.
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE)
-#' clust.cond.info(my.obj, plot.type = "bar")
-#' }
+#' clust.cond.info(demo.obj, plot.type = "pie", normalize.ncell = TRUE, my.out.put = "data")
+#'
+#' head(demo.obj@my.freq)
+#'
+#' clust.cond.info(demo.obj, plot.type = "pie", normalize.ncell = TRUE, my.out.put = "plot")
 #' @export
-clust.cond.info <- function (x = NULL, plot.type = "pie", normalize.ncell = TRUE) {
+clust.cond.info <- function (x = NULL,
+                             plot.type = "pie",
+                             my.out.put = "data",
+                             normalize.ncell = TRUE) {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
@@ -42,12 +47,12 @@ clust.cond.info <- function (x = NULL, plot.type = "pie", normalize.ncell = TRUE
   filenames <- ls(pattern="My_Cond_")
   datalist <- mget(filenames)
   NormDATA <- do.call(rbind.data.frame,datalist)
-  if (normalize.ncell == T) {
+  if (normalize.ncell == TRUE) {
     cond.clust <- NormDATA
   }
   DATA <- as.data.frame(table(cond.clust))
   Freq <- DATA$Freq
-  if (normalize.ncell == T) {
+  if (normalize.ncell == TRUE) {
     colnames(DATA) <- c("conditions","clusters","NormalizedFreq")
   }
 # as.data.frame(table(Conds))
@@ -61,13 +66,19 @@ clust.cond.info <- function (x = NULL, plot.type = "pie", normalize.ncell = TRUE
       axis.text.y=element_blank(),
       axis.ticks.y=element_blank()) + coord_polar(theta="y")
   #############
-  write.table((DATA), file="clust_cond_freq_info.txt", sep="\t", row.names =F)
-  print("clust_cond_freq_info.txt file has beed generated.")
-  if (plot.type == "bar") {
-    return(myBP)
-  }
-  if (plot.type == "pie") {
-    return(myPIE)
+#  write.table((DATA), file="clust_cond_freq_info.txt", sep="\t", row.names =FALSE)
+#  print("clust_cond_freq_info.txt file has beed generated.")
+  if (my.out.put == "plot") {
+    if (plot.type == "bar") {
+      return(myBP)
+    }
+    if (plot.type == "pie") {
+      return(myPIE)
+    }
   }
 #
+  if (my.out.put == "data") {
+    attributes(x)$my.freq <- DATA
+    return(x)
+  }
 }

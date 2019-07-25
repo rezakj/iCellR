@@ -1,14 +1,15 @@
 #' Plot nGenes, UMIs and perecent mito
 #'
-#' This function takes an object of class iCellR and creates plot.
+#' This function takes an object of class iCellR and creates plots to see the clusters.
 #' @param x An object of class iCellR.
 #' @param cell.size A numeric value for the size of the cells, default = 1.
-#' @param plot.type Choose between "tsne" and "pca", default = "tsne".
+#' @param plot.type Choose between "tsne", "pca", "umap", "diffusion", "pseudo.A" and "pseudo.B", default = "tsne".
 #' @param cell.color Choose cell color if col.by = "monochrome", default = "black".
 #' @param back.col Choose background color, default = "black".
 #' @param col.by Choose between "clusters", "conditions", "cc" (cell cycle) or "monochrome", default = "clusters".
 #' @param cond.shape If TRUE the conditions will be shown in shapes.
 #' @param cell.transparency A numeric value between 0 to 1, default = 0.5.
+#' @param clonotype.max Number of clonotype to plot, default = 10.
 #' @param clust.dim A numeric value for plot dimensions. Choose either 2 or 3, default = 2.
 #' @param interactive If TRUE an html interactive file will be made, default = TRUE.
 #' @param out.name Output name for html file if interactive = TRUE, default = "plot".
@@ -17,11 +18,27 @@
 #' @param static3D If TRUE a non-interactive 3D plot will be made.
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' tsne.plot(my.obj)
-#' }
+#' cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
+#'
+#' cluster.plot(demo.obj,plot.type = "tsne",interactive = FALSE)
+#'
+#' cluster.plot(demo.obj,plot.type = "pca",interactive = FALSE)
+#'
+#' cluster.plot(demo.obj,plot.type = "pca",col.by = "conditions",interactive = FALSE)
+#'
+#' cluster.plot(demo.obj,plot.type = "umap",col.by = "conditions",interactive = FALSE)
+#'
+#' cluster.plot(demo.obj,plot.type = "tsne",col.by = "conditions",interactive = FALSE)
 #' @import RColorBrewer
 #' @import scatterplot3d
+#' @importFrom htmlwidgets saveWidget
+#' @importFrom plotly ggplotly layout plot_ly
+#' @importFrom grDevices col2rgb colorRampPalette rgb
+#' @importFrom methods new
+#' @importFrom stats aggregate as.dendrogram cor cor.test dist hclust p.adjust prcomp quantile sd t.test
+#' @importFrom utils capture.output packageVersion read.table write.table
+#' @importFrom graphics legend par plot
+#' @importFrom ggplot2 ggplot theme_classic geom_segment geom_violin guide_colorbar guide_legend guides scale_color_discrete scale_colour_gradient scale_fill_gradient2 scale_x_continuous scale_y_continuous scale_y_discrete stat_summary coord_polar element_rect element_text element_blank facet_wrap scale_color_manual geom_hline geom_jitter geom_vline ylab xlab ggtitle theme_bw aes theme geom_bar geom_point geom_boxplot geom_errorbar position_dodge geom_tile geom_density geom_line
 #' @export
 cluster.plot <- function (x = NULL,
                           cell.size = 1,
@@ -29,14 +46,14 @@ cluster.plot <- function (x = NULL,
                           cell.color = "black",
                           back.col = "white",
                           col.by = "clusters",
-                          cond.shape = F,
+                          cond.shape = FALSE,
                           cell.transparency = 0.5,
                           clust.dim = 2,
                           angle = 20,
                           clonotype.max = 10,
-                          density = F,
+                          density = FALSE,
                           interactive = TRUE,
-                          static3D = F,
+                          static3D = FALSE,
                           out.name = "plot") {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
@@ -62,6 +79,14 @@ cluster.plot <- function (x = NULL,
     if (plot.type == "diffusion") {
       MyTitle = "Diffusion Map Plot"
       DATA <- x@diffusion.data
+    }
+    if (plot.type == "pseudo.A") {
+      MyTitle = "Pseudo Map A Plot"
+      DATA <- x@pseudo.mapA
+    }
+    if (plot.type == "pseudo.B") {
+      MyTitle = "Pseudo Map B Plot"
+      DATA <- x@pseudo.mapB
     }
   }
   # 3 dimentions
@@ -112,7 +137,7 @@ cluster.plot <- function (x = NULL,
       colono$raw_clonotype_id <- gsub("clonotype"," ", colono$raw_clonotype_id)
       colono <- colono[1]
       colnames(colono) <- c("Clonotypes")
-      colonoData <- merge(DATA,colono, by="row.names", all.x=T, all.y=F)
+      colonoData <- merge(DATA,colono, by="row.names", all.x=TRUE, all.y=FALSE)
       colonoData$Clonotypes[as.numeric(colonoData$Clonotypes) > clonotype.max] <- "remaining"
       colonoData$Clonotypes[is.na(colonoData$Clonotypes)] <- "not.determined"
       colonoData$Clonotypes <- gsub( " ", "", colonoData$Clonotypes)
@@ -152,8 +177,8 @@ cluster.plot <- function (x = NULL,
     }
 # plot 2d
   if (clust.dim == 2) {
-    if (cond.shape == F) {
-      if (static3D == F) {
+    if (cond.shape == FALSE) {
+      if (static3D == FALSE) {
         myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
                                    text = row.names(DATA), color = col.legend)) +
           geom_point(size = cell.size, alpha = cell.transparency) +
@@ -166,7 +191,7 @@ cluster.plot <- function (x = NULL,
                 panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                 legend.key = element_rect(fill = back.col))
       }
-      if (interactive == T) {
+      if (interactive == TRUE) {
         myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
                                    text = row.names(DATA), color = col.legend)) +
           geom_point(size = cell.size, alpha = cell.transparency) +
@@ -178,10 +203,10 @@ cluster.plot <- function (x = NULL,
           theme_bw()
       }
     }
-      if (cond.shape == T) {
+      if (cond.shape == TRUE) {
         conds.sh <- data.frame(do.call('rbind', strsplit(as.character(rownames(DATA)),'_',fixed=TRUE)))[1]
         cond.shape <- factor(as.matrix(conds.sh))
-        if (interactive == F) {
+        if (interactive == FALSE) {
           myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
                                      text = row.names(DATA), color = col.legend, shape = cond.shape)) +
             geom_point(size = cell.size, alpha = cell.transparency) +
@@ -194,7 +219,7 @@ cluster.plot <- function (x = NULL,
                   panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                   legend.key = element_rect(fill = back.col))
         }
-        if (interactive == T) {
+        if (interactive == TRUE) {
           myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
                                      text = row.names(DATA), color = col.legend, shape = cond.shape)) +
             geom_point(size = cell.size, alpha = cell.transparency) +
@@ -209,7 +234,7 @@ cluster.plot <- function (x = NULL,
   }
 # plot 3d
   if (clust.dim == 3) {
-    if (static3D == F) {
+    if (static3D == FALSE) {
 #      DATAann <- as.data.frame(x@cluster.data$Best.partition)
       DATAann <- as.data.frame(x@best.clust)
       A = (row.names(DATAann))
@@ -247,8 +272,8 @@ cluster.plot <- function (x = NULL,
                 pch = 19,
                 xlab = "Dim2", ylab = "Dim3",zlab = "Dim1",
                 main = MyTitle,
-                grid = T,
-                box = T,
+                grid = TRUE,
+                box = TRUE,
                 scale.y = 1,
                 angle = angle,
                 mar = c(3,3,3,6)+0.1,
@@ -260,8 +285,8 @@ cluster.plot <- function (x = NULL,
            col =  colors,
            pch = 19,
            inset = -0.1,
-           xpd = T,
-           horiz = F)
+           xpd = TRUE,
+           horiz = FALSE)
 #    scatter3D(x = DATA[,2], y = DATA[,3], z = DATA[,1],
 #              colvar = NULL,
 #              col = col.legend,
@@ -279,14 +304,14 @@ cluster.plot <- function (x = NULL,
   }
 }
   # density plot
-  if (density == T) {
+  if (density == TRUE) {
     myPLOT <- ggplot(DATA, aes(DATA[,2], fill = col.legend)) +
       geom_density(alpha=cell.transparency) +
       xlab("Dim2") +
       scale_color_discrete(name="") + theme_bw()
   }
 # return
-  if (interactive == T) {
+  if (interactive == TRUE) {
     OUT.PUT <- paste(out.name, ".html", sep="")
     htmlwidgets::saveWidget(ggplotly(myPLOT), OUT.PUT)
   } else {

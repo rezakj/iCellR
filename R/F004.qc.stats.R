@@ -8,13 +8,14 @@
 #' @param g2m.phase.genes A character vector of gene names for G2 and M phase, default = g2m.phase.
 #' @return The data frame object
 #' @examples
-#' \dontrun{
-#' UMIs.genes.mit(my.data)
+#' \donttest{
+#' New.demo.obj <- qc.stats(demo.obj)
+#' head(New.demo.obj@stats)
 #' }
 #' @export
 qc.stats <- function (x = NULL,
                       which.data = "raw.data",
-                      mito.genes = "default",
+                      mito.genes = "default.genes",
                       s.phase.genes = s.phase,
                       g2m.phase.genes = g2m.phase) {
   if ("iCellR" != class(x)[1]) {
@@ -32,13 +33,13 @@ qc.stats <- function (x = NULL,
   # get nGENEs
   nGenes <- sapply(DATA, function(DATA) length(as.numeric(subset(DATA, DATA != 0))))
   # get mito gene names
-  if (mito.genes == "default") {
+  if (mito.genes == "default.genes") {
     mito.genes <- grep(pattern = "^mt\\-", x = rownames(DATA), value = TRUE, ignore.case = TRUE)
     if ( length(mito.genes) == 0 ) {
       mito.genes <- grep(pattern = "^mt\\.", x = rownames(DATA), value = TRUE, ignore.case = TRUE)
     }
   }
-  if (mito.genes[1] != "default") {
+  if (mito.genes[1] != "default.genes") {
     mito.genes = mito.genes
   }
   # get mito percent

@@ -7,15 +7,17 @@
 #' @param cell.size A number for the size of the points in the plot, default = 1.
 #' @param box.color A color for the boxes in the "boxplot", default = "red".
 #' @param box.line.col A color for the lines around the "boxplot", default = "green".
-#' @param notch Notch the box plots, default = F.
+#' @param notch Notch the box plots, default = FALSE.
+#' @param back.col Background color, default = "white"
 #' @param cell.transparency Color transparency for points in "scatterplot" and "boxplot", default = 0.5.
 #' @param interactive If set to TRUE an interactive HTML file will be created, default = TRUE.
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
 #' @return An object of class iCellR.
 #' @examples
-#' \dontrun{
-#' clust.stats.plot(my.obj, plot.type = "box.mito", interactive = F, out.name = "box.mito.clusters")
-#' }
+#' clust.stats.plot(demo.obj,
+#'                    plot.type = "box.mito",
+#'                    interactive = FALSE,
+#'                    out.name = "box.mito.clusters")
 #' @export
 clust.stats.plot <- function (x = NULL,
                         plot.type = "box.mito",
@@ -25,7 +27,7 @@ clust.stats.plot <- function (x = NULL,
                         box.color = "red",
                         box.line.col = "green",
                         back.col = "white",
-                        notch = F,
+                        notch = FALSE,
                         interactive = TRUE,
                         out.name = "plot")
 {
@@ -38,7 +40,7 @@ clust.stats.plot <- function (x = NULL,
   # get cluster data for all cells
   MyClusts <- x@best.clust
   # merge
-  DATA <- merge(DATA, MyClusts, by = "row.names", all.x=F, all.y=T)
+  DATA <- merge(DATA, MyClusts, by = "row.names", all.x=FALSE, all.y=TRUE)
   # plot
   # mito
   mito.percent.plot <- ggplot(DATA,aes(y=mito.percent, x=as.factor(clusters))) +
@@ -66,7 +68,7 @@ clust.stats.plot <- function (x = NULL,
     theme_bw() + theme(axis.text.x=element_text(angle=90))
 # return
   if (plot.type == "box.umi") {
-    if (interactive == T) {
+    if (interactive == TRUE) {
       OUT.PUT <- paste(out.name, ".html", sep="")
       htmlwidgets::saveWidget(ggplotly(Mito.UMIs),OUT.PUT)
     }
@@ -75,7 +77,7 @@ clust.stats.plot <- function (x = NULL,
   }
   #
   if (plot.type == "box.mito") {
-    if (interactive == T) {
+    if (interactive == TRUE) {
       OUT.PUT <- paste(out.name, ".html", sep="")
       htmlwidgets::saveWidget(ggplotly(Mito.UMIs),OUT.PUT)
     }
@@ -84,7 +86,7 @@ clust.stats.plot <- function (x = NULL,
   }
   #
   if (plot.type == "box.gene") {
-    if (interactive == T) {
+    if (interactive == TRUE) {
       OUT.PUT <- paste(out.name, ".html", sep="")
       htmlwidgets::saveWidget(ggplotly(Mito.UMIs),OUT.PUT)
     }
