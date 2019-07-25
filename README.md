@@ -178,6 +178,10 @@ head(my.obj@stats)
 pie(table(my.obj@stats$Phase))
 ```
 
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/iCellR_1.png" width="400"/>
+</p>
+
 - Plot QC
 
 By default all the plotting functions would create interactive html files unless you set this parameter: interactive = FALSE.
@@ -378,9 +382,9 @@ We recomand to use the defult options as below:
 
 ```r
 my.obj <- run.clustering(my.obj, 
-	clust.method = "ward.D", 
+	clust.method = "kmeans", 
 	dist.method = "euclidean",
-	index.method = "kl",
+	index.method = "silhouette",
 	max.clust = 25,
 	min.clust = 2,
 	dims = 1:10)
@@ -395,19 +399,14 @@ my.obj <- run.clustering(my.obj,
 #	dims = 1:10)
 
 # more examples 
-#my.obj <- run.clustering(my.obj, 
-#	clust.method = "kmeans", 
-#	dist.method = "euclidean",
-#	index.method = "silhouette",
-#	max.clust = 25,
-#	dims = 1:10)
 
 #my.obj <- run.clustering(my.obj, 
-#	clust.method = "kmeans", 
+#	clust.method = "ward.D", 
 #	dist.method = "euclidean",
-#	index.method = "ccc",
-#	max.clust = 12,
-#	dims = 1:my.obj@opt.pcs)
+#	index.method = "kl",
+#	max.clust = 25,
+#	min.clust = 2,
+#	dims = 1:10)
 ```
 
 - Perform tSNE
@@ -542,6 +541,9 @@ cluster.plot(my.obj,
 my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
 # this requires python packge phate 
 # pip install --user phate
+# Install phateR version 2.9
+# wget https://cran.r-project.org/src/contrib/Archive/phateR/phateR_0.2.9.tar.gz
+# install.packages('phateR/', repos = NULL, type="source")
 
 # plot 
 cluster.plot(my.obj,
