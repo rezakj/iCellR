@@ -327,14 +327,38 @@ head(my.obj@gene.data[order(my.obj@gene.data$numberOfCells, decreasing = T),])
 It's best to always to avoid global clustering and use a set of model genes. In bulk RNA-seq data it is very common to cluster the samples based on top 500 genes ranked by base mean, this is to reduce the noise. In scRNA-seq data, it's great to do so as well. This coupled with our ranked.glsf normalization is good for matrices with a lot of zeros. You can also use your set of genes as a model rather than making one. 
 
 ```r
-make.gene.model(my.obj, 
+# See model plot 
+make.gene.model(my.obj, my.out.put = "plot",
 	dispersion.limit = 1.5, 
 	base.mean.rank = 500, 
-	no.mito.model = T,
-	no.cell.cycle = T,
+	no.mito.model = T, 
 	mark.mito = T, 
-	interactive = T,
+	interactive = F,
+	no.cell.cycle = T,
 	out.name = "gene.model")
+	
+# Write the gene model data into the object
+
+my.obj <- make.gene.model(my.obj, my.out.put = "data",
+	dispersion.limit = 1.5, 
+	base.mean.rank = 500, 
+	no.mito.model = T, 
+	mark.mito = T, 
+	interactive = F,
+	no.cell.cycle = T,
+	out.name = "gene.model")
+
+head(my.obj@gene.model)
+# "ACTB"  "ACTG1" "ACTR3" "AES"   "AIF1"  "ALDOA"
+
+# get html plot (optional)
+#make.gene.model(my.obj, my.out.put = "plot",
+#	dispersion.limit = 1.5, 
+#	base.mean.rank = 500, 
+#	no.mito.model = T, 
+#	mark.mito = T, 
+#	interactive = T,
+#	out.name = "plot4_gene.model")
 ```
 To view an the html intractive plot click on this links: [Dispersion plot](https://rawgit.com/rezakj/scSeqR/dev/doc/gene.model.html)
 
@@ -347,19 +371,18 @@ To view an the html intractive plot click on this links: [Dispersion plot](https
 - Perform PCA and batch correction 
 
 ```r
-my.obj <- run.pca(my.obj, 
-                  method = "gene.model", 
-                  gene.list = readLines("my_model_genes.txt"), 
-                  batch.norm = F)
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
 
-# Re-define model genes (run this if you have real samples)
-# find.dim.genes(my.obj, dims = 1:10, top.pos = 20, top.neg = 10)
- 
-# Second round PCA and batch correction (run this if you have real samples)
-#my.obj <- run.pca(my.obj, 
-#                  clust.method = "gene.model", 
-#                  gene.list = readLines("my_model_PC_genes.txt"),
-#                  batch.norm = T)
+# 2 round PCA (to find top genes in the first 10 PCs and re-run PCA for better clustering
+length(my.obj@gene.model)
+# 585
+my.obj <- find.dim.genes(my.obj, dims = 1:10,top.pos = 20, top.neg = 20)
+
+length(my.obj@gene.model)
+# 208
+
+# second round PC
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
 
 opt.pcs.plot(my.obj)
 my.obj@opt.pcs
