@@ -534,7 +534,7 @@ cluster.plot(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/density_clusters.png" width="400"/> 	
 </p>
 
-- Diffusion Map
+- More plots
 
 ```r
 # plot 
@@ -597,13 +597,20 @@ my.obj <- clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = F)
 my.obj <- clust.avg.exp(my.obj)
 
 head(my.obj@clust.avg)
-#     gene   cluster_1   cluster_2   cluster_3 cluster_4   cluster_5   cluster_6  cluster_7
-#1     A1BG 0.074805398 0.083831677 0.027234682         0 0.088718322 0.026671084 0.04459271
-#2 A1BG.AS1 0.013082859 0.012882983 0.005705715         0 0.003077574 0.000000000 0.01498637
-#3     A1CF 0.000000000 0.000000000 0.000000000         0 0.000000000 0.000000000 0.00000000
-#4      A2M 0.002350504 0.000000000 0.003284837         0 0.000000000 0.006868043 0.00000000
-#5  A2M.AS1 0.009734684 0.006208601 0.000000000         0 0.041558965 0.055534823 0.00000000
-#6    A2ML1 0.000000000 0.000000000 0.000000000         0 0.000000000 0.000000000 0.00000000
+#      gene   cluster_1   cluster_2  cluster_3 cluster_4   cluster_5   cluster_6
+#1     A1BG 0.072214723 0.092648973 0.08258609         0 0.027183115 0.072291636
+#2 A1BG.AS1 0.014380756 0.003280237 0.01817982         0 0.000000000 0.011545546
+#3     A1CF 0.000000000 0.000000000 0.00000000         0 0.000000000 0.000000000
+#4      A2M 0.000000000 0.000000000 0.00000000         0 0.007004131 0.004672857
+#5  A2M.AS1 0.003520828 0.039985296 0.00876364         0 0.056596203 0.018445562
+#6    A2ML1 0.000000000 0.000000000 0.00000000         0 0.000000000 0.000000000
+#   cluster_7  cluster_8   cluster_9
+#1 0.09058946 0.04466827 0.027927923
+#2 0.00000000 0.01534541 0.005930566
+#3 0.00000000 0.00000000 0.000000000
+#4 0.00000000 0.00000000 0.003411938
+#5 0.00000000 0.00000000 0.000000000
+#6 0.00000000 0.00000000 0.000000000
 ```
 
 - Save your object
@@ -623,27 +630,46 @@ dim(marker.genes)
 # [1] 1070   17
 
 head(marker.genes)
-#             baseMean     baseSD AvExpInCluster AvExpInOtherClusters foldChange log2FoldChange
-#WNT7A     0.010229718 0.10242607     0.02380399         0.0006494299   36.65368       5.195886
-#KRT1      0.020771859 0.18733189     0.04765674         0.0017973688   26.51473       4.728722
-#TSHZ2     0.048409666 0.26309988     0.11075764         0.0044064635   25.13527       4.651641
-#ANKRD55   0.008418143 0.09648853     0.01920420         0.0008056872   23.83580       4.575058
-#LINC00176 0.067707756 0.29517298     0.15445793         0.0064822618   23.82778       4.574573
-#MAL       0.193626263 1.08780664     0.42990647         0.0268672596   16.00113       4.000102
-#                  pval         padj clusters      gene  cluster_1   cluster_2   cluster_3 cluster_4
-#WNT7A     1.258875e-06 2.772043e-03        1     WNT7A 0.02380399 0.000000000 0.000000000         0
-#KRT1      1.612082e-07 3.577209e-04        1      KRT1 0.04765674 0.000000000 0.000000000         0
-#TSHZ2     3.647481e-18 8.341790e-15        1     TSHZ2 0.11075764 0.009321206 0.007981973         0
-#ANKRD55   3.871894e-05 8.409755e-02        1   ANKRD55 0.01920420 0.000000000 0.000000000         0
-#LINC00176 2.439482e-27 5.620565e-24        1 LINC00176 0.15445793 0.003689827 0.003429306         0
-#MAL       2.417583e-15 5.500001e-12        1       MAL 0.42990647 0.021592215 0.010139857         0
-#            cluster_5  cluster_6   cluster_7
-#WNT7A     0.002806920 0.00000000 0.000000000
-#KRT1      0.005251759 0.00000000 0.002596711
-#TSHZ2     0.000000000 0.00000000 0.002297921
-#ANKRD55   0.003482284 0.00000000 0.000000000
-#LINC00176 0.013798598 0.00910279 0.003420015
-#MAL       0.041585770 0.03214897 0.026263849
+#                row   baseMean    baseSD AvExpInCluster AvExpInOtherClusters
+#LRRN3         LRRN3 0.01428477 0.1282046     0.05537243          0.003437002
+#LINC00176 LINC00176 0.06757573 0.2949763     0.21404151          0.028906516
+#FHIT           FHIT 0.10195359 0.3885343     0.31404936          0.045957058
+#TSHZ2         TSHZ2 0.04831334 0.2628778     0.14300998          0.023311970
+#CCR7           CCR7 0.28132627 0.6847417     0.81386444          0.140728033
+#SCGB3A1     SCGB3A1 0.06319598 0.3554273     0.18130557          0.032013232
+#          foldChange log2FoldChange         pval         padj clusters
+#LRRN3      16.110677       4.009945 1.707232e-06 2.847662e-03        1
+#LINC00176   7.404611       2.888424 4.189197e-16 7.117446e-13        1
+#FHIT        6.833539       2.772633 1.576339e-19 2.681353e-16        1
+#TSHZ2       6.134616       2.616973 8.613622e-10 1.455702e-06        1
+#CCR7        5.783243       2.531879 1.994533e-42 3.400679e-39        1
+#SCGB3A1     5.663457       2.501683 2.578484e-07 4.313805e-04        1
+#               gene  cluster_1   cluster_2   cluster_3 cluster_4   cluster_5
+#LRRN3         LRRN3 0.05537243 0.004102916 0.002190847         0 0.010902326
+#LINC00176 LINC00176 0.21404151 0.016772401 0.005203161         0 0.009293024
+#FHIT           FHIT 0.31404936 0.008713243 0.022934924         0 0.035701186
+#TSHZ2         TSHZ2 0.14300998 0.008996236 0.009444180         0 0.000000000
+#CCR7           CCR7 0.81386444 0.075719109 0.034017494         0 0.021492756
+#SCGB3A1     SCGB3A1 0.18130557 0.039644151 0.001183264         0 0.000000000
+#            cluster_6  cluster_7   cluster_8   cluster_9
+#LRRN3     0.002087831 0.00000000 0.000000000 0.012113258
+#LINC00176 0.086762509 0.01198777 0.003501552 0.003560614
+#FHIT      0.104189143 0.04144293 0.041064681 0.007218861
+#TSHZ2     0.065509372 0.01690584 0.002352707 0.015350123
+#CCR7      0.272580821 0.06523324 0.257130255 0.031304151
+#SCGB3A1   0.078878071 0.01198777 0.000000000 0.043410608
+
+# baseMean: average expression in all the cells
+# baseSD: Standard Deviation
+# AvExpInCluster: average expression in cluster number (see clusters)
+# AvExpInOtherClusters: average expression in all the other clusters
+# foldChange: AvExpInCluster/AvExpInOtherClusters
+# log2FoldChange: log2(AvExpInCluster/AvExpInOtherClusters)
+# pval: P value 
+# padj: Adjusted P value 
+# clusters: marker for cluster number
+# gene: marker gene for the cluster
+# the rest are the average expression for each cluster
 ```
 
 - Plot genes
@@ -737,7 +763,9 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters"
   See the plots before and after data imputation. This helps to fill for drop-outs. 
 
 ```r
-# this function is being improved and soon will be available. 
+library(Rmagic)
+library(phateR)
+library(viridis)
 my.obj <- run.impute(my.obj)
 
 # save after imputation 
