@@ -53,7 +53,9 @@ download.file(url = sample.file.url,
      method = "auto")  
 
 # unzip the file. 
-untar("pbmc3k_filtered_gene_bc_matrices.tar.gz")    
+untar("pbmc3k_filtered_gene_bc_matrices.tar.gz")
+
+# more data available here: https://genome.med.nyu.edu/results/external/iCellR/ 
 ```
 
 ***
@@ -379,6 +381,8 @@ To view an the html intractive plot click on this links: [Dispersion plot](https
 ```r
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
 
+opt.pcs.plot(my.obj)
+
 # 2 round PCA (to find top genes in the first 10 PCs and re-run PCA for better clustering
 ## This is optional and might not be good in some cases
 length(my.obj@gene.model)
@@ -391,7 +395,6 @@ length(my.obj@gene.model)
 # second round PC
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
 
-opt.pcs.plot(my.obj)
 my.obj@opt.pcs
 ```        
 
