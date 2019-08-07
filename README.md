@@ -54,9 +54,9 @@ download.file(url = sample.file.url,
 
 # unzip the file. 
 untar("pbmc3k_filtered_gene_bc_matrices.tar.gz")
-
-# more data available here: https://genome.med.nyu.edu/results/external/iCellR/ 
 ```
+# more data available here: 
+https://genome.med.nyu.edu/results/external/iCellR/ 
 
 ***
 # How to use iCellR for analyzing scRNA-seq data
