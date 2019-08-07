@@ -55,7 +55,7 @@ download.file(url = sample.file.url,
 # unzip the file. 
 untar("pbmc3k_filtered_gene_bc_matrices.tar.gz")
 ```
-# more data available here: 
+more data available here: 
 https://genome.med.nyu.edu/results/external/iCellR/ 
 
 ***
