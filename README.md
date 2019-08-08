@@ -1,7 +1,9 @@
 # iCellR
 iCellR is an interactive R package to work with high-throughput single cell sequencing technologies (i.e scRNA-seq, scVDJ-seq and CITE-seq).
 
-Link to manual: [Manual](https://github.com/rezakj/iCellR/blob/master/vignettes/iCellR.pdf)
+Link to Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/packages/iCellR/index.html)
+
+Link to manual: [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.pdf)
 
 Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
 
@@ -21,13 +23,17 @@ For citation please use this link (our manuscript is in preparation): https://gi
 ## How to install iCellR
         
 ```r
-library(devtools)
-install_github("rezakj/iCellR")
+# Install from CRAN 
+install.packages("iCellR")
+
+# Install from github
+#library(devtools)
+#install_github("rezakj/iCellR")
 
 # or
-git clone https://github.com/rezakj/iCellR.git
-R
-install.packages('iCellR/', repos = NULL, type="source")
+#git clone https://github.com/rezakj/iCellR.git
+#R
+#install.packages('iCellR/', repos = NULL, type="source")
 ```
 
 ## Download a sample data
@@ -47,8 +53,10 @@ download.file(url = sample.file.url,
      method = "auto")  
 
 # unzip the file. 
-untar("pbmc3k_filtered_gene_bc_matrices.tar.gz")    
+untar("pbmc3k_filtered_gene_bc_matrices.tar.gz")
 ```
+more data available here: 
+https://genome.med.nyu.edu/results/external/iCellR/ 
 
 ***
 # How to use iCellR for analyzing scRNA-seq data
@@ -373,6 +381,8 @@ To view an the html intractive plot click on this links: [Dispersion plot](https
 ```r
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
 
+opt.pcs.plot(my.obj)
+
 # 2 round PCA (to find top genes in the first 10 PCs and re-run PCA for better clustering
 ## This is optional and might not be good in some cases
 length(my.obj@gene.model)
@@ -385,7 +395,6 @@ length(my.obj@gene.model)
 # second round PC
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
 
-opt.pcs.plot(my.obj)
 my.obj@opt.pcs
 ```        
 
