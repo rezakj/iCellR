@@ -32,7 +32,7 @@ run.pc.tsne(x = NULL, dims = 1:10, my.seed = 0, initial_dims = 50,
 
 \item{max_iter}{integer; Number of iterations (default: 1000)}
 
-\item{verbose}{logical; Whether progress updates should be printed (default: FALSE)}
+\item{verbose}{logical; Whether progress updates should be messageed (default: FALSE)}
 
 \item{is_distance}{logical; Indicate whether X is a distance matrix (experimental, default: FALSE)}
 

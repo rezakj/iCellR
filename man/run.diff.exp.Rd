@@ -29,13 +29,4 @@ diff.res <- run.diff.exp(demo.obj, de.by = "clusters", cond.1 = c(1), cond.2 = c
 
 head(diff.res)
 
-\dontrun{
-diff.res <- run.diff.exp(my.obj, de.by = "clusters", cond.1 = c(1,4), cond.2 = c(2))
-diff.res <- run.diff.exp(my.obj, de.by = "conditions", cond.1 = c("WT"), cond.2 = c("KO"))
-diff.res <- run.diff.exp(my.obj, de.by = "clustBase.condComp",
-cond.1 = c("WT"), cond.2 = c("KO"), base.cond = 1)
-diff.res <- run.diff.exp(my.obj, de.by = "condBase.clustComp",
-cond.1 = c(1), cond.2 = c(2), base.cond = "WT")
-}
-
 }

@@ -38,18 +38,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and provides plots for clonotypes.
 }
-\examples{
-\dontrun{
-clono.plot(my.obj,
-            plot.data.type = "tsne",
-            clono = 1,
-            clust.dim = 2,
-            cell.size = 1,
-            cell.colors = c("red","gray"),
-            cbox.cell.col = "black",
-            back.col = "white",
-            interactive = TRUE,
-            cell.transparency = 0.5,
-            out.name = "tSNE_3D_clusters")
-}
-}

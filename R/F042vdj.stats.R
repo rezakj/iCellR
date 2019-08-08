@@ -1,23 +1,23 @@
 #' VDJ stats
 #'
 #' This function takes a data frame of VDJ info per cell and dose QC.
-#' @param vdj.data A data frame containing VDJ data for cells.
+#' @param my.vdj A data frame containing VDJ data for cells.
 #' @return An object of class iCellR
 #' @examples
-#' \dontrun{
-#' Read your VDJ data (in this case in VDJ.tsv file) and add to your object as below
+#' my.vdj <- read.csv(file = system.file('extdata', 'all_contig_annotations.csv',
+#'           package = 'iCellR'),
+#'           as.is = TRUE)
+#' head(my.vdj)
+#' dim(my.vdj)
 #'
-#' my.vdj.data <- read.table("VDJ.tsv")
+#' My.VDJ <- prep.vdj(vdj.data = my.vdj, cond.name = "NULL")
+#' head(My.VDJ)
+#' dim(My.VDJ)
 #'
-#' VDJ <- prep.vdj(my.obj, adt.data = my.vdj.data)
-#'
-#' head(VDJ)
-#'
-#' vdj.stats(vdj.data = VDJ)
-#' }
+#' vdj.stats(My.VDJ)
 #'
 #' @export
-vdj.stats <- function (vdj.data = "data.frame") {
+vdj.stats <- function (my.vdj = "data.frame") {
   # read VDJ data
   # chin A
   my.vdj.data <- data.frame(my.vdj$clonotype.Freq,my.vdj$raw_clonotype_id,my.vdj$chain,my.vdj$cdr3)
@@ -72,7 +72,7 @@ vdj.stats <- function (vdj.data = "data.frame") {
   myPLOT <- ggplot(DATA,aes(x= freq, y=cdr3, col=chain)) +
     geom_line() + geom_point(size = freq) +
     theme_bw(base_size = 16)
-  #  write.table((my.vdj),file="my.vdj.tsv",sep="\t",row.names =F)
+#  write.table((my.vdj),file="my.vdj.tsv",sep="\t",row.names =F)
 #  grid.arrange(myPLOT,myPIE, ncol=2, widths=c(2,1), heights=c(10,1))
   return(grid.arrange(myPLOT,myPIE, ncol=2))
 }

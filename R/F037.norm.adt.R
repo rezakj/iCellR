@@ -2,11 +2,6 @@
 #' This function takes data frame and Normalizes ADT data.
 #' @param x An object of class iCellR.
 #' @return An object of class iCellR
-#' @examples
-#' \dontrun{
-#' my.obj <- norm.adt(my.obj)
-#' }
-#'
 #' @export
 norm.adt <- function (x = NULL) {
   if ("iCellR" != class(x)[1]) {

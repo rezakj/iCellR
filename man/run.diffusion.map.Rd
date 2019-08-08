@@ -46,7 +46,7 @@ run.diffusion.map(x = NULL, dims = 1:10, method = "phate",
 
 \item{plot.optimal.t}{boolean, optional, if TRUE, produce a plot showing the Von Neumann Entropy curve for automatic t selection.}
 
-\item{verbose}{int or boolean, optional (default : 1) If TRUE or > 0, print verbose updates.}
+\item{verbose}{int or boolean, optional (default : 1) If TRUE or > 0, message verbose updates.}
 
 \item{n.jobs}{int, optional (default: 1) The number of jobs to use for the computation. If -1 all CPUs are used. If 1 is given, no parallel computing code is used at all, which is useful for debugging. For n_jobs below -1, (n.cpus + 1 + n.jobs) are used. Thus for n_jobs = -2, all CPUs but one are used}
 
@@ -75,10 +75,4 @@ An object of class iCellR.
 }
 \description{
 This function takes an object of class iCellR and runs diffusion map on PCA data.
-}
-\examples{
-\donttest{
-demo.obj <- run.diffusion.map(demo.obj, dims = 1:10, method = "phate")
-head(demo.obj@diffusion.data)
-}
 }

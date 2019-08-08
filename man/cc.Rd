@@ -19,8 +19,3 @@ The data frame object
 \description{
 This function takes an object of class iCellR and assignes cell cycle stage for the cells.
 }
-\examples{
-\dontrun{
-my.obj <- cc(my.obj, s.genes = s.phase, g2m.genes = g2m.phase)
-}
-}

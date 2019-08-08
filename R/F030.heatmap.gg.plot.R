@@ -65,7 +65,7 @@ heatmap.gg.plot <- function (x = NULL,
     absentgenes = paste(absentgenes, collapse=",")
     ToPrint <- paste(absentgenes, "not available in your data.
                      To see the gene names issue this command: row.names(YOURobject@main.data)", sep=" ")
-    stop(print(ToPrint))
+    stop(message(ToPrint))
   }
   ##### get cluster data
   DATA <- x@best.clust

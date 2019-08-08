@@ -5,22 +5,25 @@
 #' @param cond.name Conditions.
 #' @return An object of class iCellR
 #' @examples
-#' \dontrun{
-#' Read your VDJ data (in this case in VDJ.tsv file) and add to your object as below
+#' my.vdj <- read.csv(file = system.file('extdata', 'all_contig_annotations.csv',
+#'           package = 'iCellR'),
+#'           as.is = TRUE)
+#' head(my.vdj)
+#' dim(my.vdj)
 #'
-#' my.vdj.data <- read.table("VDJ.tsv")
-#'
-#' VDJ <- prep.vdj(my.obj, adt.data = my.vdj.data)
-#'
-#' head(VDJ)
-#' }
+#' My.VDJ <- prep.vdj(vdj.data = my.vdj, cond.name = "NULL")
+#' head(My.VDJ)
+#' dim(My.VDJ)
 #'
 #' @export
-prep.vdj <- function (vdj.data = "all_contig_annotations.csv", cond.name = "NULL") {
+prep.vdj <- function (vdj.data = "data.frame", cond.name = "NULL") {
 # read VDJ data
-  my.vdj <- read.table(vdj.data, header = TRUE, sep=",")
+  my.vdj <- vdj.data
   my.vdj <- subset(my.vdj, productive == "True")
   my.vdj <- subset(my.vdj, raw_clonotype_id != "None")
+  cell.barcodes <- my.vdj$barcode
+  cell.barcodes <- gsub("-",".",cell.barcodes)
+  my.vdj$barcode <- cell.barcodes
   mysum <- (dim(my.vdj)[1]) / 2
   myFreq <- as.data.frame(table(my.vdj$raw_clonotype_id))
   myFreq <- myFreq[order(myFreq$Freq, decreasing = TRUE),]

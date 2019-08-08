@@ -16,8 +16,8 @@ An object of class iCellR.
 This function takes an object of class iCellR and scales the normalized data.
 }
 \examples{
-\donttest{
-my.obj <- data.scale(my.obj)
-}
+my.obj <- data.scale(demo.obj)
+
+head(my.obj@scaled.data)[1:5]
 
 }

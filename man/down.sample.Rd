@@ -16,7 +16,9 @@ An object of class iCellR.
 This function takes an object of class iCellR and down samples the condition to have equal number of cells in each condition.
 }
 \examples{
-\donttest{
-my.obj <- down.sample(my.obj)
-}
+
+my.obj <- down.sample(demo.obj)
+
+my.obj
+
 }

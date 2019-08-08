@@ -10,10 +10,6 @@
 #' @param interactive If TRUE an html interactive file will be made, default = TRUE.
 #' @param out.name Output name for html file if interactive = TRUE, default = "plot".
 #' @return An object of class iCellR
-#' @examples
-#' \donttest{
-#' gg.cor(my.obj, interactive = F, gene1 = "NKG7",gene2 = "GNLY", conds=c("WT"))
-#' }
 #'
 #' @export
 gg.cor <- function (x = NULL,

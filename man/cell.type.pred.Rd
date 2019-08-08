@@ -25,9 +25,3 @@ An object of class iCellR
 \description{
 This function takes an object of class iCellR and genes and provides a heatmap.
 }
-\examples{
-\dontrun{
-imm.gen(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
-imm.gen(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot")
-}
-}

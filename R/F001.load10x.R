@@ -5,10 +5,11 @@
 #' @param gene.name Gene names or ids column number, default = 2.
 #' @return The data frame object
 #' @examples
-#' \dontrun{
-#' # The directory should have barcodes.tsv, genes.tsv, and matrix.mtx files.
-#' load10x('path/to/data/directory')
-#' }
+#' my.data <- load10x(system.file("extdata", "filtered_gene_bc_matrices", package = "iCellR"))
+#'
+#' # See first few rows and columns
+#' head(my.data)[1:5]
+#'
 #' @import Matrix
 #' @export
 load10x <- function (dir.10x = NULL, gene.name = 2) {

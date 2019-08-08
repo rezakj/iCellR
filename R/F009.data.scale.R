@@ -4,9 +4,9 @@
 #' @param x An object of class iCellR.
 #' @return An object of class iCellR.
 #' @examples
-#' \donttest{
-#' my.obj <- data.scale(my.obj)
-#' }
+#' my.obj <- data.scale(demo.obj)
+#'
+#' head(my.obj@scaled.data)[1:5]
 #'
 #' @export
 data.scale <- function (x = NULL) {

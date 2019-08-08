@@ -26,8 +26,6 @@ The data frame object
 This function takes data frame and calculates the number of UMIs, genes per cell and percentage of mitochondrial genes per cell and cell cycle genes.
 }
 \examples{
-\donttest{
 New.demo.obj <- qc.stats(demo.obj)
 head(New.demo.obj@stats)
-}
 }
