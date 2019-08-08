@@ -17,7 +17,7 @@
 #' @param t.max int, optional, default: 100. Maximum value of t to test for automatic t selection.
 #' @param npca int, optional, default: 100 Number of principal components to use for calculating neighborhoods. For extremely large datasets, using n_pca < 20 allows neighborhoods to be calculated in log(n_samples) time.
 #' @param plot.optimal.t boolean, optional, if TRUE, produce a plot showing the Von Neumann Entropy curve for automatic t selection.
-#' @param verbose int or boolean, optional (default : 1) If TRUE or > 0, print verbose updates.
+#' @param verbose int or boolean, optional (default : 1) If TRUE or > 0, message verbose updates.
 #' @param n.jobs int, optional (default: 1) The number of jobs to use for the computation. If -1 all CPUs are used. If 1 is given, no parallel computing code is used at all, which is useful for debugging. For n_jobs below -1, (n.cpus + 1 + n.jobs) are used. Thus for n_jobs = -2, all CPUs but one are used
 #' @param seed int or NULL, random state (default: NULL)
 #' @param potential.method Deprecated. For log potential, use gamma=1. For sqrt potential, use gamma=0.
@@ -30,11 +30,6 @@
 #' @param diff.op.t Deprecated.
 #' @param dist.method Deprecated.
 #' @return An object of class iCellR.
-#' @examples
-#' \donttest{
-#' demo.obj <- run.diffusion.map(demo.obj, dims = 1:10, method = "phate")
-#' head(demo.obj@diffusion.data)
-#' }
 #' @export
 run.diffusion.map <- function (x = NULL,
                       dims = 1:10,

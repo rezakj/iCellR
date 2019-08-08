@@ -18,8 +18,9 @@ The data frame object
 This function takes 10X data files barcodes.tsv, genes.tsv and matrix.mtx and converts them to proper matrix file for iCellR.
 }
 \examples{
-\dontrun{
-# The directory should have barcodes.tsv, genes.tsv, and matrix.mtx files.
-load10x('path/to/data/directory')
-}
+my.data <- load10x(system.file("extdata", "filtered_gene_bc_matrices", package = "iCellR"))
+
+# See first few rows and columns
+head(my.data)[1:5]
+
 }

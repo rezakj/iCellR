@@ -5,10 +5,6 @@
 #' @param my.plot The plot to use for gating. Must be a 2D plot.
 #' @param plot.type Choose from UMAP and tSNE, default = NULL.
 #' @return An object of class iCellR.
-#' @examples
-#' \dontrun{
-#' cell.gating(my.obj, my.plot = PLOT, plot.type = "tsne")
-#' }
 #' @import shiny
 #' @importFrom plotly ggplotly layout plot_ly
 #' @export

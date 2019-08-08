@@ -5,10 +5,6 @@
 #' @param marker.genes A list of marker genes for clusters.
 #' @param dims PC dimentions to be used, , default = 1:10.
 #' @return An object of class iCellR.
-#' @examples
-#' \dontrun{
-#' my.obj <- pseudotime(my.obj, marker.genes = MyGenes, dims = 1:10)
-#' }
 #' @import gridExtra
 #' @export
 pseudotime <- function (x = NULL, marker.genes = "NULL", dims = 1:10) {

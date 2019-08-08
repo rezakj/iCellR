@@ -19,8 +19,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and a 2D tSNE or UMAP plot and gates around cells to get their ids.
 }
-\examples{
-\dontrun{
-cell.gating(my.obj, my.plot = PLOT, plot.type = "tsne")
-}
-}

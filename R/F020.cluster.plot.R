@@ -133,7 +133,7 @@ cluster.plot <- function (x = NULL,
       stop("Clonotype data is missing use add.vdj function to load them.")
     } else {
       colono <- unique(x@vdj.data[1:2])
-      row.names(colono) <- colono$barcode
+      row.names(colono) <- cell.barcodes
       colono$raw_clonotype_id <- gsub("clonotype"," ", colono$raw_clonotype_id)
       colono <- colono[1]
       colnames(colono) <- c("Clonotypes")

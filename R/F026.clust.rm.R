@@ -51,6 +51,6 @@ clust.rm <- function (x = NULL, clust.to.rm = "numeric") {
     DATA <- subset(DATA, !row.names(DATA) %in% clustersToGo)
     attributes(x)$tsne.data.3d <- DATA
   }
-  print("The cells in the cluster of your choice are removed from: main.data, pca.data, tsne.data, tsne.data.3d and umap.data.")
+  message("The cells in the cluster of your choice are removed from: main.data, pca.data, tsne.data, tsne.data.3d and umap.data.")
   return(x)
 }

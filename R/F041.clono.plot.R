@@ -13,20 +13,6 @@
 #' @param interactive If set to TRUE an intractive HTML file will be created, default = TRUE.
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
 #' @return An object of class iCellR.
-#' @examples
-#' \dontrun{
-#' clono.plot(my.obj,
-#'             plot.data.type = "tsne",
-#'             clono = 1,
-#'             clust.dim = 2,
-#'             cell.size = 1,
-#'             cell.colors = c("red","gray"),
-#'             cbox.cell.col = "black",
-#'             back.col = "white",
-#'             interactive = TRUE,
-#'             cell.transparency = 0.5,
-#'             out.name = "tSNE_3D_clusters")
-#' }
 #' @export
 clono.plot <- function (x = NULL,
                        plot.data.type = "tsne",
@@ -75,7 +61,9 @@ clono.plot <- function (x = NULL,
   }
   ## clonotype
       colono <- unique(x@vdj.data[1:2])
-      row.names(colono) <- colono$barcode
+      cell.barcodes <- colono$barcode
+      cell.barcodes <- gsub("-",".",cell.barcodes)
+      row.names(colono) <- cell.barcodes
       colono$raw_clonotype_id <- gsub("clonotype"," ", colono$raw_clonotype_id)
       colono <- colono[1]
       colnames(colono) <- c("Clonotypes")

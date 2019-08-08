@@ -19,8 +19,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and marker genes for clusters and performs pseudotime analysis.
 }
-\examples{
-\dontrun{
-my.obj <- pseudotime(my.obj, marker.genes = MyGenes, dims = 1:10)
-}
-}

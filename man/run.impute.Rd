@@ -28,7 +28,7 @@ run.impute(x = NULL, genes = "all_genes", k = 10, alpha = 15,
 
 \item{knn.dist.method}{string, optional, default: 'euclidean'. recommended values: 'euclidean', 'cosine' Any metric from 'scipy.spatial.distance' can be used distance metric for building kNN graph.}
 
-\item{verbose}{'int' or 'boolean', optional (default : 1) If 'TRUE' or '> 0', print verbose updates.}
+\item{verbose}{'int' or 'boolean', optional (default : 1) If 'TRUE' or '> 0', message verbose updates.}
 
 \item{n.jobs}{'int', optional (default: 1) The number of jobs to use for the computation. If -1 all CPUs are used. If 1 is given, no parallel computing code is used at all, which is useful for debugging. For n_jobs below -1, (n.cpus + 1 + n.jobs) are used. Thus for n_jobs = -2, all CPUs but one are used}
 
@@ -39,9 +39,4 @@ An object of class iCellR.
 }
 \description{
 This function takes an object of class iCellR and runs imputation on the main data. MAGIC as one of the methods: Markov Affinity-based Graph Imputation of Cells (MAGIC) is an algorithm for denoising and transcript recover of single cells applied to single-cell RNA sequencing data, as described in van Dijk et al, 2018.
-}
-\examples{
-\donttest{
-demo.obj <- run.impute(demo.obj)
-}
 }

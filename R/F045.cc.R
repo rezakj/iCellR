@@ -5,10 +5,6 @@
 #' @param s.genes Genes that are used as a marker for S phase.
 #' @param g2m.genes Genes that are used as a marker for G2 and M phase.
 #' @return The data frame object
-#' @examples
-#' \dontrun{
-#' my.obj <- cc(my.obj, s.genes = s.phase, g2m.genes = g2m.phase)
-#' }
 #' @importFrom Hmisc cut2
 #' @export
 cc <- function (object = NULL, s.genes = s.phase, g2m.genes = g2m.phase) {

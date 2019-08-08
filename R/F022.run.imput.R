@@ -10,14 +10,10 @@
 #' @param init magic object, optional object to use for initialization. Avoids recomputing intermediate steps if parameters are the same.
 #' @param t.max int, optional, default: 20 Maximum value of t to test for automatic t selection.
 #' @param knn.dist.method string, optional, default: 'euclidean'. recommended values: 'euclidean', 'cosine' Any metric from 'scipy.spatial.distance' can be used distance metric for building kNN graph.
-#' @param verbose 'int' or 'boolean', optional (default : 1) If 'TRUE' or '> 0', print verbose updates.
+#' @param verbose 'int' or 'boolean', optional (default : 1) If 'TRUE' or '> 0', message verbose updates.
 #' @param n.jobs 'int', optional (default: 1) The number of jobs to use for the computation. If -1 all CPUs are used. If 1 is given, no parallel computing code is used at all, which is useful for debugging. For n_jobs below -1, (n.cpus + 1 + n.jobs) are used. Thus for n_jobs = -2, all CPUs but one are used
 #' @param seed int or 'NULL', random state (default: 'NULL')
 #' @return An object of class iCellR.
-#' @examples
-#' \donttest{
-#' demo.obj <- run.impute(demo.obj)
-#' }
 #' @export
 run.impute <- function (x = NULL,
                        genes = "all_genes", k = 10, alpha = 15, t = "auto",

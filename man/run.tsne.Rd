@@ -34,7 +34,7 @@ run.tsne(x = NULL, clust.method = "base.mean.rank", top.rank = 500,
 
 \item{max_iter}{integer; Number of iterations (default: 1000)}
 
-\item{verbose}{logical; Whether progress updates should be printed (default: FALSE)}
+\item{verbose}{logical; Whether progress updates should be messageed (default: FALSE)}
 
 \item{is_distance}{logical; Indicate whether X is a distance matrix (experimental, default: FALSE)}
 

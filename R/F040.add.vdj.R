@@ -5,19 +5,18 @@
 #' @param vdj.data A data frame containing VDJ information for cells.
 #' @return An object of class iCellR
 #' @examples
-#' \dontrun{
-#' Read your VDJ data (in this case in VDJ.tsv file) and add to your object as below
+#' my.vdj <- read.csv(file = system.file('extdata', 'all_contig_annotations.csv',
+#'           package = 'iCellR'),
+#'           as.is = TRUE)
+#' head(my.vdj)
+#' dim(my.vdj)
 #'
-#' my.vdj.data <- read.table("VDJ.tsv")
+#' My.VDJ <- prep.vdj(vdj.data = my.vdj, cond.name = "NULL")
+#' head(My.VDJ)
+#' dim(My.VDJ)
 #'
-#' VDJ <- prep.vdj(my.obj, adt.data = my.vdj.data)
-#'
-#' head(VDJ)
-#'
-#' my.obj <- add.vdj(my.obj, vdj.data = VDJ)
-#'
-#' head(my.obj@vdj.data)
-#' }
+#' my.obj <- add.vdj(demo.obj, vdj.data = My.VDJ)
+#' my.obj
 #'
 #' @export
 add.vdj <- function (x = NULL, vdj.data = "data.frame") {

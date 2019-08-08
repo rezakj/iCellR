@@ -76,7 +76,7 @@ cell.filter <- function (x = NULL,
     }
     DATA <- DATA[ , -which(names(DATA) %in% filter.by.cell.id)]
     FiltCellIds <- paste(filter.by.cell.id , collapse=",")
-    print(paste("The following cells were filtered out:   ", FiltCellIds))
+    message(paste("The following cells were filtered out:   ", FiltCellIds))
   }
   if (filter.by.cell.id[1] == "character") {
     FiltCellIds = "no cell ids were filtered."
@@ -94,7 +94,7 @@ cell.filter <- function (x = NULL,
     }
     DATA <- DATA[ , which(names(DATA) %in% keep.cell.id)]
     FiltCellIds <- paste(keep.cell.id, collapse=",")
-    print(paste("The following cells are kept:   ", FiltCellIds))
+    message(paste("The following cells are kept:   ", FiltCellIds))
   }
   if (keep.cell.id[1] == "character") {
     FiltCellIds = "no cell ids to keep."
@@ -114,34 +114,34 @@ cell.filter <- function (x = NULL,
   BadUMIs <- c(MAXbadUMI,MINbadUMI)
 # filter
   if (length(BadMito) == 0) {
-    print("No mito filter")
+    message("No mito filter")
   } else {
     DATA <- DATA[ , -which(names(DATA) %in% BadMito)]
-    print(paste("cells with min mito ratio of",min.mito,"and max mito ratio of",max.mito,"were filtered."))
+    message(paste("cells with min mito ratio of",min.mito,"and max mito ratio of",max.mito,"were filtered."))
   }
   if (length(BadGenes) == 0) {
-    print("No gene number filter")
+    message("No gene number filter")
   } else {
     DATA <- DATA[ , -which(names(DATA) %in% BadGenes)]
-    print(paste("cells with min genes of",min.genes,"and max genes of",max.genes,"were filtered."))
+    message(paste("cells with min genes of",min.genes,"and max genes of",max.genes,"were filtered."))
   }
   if (length(BadUMIs) == 0) {
-    print("No UMI number filter")
+    message("No UMI number filter")
   } else {
     DATA <- DATA[ , -which(names(DATA) %in% BadUMIs)]
-    print(paste("cells with min UMIs of",min.umis,"and max UMIs of",max.umis,"were filtered."))
+    message(paste("cells with min UMIs of",min.umis,"and max UMIs of",max.umis,"were filtered."))
   }
   if (!exists("gene.filt.cells")) {
-    print("No cell filter by provided gene/genes")
+    message("No cell filter by provided gene/genes")
   } else {
     DATA <- DATA[ , -which(names(DATA) %in% gene.filt.cells)]
     GenesForFilter = paste(filter.by.gene, collapse=",")
-    print(paste(goneCells,"cells out of original",allCells,
+    message(paste(goneCells,"cells out of original",allCells,
                 " cells were filtered out as their expression was less than",
                 filter.by.gene.exp.min,"for",GenesForFilter))
   }
   if (filter.by.cell.id[1] == "character") {
-    print("No cell id filter")
+    message("No cell id filter")
   }
 # make a filter parameters file
   FilterFile <- paste("Filters are:
@@ -154,7 +154,7 @@ cell.filter <- function (x = NULL,
   ",FiltCellIds)
 # write filter parameters
 #  write.table((FilterFile),file="filters_set.txt", row.names =F, quote = F, col.names = F)
-#  print("filters_set.txt file has beed generated and includes the filters set for this experiment.")
+#  message("filters_set.txt file has beed generated and includes the filters set for this experiment.")
   # return data
   row.names(DATA) <- gsub("-",".", row.names(DATA))
   attributes(x)$main.data <- DATA

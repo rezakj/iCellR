@@ -7,11 +7,6 @@
 #' @param top.cell.types Top cell types sorted by cumulative expression, default = 25.
 #' @param heat.colors Colors for heatmap, default = c("blue" ,"white", "red").
 #' @return An object of class iCellR
-#' @examples
-#' \dontrun{
-#' imm.gen(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
-#' imm.gen(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot")
-#' }
 #' @import pheatmap
 #' @export
 cell.type.pred <- function (immgen.data = "rna",

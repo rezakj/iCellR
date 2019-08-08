@@ -17,9 +17,3 @@ An object of class iCellR
 \description{
 This function is to merge the RNA and ADT data to the main.data slot of the iCellR object.
 }
-\examples{
-\dontrun{
-my.obj <- adt.rna.merge(my.obj, adt.data = "raw")
-}
-
-}

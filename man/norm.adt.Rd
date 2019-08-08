@@ -17,9 +17,3 @@ An object of class iCellR
 Normalize ADT data.
 This function takes data frame and Normalizes ADT data.
 }
-\examples{
-\dontrun{
-my.obj <- norm.adt(my.obj)
-}
-
-}

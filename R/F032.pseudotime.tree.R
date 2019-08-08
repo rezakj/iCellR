@@ -99,8 +99,6 @@ pseudotime.tree <- function (x = NULL,
     return(grid.arrange(P2,P1, nrow = 2, heights=c(1,4)))
   }
   if (type != "jitter" || type != "classic") {
-    par("mar")
-    par(mar=c(0,0,0,0))
     return(plot(as.phylo(hc),
          type = type,
          cex = cex,

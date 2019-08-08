@@ -163,7 +163,7 @@ make.gene.model <- function (x = NULL,
   # write out gene model
 #  write.table((my.clust.genes),file="my_model_genes.txt", row.names =FALSE, quote = FALSE, col.names = FALSE)
   gene.counts <- dim(my.clust.genes)[1]
-#  print("my_model_genes.txt file is generated, which can be used for clustering.")
+#  message("my_model_genes.txt file is generated, which can be used for clustering.")
 if (my.out.put == "plot") {
 if (interactive == TRUE) {
   OUT.PUT <- paste(out.name, ".html", sep="")

@@ -204,7 +204,7 @@ if (do == 2) {
   #
   if (plot.type == "all.in.one") {
     if (interactive == TRUE) {
-      print("for interactive mode use single plots (i.e. box.mito, box.gene, etc.) in plot.type")
+      message("for interactive mode use single plots (i.e. box.mito, box.gene, etc.) in plot.type")
     }
     return(grid.arrange(nGenes.plot,
                         UMIsplot,

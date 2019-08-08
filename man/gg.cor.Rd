@@ -35,9 +35,3 @@ An object of class iCellR
 Gene-gene correlation.
 This function helps to visulaize and calculate gene-gene correlations.
 }
-\examples{
-\donttest{
-gg.cor(my.obj, interactive = F, gene1 = "NKG7",gene2 = "GNLY", conds=c("WT"))
-}
-
-}

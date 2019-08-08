@@ -67,7 +67,7 @@ clust.cond.info <- function (x = NULL,
       axis.ticks.y=element_blank()) + coord_polar(theta="y")
   #############
 #  write.table((DATA), file="clust_cond_freq_info.txt", sep="\t", row.names =FALSE)
-#  print("clust_cond_freq_info.txt file has beed generated.")
+#  message("clust_cond_freq_info.txt file has beed generated.")
   if (my.out.put == "plot") {
     if (plot.type == "bar") {
       return(myBP)

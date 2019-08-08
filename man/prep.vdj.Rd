@@ -4,7 +4,7 @@
 \alias{prep.vdj}
 \title{Prepare VDJ data}
 \usage{
-prep.vdj(vdj.data = "all_contig_annotations.csv", cond.name = "NULL")
+prep.vdj(vdj.data = "data.frame", cond.name = "NULL")
 }
 \arguments{
 \item{vdj.data}{A data frame containing vdj information.}
@@ -18,14 +18,14 @@ An object of class iCellR
 This function takes a data frame of VDJ data per cell and prepares it to adds it to the iCellR object.
 }
 \examples{
-\dontrun{
-Read your VDJ data (in this case in VDJ.tsv file) and add to your object as below
+my.vdj <- read.csv(file = system.file('extdata', 'all_contig_annotations.csv',
+          package = 'iCellR'),
+          as.is = TRUE)
+head(my.vdj)
+dim(my.vdj)
 
-my.vdj.data <- read.table("VDJ.tsv")
-
-VDJ <- prep.vdj(my.obj, adt.data = my.vdj.data)
-
-head(VDJ)
-}
+My.VDJ <- prep.vdj(vdj.data = my.vdj, cond.name = "NULL")
+head(My.VDJ)
+dim(My.VDJ)
 
 }

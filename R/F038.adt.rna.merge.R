@@ -4,11 +4,6 @@
 #' @param x An object of class iCellR.
 #' @param adt.data Choose from raw or main (normalized) ADT data, default = "raw".
 #' @return An object of class iCellR
-#' @examples
-#' \dontrun{
-#' my.obj <- adt.rna.merge(my.obj, adt.data = "raw")
-#' }
-#'
 #' @export
 adt.rna.merge <- function (x = NULL, adt.data = "raw") {
   if ("iCellR" != class(x)[1]) {

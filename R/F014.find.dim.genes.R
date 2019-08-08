@@ -42,7 +42,7 @@ find.dim.genes <- function (x = NULL,
   best.genes <- unique(as.character(as.matrix(as.data.frame(datalist))))
 #
 #  write.table((best.genes),file="my_model_PC_genes.txt", row.names =FALSE, quote = FALSE, col.names = FALSE)
-#  print("my_model_PC_genes.txt file is generated, which can be used for clustering.")
+#  message("my_model_PC_genes.txt file is generated, which can be used for clustering.")
   attributes(x)$gene.model <- as.character(as.matrix(best.genes))
   return(x)
   }

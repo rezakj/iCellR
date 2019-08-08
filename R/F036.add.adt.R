@@ -4,17 +4,6 @@
 #' @param x An object of class iCellR.
 #' @param adt.data A data frame containing ADT counts for cells.
 #' @return An object of class iCellR
-#' @examples
-#' \dontrun{
-#' # Read your ADT data (in this case in ADT.tsv file) and add to your object as below
-#' my.adt.data <- read.table("ADT.tsv")
-#'
-#' my.obj <- add.adt(my.obj, adt.data = my.adt.data)
-#'
-#' head(my.obj@adt.raw)[1:5]
-#'
-#' }
-#'
 #' @export
 add.adt <- function (x = NULL, adt.data = "data.frame") {
   if ("iCellR" != class(x)[1]) {
