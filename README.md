@@ -1079,7 +1079,100 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/14_monocol.png" />
 </p>
 
-# How to perform CCA (Coming soon)
+# How to perform CCA 
+
+```r
+
+library(iCellR)
+
+# download sample 1
+sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/sample1_for_CCA.tsv.gz"
+
+download.file(url = sample.file.url, 
+     destfile = "sample1_for_CCA.tsv.gz", 
+     method = "auto")  
+
+
+# download sample 2
+sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/sample2_for_CCA.tsv.gz"
+
+download.file(url = sample.file.url, 
+     destfile = "sample2_for_CCA.tsv.gz", 
+     method = "auto")  
+
+# Read both samples 
+S1 <- read.table("sample1_for_CCA.tsv.gz")
+head(S1)[1:5]
+
+S2 <- read.table("sample2_for_CCA.tsv.gz")
+head(S2)[1:5]
+
+# aggregate both samples  
+my.data <- data.aggregation(samples = c("S1","S2"), condition.names = c("S1","S2"))
+
+# make object
+my.obj <- make.obj(my.data)
+
+# QC
+my.obj <- qc.stats(my.obj,
+s.phase.genes = s.phase, 
+g2m.phase.genes = g2m.phase)
+
+# filter
+my.obj <- cell.filter(my.obj)
+
+## CCA 
+
+require(devtools)
+install_version("Seurat", version = "2.3.4", repos = "http://cran.us.r-project.org")
+library(Seurat)
+
+my.obj <- run.cca(my.obj,
+	top.vari.genes = 1000,
+	cc.number = 30,
+	dims.align = 1:20,
+	normalize.data = TRUE,
+	scale.data = TRUE,
+	normalization.method = "LogNormalize",
+	scale.factor = 10000,
+	display.progress = TRUE)
+
+################ Normalize, gene stats and gene model for PCA
+my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500) 
+my.obj <- gene.stats(my.obj, which.data = "main.data")
+my.obj <- make.gene.model(my.obj)
+
+###### See data without CCA
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
+
+my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
+
+UMAP_NoCCA <- cluster.plot(my.obj,plot.type = "umap",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
+
+PCA <- cluster.plot(my.obj,plot.type = "pca",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
+
+##### See data with CCA
+# replace PCA with CCA
+attributes(my.obj)$pca.data <- my.obj@cca.data
+
+my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
+
+UMAP_CCA <- cluster.plot(my.obj,plot.type = "umap",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
+
+Aligned_CCA <- cluster.plot(my.obj,plot.type = "pca",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
+
+# plot
+library(gridExtra)
+png('Compare.png', width = 8, height = 8, units = 'in', res = 300)
+grid.arrange(UMAP_NoCCA,PCA,UMAP_CCA,Aligned_CCA)
+dev.off()
+
+```
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Compare.png" />
+</p>
+
 
 # How to analyze CITE-seq data using iCellR
 
