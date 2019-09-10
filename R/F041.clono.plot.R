@@ -67,6 +67,8 @@ clono.plot <- function (x = NULL,
       colono$raw_clonotype_id <- gsub("clonotype"," ", colono$raw_clonotype_id)
       colono <- colono[1]
       colnames(colono) <- c("Clonotypes")
+      MyRows <- rownames(DATA)
+      rownames(DATA) <- gsub("-",".",MyRows)
       colonoData <- merge(DATA,colono, by="row.names", all.x=TRUE, all.y=FALSE)
       colonoData$Clonotypes <- gsub( " ", "", colonoData$Clonotypes)
       colonoData$Clonotypes[is.na(colonoData$Clonotypes)] <- "NA"
