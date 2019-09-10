@@ -58,4 +58,5 @@ utils::globalVariables(c("%>%",
                          "s.phase",
                          "scale_size",
                          "unit",
+                         "cell.barcodes",
                          "yend"))

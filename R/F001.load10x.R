@@ -11,6 +11,7 @@
 #' head(my.data)[1:5]
 #'
 #' @import Matrix
+#' @import knitr
 #' @export
 load10x <- function (dir.10x = NULL, gene.name = 2) {
   if (!dir.exists(dir.10x)) {
