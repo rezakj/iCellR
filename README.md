@@ -1173,6 +1173,84 @@ dev.off()
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Compare.png" />
 </p>
 
+# How to demultiplex with hashtag oligos (HTOs)
+
+```r
+# Read an example file
+ 
+my.hto <- read.table(file = system.file('extdata', 'dense_umis.tsv', package = 'iCellR'), as.is = TRUE)
+ 
+# see the head of the file for the first few columns
+head(my.hto)[1:3]
+#                         TGACAACAGGGCTCTC AAGGAGCGTCATTAGC AGTGAGGAGACTGTAA
+#Hashtag1-GTCAACTCTTTAGCG                3                7                7
+#Hashtag2-TGATGGCCTATTGGG               18               24             1761
+#Hashtag3-TTCCGCCTCTCTTTG                7                8                5
+#Hashtag4-AGTAAGTTCAGCGTA                0                0                0
+#Hashtag5-AAGTATCGTTTCGCA              890                2               11
+#Hashtag7-TGTCTTTCCTGCCAG                5                3                3
+ 
+# run annotation
+htos <- hto.anno(hto.data = my.hto, cov.thr = 10, assignment.thr = 80)
+
+head(htos)
+#                 Hashtag1-GTCAACTCTTTAGCG Hashtag2-TGATGGCCTATTGGG
+#TGACAACAGGGCTCTC                        3                       18
+#AAGGAGCGTCATTAGC                        7                       24
+#AGTGAGGAGACTGTAA                        7                     1761
+#ATCCACCCATGTTCCC                      753                       20
+#AAACGGGCAGGACCCT                      728                       24
+#ATGTGTGAGTCTTGCA                        4                       25
+#                 Hashtag3-TTCCGCCTCTCTTTG Hashtag4-AGTAAGTTCAGCGTA
+#TGACAACAGGGCTCTC                        7                        0
+#AAGGAGCGTCATTAGC                        8                        0
+#AGTGAGGAGACTGTAA                        5                        0
+#ATCCACCCATGTTCCC                        3                        0
+#AAACGGGCAGGACCCT                        3                        0
+#ATGTGTGAGTCTTGCA                      370                        0
+#                 Hashtag5-AAGTATCGTTTCGCA Hashtag7-TGTCTTTCCTGCCAG unmapped
+#TGACAACAGGGCTCTC                      890                        5       17
+#AAGGAGCGTCATTAGC                        2                        3        3
+#AGTGAGGAGACTGTAA                       11                        3       87
+#ATCCACCCATGTTCCC                        5                        6       18
+#AAACGGGCAGGACCCT                        9                        3       16
+#ATGTGTGAGTCTTGCA                        9                     1011       25
+#                    assignment.annotation percent.match coverage low.cov
+#TGACAACAGGGCTCTC Hashtag5-AAGTATCGTTTCGCA      94.68085      940   FALSE
+#AAGGAGCGTCATTAGC Hashtag2-TGATGGCCTATTGGG      51.06383       47    TRUE
+#AGTGAGGAGACTGTAA Hashtag2-TGATGGCCTATTGGG      93.97012     1874   FALSE
+#ATCCACCCATGTTCCC Hashtag1-GTCAACTCTTTAGCG      93.54037      805   FALSE
+#AAACGGGCAGGACCCT Hashtag1-GTCAACTCTTTAGCG      92.97573      783   FALSE
+#ATGTGTGAGTCTTGCA Hashtag7-TGTCTTTCCTGCCAG      70.01385     1444   FALSE
+#                 assignment.threshold
+#TGACAACAGGGCTCTC      good.assignment
+#AAGGAGCGTCATTAGC               unsure
+#AGTGAGGAGACTGTAA      good.assignment
+#ATCCACCCATGTTCCC      good.assignment
+#AAACGGGCAGGACCCT      good.assignment
+#ATGTGTGAGTCTTGCA               unsure
+
+# plot
+
+A = ggplot(data, aes(assignment.annotation,percent.match)) +
+	geom_boxplot() + 
+	theme_bw() + 
+	theme(axis.text.x=element_text(angle=90))
+
+B = ggplot(data, aes(low.cov,percent.match)) +
+	geom_boxplot() + 
+	theme_bw() + 
+	theme(axis.text.x=element_text(angle=90))
+
+library(gridExtra)
+png('HTOs.png', width = 8, height = 8, units = 'in', res = 300)
+grid.arrange(A,B,ncol=2)
+dev.off()
+```
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/data/HTOs.png" />
+</p>
 
 # How to analyze CITE-seq data using iCellR
 
