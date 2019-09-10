@@ -1251,7 +1251,7 @@ dev.off()
 ```
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/data/HTOs.png" />
+  <img src="https://github.com/rezakj/scSeqR/blob/master/data/myHTOS.png" />
 </p>
 
 # How to analyze CITE-seq data using iCellR
