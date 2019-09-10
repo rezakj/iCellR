@@ -1233,12 +1233,14 @@ head(htos)
 # plot
 
 A = ggplot(data, aes(assignment.annotation,percent.match)) +
-	geom_boxplot() + 
+	geom_jitter(alpha = 0.25, color = "blue") +
+	geom_boxplot(alpha = 0.5) + 
 	theme_bw() + 
 	theme(axis.text.x=element_text(angle=90))
 
 B = ggplot(data, aes(low.cov,percent.match)) +
-	geom_boxplot() + 
+	geom_jitter(alpha = 0.25, color = "blue") +
+	geom_boxplot(alpha = 0.5) + 
 	theme_bw() + 
 	theme(axis.text.x=element_text(angle=90))
 
