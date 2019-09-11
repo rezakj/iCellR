@@ -1079,7 +1079,7 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/14_monocol.png" />
 </p>
 
-# How to perform canonical correspondence analysis (CCA)
+# How to perform canonical correlation analysis (CCA)
 
 ```r
 
