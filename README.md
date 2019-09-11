@@ -1079,7 +1079,7 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/14_monocol.png" />
 </p>
 
-# How to perform CCA 
+# How to perform canonical correspondence analysis (CCA)
 
 ```r
 
@@ -1168,6 +1168,7 @@ grid.arrange(UMAP_NoCCA,PCA,UMAP_CCA,Aligned_CCA)
 dev.off()
 
 ```
+Before and After CCA
 
 <p align="center">
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Compare.png" />
@@ -1232,13 +1233,13 @@ head(htos)
 
 # plot
 
-A = ggplot(data, aes(assignment.annotation,percent.match)) +
+A = ggplot(htos, aes(assignment.annotation,percent.match)) +
 	geom_jitter(alpha = 0.25, color = "blue") +
 	geom_boxplot(alpha = 0.5) + 
 	theme_bw() + 
 	theme(axis.text.x=element_text(angle=90))
 
-B = ggplot(data, aes(low.cov,percent.match)) +
+B = ggplot(htos, aes(low.cov,percent.match)) +
 	geom_jitter(alpha = 0.25, color = "blue") +
 	geom_boxplot(alpha = 0.5) + 
 	theme_bw() + 
