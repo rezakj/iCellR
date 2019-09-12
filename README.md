@@ -749,7 +749,7 @@ plot_grid(plotlist=mget(filenames[1:9]))
 
 ```r
 # find top genes
-MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.2)
+MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.2,filt.ambig = F)
 MyGenes <- unique(MyGenes)
 # plot
 heatmap.gg.plot(my.obj, gene = MyGenes, interactive = T, out.name = "plot", cluster.by = "clusters")
