@@ -575,7 +575,7 @@ cluster.plot(my.obj,
 	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/diffiusion3D.gif" width="400"/>
 </p>
 
-- Plotting clusters and conditions
+- Plotting clusters and conditions at the same time
 
 ```r
 cluster.plot(my.obj,
