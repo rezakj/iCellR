@@ -22,10 +22,10 @@ top.markers <- function (x = NULL, topde = 10,
   # get rid of ambig genes (more than 1 cluster)
   data <- (as.data.frame(table(x$gene)))
   datanew <- (data[order(data$Freq, decreasing = TRUE),])
-  datanew <- subset(datanew, datanew$Freq == 1)
-  datanew <- as.character(datanew$Var1)
+  datanew1 <- subset(datanew, datanew$Freq == 1)
+  datanew1 <- as.character(datanew1$Var1)
   myDATA = x
-  myDATA <- subset(myDATA, myDATA$gene %in% datanew)
+  myDATA <- subset(myDATA, myDATA$gene %in% datanew1)
   if(filt.ambig == TRUE) {
     x = myDATA
   }
