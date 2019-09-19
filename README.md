@@ -802,7 +802,55 @@ gene.plot(my.obj, gene = "MS4A1",
 	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/imputed_BoxPlot.png" />
 </p>
 
+ - Plotting conditions and clusters for genes
+ 
+ ```r
+ A <- gene.plot(my.obj, gene = "MS4A1", 
+	plot.type = "scatterplot",
+	interactive = F,
+	cell.transparency = 1,
+	scaleValue = TRUE,
+	min.scale = 0,
+	max.scale = 2.5,
+	back.col = "white",
+	cond.shape = TRUE)
+B <- gene.plot(my.obj, gene = "MS4A1", 
+	plot.type = "scatterplot",
+	interactive = F,
+	cell.transparency = 1,
+	scaleValue = TRUE,
+	min.scale = 0,
+	max.scale = 2.5,
+	back.col = "white",
+	cond.shape = TRUE,
+	conds.to.plot = c("KO","WT"))
 
+C <- gene.plot(my.obj, gene = "MS4A1", 
+	plot.type = "boxplot",
+	interactive = F,
+	back.col = "white",
+	cond.shape = TRUE,
+	conds.to.plot = c("KO"))
+
+D <- gene.plot(my.obj, gene = "MS4A1", 
+	plot.type = "barplot",
+	interactive = F,
+	cell.transparency = 1,
+	back.col = "white",
+	cond.shape = TRUE,
+	conds.to.plot = c("KO","WT"))
+
+png('Conds.png', width = 8, height = 8, units = 'in', res = 300)
+library(gridExtra)
+grid.arrange(A,B,C,D)
+dev.off()
+ ```
+ 
+ <p align="center">
+	<img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds.png" />
+</p>
+ 
+ 
  - Cell type prediction using ImmGen
  
 Note that ImmGen is mouse genome data and the sample data here is human. For 157 ULI-RNA-Seq samples use this meta data: [metadata](https://github.com/rezakj/scSeqR/blob/dev/doc/uli_RNA_metadat.txt). 
