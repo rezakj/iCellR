@@ -862,10 +862,8 @@ D <- gene.plot(my.obj, gene = "MS4A1",
 	cond.shape = TRUE,
 	conds.to.plot = c("KO","WT"))
 
-png('Conds.png', width = 8, height = 8, units = 'in', res = 300)
 library(gridExtra)
 grid.arrange(A,B,C,D)
-dev.off()
  ```
  
  <p align="center">
