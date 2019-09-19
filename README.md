@@ -575,6 +575,28 @@ cluster.plot(my.obj,
 	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/diffiusion3D.gif" width="400"/>
 </p>
 
+- Plotting clusters and conditions
+
+```r
+cluster.plot(my.obj,
+	cell.size = 1,
+	plot.type = "umap",
+	cell.color = "black",
+	back.col = "white",
+	col.by = "clusters",
+	cell.transparency = 0.5,
+	clust.dim = 2,
+	cond.shape = T,
+	interactive = T,
+	out.name = "2d_UMAP_clusters_conds")
+```
+
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds_clusts.gif"/>
+</p>
+
+
 - Normalized cell frequencies in clusters and conditions
 
 ```r
