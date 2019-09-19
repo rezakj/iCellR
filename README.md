@@ -16,7 +16,7 @@ For citation please use this link (our manuscript is in preparation): https://gi
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out2.gif" width="400"/>
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out3.gif" width="400"/>
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out4.gif" width="400"/> 
-	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/gating1.gif"/>
+	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/gating2.gif"/>
 </p>
 
 ***
