@@ -5,13 +5,14 @@
 \title{Make scatter, box and bar plots for genes}
 \usage{
 gene.plot(x = NULL, gene = "NULL", cond.shape = FALSE,
-  data.type = "main", box.to.test = 0, box.pval = "sig.signs",
-  plot.data.type = "tsne", scaleValue = FALSE, min.scale = -2.5,
-  max.scale = 2.5, clust.dim = 2, col.by = "clusters",
-  plot.type = "scatterplot", cell.size = 1, cell.colors = c("gray",
-  "red"), box.cell.col = "black", box.color = "red",
-  box.line.col = "green", back.col = "white",
-  cell.transparency = 0.5, interactive = TRUE, out.name = "plot")
+  conds.to.plot = NULL, data.type = "main", box.to.test = 0,
+  box.pval = "sig.signs", plot.data.type = "tsne",
+  scaleValue = FALSE, min.scale = -2.5, max.scale = 2.5,
+  clust.dim = 2, col.by = "clusters", plot.type = "scatterplot",
+  cell.size = 1, cell.colors = c("gray", "red"),
+  box.cell.col = "black", box.color = "red", box.line.col = "green",
+  back.col = "white", cell.transparency = 0.5, interactive = TRUE,
+  out.name = "plot")
 }
 \arguments{
 \item{x}{An object of class iCellR.}
@@ -19,6 +20,8 @@ gene.plot(x = NULL, gene = "NULL", cond.shape = FALSE,
 \item{gene}{A gene name to be plotted.}
 
 \item{cond.shape}{If TRUE the conditions will be shown in shapes.}
+
+\item{conds.to.plot}{Choose the conditions you want to see in the plot, default = NULL (all conditions).}
 
 \item{data.type}{Choose from "main" or "imputed", default = "main".}
 
