@@ -218,7 +218,6 @@ DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
   # plot 2d
 #    Conditions = col.legend.box
   if (clust.dim == 2) {
-    if (interactive == FALSE) {
       if (cond.shape == FALSE) {
         myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
                                    text = row.names(DATA), color = Expression)) +
@@ -242,7 +241,6 @@ DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
             theme(panel.background = element_rect(fill = back.col, colour = "black"),
                   panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                   legend.key = element_rect(fill = back.col))
-        }
     } #else {
 #      myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
 #                                 text = row.names(DATA), color = Expression)) +
