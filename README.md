@@ -386,16 +386,14 @@ opt.pcs.plot(my.obj)
 # 2 round PCA (to find top genes in the first 10 PCs and re-run PCA for better clustering
 ## This is optional and might not be good in some cases
 length(my.obj@gene.model)
-# 585
+# 681
 my.obj <- find.dim.genes(my.obj, dims = 1:10,top.pos = 20, top.neg = 20) # (optional)
 
 length(my.obj@gene.model)
-# 208
+# 214
 
 # second round PC
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
-
-my.obj@opt.pcs
 ```        
 
 <p align="center">
