@@ -412,8 +412,12 @@ Here we cluster the first 10 dimensions of the data which is converted to princi
 We recomand to use the defult options as below:
 
 ```r
-library('devtools')
+library(Rphenograph)
 my.obj <- run.phenograph(my.obj,k = 45,dims = 1:10)
+
+
+# if Rphenograph not installed
+#devtools::install_github("JinmiaoChenLab/Rphenograph")
 
 # or 
 
