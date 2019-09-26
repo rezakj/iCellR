@@ -422,8 +422,10 @@ my.obj <- run.clustering(my.obj,
 
 # or 
 
-library(Rphenograph)
-my.obj <- run.phenograph(my.obj,k = 45,dims = 1:10)
+#library(Rphenograph)
+#my.obj <- run.phenograph(my.obj,k = 45,dims = 1:10)
+
+
 # if Rphenograph not installed
 #devtools::install_github("JinmiaoChenLab/Rphenograph")
 
