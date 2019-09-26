@@ -27,7 +27,7 @@ An object of class iCellR
 This function takes an object of class iCellR and performs differential expression (DE) analysis to find marker genes for each cluster.
 }
 \examples{
-marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
+marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = FALSE)
 
 head(marker.genes)
 }

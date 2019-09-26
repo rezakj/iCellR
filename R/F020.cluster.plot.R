@@ -121,7 +121,7 @@ cluster.plot <- function (x = NULL,
   # clusters
   # always use hierarchical (k means changes everytime you run)
   if (col.by == "clusters") {
-    if (is.null(x@cluster.data$Best.partition)) {
+    if (is.null(x@best.clust)) {
       stop("Clusters are not assigend yet, please run assign.clust fisrt.")
     } else {
       col.legend <- factor(x@best.clust$clusters)

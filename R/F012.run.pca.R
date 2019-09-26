@@ -50,8 +50,13 @@ run.pca <- function (x = NULL,
       genesForClustering <- gene.list
       topGenes <- subset(DATA, rownames(DATA) %in% genesForClustering)
       if (batch.norm == FALSE){
-         TopNormLogScale <- log2(topGenes + plus.log.value)
-         # TopNormLogScale <- scale(topGenes)
+        if (data.type == "main") {
+          TopNormLogScale <- log2(topGenes + plus.log.value)
+        }
+        if (data.type == "imputed") {
+         # TopNormLogScale <- topGenes
+          TopNormLogScale <- t(scale(t(topGenes)))
+        }
       }
       if (batch.norm == TRUE){
         ## new method
@@ -59,7 +64,7 @@ run.pca <- function (x = NULL,
         norm.facts <- as.numeric(libSiz) / mean(as.numeric(libSiz))
         dataMat <- as.matrix(topGenes)
         normalized <- as.data.frame(sweep(dataMat, 2, norm.facts, `/`))
-         TopNormLogScale <- log2(normalized + plus.log.value)
+        # TopNormLogScale <- log2(normalized + plus.log.value)
         TopNormLogScale <- normalized
       }
     }
