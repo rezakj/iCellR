@@ -412,23 +412,21 @@ Here we cluster the first 10 dimensions of the data which is converted to princi
 We recomand to use the defult options as below:
 
 ```r
-library(Rphenograph)
-my.obj <- run.phenograph(my.obj,k = 45,dims = 1:10)
-
-
-# if Rphenograph not installed
-#devtools::install_github("JinmiaoChenLab/Rphenograph")
+my.obj <- run.clustering(my.obj, 
+	clust.method = "kmeans", 
+	dist.method = "euclidean",
+	index.method = "silhouette",
+	max.clust = 25,
+	min.clust = 2,
+	dims = 1:10)
 
 # or 
 
-#my.obj <- run.clustering(my.obj, 
-#	clust.method = "kmeans", 
-#	dist.method = "euclidean",
-#	index.method = "silhouette",
-#	max.clust = 25,
-#	min.clust = 2,
-#	dims = 1:10)
-	
+library(Rphenograph)
+my.obj <- run.phenograph(my.obj,k = 45,dims = 1:10)
+# if Rphenograph not installed
+#devtools::install_github("JinmiaoChenLab/Rphenograph")
+
 # If you want to manually set the number of clusters, and not used the predicted optimal number, set the minimum and maximum to the number you want:
 #my.obj <- run.clustering(my.obj, 
 #	clust.method = "ward.D",
