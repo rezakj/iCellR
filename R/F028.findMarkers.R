@@ -10,7 +10,7 @@
 #'
 #' @return An object of class iCellR
 #' @examples
-#' marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
+#' marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = FALSE)
 #'
 #' head(marker.genes)
 #' @export

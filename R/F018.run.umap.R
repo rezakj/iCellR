@@ -21,17 +21,26 @@ run.umap <- function (x = NULL,
   # get PCA data
   DATA <- x@pca.data
   DATA <- DATA[dims]
-  #  2 dimention
-  #  if (clust.dim == 2) {
-  # TransPosed <- t(TopNormLogScale)
-  # DD <- phate(DATA)
-  # phate.data <- as.data.frame(DD$embedding)
-  #### method 2
-  #devtools::install_github("jlmelville/uwot")
-  # library(uwot)
-  # myUMAP <- umap(DATA)
-  # row.names(myUMAP) <- row.names(DATA)
-  # myUMAP <- as.data.frame(myUMAP)
+#  data <- as.matrix(DATA)
+#  Rphenograph_out <- Rphenograph(data, k = 45)
+#  modularity(Rphenograph_out[[2]])
+#  MyClusts = membership(Rphenograph_out[[2]])
+#  MyClusts <- as.data.frame(as.matrix(MyClusts))
+#  row.names(MyClusts) <- row.names(data)
+#  colnames(MyClusts) <- "clusters"
+#  my.obj@best.clust <- MyClusts
+#  head(my.obj@best.clust)
+  ##########
+#  DATA <- my.obj@imputed.data
+#  DATA <- my.obj@main.data
+#  raw.data.order <- DATA[ order(rowMeans(DATA), decreasing = TRUE), ]
+#  topGenes <- head(raw.data.order,500)
+#  DATA<- as.data.frame(t(as.data.frame(scale(topGenes))))
+#  head(DATA)[1:5]
+#  myUMAP = umap(DATA, method = "umap-learn")
+#  myUMAP = as.data.frame((myUMAP$layout))
+#  my.obj@umap.data <- myUMAP
+#  head(my.obj@umap.data)
 #  library(umap)
   myUMAP = umap(DATA, method = method)
   myUMAP = as.data.frame((myUMAP$layout))
