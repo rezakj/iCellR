@@ -1416,9 +1416,11 @@ VDJ data dimentions (rows,columns):0,0
    ADT columns names:...
    ADT row names:...
 ########### iCellR object ##########
+```
 
-# add ADT data
+- add ADT data
 
+```r
 my.obj <- add.adt(my.obj, adt.data = adt.data)
 
 # check too see
@@ -1451,6 +1453,50 @@ VDJ data dimentions (rows,columns):0,0
    ADT row names:...
 ########### iCellR object ##########
   ```
+- QC, filter, normalize
+
+```r
+# QC
+my.obj <- qc.stats(my.obj,
+	s.phase.genes = s.phase, 
+	g2m.phase.genes = g2m.phase)
+
+# plot as mentioned above
+
+# filter 
+my.obj <- cell.filter(my.obj,
+	min.mito = 0,
+	max.mito = 0.07 ,
+	min.genes = 500,
+	max.genes = 4000,
+	min.umis = 0,
+	max.umis = Inf)
+
+# normalize RNA
+my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500) 
+
+# normalize ADT
+my.obj <- norm.adt(my.obj)
+
+# gene stats
+my.obj <- gene.stats(my.obj, which.data = "main.data")
+
+# find genes for PCA
+my.obj <- make.gene.model(my.obj, my.out.put = "data",
+	dispersion.limit = 1.5, 
+	base.mean.rank = 500, 
+	no.mito.model = T, 
+	mark.mito = T, 
+	interactive = F,
+	no.cell.cycle = T,
+	out.name = "gene.model")
+
+# merge RNA and ADT data
+my.obj <- adt.rna.merge(my.obj, adt.data = "main")
+
+# run PCA and the rest is as above
+```
+
 
 
 <p align="center">
