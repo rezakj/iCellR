@@ -1453,7 +1453,7 @@ VDJ data dimentions (rows,columns):0,0
    ADT row names:...
 ########### iCellR object ##########
   ```
-- QC, filter, normalize
+- QC, filter, normalize, merge ADT and RNA and PCA and UMAP
 
 ```r
 # QC
@@ -1495,13 +1495,56 @@ my.obj <- make.gene.model(my.obj, my.out.put = "data",
 my.obj <- adt.rna.merge(my.obj, adt.data = "main")
 
 # run PCA and the rest is as above
+
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
+
+# 2 pass PCA 
+my.obj <- find.dim.genes(my.obj, dims = 1:20,top.pos = 20, top.neg = 20)
+# second round PC
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
+
+my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn")
+```
+
+- plot 
+
+```r
+# find ADT gene names 
+grep("^ADT_", rownames(my.obj@main.data),value=T)
+# [1] "ADT_CD3"    "ADT_CD4"    "ADT_CD8"    "ADT_CD45RA" "ADT_CD56"
+# [6] "ADT_CD16"   "ADT_CD11c"  "ADT_CD14"   "ADT_CD19"   "ADT_CD34"
+
+A = gene.plot(my.obj, 
+	gene = "ADT_CD3",
+	plot.data.type = "umap",
+	interactive = F,
+	cell.transparency = 0.5)
+
+B = gene.plot(my.obj, 
+	gene = "CD3E",
+	plot.data.type = "umap",
+	interactive = F,
+	cell.transparency = 0.5)
+
+C = gene.plot(my.obj, 
+	gene = "ADT_CD16",
+	plot.data.type = "umap",
+	interactive = F,
+	cell.transparency = 0.5)
+
+D = gene.plot(my.obj, 
+	gene = "FCGR3A",
+	plot.data.type = "umap",
+	interactive = F,
+	cell.transparency = 0.5)
+		
+library(gridExtra)
+grid.arrange(A,B,C,D)
 ```
 
 
-
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/list3.png" />
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/list5.png" />
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/NotScaled.png" />
 </p>
 
 # How to analyze scVDJ-seq data using iCellR
