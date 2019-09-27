@@ -1504,6 +1504,36 @@ my.obj <- find.dim.genes(my.obj, dims = 1:20,top.pos = 20, top.neg = 20)
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
 
 my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn")
+
+# check your object 
+my.obj
+###################################
+,--. ,-----.       ,--.,--.,------.
+`--''  .--./ ,---. |  ||  ||  .--. '
+,--.|  |    | .-. :|  ||  ||  '--'.'
+|  |'  '--'\   --. |  ||  ||  |
+`--' `-----' `----'`--'`--'`--' '--'
+###################################
+An object of class iCellR version: 1.1.4
+Raw/original data dimentions (rows,columns): 20501,8617
+Data conditions: no conditions/single sample
+Row names: A1BG,A1BG-AS1,A1CF ...
+Columns names: CTGTTTACACCGCTAG,CTCTACGGTGTGGCTC,AGCAGCCAGGCTCATT ...
+###################################
+   QC stats performed:TRUE, PCA performed:TRUE, CCA performed:FALSE
+   Clustering performed:TRUE, Number of clusters:14
+   tSNE performed:FALSE, UMAP performed:TRUE, DiffMap performed:FALSE
+   Main data dimentions (rows,columns):20511,8305
+   Normalization factors:8.448547776071,...
+   Imputed data dimentions (rows,columns):0,0
+############## scVDJ-Seq ###########
+VDJ data dimentions (rows,columns):0,0
+############## CITE-Seq ############
+   ADT raw data dimentions (rows,columns):10,8617
+   ADT main data dimentions (rows,columns):10,8617
+   ADT columns names:CTGTTTACACCGCTAG...
+   ADT row names:ADT_CD3...
+########### iCellR object ##########
 ```
 
 - plot 
