@@ -1453,7 +1453,7 @@ VDJ data dimentions (rows,columns):0,0
    ADT row names:...
 ########### iCellR object ##########
   ```
-- QC, filter, normalize, merge ADT and RNA and PCA and UMAP
+- QC, filter, normalize, merge ADT and RNA data, run PCA and UMAP
 
 ```r
 # QC
