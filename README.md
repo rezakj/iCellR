@@ -1333,6 +1333,126 @@ dev.off()
 
 # How to analyze CITE-seq data using iCellR
 
+ - Download test samples
+ 
+ ```r
+ sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/CITE-Seq_sample_RNA.tsv.gz"
+
+# download RNA file
+
+download.file(url = sample.file.url, 
+     destfile = "CITE-Seq_sample_RNA.tsv.gz", 
+     method = "auto")  
+
+sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/CITE-Seq_sample_ADT.tsv.gz"
+
+# download ADT file
+
+download.file(url = sample.file.url, 
+     destfile = "CITE-Seq_sample_ADT.tsv.gz", 
+     method = "auto")  
+ ```
+ 
+  - Read the files and make your object
+  
+  ```r
+  # Read RNA file
+ rna.data <- read.delim("CITE-Seq_sample_RNA.tsv.gz",header=TRUE)
+ 
+  # see the head 
+ head(rna.data)[1:3]
+#          CTGTTTACACCGCTAG CTCTACGGTGTGGCTC AGCAGCCAGGCTCATT
+#A1BG                    0                0                0
+#A1BG-AS1                0                0                0
+#A1CF                    0                0                0
+#A2M                     0                0                0
+#A2M-AS1                 0                0                0
+#A2ML1                   0                0                0
+  
+ # Read ADT file
+ adt.data <- read.delim("CITE-Seq_sample_ADT.tsv.gz",header=TRUE)
+ 
+ # see the head 
+ head(adt.data)[1:3]
+#        CTGTTTACACCGCTAG CTCTACGGTGTGGCTC AGCAGCCAGGCTCATT
+#CD3                  60               52               89
+#CD4                  72               49              112
+#CD8                  76               59               61
+#CD45RA              575             3943              682
+#CD56                 64               68               87
+#CD16                161              107              117
+ 
+# if you had multiple sample use the data.aggregation function for both RNA and ADT data. 
+
+# make iCellR object
+my.obj <- make.obj(rna.data)
+
+# check object
+my.obj
+###################################
+,--. ,-----.       ,--.,--.,------.
+`--''  .--./ ,---. |  ||  ||  .--. '
+,--.|  |    | .-. :|  ||  ||  '--'.'
+|  |'  '--'\   --. |  ||  ||  |
+`--' `-----' `----'`--'`--'`--' '--'
+###################################
+An object of class iCellR version: 1.1.4
+Raw/original data dimentions (rows,columns): 20501,8617
+Data conditions: no conditions/single sample
+Row names: A1BG,A1BG-AS1,A1CF ...
+Columns names: CTGTTTACACCGCTAG,CTCTACGGTGTGGCTC,AGCAGCCAGGCTCATT ...
+###################################
+   QC stats performed:FALSE, PCA performed:FALSE, CCA performed:FALSE
+   Clustering performed:FALSE, Number of clusters:0
+   tSNE performed:FALSE, UMAP performed:FALSE, DiffMap performed:FALSE
+   Main data dimentions (rows,columns):0,0
+   Normalization factors:,...
+   Imputed data dimentions (rows,columns):0,0
+############## scVDJ-Seq ###########
+VDJ data dimentions (rows,columns):0,0
+############## CITE-Seq ############
+   ADT raw data dimentions (rows,columns):0,0
+   ADT main data dimentions (rows,columns):0,0
+   ADT columns names:...
+   ADT row names:...
+########### iCellR object ##########
+
+# add ADT data
+
+my.obj <- add.adt(my.obj, adt.data = adt.data)
+
+# check too see
+ my.obj
+###################################
+,--. ,-----.       ,--.,--.,------.
+`--''  .--./ ,---. |  ||  ||  .--. '
+,--.|  |    | .-. :|  ||  ||  '--'.'
+|  |'  '--'\   --. |  ||  ||  |
+`--' `-----' `----'`--'`--'`--' '--'
+###################################
+An object of class iCellR version: 1.1.4
+Raw/original data dimentions (rows,columns): 20501,8617
+Data conditions: no conditions/single sample
+Row names: A1BG,A1BG-AS1,A1CF ...
+Columns names: CTGTTTACACCGCTAG,CTCTACGGTGTGGCTC,AGCAGCCAGGCTCATT ...
+###################################
+   QC stats performed:FALSE, PCA performed:FALSE, CCA performed:FALSE
+   Clustering performed:FALSE, Number of clusters:0
+   tSNE performed:FALSE, UMAP performed:FALSE, DiffMap performed:FALSE
+   Main data dimentions (rows,columns):0,0
+   Normalization factors:,...
+   Imputed data dimentions (rows,columns):0,0
+############## scVDJ-Seq ###########
+VDJ data dimentions (rows,columns):0,0
+############## CITE-Seq ############
+-   ADT raw data dimentions (rows,columns):10,8617
+   ADT main data dimentions (rows,columns):0,0
+   ADT columns names:...
+   ADT row names:...
+########### iCellR object ##########
+  ```
+
+
 <p align="center">
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/list3.png" />
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/list5.png" />
