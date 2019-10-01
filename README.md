@@ -1334,6 +1334,49 @@ dev.off()
   <img src="https://github.com/rezakj/scSeqR/blob/master/data/myHTOS.png" />
 </p>
 
+ - Filtering HTOs and merging the samples
+ 
+ ```r
+ # let's say you decide a filter of 80%
+ dim(htos)
+ # [1] 1500   12
+ htos <- subset(htos,htos$percent.match > 80)
+ dim(htos)
+ # [1] 1073   12 
+ 
+ sample1 <- row.names(subset(htos,htos$assignment.annotation == "Hashtag1-GTCAACTCTTTAGCG"))
+ 
+ head(sample1)
+# [1] "ATCCACCCATGTTCCC" "AAACGGGCAGGACCCT" "TTCTACATCCTCATTA" "GGTATTGTCCTATGTT"
+# [5] "GTCGTAATCTTACCTA" "ACAGCCGGTTGGGACA"
+
+length(sample1)
+# [1] 213
+# in this case you have 213 cells in sample 1
+
+sample2 <- row.names(subset(htos,htos$assignment.annotation == "Hashtag2-TGATGGCCTATTGGG"))
+
+# now read your RNA data 
+# example:
+RNA.data <- load10x("filtered_gene_bc_matrices/hg19/")
+
+# demultiplex RNA data 
+sample1.rna <- RNA.data[ , which(names(RNA.data) %in% sample1)]
+
+sample2.rna <- RNA.data[ , which(names(RNA.data) %in% sample2)]
+
+# aggregate 
+
+my.data <- data.aggregation(samples = c("sample1.rna","sample2.rna"), 
+	condition.names = c("S1","S2"))
+	
+# make iCellR object	
+my.obj <- make.obj(my.data)
+
+# The rest is as above :)
+ ```
+
+
 # How to analyze CITE-seq data using iCellR
 
  - Download test samples
