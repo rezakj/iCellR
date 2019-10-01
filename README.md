@@ -1362,6 +1362,10 @@ sample2 <- row.names(subset(htos,htos$assignment.annotation == "Hashtag2-TGATGGC
 # example:
 RNA.data <- load10x("filtered_gene_bc_matrices/hg19/")
 
+# NOTE the RNA data has the cell IDs in the sample format as HTOs 
+# "GTCGTAATCTTACCTA" "ACAGCCGGTTGGGACA" ... 
+# Not "GTCGTAATCTTACCTA.1" "ACAGCCGGTTGGGACA.1"
+
 # demultiplex RNA data 
 # Take RNA-Seq data with the cell IDs from Hashtag1
 sample1.rna <- RNA.data[ , which(names(RNA.data) %in% sample1)]
