@@ -1344,6 +1344,7 @@ dev.off()
  dim(htos)
  # [1] 1073   12 
  
+ # Take the cell IDs from Hashtag1
  sample1 <- row.names(subset(htos,htos$assignment.annotation == "Hashtag1-GTCAACTCTTTAGCG"))
  
  head(sample1)
@@ -1354,6 +1355,7 @@ length(sample1)
 # [1] 213
 # in this case you have 213 cells in sample 1 (Hashtag1)
 
+# Take the cell IDs from Hashtag2
 sample2 <- row.names(subset(htos,htos$assignment.annotation == "Hashtag2-TGATGGCCTATTGGG"))
 
 # now read your RNA data 
@@ -1361,11 +1363,13 @@ sample2 <- row.names(subset(htos,htos$assignment.annotation == "Hashtag2-TGATGGC
 RNA.data <- load10x("filtered_gene_bc_matrices/hg19/")
 
 # demultiplex RNA data 
+# Take RNA-Seq data with the cell IDs from Hashtag1
 sample1.rna <- RNA.data[ , which(names(RNA.data) %in% sample1)]
 
+# Take RNA-Seq data with the cell IDs from Hashtag2
 sample2.rna <- RNA.data[ , which(names(RNA.data) %in% sample2)]
 
-# aggregate 
+# aggregate (merge the 2 or more samples after demultiplexing)
 
 my.data <- data.aggregation(samples = c("sample1.rna","sample2.rna"), 
 	condition.names = c("S1","S2"))
