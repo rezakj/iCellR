@@ -1337,7 +1337,7 @@ dev.off()
  - Filtering HTOs and merging the samples
  
  ```r
- # let's say you decide a filter of 80%
+ # let's say you decided filtering based on 80%
  dim(htos)
  # [1] 1500   12
  htos <- subset(htos,htos$percent.match > 80)
@@ -1352,7 +1352,7 @@ dev.off()
 
 length(sample1)
 # [1] 213
-# in this case you have 213 cells in sample 1
+# in this case you have 213 cells in sample 1 (Hashtag1)
 
 sample2 <- row.names(subset(htos,htos$assignment.annotation == "Hashtag2-TGATGGCCTATTGGG"))
 
