@@ -1360,7 +1360,7 @@ sample2 <- row.names(subset(htos,htos$assignment.annotation == "Hashtag2-TGATGGC
 
 # now read your RNA data 
 # example:
-RNA.data <- load10x("filtered_gene_bc_matrices/hg19/")
+RNA.data <- load10x("YOUR/data/filtered_gene_bc_matrices/hg19/")
 
 head(RNA.data)[1:2]
 #         AAACATAAAACCAG CCCCATTGAGCTAA
