@@ -797,10 +797,11 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters"
  - Run data imputation
 
 ```r
-library(Rmagic)
-library(phateR)
-library(viridis)
-my.obj <- run.impute(my.obj)
+my.obj <- run.impute(my.obj, dims = 1:10, cell.ratio = 2, data.type = "pca")
+
+# more examples
+# my.obj <- run.impute(my.obj, cell.ratio = 2, data.type = "tsne")
+# my.obj <- run.impute(my.obj, cell.ratio = 2, data.type = "umap")
 
 # save after imputation 
 save(my.obj, file = "my.obj.Robj")
