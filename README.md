@@ -471,8 +471,9 @@ my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
 # wget https://cran.r-project.org/src/contrib/Archive/phateR/phateR_0.2.9.tar.gz
 # install.packages('phateR/', repos = NULL, type="source")
 
-library(phateR)
-my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
+# optional 
+# library(phateR)
+# my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
 ```
 
 - Visualize data
