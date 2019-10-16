@@ -9,6 +9,7 @@ Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vi
 
 For citation please use this link (our manuscript is in preparation): https://github.com/rezakj/iCellR
 
+If you are using FlowJo or SeqGeq and like to use graphical user interface (GUI) tools, they have made plugins for iCellR and other single cell tools: https://www.flowjo.com/exchange/#/ (list of all plugins) and https://www.flowjo.com/exchange/#/plugin/profile?id=34 (iCellR plugin)
 ### Single (i) Cell R package (iCellR)
 
 <p align="center">
@@ -70,6 +71,9 @@ library("iCellR")
 my.data <- load10x("filtered_gene_bc_matrices/hg19/")
 
 # This directory includes; barcodes.tsv, genes.tsv/features.tsv and matrix.mtx files (data could be zipped or unzipped).
+
+# if your data is in a csv or tsv format read it like this example
+# my.data <- read.delim("CITE-Seq_sample_RNA.tsv.gz",header=TRUE)
 ```
 
 To see the help page for each function use question mark as: 
@@ -419,7 +423,16 @@ my.obj <- run.clustering(my.obj,
 	max.clust = 25,
 	min.clust = 2,
 	dims = 1:10)
-	
+
+# or 
+
+#library(Rphenograph)
+#my.obj <- run.phenograph(my.obj,k = 45,dims = 1:10)
+
+
+# if Rphenograph not installed
+#devtools::install_github("JinmiaoChenLab/Rphenograph")
+
 # If you want to manually set the number of clusters, and not used the predicted optimal number, set the minimum and maximum to the number you want:
 #my.obj <- run.clustering(my.obj, 
 #	clust.method = "ward.D",
@@ -458,8 +471,9 @@ my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
 # wget https://cran.r-project.org/src/contrib/Archive/phateR/phateR_0.2.9.tar.gz
 # install.packages('phateR/', repos = NULL, type="source")
 
-library(phateR)
-my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
+# optional 
+# library(phateR)
+# my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
 ```
 
 - Visualize data
@@ -784,10 +798,11 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters"
  - Run data imputation
 
 ```r
-library(Rmagic)
-library(phateR)
-library(viridis)
-my.obj <- run.impute(my.obj)
+my.obj <- run.impute(my.obj, dims = 1:10, cell.ratio = 2, data.type = "pca")
+
+# more examples
+# my.obj <- run.impute(my.obj, cell.ratio = 2, data.type = "tsne")
+# my.obj <- run.impute(my.obj, cell.ratio = 2, data.type = "umap")
 
 # save after imputation 
 save(my.obj, file = "my.obj.Robj")
@@ -1321,11 +1336,308 @@ dev.off()
   <img src="https://github.com/rezakj/scSeqR/blob/master/data/myHTOS.png" />
 </p>
 
+ - Filtering HTOs and merging the samples
+ 
+ ```r
+ # let's say you decided filtering based on 80%
+ dim(htos)
+ # [1] 1500   12
+ htos <- subset(htos,htos$percent.match > 80)
+ dim(htos)
+ # [1] 1073   12 
+ 
+ # Take the cell IDs from Hashtag1
+ sample1 <- row.names(subset(htos,htos$assignment.annotation == "Hashtag1-GTCAACTCTTTAGCG"))
+ 
+ head(sample1)
+# [1] "ATCCACCCATGTTCCC" "AAACGGGCAGGACCCT" "TTCTACATCCTCATTA" "GGTATTGTCCTATGTT"
+# [5] "GTCGTAATCTTACCTA" "ACAGCCGGTTGGGACA"
+
+length(sample1)
+# [1] 213
+# in this case you have 213 cells in sample 1 (Hashtag1)
+
+# Take the cell IDs from Hashtag2
+sample2 <- row.names(subset(htos,htos$assignment.annotation == "Hashtag2-TGATGGCCTATTGGG"))
+
+# now read your RNA data 
+# example:
+RNA.data <- load10x("YOUR/data/filtered_gene_bc_matrices/hg19/")
+
+head(RNA.data)[1:2]
+#         AAACATAAAACCAG CCCCATTGAGCTAA
+#A1BG.AS1                   0                   0
+#BCLA                       0                   0
+#A2M                        0                   0
+#GATA1                      0                   0
+
+# NOTE: the RNA data has the cell IDs in the same format as HTOs 
+# "AAACATAAAACCAG" "CCCCATTGAGCTAA" ... 
+# Not "AAACATAAAACCAG.1" "CCCCATTGAGCTAA.1" ... 
+
+# demultiplex RNA data 
+# Take RNA-Seq data with the cell IDs from Hashtag1
+sample1.rna <- RNA.data[ , which(names(RNA.data) %in% sample1)]
+
+# Take RNA-Seq data with the cell IDs from Hashtag2
+sample2.rna <- RNA.data[ , which(names(RNA.data) %in% sample2)]
+
+# aggregate (merge the 2 or more samples after demultiplexing)
+
+my.data <- data.aggregation(samples = c("sample1.rna","sample2.rna"), 
+	condition.names = c("S1","S2"))
+	
+# make iCellR object	
+my.obj <- make.obj(my.data)
+
+# The rest is as above :)
+ ```
+
+
 # How to analyze CITE-seq data using iCellR
 
+ - Download test samples
+ 
+ ```r
+ sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/CITE-Seq_sample_RNA.tsv.gz"
+
+# download RNA file
+
+download.file(url = sample.file.url, 
+     destfile = "CITE-Seq_sample_RNA.tsv.gz", 
+     method = "auto")  
+
+sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/CITE-Seq_sample_ADT.tsv.gz"
+
+# download ADT file
+
+download.file(url = sample.file.url, 
+     destfile = "CITE-Seq_sample_ADT.tsv.gz", 
+     method = "auto")  
+ ```
+ 
+  - Read the files and make your object
+  
+  ```r
+  # Read RNA file
+ rna.data <- read.delim("CITE-Seq_sample_RNA.tsv.gz",header=TRUE)
+ 
+  # see the head 
+ head(rna.data)[1:3]
+#          CTGTTTACACCGCTAG CTCTACGGTGTGGCTC AGCAGCCAGGCTCATT
+#A1BG                    0                0                0
+#A1BG-AS1                0                0                0
+#A1CF                    0                0                0
+#A2M                     0                0                0
+#A2M-AS1                 0                0                0
+#A2ML1                   0                0                0
+  
+ # Read ADT file
+ adt.data <- read.delim("CITE-Seq_sample_ADT.tsv.gz",header=TRUE)
+ 
+ # see the head 
+ head(adt.data)[1:3]
+#        CTGTTTACACCGCTAG CTCTACGGTGTGGCTC AGCAGCCAGGCTCATT
+#CD3                  60               52               89
+#CD4                  72               49              112
+#CD8                  76               59               61
+#CD45RA              575             3943              682
+#CD56                 64               68               87
+#CD16                161              107              117
+ 
+# if you had multiple sample use the data.aggregation function for both RNA and ADT data. 
+
+# make iCellR object
+my.obj <- make.obj(rna.data)
+
+# check object
+my.obj
+###################################
+,--. ,-----.       ,--.,--.,------.
+`--''  .--./ ,---. |  ||  ||  .--. '
+,--.|  |    | .-. :|  ||  ||  '--'.'
+|  |'  '--'\   --. |  ||  ||  |
+`--' `-----' `----'`--'`--'`--' '--'
+###################################
+An object of class iCellR version: 1.1.4
+Raw/original data dimentions (rows,columns): 20501,8617
+Data conditions: no conditions/single sample
+Row names: A1BG,A1BG-AS1,A1CF ...
+Columns names: CTGTTTACACCGCTAG,CTCTACGGTGTGGCTC,AGCAGCCAGGCTCATT ...
+###################################
+   QC stats performed:FALSE, PCA performed:FALSE, CCA performed:FALSE
+   Clustering performed:FALSE, Number of clusters:0
+   tSNE performed:FALSE, UMAP performed:FALSE, DiffMap performed:FALSE
+   Main data dimentions (rows,columns):0,0
+   Normalization factors:,...
+   Imputed data dimentions (rows,columns):0,0
+############## scVDJ-Seq ###########
+VDJ data dimentions (rows,columns):0,0
+############## CITE-Seq ############
+   ADT raw data dimentions (rows,columns):0,0
+   ADT main data dimentions (rows,columns):0,0
+   ADT columns names:...
+   ADT row names:...
+########### iCellR object ##########
+```
+
+- add ADT data
+
+```r
+my.obj <- add.adt(my.obj, adt.data = adt.data)
+
+# check too see
+ my.obj
+###################################
+,--. ,-----.       ,--.,--.,------.
+`--''  .--./ ,---. |  ||  ||  .--. '
+,--.|  |    | .-. :|  ||  ||  '--'.'
+|  |'  '--'\   --. |  ||  ||  |
+`--' `-----' `----'`--'`--'`--' '--'
+###################################
+An object of class iCellR version: 1.1.4
+Raw/original data dimentions (rows,columns): 20501,8617
+Data conditions: no conditions/single sample
+Row names: A1BG,A1BG-AS1,A1CF ...
+Columns names: CTGTTTACACCGCTAG,CTCTACGGTGTGGCTC,AGCAGCCAGGCTCATT ...
+###################################
+   QC stats performed:FALSE, PCA performed:FALSE, CCA performed:FALSE
+   Clustering performed:FALSE, Number of clusters:0
+   tSNE performed:FALSE, UMAP performed:FALSE, DiffMap performed:FALSE
+   Main data dimentions (rows,columns):0,0
+   Normalization factors:,...
+   Imputed data dimentions (rows,columns):0,0
+############## scVDJ-Seq ###########
+VDJ data dimentions (rows,columns):0,0
+############## CITE-Seq ############
+-   ADT raw data dimentions (rows,columns):10,8617
+   ADT main data dimentions (rows,columns):0,0
+   ADT columns names:...
+   ADT row names:...
+########### iCellR object ##########
+  ```
+- QC, filter, normalize, merge ADT and RNA data, run PCA and UMAP
+
+```r
+# QC
+my.obj <- qc.stats(my.obj,
+	s.phase.genes = s.phase, 
+	g2m.phase.genes = g2m.phase)
+
+# plot as mentioned above
+
+# filter 
+my.obj <- cell.filter(my.obj,
+	min.mito = 0,
+	max.mito = 0.07 ,
+	min.genes = 500,
+	max.genes = 4000,
+	min.umis = 0,
+	max.umis = Inf)
+
+# normalize RNA
+my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500) 
+
+# normalize ADT
+my.obj <- norm.adt(my.obj)
+
+# gene stats
+my.obj <- gene.stats(my.obj, which.data = "main.data")
+
+# find genes for PCA
+my.obj <- make.gene.model(my.obj, my.out.put = "data",
+	dispersion.limit = 1.5, 
+	base.mean.rank = 500, 
+	no.mito.model = T, 
+	mark.mito = T, 
+	interactive = F,
+	no.cell.cycle = T,
+	out.name = "gene.model")
+
+# merge RNA and ADT data
+my.obj <- adt.rna.merge(my.obj, adt.data = "main")
+
+# run PCA and the rest is as above
+
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
+
+# 2 pass PCA 
+my.obj <- find.dim.genes(my.obj, dims = 1:20,top.pos = 20, top.neg = 20)
+# second round PC
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
+
+my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn")
+
+# check your object 
+my.obj
+###################################
+,--. ,-----.       ,--.,--.,------.
+`--''  .--./ ,---. |  ||  ||  .--. '
+,--.|  |    | .-. :|  ||  ||  '--'.'
+|  |'  '--'\   --. |  ||  ||  |
+`--' `-----' `----'`--'`--'`--' '--'
+###################################
+An object of class iCellR version: 1.1.4
+Raw/original data dimentions (rows,columns): 20501,8617
+Data conditions: no conditions/single sample
+Row names: A1BG,A1BG-AS1,A1CF ...
+Columns names: CTGTTTACACCGCTAG,CTCTACGGTGTGGCTC,AGCAGCCAGGCTCATT ...
+###################################
+   QC stats performed:TRUE, PCA performed:TRUE, CCA performed:FALSE
+   Clustering performed:TRUE, Number of clusters:14
+   tSNE performed:FALSE, UMAP performed:TRUE, DiffMap performed:FALSE
+   Main data dimentions (rows,columns):20511,8305
+   Normalization factors:8.448547776071,...
+   Imputed data dimentions (rows,columns):0,0
+############## scVDJ-Seq ###########
+VDJ data dimentions (rows,columns):0,0
+############## CITE-Seq ############
+   ADT raw data dimentions (rows,columns):10,8617
+   ADT main data dimentions (rows,columns):10,8617
+   ADT columns names:CTGTTTACACCGCTAG...
+   ADT row names:ADT_CD3...
+########### iCellR object ##########
+```
+
+- plot 
+
+```r
+# find ADT gene names 
+grep("^ADT_", rownames(my.obj@main.data),value=T)
+# [1] "ADT_CD3"    "ADT_CD4"    "ADT_CD8"    "ADT_CD45RA" "ADT_CD56"
+# [6] "ADT_CD16"   "ADT_CD11c"  "ADT_CD14"   "ADT_CD19"   "ADT_CD34"
+
+A = gene.plot(my.obj, 
+	gene = "ADT_CD3",
+	plot.data.type = "umap",
+	interactive = F,
+	cell.transparency = 0.5)
+
+B = gene.plot(my.obj, 
+	gene = "CD3E",
+	plot.data.type = "umap",
+	interactive = F,
+	cell.transparency = 0.5)
+
+C = gene.plot(my.obj, 
+	gene = "ADT_CD16",
+	plot.data.type = "umap",
+	interactive = F,
+	cell.transparency = 0.5)
+
+D = gene.plot(my.obj, 
+	gene = "FCGR3A",
+	plot.data.type = "umap",
+	interactive = F,
+	cell.transparency = 0.5)
+		
+library(gridExtra)
+grid.arrange(A,B,C,D)
+```
+
+
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/list3.png" />
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/list5.png" />
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/NotScaled.png" />
 </p>
 
 # How to analyze scVDJ-seq data using iCellR
