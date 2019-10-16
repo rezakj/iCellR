@@ -1163,8 +1163,8 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 # How to perform canonical correlation analysis (CCA)
 
 ```r
-
 library(iCellR)
+library(Seurat)
 
 # download sample 1
 sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/sample1_for_CCA.tsv.gz"
@@ -1207,6 +1207,8 @@ my.obj <- cell.filter(my.obj)
 require(devtools)
 install_version("Seurat", version = "2.3.4", repos = "http://cran.us.r-project.org")
 library(Seurat)
+
+# this function runs Seurat in the background but only works best if you have 2 samples. If you have more than 2 samples it's best to run the commands explained in the next code block and run Seurat directly. After CCA just replace the pca.data slot of iCellR with CCA results from Seurat. 
 
 my.obj <- run.cca(my.obj,
 	top.vari.genes = 1000,
