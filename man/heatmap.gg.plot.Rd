@@ -4,19 +4,22 @@
 \alias{heatmap.gg.plot}
 \title{Create heatmaps for genes in clusters or conditions.}
 \usage{
-heatmap.gg.plot(x = NULL, gene = "NULL", data.type = "main",
-  cluster.by = "clusters", min.scale = -2.5, max.scale = 2.5,
-  interactive = TRUE, cex.col = 10, cex.row = 10, no.key = FALSE,
-  out.name = "plot", heat.colors = c("blue", "white", "red"))
+heatmap.gg.plot(x = NULL, gene = "NULL", cell.sort = TRUE,
+  data.type = "main", cluster.by = "clusters", min.scale = -2.5,
+  max.scale = 2.5, interactive = TRUE, cex.col = 10, cex.row = 10,
+  no.key = FALSE, out.name = "plot", heat.colors = c("blue", "white",
+  "red"))
 }
 \arguments{
 \item{x}{A data frame containing gene counts for cells.}
 
 \item{gene}{A set of gene names to be heatmapped.}
 
+\item{cell.sort}{If FALSE the cells will not be sorted based on their distance, default = TRUE.}
+
 \item{data.type}{Choose from "main" and "imputed", default = "main".}
 
-\item{cluster.by}{Choose from "clusters" or "conditions", default = "clusters".}
+\item{cluster.by}{Choose from "clusters", "conditions" or "none", default = "clusters".}
 
 \item{min.scale}{Set a minimum color scale, default = -2.5.}
 
