@@ -1209,8 +1209,8 @@ install_version("Seurat", version = "2.3.4", repos = "http://cran.us.r-project.o
 library(Seurat)
 
 # this function runs Seurat in the background but only works best if you have 2 samples. 
-If you have more than 2 samples it's best to run the commands explained in the next code block and run Seurat directly.
-After CCA just replace the pca.data slot of iCellR with CCA results from Seurat. 
+# If you have more than 2 samples it's best to run the commands explained in the next code block and run Seurat directly.
+# After CCA just replace the pca.data slot of iCellR with CCA results from Seurat. 
 
 my.obj <- run.cca(my.obj,
 	top.vari.genes = 1000,
