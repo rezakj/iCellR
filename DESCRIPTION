@@ -1,7 +1,7 @@
 Package: iCellR
 Type: Package
 Title: Analyzing High-Throughput Single Cell Sequencing Data
-Version: 1.1.4
+Version: 1.2.0
 Author: Alireza Khodadadi-Jamayran, 
   Joseph Pucella,
   Hua Zhou,
@@ -23,4 +23,4 @@ RoxygenNote: 6.1.1
 URL: https://github.com/rezakj/iCellR
 Suggests: phateR, Rmagic, Seurat
 NeedsCompilation: no
-Packaged: 2019-09-26 15:34:24 UTC; khodaa01
+Packaged: 2019-10-16 15:49:20 UTC; khodaa01

@@ -3,8 +3,9 @@
 #' This function takes an object of class iCellR and genes and provides a heatmap.
 #' @param x A data frame containing gene counts for cells.
 #' @param gene A set of gene names to be heatmapped.
-#' @param cluster.by Choose from "clusters" or "conditions", default = "clusters".
+#' @param cluster.by Choose from "clusters", "conditions" or "none", default = "clusters".
 #' @param heat.colors Colors for heatmap, default = c("blue" ,"white", "red").
+#' @param cell.sort If FALSE the cells will not be sorted based on their distance, default = TRUE.
 #' @param interactive If TRUE an html interactive file will be made, default = TRUE.
 #' @param out.name Output name for html file if interactive = TRUE, default = "plot".
 #' @param no.key If you want a color legend key, default = FALSE.
@@ -37,6 +38,7 @@
 #' @export
 heatmap.gg.plot <- function (x = NULL,
                           gene = "NULL",
+                          cell.sort = TRUE,
                           data.type = "main",
                           cluster.by = "clusters",
                           min.scale = -2.5,
@@ -70,6 +72,7 @@ heatmap.gg.plot <- function (x = NULL,
   ##### get cluster data
   DATA <- x@best.clust
   MYord <- cbind(Row = rownames(DATA), DATA)
+ ############
   ## order by cluster
   if (cluster.by == "clusters") {
 #  MYord <- (MYord[order(MYord$Row, decreasing = F),])
@@ -84,15 +87,33 @@ heatmap.gg.plot <- function (x = NULL,
   }
   MyLines <- as.numeric(mget(ls(pattern="cluster_")))
   MyLines <- MyLines[1:length(MyLines)-1]
-}
+  }
+  ################
   if (cluster.by == "conditions") {
-    MYord <- (MYord[order(MYord$Row, decreasing = FALSE),])
-    z = as.data.frame(MYord$Row)
+    clustOrd <-  data.frame(do.call('rbind', strsplit(as.character(rownames(DATA)),'_',fixed=TRUE)))[1]
+    colnames(clustOrd)="clusters"
+    MYord$clusters <- clustOrd
+    cond.data <- MYord
+    ha <- cond.data$clusters
+    colnames(ha) <- "MyConds"
+    cond.data$MyConds <- ha$MyConds
+    z <- as.data.frame(MYord$clusters)
+    clustOrd = unique(MYord$clusters)
+    MyLines <- as.numeric(row.names(clustOrd))
   }
   # order
   MYord <- row.names(MYord)
   ### get main data
   sub.data <- DATAmain[gene, colnames(DATAmain),drop = FALSE]
+  if (cell.sort == TRUE) {
+    counts.pca <- prcomp(t(scale(t(sub.data))), center = FALSE, scale. = FALSE)
+    my.data.my.pca = t(counts.pca$rotation)[1:2, ]
+    My.distances = as.data.frame(as.matrix(dist(t(my.data.my.pca))))[1]
+    colnames(My.distances) <- "MyDist"
+    My.distances$MyIDs <- row.names(My.distances)
+    My.distances <- row.names(My.distances[order(My.distances$MyDist, decreasing = T),])
+  }
+##########
   data.t <- t(sub.data)
   data.expr <- as.data.frame(data.t)
   ## clusters
@@ -121,7 +142,7 @@ heatmap.gg.plot <- function (x = NULL,
   names(x = data)[names(x = data) == "X1"] <- "cell"
   names(x = data)[names(x = data) == "X2"] <- "gene"
   names(x = data)[names(x = data) == "value"] <- "expression"
-  head(data)
+  # head(data)
   ## Make color breaks based on expression
   CustomPalette <- function (low = "white", high = "red", mid = NULL, k = 50)
   {
@@ -159,12 +180,19 @@ heatmap.gg.plot <- function (x = NULL,
 #
   # merge data with cluster
   clusters <- cbind(cell = rownames(clusters),clusters)
+  if (cluster.by == "conditions") {
+    colnames(cond.data) <- c("cell","clusters","MyConds")
+    clusters <- cond.data
+  }
   data <- cbind(Myord = row.names(data), data)
   mrgd <- merge(data, clusters, by="cell")
   mrgd <- (mrgd[order(as.numeric(as.character(mrgd$Myord)), decreasing = TRUE),])
   data <- mrgd
   data$gene <- factor(data$gene, levels = rev(gene))
   data$cell <- factor(data$cell, levels = MYord)
+  if (cell.sort == TRUE) {
+    data$cell <- factor(data$cell, levels = My.distances)
+  }
   ### plot
   heatmap <- ggplot(data, aes(x = cell, y = gene, fill = expression, text=clusters)) + geom_tile() +
     scale_fill_gradient2(low = col.low, mid = col.mid, high = col.high, name = "",
@@ -200,9 +228,17 @@ heatmap.gg.plot <- function (x = NULL,
 #  }
 
   ###
-
+  if (cluster.by == "clusters") {
   heatmap <- heatmap + facet_wrap( ~ clusters, nrow = 1,scales = "free_x") +
     theme(strip.background = element_rect(fill= NA))
+  }
+  if (cluster.by == "conditions") {
+    heatmap <- heatmap + facet_wrap( ~ MyConds, nrow = 1,scales = "free_x") +
+      theme(strip.background = element_rect(fill= NA))
+  }
+  if (cluster.by == "none") {
+    heatmap <- heatmap
+  }
 
   # line per group of genes
 #  if (geneline == T) {

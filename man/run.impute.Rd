@@ -4,13 +4,22 @@
 \alias{run.impute}
 \title{Impute the main data}
 \usage{
-run.impute(x = NULL, genes = "all_genes", k = 10, alpha = 15,
-  t = "auto", npca = 100, init = NULL, t.max = 20,
+run.impute(x = NULL, imp.method = "iCellR.imp", dims = 1:10,
+  cell.ratio = 2, data.type = "pca", genes = "all_genes", k = 10,
+  alpha = 15, t = "auto", npca = 100, init = NULL, t.max = 20,
   knn.dist.method = "euclidean", verbose = 1, n.jobs = 1,
   seed = NULL)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
+
+\item{imp.method}{Choose between "iCellR.imp" and "magic", defualt = "iCellR.imp".}
+
+\item{dims}{PC dimentions to be used for the analysis, default = 10.}
+
+\item{cell.ratio}{Percent of cells to use to find neighboring cells, default = 2.}
+
+\item{data.type}{Choose between "tsne", "pca", "umap", "diffusion", default = "pca".}
 
 \item{genes}{character or integer vector, default: NULL vector of column names or column indices for which to return smoothed data If 'all_genes' or NULL, the entire smoothed matrix is returned}
 
@@ -38,5 +47,5 @@ run.impute(x = NULL, genes = "all_genes", k = 10, alpha = 15,
 An object of class iCellR.
 }
 \description{
-This function takes an object of class iCellR and runs imputation on the main data. MAGIC as one of the methods: Markov Affinity-based Graph Imputation of Cells (MAGIC) is an algorithm for denoising and transcript recover of single cells applied to single-cell RNA sequencing data, as described in van Dijk et al, 2018.
+This function takes an object of class iCellR and runs imputation on the main data.
 }

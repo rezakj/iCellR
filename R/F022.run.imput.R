@@ -1,7 +1,11 @@
 #' Impute the main data
 #'
-#' This function takes an object of class iCellR and runs imputation on the main data. MAGIC as one of the methods: Markov Affinity-based Graph Imputation of Cells (MAGIC) is an algorithm for denoising and transcript recover of single cells applied to single-cell RNA sequencing data, as described in van Dijk et al, 2018.
+#' This function takes an object of class iCellR and runs imputation on the main data.
 #' @param x An object of class iCellR.
+#' @param imp.method Choose between "iCellR.imp" and "magic", defualt = "iCellR.imp".
+#' @param cell.ratio Percent of cells to use to find neighboring cells, default = 2.
+#' @param dims PC dimentions to be used for the analysis, default = 10.
+#' @param data.type Choose between "tsne", "pca", "umap", "diffusion", default = "pca".
 #' @param genes character or integer vector, default: NULL vector of column names or column indices for which to return smoothed data If 'all_genes' or NULL, the entire smoothed matrix is returned
 #' @param k int, optional, default: 10 number of nearest neighbors on which to build kernel
 #' @param alpha int, optional, default: 15 sets decay rate of kernel tails. If NULL, alpha decaying kernel is not used
@@ -16,43 +20,88 @@
 #' @return An object of class iCellR.
 #' @export
 run.impute <- function (x = NULL,
-                       genes = "all_genes", k = 10, alpha = 15, t = "auto",
-                       npca = 100, init = NULL, t.max = 20,
-                       knn.dist.method = "euclidean", verbose = 1, n.jobs = 1,
-                       seed = NULL) {
+                        imp.method = "iCellR.imp", dims = 1:10,cell.ratio = 2,
+                        data.type = "pca",genes = "all_genes", k = 10, alpha = 15, t = "auto",
+                        npca = 100, init = NULL, t.max = 20,
+                        knn.dist.method = "euclidean", verbose = 1, n.jobs = 1,
+                        seed = NULL) {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
-  ###########
-  if(!"phateR" %in% (.packages())){
-    stop("Please load phateR package: library(phateR). This function requires 'phateR','Rmagic'and'viridis'.")
-  }
-  ##########
-  ###########
-  if(!"Rmagic" %in% (.packages())){
-    stop("Please load Rmagic package: library(Rmagic). This function requires 'phateR','Rmagic'and'viridis'.")
-  }
-  ##########
-  ###########
-  if(!"viridis" %in% (.packages())){
-    stop("Please load viridis package: library(viridis). This function requires 'phateR','Rmagic'and'viridis'.")
-  }
-  ##########
-### load packages
-  # https://github.com/KrishnaswamyLab/MAGIC/tree/master/Rmagic
-  # https://www.analyticsvidhya.com/blog/2016/03/tutorial-powerful-packages-imputing-missing-values/
   # get data
   DATA <- x@main.data
+  message(paste(" main data dimentions:",dim(DATA)[1],"genes and",dim(DATA)[2],"cells"))
+  message(" Genes with no coverage are being removed from the matrix ...")
   DATA <- DATA[ rowSums(DATA) > 0, ]
-  DATA <- as.data.frame(t(DATA))
-  data_MAGIC <- magic(DATA,
-                      genes = genes, k = k, alpha = alpha, t = t,
-                      npca = npca, init = init, t.max = t.max,
-                      knn.dist.method = knn.dist.method, verbose = verbose, n.jobs = n.jobs,
-                      seed = seed)
-  DATA <- as.data.frame(t(data_MAGIC$result))
-  # return
-  attributes(x)$imputed.data <- DATA
-  # return
-  return(x)
+  message(paste(" dimentions after removing zero cov. genes:",dim(DATA)[1],"genes and",dim(DATA)[2],"cells"))
+  #########
+  #########################
+  if (imp.method == "iCellR.imp"){
+    my.data = DATA
+    if(data.type == "pca") {
+      num.of.PCs = c(dims)
+      my.data.my.pca = t(x@pca.info$rotation)[num.of.PCs, ]
+    }
+    if(data.type == "umap") {
+      my.data.my.pca = t(x@umap.data)
+    }
+    if(data.type == "tsne") {
+      my.data.my.pca = t(x@tsne.data)
+    }
+    if(data.type == "diffusion") {
+      my.data.my.pca = t(x@diffusion.data)
+    }
+#########
+    message(paste("   Calculating distance ..."))
+    My.distances = as.matrix(dist(t(my.data.my.pca), method = knn.dist.method))
+    ncells = dim(my.data)[2]
+    cell.num = ceiling(cell.ratio/100 * ncells)
+    message(paste("    ",cell.ratio,"percent of ",ncells, "cells is", cell.num))
+    message("     To change the number of neighboring cells cahnge cell.ratio option")
+    message(paste("    Finding",cell.num, "neighboring cells per cell ..."))
+    KNN1 = lapply(1:ncells, function(findKNN){
+      order(My.distances[,findKNN])[1:cell.num]})
+    ############
+    message(paste("   correcting the coverage of the neighboring cells (mean) ..."))
+    data.sum1 = sapply(KNN1, function(sum.cov){
+      rowMeans(my.data[, sum.cov])})
+    ############
+    data.sum1 <- as.data.frame(data.sum1)
+    colnames(data.sum1) <- colnames(my.data)
+    message(paste("All done!"))
+    attributes(x)$imputed.data <- data.sum1
+    return(x)
+  }
+  ###############################################################
+  if (imp.method == "magic"){
+    ###########
+    if(!"phateR" %in% (.packages())){
+      stop("Please load phateR package: library(phateR). This function requires 'phateR','Rmagic'and'viridis'.")
+    }
+    ##########
+    ###########
+    if(!"Rmagic" %in% (.packages())){
+      stop("Please load Rmagic package: library(Rmagic). This function requires 'phateR','Rmagic'and'viridis'.")
+    }
+    ##########
+    ###########
+    if(!"viridis" %in% (.packages())){
+      stop("Please load viridis package: library(viridis). This function requires 'phateR','Rmagic'and'viridis'.")
+    }
+    ##########
+    ### load packages
+    # https://github.com/KrishnaswamyLab/MAGIC/tree/master/Rmagic
+    # https://www.analyticsvidhya.com/blog/2016/03/tutorial-powerful-packages-imputing-missing-values/
+    DATA <- as.data.frame(t(DATA))
+    data_MAGIC <- magic(DATA,
+                        genes = genes, k = k, alpha = alpha, t = t,
+                        npca = npca, init = init, t.max = t.max,
+                        knn.dist.method = knn.dist.method, verbose = verbose, n.jobs = n.jobs,
+                        seed = seed)
+    DATA <- as.data.frame(t(data_MAGIC$result))
+    # return
+    attributes(x)$imputed.data <- DATA
+    # return
+    return(x)
+  }
 }
