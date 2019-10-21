@@ -1301,39 +1301,6 @@ g2m.phase.genes = g2m.phase)
 # filter
 my.obj <- cell.filter(my.obj)
 
-## Get the samples
-
-data <- my.obj@main.data
-Cells <- colnames(data)
-
-head(Cells)
-#[1] "S1_AAACATACATTTCC.1" "S1_AAACATACCAGAAA.1" "S1_AAACATACCATGCA.1"
-#[4] "S1_AAACATACCTCGCT.1" "S1_AAACATACCTGGTA.1" "S1_AAACATACGATGAA.1"
-
-FistCond = grep("S1_", Cells, value = TRUE)
-SecondCond = grep("S2_", Cells, value = TRUE)
-
-DATA1 <- data[ , which(names(data) %in% FistCond)]
-DATA2 <- data[ , which(names(data) %in% SecondCond)]
-
-head(DATA1)[1:2]
-#        S1_AAACATACATTTCC.1 S1_AAACATACCAGAAA.1
-#5S_rRNA                   0                   0
-#7SK                       0                   0
-#7SK.1                     0                   0
-#7SK.2                     0                   0
-#7SK.3                     0                   0
-#A1BG                      0                   0
-
-head(DATA2)[1:2]
-#        S2_AAACATACCAAGCT.1 S2_AAACATACCCCTAC.1
-#5S_rRNA                   0                   0
-#7SK                       0                   0
-#7SK.1                     0                   0
-#7SK.2                     0                   0
-#7SK.3                     0                   0
-#A1BG                      0                   0
-
 ####################################
 library(scran) # install from bioconductor 
 
