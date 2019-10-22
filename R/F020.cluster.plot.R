@@ -95,6 +95,10 @@ cluster.plot <- function (x = NULL,
       MyTitle = "3D tSNE Plot"
       DATA <- x@tsne.data.3d
     }
+    if (plot.type == "umap") {
+      MyTitle = "3D umap Plot"
+      DATA <- x@umap.data
+    }
     if (plot.type == "pca") {
       MyTitle = "3D PCA Plot"
       DATA <- x@pca.data

@@ -1,11 +1,13 @@
-#' Run MNN alignment on the main data
+#' Run MNN alignment on the main data.
 #'
-#' This function takes an object of class iCellR and runs MNN alignment.
+#' This function takes an object of class iCellR and runs MNN alignment. It's a wrapper for scran.
 #' @param x An object of class iCellR.
 #' @param k An integer scalar specifying the number of nearest neighbors to consider when identifying MNNs.
 #' @param cos.norm A logical scalar indicating whether cosine normalization should be performed on the input data prior to calculating distances between cells.
-#' @param ndist: A numeric scalar specifying the threshold beyond which neighbours are to be ignored when computing correction vectors. Each threshold is defined in terms of the number of median distances.
-#' @param d approximate, irlba.args: Further arguments to pass to ‘multiBatchPCA’. Setting ‘approximate=TRUE’ is recommended for large data sets with many cells.
+#' @param ndist A numeric scalar specifying the threshold beyond which neighbours are to be ignored when computing correction vectors. Each threshold is defined in terms of the number of median distances.
+#' @param d Number of dimentions to pass to ‘multiBatchPCA’.
+#' @param approximate Further arguments to pass to ‘multiBatchPCA’. Setting ‘approximate=TRUE’ is recommended for large data sets with many cells.
+#' @param irlba.args Further arguments to pass to ‘multiBatchPCA’. Setting ‘approximate=TRUE’ is recommended for large data sets with many cells.
 #' @param subset.row See ‘?"scran-gene-selection"’.
 #' @param auto.order Logical scalar indicating whether re-ordering of batches should be performed to maximize the number of MNN pairs at each step.
 #' @param Alternatively an integer vector containing a permutation of ‘1:N’ where ‘N’ is the number of batches.
@@ -62,12 +64,14 @@ run.mnn <- function (x = NULL,
     stop("Please load scran package: library(scran)")
   }
   ##########
-  message(" Prepering samples ...")
+  message(" Preparing samples ...")
   for(i in Patt){
     IDs = grep(i, Cells, value = TRUE)
     mydata <- DATA[ , which(names(DATA) %in% IDs)]
     SampNam <- paste("iCellRSample",i,sep="_")
     mydata <- SingleCellExperiment(list(counts=as.matrix(mydata)))
+    MyMassg <- paste("    Normalizing sample:",as.character(as.matrix(strsplit(i,'_',fixed=TRUE))))
+    message(MyMassg)
     mydata <- computeSumFactors(mydata)
     mydata <- normalize(mydata)
     eval(call("<-", as.name(SampNam), mydata))
@@ -91,7 +95,7 @@ run.mnn <- function (x = NULL,
   MyPARAM <- paste(MyPARAM1,MyPARAM2,MyPARAM3,MyPARAM4,MyPARAM5)
   ############
   ha=paste("out <- fastMNN(",filenames,",",MyPARAM )
-  message(" Running fast MNN ...")
+  message("   Running MNN ...")
   eval(parse(text=ha))
   MNN <- as.data.frame(t(out$corrected))
   ######### Col Names
@@ -105,6 +109,7 @@ run.mnn <- function (x = NULL,
   counts.pca <- prcomp((MNN), center = TRUE, scale. = FALSE)
   attributes(x)$pca.info <- counts.pca
   dataPCA = data.frame(counts.pca$rotation) # [1:max.dim]
+  message("All done!")
   attributes(x)$pca.data <- dataPCA
   return(x)
 }

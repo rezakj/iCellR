@@ -2,7 +2,7 @@
 % Please edit documentation in R/run.mnn.R
 \name{run.mnn}
 \alias{run.mnn}
-\title{Run MNN alignment on the main data}
+\title{Run MNN alignment on the main data.}
 \usage{
 run.mnn(x = NULL, method = "base.mean.rank", top.rank = 500,
   gene.list = "character", k = 20, cos.norm = TRUE, ndist = 3,
@@ -18,7 +18,13 @@ run.mnn(x = NULL, method = "base.mean.rank", top.rank = 500,
 
 \item{cos.norm}{A logical scalar indicating whether cosine normalization should be performed on the input data prior to calculating distances between cells.}
 
-\item{d}{approximate, irlba.args: Further arguments to pass to ‘multiBatchPCA’. Setting ‘approximate=TRUE’ is recommended for large data sets with many cells.}
+\item{ndist}{A numeric scalar specifying the threshold beyond which neighbours are to be ignored when computing correction vectors. Each threshold is defined in terms of the number of median distances.}
+
+\item{d}{Number of dimentions to pass to ‘multiBatchPCA’.}
+
+\item{approximate}{Further arguments to pass to ‘multiBatchPCA’. Setting ‘approximate=TRUE’ is recommended for large data sets with many cells.}
+
+\item{irlba.args}{Further arguments to pass to ‘multiBatchPCA’. Setting ‘approximate=TRUE’ is recommended for large data sets with many cells.}
 
 \item{subset.row}{See ‘?"scran-gene-selection"’.}
 
@@ -27,8 +33,6 @@ run.mnn(x = NULL, method = "base.mean.rank", top.rank = 500,
 \item{pc.input}{Logical scalar indicating whether the values in ‘...’ are already low-dimensional, e.g., the output of ‘multiBatchPCA’.}
 
 \item{compute.variances}{Logical scalar indicating whether the percentage of variance lost due to non-orthogonality should be computed.}
-
-\item{ndist:}{A numeric scalar specifying the threshold beyond which neighbours are to be ignored when computing correction vectors. Each threshold is defined in terms of the number of median distances.}
 
 \item{Alternatively}{an integer vector containing a permutation of ‘1:N’ where ‘N’ is the number of batches.}
 
@@ -44,5 +48,5 @@ run.mnn(x = NULL, method = "base.mean.rank", top.rank = 500,
 An object of class iCellR.
 }
 \description{
-This function takes an object of class iCellR and runs MNN alignment.
+This function takes an object of class iCellR and runs MNN alignment. It's a wrapper for scran.
 }

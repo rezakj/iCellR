@@ -44,6 +44,9 @@ run.umap <- function (x = NULL,
 #  library(umap)
   myUMAP = umap(DATA, method = method)
   myUMAP = as.data.frame((myUMAP$layout))
+  My.distances = as.data.frame(as.matrix(dist((DATA))))[1]
+  colnames(My.distances) <- "V3"
+  myUMAP <- cbind(myUMAP,My.distances)
   attributes(x)$umap.data <- myUMAP
 # return
   return(x)
