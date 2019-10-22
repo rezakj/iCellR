@@ -811,10 +811,13 @@ my.obj <- run.impute(my.obj, dims = 1:10, cell.ratio = 2, data.type = "pca")
 save(my.obj, file = "my.obj.Robj")
 
 # some more plots from another analysis 
-A=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
-B=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters", data.type = "imputed")
-C=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "conditions")
-D=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "none", data.type = "imputed")
+A=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters", cell.sort = TRUE)
+B=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters", data.type = "imputed", cell.sort = TRUE)
+C=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "conditions", cell.sort = TRUE)
+D=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "none", data.type = "imputed", cell.sort = TRUE)
+
+# If cluster.by = "none", your heamap would have like a Pseudotime effect.
+# It calculates the distance between the cells based on the genes in the heatmap. 
 
 library(gridExtra)
 grid.arrange(A,B,C,D)
