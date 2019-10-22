@@ -1160,7 +1160,7 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/14_monocol.png" />
 </p>
 
-# How to perform canonical correlation analysis (CCA)
+# How to perform canonical correlation analysis (CCA) for sample alignment 
 
 ```r
 library(iCellR)
@@ -1258,6 +1258,56 @@ Before and After CCA
 <p align="center">
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Compare.png" />
 </p>
+
+
+# How to perform mutual nearest neighbor (MNN) sample alignment 
+
+```r
+library(iCellR)
+
+# download sample 1
+sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/sample1_for_CCA.tsv.gz"
+
+download.file(url = sample.file.url, 
+     destfile = "sample1_for_CCA.tsv.gz", 
+     method = "auto")  
+
+
+# download sample 2
+sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/sample2_for_CCA.tsv.gz"
+
+download.file(url = sample.file.url, 
+     destfile = "sample2_for_CCA.tsv.gz", 
+     method = "auto")  
+
+# Read both samples 
+S1 <- read.table("sample1_for_CCA.tsv.gz")
+head(S1)[1:5]
+
+S2 <- read.table("sample2_for_CCA.tsv.gz")
+head(S2)[1:5]
+
+# aggregate both samples  
+my.data <- data.aggregation(samples = c("S1","S2"), condition.names = c("S1","S2"))
+
+# make object
+my.obj <- make.obj(my.data)
+
+# QC
+my.obj <- qc.stats(my.obj,
+s.phase.genes = s.phase, 
+g2m.phase.genes = g2m.phase)
+
+# filter
+my.obj <- cell.filter(my.obj)
+
+####################################
+library(scran) # install from bioconductor 
+
+# function soon to come
+# my.obj <- run.mnn(my.obj)
+```
+
 
 # How to demultiplex with hashtag oligos (HTOs)
 
