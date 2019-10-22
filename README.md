@@ -1312,6 +1312,8 @@ my.obj <- make.gene.model(my.obj, my.out.put = "data",
 	out.name = "gene.model")
 	
 ###### Run MNN 
+# This would automatically run all the samples in your experiment 
+
 library(scran)
 my.obj <- run.mnn(my.obj,
     method = "gene.model",
@@ -1326,10 +1328,16 @@ my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500)
 my.obj <- run.pc.tsne(my.obj, dims = 1:10)
 my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn")
 
-cluster.plot(my.obj,plot.type = "tsne",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
+cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F)
 
-cluster.plot(my.obj,plot.type = "umap",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
+cluster.plot(my.obj,plot.type = "umap",col.by = "conditions",interactive = F)
 ```
+
+Before and After MNN analysis
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/MNN.png" />
+</p>
 
 
 # How to demultiplex with hashtag oligos (HTOs)
