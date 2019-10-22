@@ -1300,13 +1300,44 @@ g2m.phase.genes = g2m.phase)
 
 # filter
 my.obj <- cell.filter(my.obj)
+my.obj <- gene.stats(my.obj, which.data = "main.data")
 
-####################################
-library(scran) # install from bioconductor 
+my.obj <- make.gene.model(my.obj, my.out.put = "data",
+	dispersion.limit = 1.5,
+	base.mean.rank = 500,
+	no.mito.model = T,
+	mark.mito = T,
+	interactive = F,
+	no.cell.cycle = T,
+	out.name = "gene.model")
+	
+###### Run MNN 
+# This would automatically run all the samples in your experiment 
 
-# function soon to come
-# my.obj <- run.mnn(my.obj)
+library(scran)
+my.obj <- run.mnn(my.obj,
+    method = "gene.model",
+    gene.list = my.obj@gene.model,
+    k=20,
+    d=50)
+    
+# normaliza the main data for iCellR analyses
+my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500)
+
+## run tSNE 
+my.obj <- run.pc.tsne(my.obj, dims = 1:10)
+my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn")
+
+cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F)
+
+cluster.plot(my.obj,plot.type = "umap",col.by = "conditions",interactive = F)
 ```
+
+Before and After MNN analysis
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/MNN.png" />
+</p>
 
 
 # How to demultiplex with hashtag oligos (HTOs)
