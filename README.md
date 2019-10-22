@@ -1788,4 +1788,56 @@ add.vdj(my.obj, vdj.data = my.vdj.data)
  ```
 
 
+```r
+sessionInfo()
+R version 3.5.1 (2018-07-02)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Red Hat Enterprise Linux
 
+Matrix products: default
+BLAS: /gpfs/share/apps/R/3.5.1/lib64/R/lib/libRblas.so
+LAPACK: /gpfs/share/apps/R/3.5.1/lib64/R/lib/libRlapack.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base
+
+other attached packages:
+[1] iCellR_1.2.2  plotly_4.9.0  ggplot2_3.2.1
+
+loaded via a namespace (and not attached):
+ [1] ggrepel_0.8.1        Rcpp_1.0.2           ape_5.3
+ [4] lattice_0.20-38      tidyr_1.0.0          assertthat_0.2.1
+ [7] zeallot_0.1.0        digest_0.6.22        mime_0.7
+[10] R6_2.4.0             plyr_1.8.4           backports_1.1.5
+[13] acepack_1.4.1        httr_1.4.1           pillar_1.4.2
+[16] rlang_0.4.0          lazyeval_0.2.2       rstudioapi_0.10
+[19] data.table_1.12.6    rpart_4.1-15         Matrix_1.2-17
+[22] checkmate_1.9.4      reticulate_1.13      splines_3.5.1
+[25] Rtsne_0.15           stringr_1.4.0        foreign_0.8-72
+[28] htmlwidgets_1.5.1    pheatmap_1.0.12      munsell_0.5.0
+[31] umap_0.2.3.1         shiny_1.4.0          compiler_3.5.1
+[34] httpuv_1.5.2         xfun_0.10            pkgconfig_2.0.3
+[37] askpass_1.1          base64enc_0.1-3      htmltools_0.4.0
+[40] nnet_7.3-12          openssl_1.4.1        tidyselect_0.2.5
+[43] htmlTable_1.13.2     tibble_2.1.3         gridExtra_2.3
+[46] Hmisc_4.2-0          reshape_0.8.8        viridisLite_0.3.0
+[49] ggpubr_0.2.3         crayon_1.3.4         dplyr_0.8.3
+[52] withr_2.1.2          later_1.0.0          MASS_7.3-51.4
+[55] grid_3.5.1           NbClust_3.0          nlme_3.1-141
+[58] jsonlite_1.6         xtable_1.8-4         gtable_0.3.0
+[61] lifecycle_0.1.0      magrittr_1.5         scales_1.0.0
+[64] stringi_1.4.3        ggsignif_0.6.0       promises_1.1.0
+[67] scatterplot3d_0.3-41 latticeExtra_0.6-28  ggdendro_0.1-20
+[70] vctrs_0.2.0          Formula_1.2-3        RColorBrewer_1.1-2
+[73] tools_3.5.1          glue_1.3.1           purrr_0.3.3
+[76] parallel_3.5.1       fastmap_1.0.1        survival_2.44-1.1
+[79] colorspace_1.4-1     cluster_2.1.0        knitr_1.25
+```
