@@ -811,16 +811,14 @@ my.obj <- run.impute(my.obj, dims = 1:10, cell.ratio = 2, data.type = "pca")
 save(my.obj, file = "my.obj.Robj")
 
 # some more plots from another analysis 
+A=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
+B=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters", data.type = "imputed")
+C=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "conditions")
+D=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "none", data.type = "imputed")
 
-heatmap.gg.plot(my.obj, gene = MyGenes, 
-                interactive = F, 
-                cluster.by = "clusters")
+library(gridExtra)
+grid.arrange(A,B,C,D)
 
-# Heat map on imputed data 
-heatmap.gg.plot(my.obj, gene = MyGenes, 
-                interactive = F, 
-                cluster.by = "clusters",
-                data.type = "imputed")
 # main data 
 gene.plot(my.obj, gene = "MS4A1", 
     plot.type = "scatterplot",
@@ -835,7 +833,7 @@ gene.plot(my.obj, gene = "MS4A1",
 ```
 
 <p align="center">
-	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/imputed_heatmap.png" />
+	<img src="https://github.com/rezakj/scSeqR/blob/master/doc/heatmaps.png" />
 	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/imputed_dotPlot.png" />
 	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/imputed_BoxPlot.png" />
 </p>
