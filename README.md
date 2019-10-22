@@ -638,6 +638,9 @@ my.obj <- clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = F)
 - Avrage expression per cluster
 
 ```r
+# remember to run this command again if you recluster the data (change the number of clusters). 
+# This is because this data slot with avrage expressions per cluster is used for finding markers and downstream analysis. 
+
 my.obj <- clust.avg.exp(my.obj)
 
 head(my.obj@clust.avg)
@@ -1163,6 +1166,12 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 # How to perform canonical correlation analysis (CCA) for sample alignment 
 
 ```r
+# this function runs Seurat in the background but only works best if you have 2 samples. 
+# If you have more than 2 samples it's best to run the commands explained in the next code block MNN.
+# After CCA just replace the pca.data slot of iCellR with CCA results from Seurat. 
+
+# We recommand running MNN alignment instead of CCA
+
 library(iCellR)
 library(Seurat)
 
@@ -1209,7 +1218,7 @@ install_version("Seurat", version = "2.3.4", repos = "http://cran.us.r-project.o
 library(Seurat)
 
 # this function runs Seurat in the background but only works best if you have 2 samples. 
-# If you have more than 2 samples it's best to run the commands explained in the next code block and run Seurat directly.
+# If you have more than 2 samples it's best to run the commands explained in the next code block MNN.
 # After CCA just replace the pca.data slot of iCellR with CCA results from Seurat. 
 
 my.obj <- run.cca(my.obj,
@@ -1326,7 +1335,11 @@ my.obj <- run.mnn(my.obj,
 #    gene.list = my.obj@gene.model,
 #    k=20,
 #    d=50)
-    
+
+# By running MNN alignment you replace the PCA data slot and there is no need to run PCA. 
+# If you run PCA, MNN results will be replaced. (Do only if you want to see the results before and after MNN)
+
+
 # normaliza the main data for iCellR analyses
 my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500)
 
