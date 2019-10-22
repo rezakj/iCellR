@@ -210,6 +210,7 @@ gene.plot <- function (x = NULL,
 MyConds <- data.frame(do.call('rbind', strsplit(as.character(rownames(DATA)),'_',fixed=TRUE)))[1]
 MyConds <- factor(as.matrix(MyConds))
 DATA <- cbind(DATA, Expression = col.legend, Clusters = col.legend.box, Conditions = MyConds)
+####
 if (!is.null(conds.to.plot)) {
 DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
 }
