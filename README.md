@@ -1316,10 +1316,16 @@ my.obj <- make.gene.model(my.obj, my.out.put = "data",
 
 library(scran)
 my.obj <- run.mnn(my.obj,
-    method = "gene.model",
-    gene.list = my.obj@gene.model,
+    top.rank = 500,
     k=20,
     d=50)
+
+# or 
+#my.obj <- run.mnn(my.obj,
+#    method = "gene.model",
+#    gene.list = my.obj@gene.model,
+#    k=20,
+#    d=50)
     
 # normaliza the main data for iCellR analyses
 my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500)
