@@ -7,7 +7,7 @@ Link to manual: [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.p
 
 Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
 
-For citation please use this link (our manuscript is in preparation): https://github.com/rezakj/iCellR
+For citation please use this link (our manuscript is in preparation): https://CRAN.R-project.org/package=iCellR 
 
 If you are using FlowJo or SeqGeq and like to use graphical user interface (GUI) tools, they have made plugins for iCellR and other single cell tools: https://www.flowjo.com/exchange/#/ (list of all plugins) and https://www.flowjo.com/exchange/#/plugin/profile?id=34 (iCellR plugin)
 ### Single (i) Cell R package (iCellR)
