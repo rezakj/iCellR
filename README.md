@@ -384,7 +384,7 @@ To view an the html intractive plot click on this links: [Dispersion plot](https
 - Perform Principal component analysis (PCA)
 
 ```r
-my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
 
 opt.pcs.plot(my.obj)
 
@@ -398,7 +398,7 @@ length(my.obj@gene.model)
 # 214
 
 # second round PC
-my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
 ```        
 
 <p align="center">
