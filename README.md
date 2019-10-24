@@ -268,6 +268,26 @@ This step is optional and is for having the same number of cells for each condit
 #[1] "Data conditions: Ctrl,KO,WT (877,877,877)"
 ```
 
+- Optional batch correction using MNN method (explianed here: https://www.nature.com/articles/nbt.4091)
+
+```r
+# if you run this skip the run.pca function. 
+
+library(scran)
+my.obj <- run.mnn(my.obj,
+     top.rank = 500,
+     k=20,
+     d=50)
+
+# Preparing samples ...
+#    Normalizing sample: WT
+#    Normalizing sample: KO
+#    Normalizing sample: Ctrl
+#   Running MNN ...
+# Running PCA ...
+#All done!
+```
+
 - Normalize data
 
 You have a few options to normalize your data based on your study. You can also normalize your data using tools other than iCellR and import your data to iCellR. We recommend "ranked.glsf" normalization for most single cell studies. This normalization is great for fixing matrixes with lots of zeros and because it's geometric it is great for fixing for batch effects, as long as all the data is aggregated into one file (to aggregate your data see "aggregating data" section above). 
@@ -307,10 +327,12 @@ stats.plot(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/stats2.png" />
 </p>
 
-- Scale data
+- Scale data (optional)
+iCellR dose not need this step as it scales the data when they need to be scaled on the fly; like for plotting or PCA. 
+It is important to use the untansformed data for differential expression analysis to calculate the accurate fold changes.
 
 ```r
-my.obj <- data.scale(my.obj)
+# my.obj <- data.scale(my.obj)
 ```
 
 - Gene stats
@@ -382,6 +404,7 @@ To view an the html intractive plot click on this links: [Dispersion plot](https
 
 
 - Perform Principal component analysis (PCA)
+Skip this step if you did MNN batch correction. 
 
 ```r
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
