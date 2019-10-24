@@ -286,6 +286,8 @@ my.obj <- run.mnn(my.obj,
 #   Running MNN ...
 # Running PCA ...
 #All done!
+
+detach("package:scran", unload=TRUE)
 ```
 
 - Normalize data
@@ -1366,6 +1368,8 @@ my.obj <- run.mnn(my.obj,
 # By running MNN alignment you replace the PCA data slot and there is no need to run PCA. 
 # If you run PCA, MNN results will be replaced. (Do only if you want to see the results before and after MNN)
 
+# detach scran
+detach("package:scran", unload=TRUE)
 
 # normaliza the main data for iCellR analyses
 my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500)
