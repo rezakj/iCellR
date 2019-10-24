@@ -328,6 +328,7 @@ stats.plot(my.obj,
 </p>
 
 - Scale data (optional)
+
 iCellR dose not need this step as it scales the data when they need to be scaled on the fly; like for plotting or PCA. 
 It is important to use the untansformed data for differential expression analysis to calculate the accurate fold changes.
 
