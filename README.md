@@ -331,6 +331,7 @@ stats.plot(my.obj,
 
 iCellR dose not need this step as it scales the data when they need to be scaled on the fly; like for plotting or PCA. 
 It is important to use the untansformed data for differential expression analysis to calculate the accurate fold changes.
+If you run this function the scaled data will be saved in different slot for you to download for plotting but will not be use by iCellR.
 
 ```r
 # my.obj <- data.scale(my.obj)
