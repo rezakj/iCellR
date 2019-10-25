@@ -268,28 +268,6 @@ This step is optional and is for having the same number of cells for each condit
 #[1] "Data conditions: Ctrl,KO,WT (877,877,877)"
 ```
 
-- Optional batch correction using MNN method (explianed here: https://www.nature.com/articles/nbt.4091)
-
-```r
-# if you run this skip the run.pca function. 
-
-library(scran)
-my.obj <- run.mnn(my.obj,
-     top.rank = 500,
-     k=20,
-     d=50)
-
-# Preparing samples ...
-#    Normalizing sample: WT
-#    Normalizing sample: KO
-#    Normalizing sample: Ctrl
-#   Running MNN ...
-# Running PCA ...
-#All done!
-
-detach("package:scran", unload=TRUE)
-```
-
 - Normalize data
 
 You have a few options to normalize your data based on your study. You can also normalize your data using tools other than iCellR and import your data to iCellR. We recommend "ranked.glsf" normalization for most single cell studies. This normalization is great for fixing matrixes with lots of zeros and because it's geometric it is great for fixing for batch effects, as long as all the data is aggregated into one file (to aggregate your data see "aggregating data" section above). 
@@ -1357,6 +1335,9 @@ my.obj <- run.mnn(my.obj,
     top.rank = 500,
     k=20,
     d=50)
+
+# detach the scran pacakge after MNN as it masks some of the functions 
+detach("package:scran", unload=TRUE)
 
 # or 
 #my.obj <- run.mnn(my.obj,
