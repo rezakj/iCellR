@@ -2,6 +2,10 @@
 #'
 #' This function takes an object of class iCellR and runs MNN alignment. It's a wrapper for scran.
 #' @param x An object of class iCellR.
+#' @param method Choose from "base.mean.rank" or "gene.model", default is "base.mean.rank". If gene.model is chosen you need to provide gene.list.
+#' @param top.rank A number taking the top genes ranked by base mean, default = 500.
+#' @param data.type Choose from "main" and "imputed", default = "main"
+#' @param gene.list A charactor vector of genes to be used for PCA. If "clust.method" is set to "gene.model", default = "my_model_genes.txt".
 #' @param k An integer scalar specifying the number of nearest neighbors to consider when identifying MNNs.
 #' @param cos.norm A logical scalar indicating whether cosine normalization should be performed on the input data prior to calculating distances between cells.
 #' @param ndist A numeric scalar specifying the threshold beyond which neighbours are to be ignored when computing correction vectors. Each threshold is defined in terms of the number of median distances.
@@ -9,14 +13,13 @@
 #' @param approximate Further arguments to pass to ‘multiBatchPCA’. Setting ‘approximate=TRUE’ is recommended for large data sets with many cells.
 #' @param irlba.args Further arguments to pass to ‘multiBatchPCA’. Setting ‘approximate=TRUE’ is recommended for large data sets with many cells.
 #' @param subset.row See ‘?"scran-gene-selection"’.
-#' @param auto.order Logical scalar indicating whether re-ordering of batches should be performed to maximize the number of MNN pairs at each step.
-#' @param Alternatively an integer vector containing a permutation of ‘1:N’ where ‘N’ is the number of batches.
+#' @param auto.order Logical scalar indicating whether re-ordering of batches should be performed to maximize the number of MNN pairs at each step. Alternatively an integer vector containing a permutation of ‘1:N’ where ‘N’ is the number of batches.
 #' @param compute.variances Logical scalar indicating whether the percentage of variance lost due to non-orthogonality should be computed.
 #' @param pc.input Logical scalar indicating whether the values in ‘...’ are already low-dimensional, e.g., the output of ‘multiBatchPCA’.
-#' @param assay.type: A string or integer scalar specifying the assay containing the expression values, if SingleCellExperiment objects are present in ‘...’.
-#' @param get.spikes: See ‘?"scran-gene-selection"’. Only relevant if ‘...’ contains SingleCellExperiment objects.
-#' @param BNPARAM: A BiocNeighborParam object specifying the nearest neighbor algorithm. Defaults to an exact algorithm if ‘NULL’, see ‘?findKNN’ for more details.
-#' @param BPPARAM: A BiocParallelParam object specifying whether the PCA and nearest-neighbor searches should be parallelized.
+#' @param assay.type A string or integer scalar specifying the assay containing the expression values, if SingleCellExperiment objects are present in ‘...’.
+#' @param get.spikes See ‘?"scran-gene-selection"’. Only relevant if ‘...’ contains SingleCellExperiment objects.
+#' @param BNPARAM A BiocNeighborParam object specifying the nearest neighbor algorithm. Defaults to an exact algorithm if ‘NULL’, see ‘?findKNN’ for more details.
+#' @param BPPARAM A BiocParallelParam object specifying whether the PCA and nearest-neighbor searches should be parallelized.
 #' @return An object of class iCellR.
 #' @importFrom htmlwidgets saveWidget
 #' @export
@@ -24,6 +27,7 @@ run.mnn <- function (x = NULL,
                      method = "base.mean.rank",
                      top.rank = 500,
                      gene.list = "character",
+                     data.type = "main",
                      k=20, cos.norm=TRUE, ndist=3, d=50, approximate=FALSE,
                      irlba.args=list(), subset.row=NULL, auto.order=FALSE, pc.input=FALSE,
                      compute.variances=FALSE, assay.type="logcounts", get.spikes=FALSE,
@@ -35,7 +39,14 @@ run.mnn <- function (x = NULL,
   ##########
   #  require(Seurat)
   # Get data
-  DATA <- x@main.data
+  ## get main data
+  if (data.type == "main") {
+    DATA <- x@main.data
+  }
+  if (data.type == "imputed") {
+    DATA <- x@imputed.data
+  }
+  ####
   if (method == "base.mean.rank") {
     raw.data.order <- DATA[ order(rowMeans(DATA), decreasing = TRUE), ]
     DATA <- head(raw.data.order,top.rank)

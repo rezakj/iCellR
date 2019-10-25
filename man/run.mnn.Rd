@@ -5,14 +5,23 @@
 \title{Run MNN alignment on the main data.}
 \usage{
 run.mnn(x = NULL, method = "base.mean.rank", top.rank = 500,
-  gene.list = "character", k = 20, cos.norm = TRUE, ndist = 3,
-  d = 50, approximate = FALSE, irlba.args = list(),
-  subset.row = NULL, auto.order = FALSE, pc.input = FALSE,
-  compute.variances = FALSE, assay.type = "logcounts",
-  get.spikes = FALSE, BNPARAM = NULL, BPPARAM = SerialParam())
+  gene.list = "character", data.type = "main", k = 20,
+  cos.norm = TRUE, ndist = 3, d = 50, approximate = FALSE,
+  irlba.args = list(), subset.row = NULL, auto.order = FALSE,
+  pc.input = FALSE, compute.variances = FALSE,
+  assay.type = "logcounts", get.spikes = FALSE, BNPARAM = NULL,
+  BPPARAM = SerialParam())
 }
 \arguments{
 \item{x}{An object of class iCellR.}
+
+\item{method}{Choose from "base.mean.rank" or "gene.model", default is "base.mean.rank". If gene.model is chosen you need to provide gene.list.}
+
+\item{top.rank}{A number taking the top genes ranked by base mean, default = 500.}
+
+\item{gene.list}{A charactor vector of genes to be used for PCA. If "clust.method" is set to "gene.model", default = "my_model_genes.txt".}
+
+\item{data.type}{Choose from "main" and "imputed", default = "main"}
 
 \item{k}{An integer scalar specifying the number of nearest neighbors to consider when identifying MNNs.}
 
@@ -28,21 +37,19 @@ run.mnn(x = NULL, method = "base.mean.rank", top.rank = 500,
 
 \item{subset.row}{See ‘?"scran-gene-selection"’.}
 
-\item{auto.order}{Logical scalar indicating whether re-ordering of batches should be performed to maximize the number of MNN pairs at each step.}
+\item{auto.order}{Logical scalar indicating whether re-ordering of batches should be performed to maximize the number of MNN pairs at each step. Alternatively an integer vector containing a permutation of ‘1:N’ where ‘N’ is the number of batches.}
 
 \item{pc.input}{Logical scalar indicating whether the values in ‘...’ are already low-dimensional, e.g., the output of ‘multiBatchPCA’.}
 
 \item{compute.variances}{Logical scalar indicating whether the percentage of variance lost due to non-orthogonality should be computed.}
 
-\item{Alternatively}{an integer vector containing a permutation of ‘1:N’ where ‘N’ is the number of batches.}
+\item{assay.type}{A string or integer scalar specifying the assay containing the expression values, if SingleCellExperiment objects are present in ‘...’.}
 
-\item{assay.type:}{A string or integer scalar specifying the assay containing the expression values, if SingleCellExperiment objects are present in ‘...’.}
+\item{get.spikes}{See ‘?"scran-gene-selection"’. Only relevant if ‘...’ contains SingleCellExperiment objects.}
 
-\item{get.spikes:}{See ‘?"scran-gene-selection"’. Only relevant if ‘...’ contains SingleCellExperiment objects.}
+\item{BNPARAM}{A BiocNeighborParam object specifying the nearest neighbor algorithm. Defaults to an exact algorithm if ‘NULL’, see ‘?findKNN’ for more details.}
 
-\item{BNPARAM:}{A BiocNeighborParam object specifying the nearest neighbor algorithm. Defaults to an exact algorithm if ‘NULL’, see ‘?findKNN’ for more details.}
-
-\item{BPPARAM:}{A BiocParallelParam object specifying whether the PCA and nearest-neighbor searches should be parallelized.}
+\item{BPPARAM}{A BiocParallelParam object specifying whether the PCA and nearest-neighbor searches should be parallelized.}
 }
 \value{
 An object of class iCellR.

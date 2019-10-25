@@ -5,7 +5,7 @@
 #' @param fold.change A number that designates the minimum fold change for out put, default = 2.
 #' @param padjval Minimum adjusted p value for out put, default = 0.1.
 #' @param Inf.FCs If set to FALSE the infinite fold changes would be filtered from out put, default = FALSE.
-#' @param uniq If set to TRUE only genes that are a marker for only one cluster would be in the out put, default = TRUE.
+#' @param uniq If set to TRUE only genes that are a marker for only one cluster would be in the out put, default = FALSE.
 #' @param positive If set to FALSE both the up regulated (positive) and down regulated (negative) markers would be in the out put, default = FALSE.
 #'
 #' @return An object of class iCellR
@@ -30,15 +30,19 @@ findMarkers <- function (x = NULL,
   DATA <- x@best.clust
   ############## set wich clusters you want as condition 1 and 2
   MyClusts <- as.numeric(unique(DATA$clusters))
+  MyClusts <- sort(MyClusts)
 ############################### loop start
   for (i in MyClusts) {
+    message(paste(" Finding markers for cluster:",i,"..."))
     Noi <- MyClusts[-which((MyClusts) %in% i)]
     Table=DATA
     Cluster0 <- row.names(subset(Table, Table$clusters %in% i))
     Cluster1 <- row.names(subset(Table, Table$clusters %in% Noi))
     ############## Filter
-    cond1 <- dat[,Cluster0]
-    cond2 <- dat[,Cluster1]
+#    cond1 <- dat[,Cluster0]
+#    cond2 <- dat[,Cluster1]
+    cond1 <- dat[ , which(names(dat) %in% Cluster0)]
+    cond2 <- dat[ , which(names(dat) %in% Cluster1)]
     ### merge both for pval length not matching error
     mrgd <- cbind(cond1,cond2)
 #    mrgd <- merge(cond1, cond2, by="row.names")
@@ -128,5 +132,6 @@ findMarkers <- function (x = NULL,
   }
   df <- df[order(df$log2FoldChange,decreasing = TRUE),]
   df <- df[order(df$clusters,decreasing = FALSE),]
+  message("All done!")
   return(df)
 }

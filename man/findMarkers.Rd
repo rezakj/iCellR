@@ -16,7 +16,7 @@ findMarkers(x = NULL, fold.change = 2, padjval = 0.1,
 
 \item{Inf.FCs}{If set to FALSE the infinite fold changes would be filtered from out put, default = FALSE.}
 
-\item{uniq}{If set to TRUE only genes that are a marker for only one cluster would be in the out put, default = TRUE.}
+\item{uniq}{If set to TRUE only genes that are a marker for only one cluster would be in the out put, default = FALSE.}
 
 \item{positive}{If set to FALSE both the up regulated (positive) and down regulated (negative) markers would be in the out put, default = FALSE.}
 }
