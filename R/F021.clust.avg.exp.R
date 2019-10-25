@@ -15,11 +15,16 @@ clust.avg.exp <- function (x = NULL) {
       DATA <- x@best.clust
   # get data
   sampleCondition <- DATA$clusters
-  conditions <- unique(sampleCondition)
+  conditions <- sort(unique(sampleCondition))
   DATA1 <- DATA
-  Table = data.matrix(x@main.data)
+  Table = x@main.data
   for(i in conditions){
-    DATA <- Table[,row.names(subset(DATA1, sampleCondition == i))]
+    IDs <- rownames(subset(DATA1, sampleCondition == i))
+    DATA <- Table[ , which(names(Table) %in% IDs)]
+    DATA <- as.matrix(DATA)
+    message(paste(" Averaging gene expression for cluster:",i,"..."))
+    message(paste("      Averaging",dim(DATA)[2],"cells ..."))
+#    DATA <- Table[,row.names(subset(DATA1, sampleCondition == i))]
     DATA <- apply(DATA, 1, function(DATA) {mean(DATA)})
     DATA <- as.data.frame(DATA)
     Name=paste("meanExp_cluster",i,".txt",sep="_")
@@ -44,5 +49,6 @@ clust.avg.exp <- function (x = NULL) {
 #  file.remove(list.files(pattern="meanExp"))
    MeanExpForClusters <- MeanExpForClusters[order(nchar(colnames(MeanExpForClusters)),colnames(MeanExpForClusters))]
    attributes(x)$clust.avg <- MeanExpForClusters
+   message("All done!")
   return(x)
 }
