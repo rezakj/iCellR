@@ -100,6 +100,7 @@ run.impute <- function (x = NULL,
                         seed = seed)
     DATA <- as.data.frame(t(data_MAGIC$result))
     # return
+    DATA <- round(DATA, digits = 3)
     attributes(x)$imputed.data <- DATA
     # return
     return(x)

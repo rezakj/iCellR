@@ -81,6 +81,7 @@ norm.data <- function (x = NULL,
 #  names(SizeFactors) <- c(colnames(DATA))
 #  SizeFactors <- as.data.frame(SizeFactors)
 #  normalized[is.na(normalized)] <- 0
+  normalized <- round(normalized, digits = 3)
   attributes(x)$main.data <- normalized
   attributes(x)$norm.factors <- norm.facts
   return(x)
