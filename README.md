@@ -1371,7 +1371,7 @@ Before and After MNN analysis
 </p>
 
 
-# How to perform anchor sample alignment 
+# How to perform Seurat's anchor (integration) sample alignment 
 
 ```r
 library(iCellR)
