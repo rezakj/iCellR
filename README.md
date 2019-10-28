@@ -386,7 +386,7 @@ To view an the html intractive plot click on this links: [Dispersion plot](https
 
 
 - Perform Principal component analysis (PCA)
-Skip this step if you did batch correction. For batch correction (sample alignment/harmonization) see the sections; CCA, MNN or anchor alignment. 
+Skip this step if you did batch correction. For batch correction (sample alignment/harmonization) see the sections; CCA, MNN or anchor (integration) alignment. 
 
 ```r
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
