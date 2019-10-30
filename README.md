@@ -1897,6 +1897,84 @@ head(my.vdj.data)
 add.vdj(my.obj, vdj.data = my.vdj.data)
  ```
 
+# How to analyze large bulk RNA-Seq data (TCGA)
+
+
+```r
+sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/TCGA_sample_Normalized_data.tsv.gz"
+
+download.file(url = sample.file.url, 
+     destfile = "TCGA_sample_Normalized_data.tsv.gz", 
+     method = "auto")  
+
+TCGA.data <- read.table("TCGA_sample_Normalized_data.tsv.gz")
+head(TCGA.data)[1:3]
+#         Basal_TCGA.A1.A0SK.txt Basal_TCGA.A1.A0SP.txt Basal_TCGA.A2.A04P.txt
+#TSPAN6                5823.4300            4318.034382            5265.733258
+#TNMD                     0.0000               6.049079               6.763079
+#DPM1                  3248.1536            2528.515113            1183.538813
+#SCYL3                 1059.7135             965.836315            1109.144945
+#C1orf112              1251.3155            1070.687022             485.589067
+#FGR                    106.2438             933.574559             512.641383
+
+library(iCellR)
+my.obj <- make.obj(TCGA.data)
+
+my.obj@main.data <- my.obj@raw.data
+
+my.obj
+###################################
+,--. ,-----.       ,--.,--.,------.
+`--''  .--./ ,---. |  ||  ||  .--. '
+,--.|  |    | .-. :|  ||  ||  '--'.'
+|  |'  '--'\   --. |  ||  ||  |
+`--' `-----' `----'`--'`--'`--' '--'
+###################################
+An object of class iCellR version: 1.2.4
+Raw/original data dimentions (rows,columns): 69797,882
+Data conditions in raw data: Basal,Her2,LumA,LumB,Normal (131,64,404,170,113)
+Row names: TSPAN6,TNMD,DPM1 ...
+Columns names: Basal_TCGA.A1.A0SK.txt,Basal_TCGA.A1.A0SP.txt,Basal_TCGA.A2.A04P.txt ...
+###################################
+   QC stats performed:FALSE, PCA performed:FALSE, CCA performed:FALSE
+   Clustering performed:FALSE, Number of clusters:0
+   tSNE performed:FALSE, UMAP performed:FALSE, DiffMap performed:FALSE
+   Main data dimentions (rows,columns):69797,882
+   Normalization factors:,...
+   Imputed data dimentions (rows,columns):0,0
+############## scVDJ-Seq ###########
+VDJ data dimentions (rows,columns):0,0
+############## CITE-Seq ############
+   ADT raw data dimentions (rows,columns):0,0
+   ADT main data dimentions (rows,columns):0,0
+   ADT columns names:...
+   ADT row names:...
+########### iCellR object ##########
+
+
+my.obj <- run.pca(my.obj)
+
+my.obj <- run.clustering(my.obj, 
+	clust.method = "kmeans", 
+	dist.method = "euclidean",
+	index.method = "silhouette",
+	max.clust =25,
+	min.clust = 2,
+	dims = 1:10)
+
+my.obj <- run.pc.tsne(my.obj, dims = 1:10)
+my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
+
+cluster.plot(my.obj,plot.type = "pca",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
+cluster.plot(my.obj,plot.type = "umap",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
+cluster.plot(my.obj,plot.type = "tsne",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
+cluster.plot(my.obj,plot.type = "umap",cell.color = "black",cell.transparency = 1,interactive = F)
+```
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/TCGA.png" />
+</p>
+
 
 ```r
 sessionInfo()
