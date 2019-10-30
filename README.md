@@ -1899,6 +1899,7 @@ add.vdj(my.obj, vdj.data = my.vdj.data)
 
 # How to analyze large bulk RNA-Seq data (TCGA)
 
+In this example the samples are normalized using DESeq2 so no noramalizaion is needed.
 
 ```r
 sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/TCGA_sample_Normalized_data.tsv.gz"
