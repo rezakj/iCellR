@@ -955,6 +955,16 @@ clust.stats.plot(my.obj, plot.type = "box.gene", interactive = F)
 
 - Differential Expression Analysis 
 
+The differential expression (DE) analysis function in iCellR allows the users to choose from any combinations of clusters and conditions. For example, a user with two samples (say WT and KO) has four different possible ways of comparisons:
+
+a-Comparing a cluster/clusters with different cluster/clusters (e.g. cluster 1 and 2 vs. 4)
+
+b-Comparing a cluster/clusters with different cluster/clusters only in one/more condition/conditions (e.g. cluster 1 vs cluster 2 but only the WT sample)
+
+c-Comparing a condtion/condtions with different condtion/condtions (e.g. WT vs KO)
+
+d-Comparing a condtion/condtions with different condtion/condtions only in one/more cluster/clusters (e.g. cluster 1 WT vs cluster 1 KO)
+
 ```r
 diff.res <- run.diff.exp(my.obj, de.by = "clusters", cond.1 = c(1,4), cond.2 = c(2))
 diff.res1 <- as.data.frame(diff.res)
@@ -976,10 +986,18 @@ head(diff.res1)
 #AC092580.4 7.254675e-03
 
 # more examples 
-# diff.res <- run.diff.exp(my.obj, de.by = "conditions", cond.1 = c("WT"), cond.2 = c("KO"))
-# diff.res <- run.diff.exp(my.obj, de.by = "clusters", cond.1 = c(1,4), cond.2 = c(2))
-# diff.res <- run.diff.exp(my.obj, de.by = "clustBase.condComp", cond.1 = c("WT"), cond.2 = c("KO"), base.cond = 1)
-# diff.res <- run.diff.exp(my.obj, de.by = "condBase.clustComp", cond.1 = c(1), cond.2 = c(2), base.cond = "WT")
+
+# Comparing a condtion/condtions with different condtion/condtions (e.g. WT vs KO)
+diff.res <- run.diff.exp(my.obj, de.by = "conditions", cond.1 = c("WT"), cond.2 = c("KO"))
+
+# Comparing a cluster/clusters with different cluster/clusters (e.g. cluster 1 and 2 vs. 4)
+diff.res <- run.diff.exp(my.obj, de.by = "clusters", cond.1 = c(1,4), cond.2 = c(2))
+
+# Comparing a condtion/condtions with different condtion/condtions only in one/more cluster/clusters (e.g. cluster 1 WT vs cluster 1 KO)
+diff.res <- run.diff.exp(my.obj, de.by = "clustBase.condComp", cond.1 = c("WT"), cond.2 = c("KO"), base.cond = 1)
+
+# Comparing a cluster/clusters with different cluster/clusters only in one/more condition/conditions (e.g. cluster 1 vs cluster 2 but only the WT sample)
+diff.res <- run.diff.exp(my.obj, de.by = "condBase.clustComp", cond.1 = c(1), cond.2 = c(2), base.cond = "WT")
 ```
 
 - Volcano and MA plots 
