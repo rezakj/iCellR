@@ -11,6 +11,8 @@ For citation please use this link (our manuscript is in preparation): https://CR
 
 If you are using FlowJo or SeqGeq, they have made plugins for iCellR and other single cell tools: https://www.flowjo.com/exchange/#/ (list of all plugins) and https://www.flowjo.com/exchange/#/plugin/profile?id=34 (iCellR plugin)
 
+Tutorials: example1[https://genome.med.nyu.edu/results/external/iCellR/example1/] and code[https://genome.med.nyu.edu/results/external/iCellR/example1/code.txt]
+
 ### Single (i) Cell R package (iCellR)
 
 <p align="center">
