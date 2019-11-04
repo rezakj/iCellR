@@ -70,4 +70,8 @@ utils::globalVariables(c("%>%",
                          "computeSumFactors",
                          "normalize",
                          "out",
+                         "DefaultAssay<-",
+                         "IntegrateData",
+                         "FindIntegrationAnchors",
+                         "FindVariableFeatures",
                          "yend"))

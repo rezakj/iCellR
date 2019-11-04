@@ -112,25 +112,33 @@ cell.filter <- function (x = NULL,
   BadMito <- c(MAXmito,MINmito)
   BadGenes <- c(MAXbad,MINbad)
   BadUMIs <- c(MAXbadUMI,MINbadUMI)
+  BADgenes <- c(BadMito,BadGenes,BadUMIs)
 # filter
   if (length(BadMito) == 0) {
     message("No mito filter")
   } else {
-    DATA <- DATA[ , -which(names(DATA) %in% BadMito)]
+#    DATA <- DATA[ , -which(names(DATA) %in% BadMito)]
     message(paste("cells with min mito ratio of",min.mito,"and max mito ratio of",max.mito,"were filtered."))
   }
   if (length(BadGenes) == 0) {
     message("No gene number filter")
   } else {
-    DATA <- DATA[ , -which(names(DATA) %in% BadGenes)]
+#    DATA <- DATA[ , -which(names(DATA) %in% BadGenes)]
     message(paste("cells with min genes of",min.genes,"and max genes of",max.genes,"were filtered."))
   }
   if (length(BadUMIs) == 0) {
     message("No UMI number filter")
   } else {
-    DATA <- DATA[ , -which(names(DATA) %in% BadUMIs)]
+#    DATA <- DATA[ , -which(names(DATA) %in% BadUMIs)]
     message(paste("cells with min UMIs of",min.umis,"and max UMIs of",max.umis,"were filtered."))
   }
+####
+  if (length(BADgenes) == 0) {
+    message("No UMI, mito and gene number filter")
+  } else {
+    DATA <- DATA[ , -which(names(DATA) %in% BADgenes)]
+      }
+####
   if (!exists("gene.filt.cells")) {
     message("No cell filter by provided gene/genes")
   } else {
