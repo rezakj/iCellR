@@ -1115,7 +1115,10 @@ pseudotime.tree(my.obj,
 	type = "classic",
 	clust.method = "complete")
 	
-# New pseudotime maps coming soon see plots below
+pseudotime.tree(my.obj,
+	marker.genes = MyGenes,
+	type = "jitter",
+	clust.method = "complete")	
 
  ```
 <p align="center">
@@ -1124,7 +1127,6 @@ pseudotime.tree(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_unrooted.png" width="400" />
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_classic.png" width="400" />
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_jitter.png" width="400"/>
-	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/12_pseudotime.png"/>
 </p>
 
 
