@@ -479,6 +479,10 @@ my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
 # Install phateR version 2.9
 # wget https://cran.r-project.org/src/contrib/Archive/phateR/phateR_0.2.9.tar.gz
 # install.packages('phateR/', repos = NULL, type="source")
+# or 
+# library(devtools)
+# install_version("phateR", version = "0.2.9", repos = "http://cran.us.r-project.org")
+
 
 # optional 
 # library(phateR)
