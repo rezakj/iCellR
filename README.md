@@ -3,7 +3,7 @@ iCellR is an interactive R package to work with high-throughput single cell sequ
 
 Link to Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/packages/iCellR/index.html)
 
-Link to manual: [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.pdf)
+Link to manual: [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.pdf) Publications: [PMID 31744829](https://pubmed.ncbi.nlm.nih.gov/31744829-in-vivo-epigenetic-crispr-screen-identifies-asf1a-as-an-immunotherapeutic-target-in-kras-mutant-lung-adenocarcinoma/?from_term=alireza+khodadadi-jamayran&from_filter=years.2019-2019&from_pos=5)
 
 Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
 
