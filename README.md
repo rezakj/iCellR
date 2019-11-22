@@ -8,7 +8,8 @@ Link to manual: [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.p
 Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
 
 For citation please use this link (our manuscript is in preparation): https://github.com/rezakj/iCellR
-Publications: [PMID 31744829](https://pubmed.ncbi.nlm.nih.gov/31744829-in-vivo-epigenetic-crispr-screen-identifies-asf1a-as-an-immunotherapeutic-target-in-kras-mutant-lung-adenocarcinoma/?from_term=alireza+khodadadi-jamayran&from_filter=years.2019-2019&from_pos=5)
+
+iCellR publications: [PMID 31744829](https://pubmed.ncbi.nlm.nih.gov/31744829-in-vivo-epigenetic-crispr-screen-identifies-asf1a-as-an-immunotherapeutic-target-in-kras-mutant-lung-adenocarcinoma/?from_term=alireza+khodadadi-jamayran&from_filter=years.2019-2019&from_pos=5)
 
 If you are using FlowJo or SeqGeq, they have made plugins for iCellR and other single cell tools: https://www.flowjo.com/exchange/#/ (list of all plugins) and https://www.flowjo.com/exchange/#/plugin/profile?id=34 (iCellR plugin)
 
