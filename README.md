@@ -13,6 +13,8 @@ If you are using FlowJo or SeqGeq, they have made plugins for iCellR and other s
 
 Tutorials: [example 1 code](https://genome.med.nyu.edu/results/external/iCellR/example1/code.txt) and [results](https://genome.med.nyu.edu/results/external/iCellR/example1/)
 
+iCellR Viewer (web GUI app): https://compbio.nyumc.org/icellr/
+
 ### Single (i) Cell R package (iCellR)
 
 <p align="center">
