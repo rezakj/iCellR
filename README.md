@@ -959,7 +959,8 @@ clust.stats.plot(my.obj, plot.type = "pie.cc", interactive = F)
 <p align="center">
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/6_cluster_mito_ratio.png" width="400"/>
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/5_cluster_gene_cov.png" width="400"/>  
-	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc.png" />  
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc2.png" width="400"/> 
 </p>
 
 
