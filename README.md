@@ -1,15 +1,19 @@
 # iCellR
 iCellR is an interactive R package to work with high-throughput single cell sequencing technologies (i.e scRNA-seq, scVDJ-seq and CITE-seq).
 
-Link to Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/packages/iCellR/index.html)
-
-Link to manual: [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.pdf)
+Link to Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/packages/iCellR/index.html).  Link to manual: [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.pdf)
 
 Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
 
-For citation please use this link (our manuscript is in preparation): https://CRAN.R-project.org/package=iCellR 
+For citation please use this link (our manuscript is in preparation): https://github.com/rezakj/iCellR
+
+iCellR publications: [PMID 31744829](https://pubmed.ncbi.nlm.nih.gov/31744829-in-vivo-epigenetic-crispr-screen-identifies-asf1a-as-an-immunotherapeutic-target-in-kras-mutant-lung-adenocarcinoma/?from_term=alireza+khodadadi-jamayran&from_filter=years.2019-2019&from_pos=5)
 
 If you are using FlowJo or SeqGeq, they have made plugins for iCellR and other single cell tools: https://www.flowjo.com/exchange/#/ (list of all plugins) and https://www.flowjo.com/exchange/#/plugin/profile?id=34 (iCellR plugin)
+
+Tutorials: [example 1 code](https://genome.med.nyu.edu/results/external/iCellR/example1/code.txt) and [results](https://genome.med.nyu.edu/results/external/iCellR/example1/)
+
+iCellR Viewer (web GUI app): https://compbio.nyumc.org/icellr/
 
 ### Single (i) Cell R package (iCellR)
 
@@ -477,6 +481,10 @@ my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
 # Install phateR version 2.9
 # wget https://cran.r-project.org/src/contrib/Archive/phateR/phateR_0.2.9.tar.gz
 # install.packages('phateR/', repos = NULL, type="source")
+# or 
+# library(devtools)
+# install_version("phateR", version = "0.2.9", repos = "http://cran.us.r-project.org")
+
 
 # optional 
 # library(phateR)
@@ -1113,7 +1121,10 @@ pseudotime.tree(my.obj,
 	type = "classic",
 	clust.method = "complete")
 	
-# New pseudotime maps coming soon see plots below
+pseudotime.tree(my.obj,
+	marker.genes = MyGenes,
+	type = "jitter",
+	clust.method = "complete")	
 
  ```
 <p align="center">
@@ -1122,7 +1133,6 @@ pseudotime.tree(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_unrooted.png" width="400" />
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_classic.png" width="400" />
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_jitter.png" width="400"/>
-	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/12_pseudotime.png"/>
 </p>
 
 
