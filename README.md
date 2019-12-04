@@ -816,7 +816,7 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters"
  - Run data imputation
 
 ```r
-my.obj <- run.impute(my.obj, dims = 1:10, cell.ratio = 2, data.type = "pca")
+my.obj <- run.impute(my.obj, dims = 1:10, nn = 10, data.type = "pca")
 
 # more examples
 # my.obj <- run.impute(my.obj, cell.ratio = 2, data.type = "tsne")
