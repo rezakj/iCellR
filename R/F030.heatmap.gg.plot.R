@@ -38,7 +38,7 @@
 #' @export
 heatmap.gg.plot <- function (x = NULL,
                           gene = "NULL",
-                          cell.sort = TRUE,
+                          cell.sort = FALSE,
                           data.type = "main",
                           cluster.by = "clusters",
                           min.scale = -2.5,

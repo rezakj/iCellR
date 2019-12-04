@@ -7,7 +7,7 @@
 #' @param data.type Choose from "main" and "imputed", default = "main"
 #' @param plus.log.value A number to add to each value in the matrix before log transformasion to aviond Inf numbers, default = 0.1.
 #' @param gene.list A charactor vector of genes to be used for PCA. If "clust.method" is set to "gene.model", default = "my_model_genes.txt".
-#' @param batch.norm If TRUE the data will be normalized based on the genes in gene.list or top ranked genes.
+#' @param scale.data If TRUE the data will be scaled (log2 + plus.log.value), default = TRUE.
 #' @return An object of class iCellR.
 #' @examples
 #' demo.obj <- run.pca(demo.obj, method = "gene.model", gene.list = demo.obj@gene.model)
@@ -20,7 +20,7 @@ run.pca <- function (x = NULL,
                           method = "base.mean.rank",
                           top.rank = 500,
                           plus.log.value = 0.1,
-                          batch.norm = FALSE,
+                          scale.data = TRUE,
                           gene.list = "character") {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
@@ -36,8 +36,10 @@ run.pca <- function (x = NULL,
   # model base mean rank
   if (method == "base.mean.rank") {
     raw.data.order <- DATA[ order(rowMeans(DATA), decreasing = TRUE), ]
-    topGenes <- head(raw.data.order,top.rank)
-    TopNormLogScale <- log(topGenes + plus.log.value)
+    TopNormLogScale <- head(raw.data.order,top.rank)
+    if(scale.data == TRUE) {
+      TopNormLogScale <- log(TopNormLogScale + plus.log.value)
+    }
     # TopNormLogScale <- scale(topGenes)
 #    TopNormLogScale <- t(TopNormLogScale)
 #    TopNormLogScale <- as.data.frame(t(scale(TopNormLogScale)))
@@ -49,24 +51,28 @@ run.pca <- function (x = NULL,
     } else {
       genesForClustering <- gene.list
       topGenes <- subset(DATA, rownames(DATA) %in% genesForClustering)
-      if (batch.norm == FALSE){
         if (data.type == "main") {
-          TopNormLogScale <- log2(topGenes + plus.log.value)
-        }
+          TopNormLogScale <- topGenes
+          if(scale.data == TRUE) {
+            TopNormLogScale <- log(TopNormLogScale + plus.log.value)
+          }
         if (data.type == "imputed") {
-         # TopNormLogScale <- topGenes
-          TopNormLogScale <- t(scale(t(topGenes)))
+          TopNormLogScale <- topGenes
+          if(scale.data == TRUE) {
+            TopNormLogScale <- t(scale(t(topGenes)))
+#            TopNormLogScale <- log(TopNormLogScale + plus.log.value)
+          }
         }
       }
-      if (batch.norm == TRUE){
-        ## new method
-        libSiz <- colSums(topGenes)
-        norm.facts <- as.numeric(libSiz) / mean(as.numeric(libSiz))
-        dataMat <- as.matrix(topGenes)
-        normalized <- as.data.frame(sweep(dataMat, 2, norm.facts, `/`))
+#      if (batch.norm == TRUE){
+#        ## new method
+#        libSiz <- colSums(topGenes)
+#        norm.facts <- as.numeric(libSiz) / mean(as.numeric(libSiz))
+#        dataMat <- as.matrix(topGenes)
+#        normalized <- as.data.frame(sweep(dataMat, 2, norm.facts, `/`))
         # TopNormLogScale <- log2(normalized + plus.log.value)
-        TopNormLogScale <- normalized
-      }
+#        TopNormLogScale <- normalized
+#      }
     }
   }
 # Returns

@@ -7,7 +7,9 @@
 #' @return The data frame object
 #' @importFrom Hmisc cut2
 #' @export
-cc <- function (object = NULL, s.genes = s.phase, g2m.genes = g2m.phase) {
+cc <- function (object = NULL,
+                s.genes = s.phase,
+                g2m.genes = g2m.phase) {
   if ("iCellR" != class(object)[1]) {
     stop("object should be an object of class iCellR")
   }

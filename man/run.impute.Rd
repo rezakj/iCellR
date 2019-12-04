@@ -5,7 +5,7 @@
 \title{Impute the main data}
 \usage{
 run.impute(x = NULL, imp.method = "iCellR.imp", dims = 1:10,
-  cell.ratio = 2, data.type = "pca", genes = "all_genes", k = 10,
+  nn = 10, data.type = "pca", genes = "all_genes", k = 10,
   alpha = 15, t = "auto", npca = 100, init = NULL, t.max = 20,
   knn.dist.method = "euclidean", verbose = 1, n.jobs = 1,
   seed = NULL)
@@ -17,23 +17,23 @@ run.impute(x = NULL, imp.method = "iCellR.imp", dims = 1:10,
 
 \item{dims}{PC dimentions to be used for the analysis, default = 10.}
 
-\item{cell.ratio}{Percent of cells to use to find neighboring cells, default = 2.}
+\item{nn}{Number of neighboring cells to find, default = 10.}
 
 \item{data.type}{Choose between "tsne", "pca", "umap", "diffusion", default = "pca".}
 
 \item{genes}{character or integer vector, default: NULL vector of column names or column indices for which to return smoothed data If 'all_genes' or NULL, the entire smoothed matrix is returned}
 
-\item{k}{int, optional, default: 10 number of nearest neighbors on which to build kernel}
+\item{k}{if imp.method is magic; int, optional, default: 10 number of nearest neighbors on which to build kernel}
 
-\item{alpha}{int, optional, default: 15 sets decay rate of kernel tails. If NULL, alpha decaying kernel is not used}
+\item{alpha}{if imp.method is magic; int, optional, default: 15 sets decay rate of kernel tails. If NULL, alpha decaying kernel is not used}
 
-\item{t}{int, optional, default: 'auto' power to which the diffusion operator is powered sets the level of diffusion. If 'auto', t is selected according to the Procrustes disparity of the diffused data.'}
+\item{t}{if imp.method is magic; int, optional, default: 'auto' power to which the diffusion operator is powered sets the level of diffusion. If 'auto', t is selected according to the Procrustes disparity of the diffused data.'}
 
 \item{npca}{number of PCA components that should be used; default: 100.}
 
 \item{init}{magic object, optional object to use for initialization. Avoids recomputing intermediate steps if parameters are the same.}
 
-\item{t.max}{int, optional, default: 20 Maximum value of t to test for automatic t selection.}
+\item{t.max}{if imp.method is magic; int, optional, default: 20 Maximum value of t to test for automatic t selection.}
 
 \item{knn.dist.method}{string, optional, default: 'euclidean'. recommended values: 'euclidean', 'cosine' Any metric from 'scipy.spatial.distance' can be used distance metric for building kNN graph.}
 

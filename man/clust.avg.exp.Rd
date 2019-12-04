@@ -4,10 +4,12 @@
 \alias{clust.avg.exp}
 \title{Create a data frame of mean expression of genes per cluster}
 \usage{
-clust.avg.exp(x = NULL)
+clust.avg.exp(x = NULL, data.type = "main")
 }
 \arguments{
 \item{x}{An object of class iCellR.}
+
+\item{data.type}{Choose from "main" and "imputed", default = "main"}
 }
 \value{
 An object of class iCellR.

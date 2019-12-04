@@ -6,6 +6,25 @@
 #' @param top.rank A number taking the top genes ranked by base mean, default = 500.
 #' @param data.type Choose from "main" and "imputed", default = "main"
 #' @param gene.list A charactor vector of genes to be used for PCA. If "clust.method" is set to "gene.model", default = "my_model_genes.txt".
+#' @param normalization.method Choose from "LogNormalize", "CLR" and "RC". LogNormalize: Feature counts for each cell are divided by the total counts for that cell and multiplied by the scale.factor. This is then natural-log transformed using log1p. CLR: Applies a centered log ratio transformation. RC: Relative counts. Feature counts for each cell are divided by the total counts for that cell and multiplied by the scale.factor. No log-transformation is applied. For counts per million (CPM) set ‘scale.factor = 1e6’
+#' @param scale.factor Sets the scale factor for cell-level normalization.
+#' @param margin If performing CLR normalization, normalize across features (1) or cells (2)
+#' @param block.size How many cells should be run in each chunk, will try to split evenly across threads
+#' @param selection.method Choose from "vst","mean.var.plot (mvp)","dispersion (disp)".
+#' @param nfeatures Number of features to select as top variable features; only used when ‘selection.method’ is set to ‘'dispersion'’ or ‘'vst'’
+#' @param anchor.features A numeric value. This will call ‘SelectIntegrationFeatures’ to select the provided number of features to be used in anchor finding
+#' @param scale Whether or not to scale the features provided. Only set to FALSE if you have previously scaled the features you want to use for each object in the object.list
+#' @param sct.clip.range Numeric of length two specifying the min and max values the Pearson residual will be clipped to
+#' @param reduction cca: Canonical correlation analysis. rpca: Reciprocal PCA
+#' @param l2.norm Perform L2 normalization on the CCA cell embeddings after dimensional reduction
+#' @param dims Which dimensions to use from the CCA to specify the neighbor search space
+#' @param k.anchor How many neighbors (k) to use when picking anchors
+#' @param k.filter How many neighbors (k) to use when filtering anchors
+#' @param k.score How many neighbors (k) to use when scoring anchors
+#' @param max.features The maximum number of features to use when specifying the neighborhood search space in the anchor filtering
+#' @param nn.method Method for nearest neighbor finding. Options include: rann, annoy
+#' @param eps Error bound on the neighbor finding algorithm (from RANN)
+#' @param k.weight Number of neighbors to consider when weighting
 #' @return An object of class iCellR.
 #' @importFrom htmlwidgets saveWidget
 #' @export
@@ -24,8 +43,7 @@ run.anchor <- function (x = NULL,
                      sct.clip.range = NULL, reduction = c("cca", "rpca"),
                      l2.norm = TRUE, dims = 1:30, k.anchor = 5, k.filter = 200,
                      k.score = 30, max.features = 200, nn.method = "rann", eps = 0,
-                     k.weight = 100,
-                     verbose = TRUE) {
+                     k.weight = 100) {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
@@ -77,7 +95,7 @@ run.anchor <- function (x = NULL,
     message(MyMassg)
     mydata <- CreateSeuratObject(counts = mydata, project = i)
     mydata <- NormalizeData(mydata, normalization.method=normalization.method,
-                            scale.factor =scale.factor, verbose = verbose,
+                            scale.factor =scale.factor,
                             margin = margin, block.size=block.size)
     mydata <- FindVariableFeatures(mydata,
                                    selection.method = selection.method,
@@ -95,10 +113,11 @@ run.anchor <- function (x = NULL,
                                       k.score = k.score, max.features = max.features, nn.method = nn.method, eps = eps)
   MYcombined <- IntegrateData(anchorset = Myanchors, dims = dims,
                               normalization.method = normalization.method,
-                              verbose =verbose, k.weight = k.weight)
+                              k.weight = k.weight)
+  ####
   DefaultAssay(MYcombined) <- "integrated"
-  MYcombined <- ScaleData(MYcombined, verbose = FALSE)
-#  MYcombined <- RunPCA(MYcombined, npcs = 30, verbose = FALSE)
+  MYcombined <- ScaleData(MYcombined)
+#  MYcombined <- RunPCA(MYcombined, npcs = 30)
   data <- as.data.frame(MYcombined@assays$integrated@scale.data)
   ############
   BestOrder <- colnames(DATA)

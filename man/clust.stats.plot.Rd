@@ -12,7 +12,7 @@ clust.stats.plot(x = NULL, plot.type = "box.mito",
 \arguments{
 \item{x}{An object of class iCellR.}
 
-\item{plot.type}{Choose from "box.umi", "box.mito", "box.gene", default = "box.mito".}
+\item{plot.type}{Choose from "bar.cc", "pie.cc" , box.umi", "box.mito", "box.gene", default = "box.mito".}
 
 \item{cell.color}{Choose a color for points in the plot.}
 

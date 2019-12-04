@@ -4,11 +4,13 @@
 \alias{findMarkers}
 \title{Find marker genes for each cluster}
 \usage{
-findMarkers(x = NULL, fold.change = 2, padjval = 0.1,
-  Inf.FCs = FALSE, uniq = FALSE, positive = TRUE)
+findMarkers(x = NULL, data.type = "main", fold.change = 2,
+  padjval = 0.1, Inf.FCs = FALSE, uniq = FALSE, positive = TRUE)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
+
+\item{data.type}{Choose from "main" and "imputed", default = "main"}
 
 \item{fold.change}{A number that designates the minimum fold change for out put, default = 2.}
 

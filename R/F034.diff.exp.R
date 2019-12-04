@@ -2,6 +2,7 @@
 #'
 #' This function takes an object of class iCellR and performs differential expression (DE) analysis for clusters and conditions.
 #' @param x An object of class iCellR.
+#' @param data.type Choose from "main" and "imputed", default = "main"
 #' @param de.by Choose from "clusters", "conditions", "clustBase.condComp" or "condBase.clustComp".
 #' @param cond.1 First condition to do DE analysis on.
 #' @param cond.2 Second condition to do DE analysis on.
@@ -14,6 +15,7 @@
 #'
 #' @export
 run.diff.exp <- function (x = NULL,
+                      data.type = "main",
                       de.by = "clusters",
                       cond.1 = "array",
                       cond.2 = "array",
@@ -22,7 +24,14 @@ run.diff.exp <- function (x = NULL,
     stop("x should be an object of class iCellR")
   }
   ###########
-  dat <- x@main.data
+#  dat <- x@main.data
+  ## get main data
+  if (data.type == "main") {
+    dat <- x@main.data
+  }
+  if (data.type == "imputed") {
+    dat <- x@imputed.data
+  }
   # 2 dimentions
   DATA <- x@best.clust
   ############## set wich clusters you want as condition 1 and 2
