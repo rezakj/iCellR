@@ -2,6 +2,7 @@
 #'
 #' This function takes an object of class iCellR and performs differential expression (DE) analysis to find marker genes for each cluster.
 #' @param x An object of class iCellR.
+#' @param data.type Choose from "main" and "imputed", default = "main"
 #' @param fold.change A number that designates the minimum fold change for out put, default = 2.
 #' @param padjval Minimum adjusted p value for out put, default = 0.1.
 #' @param Inf.FCs If set to FALSE the infinite fold changes would be filtered from out put, default = FALSE.
@@ -15,6 +16,7 @@
 #' head(marker.genes)
 #' @export
 findMarkers <- function (x = NULL,
+          data.type = "main",
           fold.change = 2,
           padjval = 0.1,
           Inf.FCs = FALSE,
@@ -25,8 +27,17 @@ findMarkers <- function (x = NULL,
   }
   ###########
 #  x <- clust.avg.exp(x)
-  dat <- x@main.data
+#  dat <- x@main.data
+  ## get main data
+  if (data.type == "main") {
+    dat <- x@main.data
+  }
+  if (data.type == "imputed") {
+    dat <- x@imputed.data
+  }
   # get cluster data
+  # get avrages
+  x <- clust.avg.exp(x, data.type = data.type)
   DATA <- x@best.clust
   ############## set wich clusters you want as condition 1 and 2
   MyClusts <- as.numeric(unique(DATA$clusters))
@@ -99,12 +110,14 @@ findMarkers <- function (x = NULL,
     mrgdall <- merge(Stats, Stats1, by="row.names")
     row.names(mrgdall) <- mrgdall$Row.names
     mrgdall <- mrgdall[,-1]
-    # get avrage data
-    AvData <- x@clust.avg
-    row.names(AvData) <- AvData$gene
-    mrgdall <- merge(mrgdall, AvData, by="row.names")
-    row.names(mrgdall) <- mrgdall$Row.names
-    mrgdall <- mrgdall[,-1]
+    ############################# get avrage data
+#    if (add.avg == TRUE) {
+      AvData <- x@clust.avg
+      row.names(AvData) <- AvData$gene
+      mrgdall <- merge(mrgdall, AvData, by="row.names")
+      row.names(mrgdall) <- mrgdall$Row.names
+      mrgdall <- mrgdall[,-1]
+#    }
     # make it an object
     DatNmaes=paste("DATAcluster",i,sep="_")
     eval(call("<-", as.name(DatNmaes), mrgdall))

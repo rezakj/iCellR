@@ -86,6 +86,7 @@ gg.cor <- function (x = NULL,
     ylab(paste("log2 expression (", gene2,")", sep="")) +
 #    geom_abline(color= ab.col, linetype="dashed", size = ab.size) +
     ggtitle("gene gene correlation and cell gating", subtitle = Sub) +
+    guides(colour = guide_legend(override.aes = list(size=5))) +
 #    scale_y_continuous(trans = "log1p") +
 #    scale_x_continuous(trans = "log1p") +
     theme_bw()

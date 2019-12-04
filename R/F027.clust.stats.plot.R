@@ -2,7 +2,7 @@
 #'
 #' This function takes an object of class iCellR and creates QC plot.
 #' @param x An object of class iCellR.
-#' @param plot.type Choose from "box.umi", "box.mito", "box.gene", default = "box.mito".
+#' @param plot.type Choose from "bar.cc", "pie.cc" , box.umi", "box.mito", "box.gene", default = "box.mito".
 #' @param cell.color Choose a color for points in the plot.
 #' @param cell.size A number for the size of the points in the plot, default = 1.
 #' @param box.color A color for the boxes in the "boxplot", default = "red".
@@ -41,7 +41,21 @@ clust.stats.plot <- function (x = NULL,
   MyClusts <- x@best.clust
   # merge
   DATA <- merge(DATA, MyClusts, by = "row.names", all.x=FALSE, all.y=TRUE)
-  # plot
+######  # plot
+# cell cycle
+  # bar
+  COUNTS <- c(1:length(DATA$Phase))
+  myBP <- ggplot(DATA,aes(y=COUNTS,
+                          x=clusters, fill = Phase)) +
+    geom_bar(stat = "identity") + theme_bw() +
+    theme(axis.text.x=element_text(angle=90)) +
+    ylab("Cell number ratio")
+  # pie
+  myPIE <- ggplot(DATA,aes(y=clusters, x="", fill = Phase)) +
+    geom_bar(stat = "identity", position = "fill") + theme_bw() + facet_wrap(~ clusters) +
+    theme(axis.title.y=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks.y=element_blank()) + coord_polar(theta="y")
   # mito
   mito.percent.plot <- ggplot(DATA,aes(y=mito.percent, x=as.factor(clusters))) +
     geom_jitter(color = cell.color, size = cell.size, alpha = cell.transparency) +
@@ -70,7 +84,7 @@ clust.stats.plot <- function (x = NULL,
   if (plot.type == "box.umi") {
     if (interactive == TRUE) {
       OUT.PUT <- paste(out.name, ".html", sep="")
-      htmlwidgets::saveWidget(ggplotly(Mito.UMIs),OUT.PUT)
+      htmlwidgets::saveWidget(ggplotly(UMIsplot),OUT.PUT)
     }
     else
       return(UMIsplot)
@@ -79,7 +93,7 @@ clust.stats.plot <- function (x = NULL,
   if (plot.type == "box.mito") {
     if (interactive == TRUE) {
       OUT.PUT <- paste(out.name, ".html", sep="")
-      htmlwidgets::saveWidget(ggplotly(Mito.UMIs),OUT.PUT)
+      htmlwidgets::saveWidget(ggplotly(mito.percent.plot),OUT.PUT)
     }
     else
       return(mito.percent.plot)
@@ -88,9 +102,27 @@ clust.stats.plot <- function (x = NULL,
   if (plot.type == "box.gene") {
     if (interactive == TRUE) {
       OUT.PUT <- paste(out.name, ".html", sep="")
-      htmlwidgets::saveWidget(ggplotly(Mito.UMIs),OUT.PUT)
+      htmlwidgets::saveWidget(ggplotly(nGenes.plot),OUT.PUT)
     }
     else
       return(nGenes.plot)
+  }
+  #
+  if (plot.type == "pie.cc") {
+    if (interactive == TRUE) {
+      OUT.PUT <- paste(out.name, ".html", sep="")
+      htmlwidgets::saveWidget(ggplotly(myPIE),OUT.PUT)
+    }
+    else
+      return(myPIE)
+  }
+  #
+  if (plot.type == "bar.cc") {
+    if (interactive == TRUE) {
+      OUT.PUT <- paste(out.name, ".html", sep="")
+      htmlwidgets::saveWidget(ggplotly(myBP),OUT.PUT)
+    }
+    else
+      return(myBP)
   }
 }

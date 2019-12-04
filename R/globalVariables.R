@@ -74,4 +74,5 @@ utils::globalVariables(c("%>%",
                          "IntegrateData",
                          "FindIntegrationAnchors",
                          "FindVariableFeatures",
+                         "Phase",
                          "yend"))

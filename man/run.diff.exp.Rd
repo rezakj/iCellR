@@ -4,11 +4,13 @@
 \alias{run.diff.exp}
 \title{Differential expression (DE) analysis}
 \usage{
-run.diff.exp(x = NULL, de.by = "clusters", cond.1 = "array",
-  cond.2 = "array", base.cond = 0)
+run.diff.exp(x = NULL, data.type = "main", de.by = "clusters",
+  cond.1 = "array", cond.2 = "array", base.cond = 0)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
+
+\item{data.type}{Choose from "main" and "imputed", default = "main"}
 
 \item{de.by}{Choose from "clusters", "conditions", "clustBase.condComp" or "condBase.clustComp".}
 

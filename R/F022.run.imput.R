@@ -3,16 +3,16 @@
 #' This function takes an object of class iCellR and runs imputation on the main data.
 #' @param x An object of class iCellR.
 #' @param imp.method Choose between "iCellR.imp" and "magic", defualt = "iCellR.imp".
-#' @param cell.ratio Percent of cells to use to find neighboring cells, default = 2.
+#' @param nn Number of neighboring cells to find, default = 10.
 #' @param dims PC dimentions to be used for the analysis, default = 10.
 #' @param data.type Choose between "tsne", "pca", "umap", "diffusion", default = "pca".
 #' @param genes character or integer vector, default: NULL vector of column names or column indices for which to return smoothed data If 'all_genes' or NULL, the entire smoothed matrix is returned
-#' @param k int, optional, default: 10 number of nearest neighbors on which to build kernel
-#' @param alpha int, optional, default: 15 sets decay rate of kernel tails. If NULL, alpha decaying kernel is not used
-#' @param t int, optional, default: 'auto' power to which the diffusion operator is powered sets the level of diffusion. If 'auto', t is selected according to the Procrustes disparity of the diffused data.'
+#' @param k if imp.method is magic; int, optional, default: 10 number of nearest neighbors on which to build kernel
+#' @param alpha if imp.method is magic; int, optional, default: 15 sets decay rate of kernel tails. If NULL, alpha decaying kernel is not used
+#' @param t if imp.method is magic; int, optional, default: 'auto' power to which the diffusion operator is powered sets the level of diffusion. If 'auto', t is selected according to the Procrustes disparity of the diffused data.'
 #' @param npca number of PCA components that should be used; default: 100.
 #' @param init magic object, optional object to use for initialization. Avoids recomputing intermediate steps if parameters are the same.
-#' @param t.max int, optional, default: 20 Maximum value of t to test for automatic t selection.
+#' @param t.max if imp.method is magic; int, optional, default: 20 Maximum value of t to test for automatic t selection.
 #' @param knn.dist.method string, optional, default: 'euclidean'. recommended values: 'euclidean', 'cosine' Any metric from 'scipy.spatial.distance' can be used distance metric for building kNN graph.
 #' @param verbose 'int' or 'boolean', optional (default : 1) If 'TRUE' or '> 0', message verbose updates.
 #' @param n.jobs 'int', optional (default: 1) The number of jobs to use for the computation. If -1 all CPUs are used. If 1 is given, no parallel computing code is used at all, which is useful for debugging. For n_jobs below -1, (n.cpus + 1 + n.jobs) are used. Thus for n_jobs = -2, all CPUs but one are used
@@ -20,7 +20,7 @@
 #' @return An object of class iCellR.
 #' @export
 run.impute <- function (x = NULL,
-                        imp.method = "iCellR.imp", dims = 1:10,cell.ratio = 2,
+                        imp.method = "iCellR.imp", dims = 1:10, nn = 10,
                         data.type = "pca",genes = "all_genes", k = 10, alpha = 15, t = "auto",
                         npca = 100, init = NULL, t.max = 20,
                         knn.dist.method = "euclidean", verbose = 1, n.jobs = 1,
@@ -55,10 +55,11 @@ run.impute <- function (x = NULL,
     message(paste("   Calculating distance ..."))
     My.distances = as.matrix(dist(t(my.data.my.pca), method = knn.dist.method))
     ncells = dim(my.data)[2]
-    cell.num = ceiling(cell.ratio/100 * ncells)
-    message(paste("    ",cell.ratio,"percent of ",ncells, "cells is", cell.num))
-    message("     To change the number of neighboring cells cahnge cell.ratio option")
+#    cell.num = ceiling(cell.ratio/100 * ncells)
+    cell.num = nn
+#    message(paste("    ",cell.ratio,"percent of ",ncells, "cells is", cell.num))
     message(paste("    Finding",cell.num, "neighboring cells per cell ..."))
+    message("     To change the number of neighboring cells cahnge nn option")
     KNN1 = lapply(1:ncells, function(findKNN){
       order(My.distances[,findKNN])[1:cell.num]})
     ############

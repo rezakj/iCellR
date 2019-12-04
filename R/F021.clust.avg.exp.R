@@ -2,13 +2,15 @@
 #'
 #' This function takes an object of class iCellR and creates an average gene expression for every cluster.
 #' @param x An object of class iCellR.
+#' @param data.type Choose from "main" and "imputed", default = "main"
 #' @return An object of class iCellR.
 #' @examples
 #' demo.obj <- clust.avg.exp(demo.obj)
 #'
 #' head(demo.obj@clust.avg)
 #' @export
-clust.avg.exp <- function (x = NULL) {
+clust.avg.exp <- function (x = NULL,
+                           data.type = "main") {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
@@ -17,7 +19,14 @@ clust.avg.exp <- function (x = NULL) {
   sampleCondition <- DATA$clusters
   conditions <- sort(unique(sampleCondition))
   DATA1 <- DATA
-  Table = x@main.data
+  ## get main data
+  if (data.type == "main") {
+    Table <- x@main.data
+  }
+  if (data.type == "imputed") {
+    Table <- x@imputed.data
+  }
+#  Table = x@main.data
   for(i in conditions){
     IDs <- rownames(subset(DATA1, sampleCondition == i))
     DATA <- Table[ , which(names(Table) %in% IDs)]
