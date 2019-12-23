@@ -9,7 +9,7 @@ For citation please use this link (our manuscript is in preparation): https://gi
 
 iCellR publications: [PMID 31744829](https://pubmed.ncbi.nlm.nih.gov/31744829-in-vivo-epigenetic-crispr-screen-identifies-asf1a-as-an-immunotherapeutic-target-in-kras-mutant-lung-adenocarcinoma/?from_term=alireza+khodadadi-jamayran&from_filter=years.2019-2019&from_pos=5)
 
-If you are using FlowJo or SeqGeq, they have made plugins for iCellR and other single cell tools: https://www.flowjo.com/exchange/#/ (list of all plugins) and https://www.flowjo.com/exchange/#/plugin/profile?id=34 (iCellR plugin). [Tutorial](https://www.youtube.com/watch?v=gXFmWRpdwow)
+If you are using FlowJo or SeqGeq, they have made plugins for iCellR and other single cell tools: https://www.flowjo.com/exchange/#/ (list of all plugins) and https://www.flowjo.com/exchange/#/plugin/profile?id=34 (iCellR plugin). [SeqGeq DE tutorial](https://www.youtube.com/watch?v=gXFmWRpdwow)
 
 Tutorials: [example 1 code](https://genome.med.nyu.edu/results/external/iCellR/example1/code.txt) and [results](https://genome.med.nyu.edu/results/external/iCellR/example1/)
 
