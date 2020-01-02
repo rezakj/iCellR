@@ -1202,6 +1202,11 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/14_monocol.png" />
 </p>
 
+# Batch correction (sample alignment) methods:
+## 1- CCA
+## 2- MNN
+## 3- Anchor 
+
 # How to perform canonical correlation analysis (CCA) for sample alignment 
 
 ```r
