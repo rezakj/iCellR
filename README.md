@@ -1204,10 +1204,12 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 
 # Batch correction (sample alignment) methods:
 1- CCA
+
 2- MNN
+
 3- Anchor 
 
-# How to perform canonical correlation analysis (CCA) for sample alignment 
+# 1- How to perform canonical correlation analysis (CCA) for sample alignment 
 
 ```r
 # this function runs Seurat in the background but only works best if you have 2 samples. 
@@ -1313,7 +1315,7 @@ Before and After CCA
 </p>
 
 
-# How to perform mutual nearest neighbor (MNN) sample alignment 
+# 2- How to perform mutual nearest neighbor (MNN) sample alignment 
 
 ```r
 library(iCellR)
@@ -1408,7 +1410,7 @@ Before and After MNN analysis
 </p>
 
 
-# How to perform Seurat's anchor (integration) sample alignment 
+# 3- How to perform Seurat's anchor (integration) sample alignment 
 
 ```r
 library(iCellR)
