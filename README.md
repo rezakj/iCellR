@@ -1276,11 +1276,11 @@ my.obj <- gene.stats(my.obj, which.data = "main.data")
 my.obj <- make.gene.model(my.obj)
 
 ###### See data without CCA
-my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
 
 my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
 
-UMAP_NoCCA <- cluster.plot(my.obj,plot.type = "umap",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
+UMAP_NoCCA <- cluster.plot(my.obj,plot.type = "umap",cell.color = "black",col.by = "conditions",cell.transparency = 0.5)
 
 PCA <- cluster.plot(my.obj,plot.type = "pca",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
 
@@ -1791,12 +1791,12 @@ my.obj <- adt.rna.merge(my.obj, adt.data = "main")
 
 # run PCA and the rest is as above
 
-my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
 
 # 2 pass PCA 
 my.obj <- find.dim.genes(my.obj, dims = 1:20,top.pos = 20, top.neg = 20)
 # second round PC
-my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main",batch.norm = F)
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
 
 my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn")
 
