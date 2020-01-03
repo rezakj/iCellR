@@ -13,7 +13,7 @@
 #' @param dot.transparency Color transparency for points in "scatterplot" and "boxplot", default = 0.5.
 #' @param dot.col A set of three colors for the points in the volcano plot, default = c("#E64B35","#3182bd","#636363").
 #' @param interactive If set to TRUE an interactive HTML file will be created, default = TRUE.
-#' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
+#' @param out.name If "interactive" is set to TRUE, the output name for HTML, default = "plot".
 #' @return Plots
 #' @examples
 #'
