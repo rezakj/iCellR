@@ -1083,7 +1083,7 @@ my.plot <- gene.plot(my.obj, gene = "GNLY",
 	clust.dim = 2,
 	interactive = F)
 
-cell.gating(my.obj, my.plot = my.plot)	
+cell.gating(my.obj, my.plot = my.plot, plot.type = "tsne")	
 
 # or 
 
