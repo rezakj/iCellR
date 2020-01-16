@@ -22,7 +22,6 @@
 #'
 #' # make iCellR object
 #' myDemo.obj <- make.obj(demo)
-#' myDemo.obj
 #'
 #' @export
 data.aggregation <- function (samples = NULL,

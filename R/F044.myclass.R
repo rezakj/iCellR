@@ -48,9 +48,13 @@ setMethod("show",
             message("   QC stats performed:",dim(object@stats)[1] != 0,", ","PCA performed:",dim(object@pca.data)[1] != 0)
             message("   Clustering performed:",!is.null(object@best.clust$clusters),", ","Number of clusters:",length(unique(object@best.clust$clusters)))
             message("   tSNE performed:",dim(object@tsne.data)[1] != 0,", ","UMAP performed:",dim(object@umap.data)[1] != 0,", ","DiffMap performed:",dim(object@diffusion.data)[1] != 0)
-            message("   Main data dimensions (rows,columns):",dim(object@main.data)[1],",",dim(object@main.data)[2])
-            InFO <- table(data.frame(do.call('rbind', strsplit(as.character(colnames(object@main.data)),'_',fixed=TRUE)))[1])
-            message("   ",paste(as.character(as.data.frame(InFO)$Var1) , collapse=","),"(",paste(as.character(as.data.frame(InFO)$Freq) , collapse=","),")")
+            message("   Main data dimensions (rows,columns): ",dim(object@main.data)[1],",",dim(object@main.data)[2])
+            if (dim(object@main.data)[1] != 0){
+              InFO <- table(data.frame(do.call('rbind', strsplit(as.character(colnames(object@main.data)),'_',fixed=TRUE)))[1])
+              D1 <- paste(as.character(as.data.frame(InFO)$Var1), collapse=",")
+              D2 <- paste(as.character(as.data.frame(InFO)$Freq), collapse=",")
+              message("   Data conditions in main data:",D1,"(", D2,")")
+            }
             message("   Normalization factors:",head(object@norm.factors,1),",","... ")
             message("   Imputed data dimensions (rows,columns):",dim(object@imputed.data)[1],",",dim(object@imputed.data)[2])
             message("############## scVDJ-Seq ###########","")

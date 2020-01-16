@@ -24,7 +24,7 @@ LazyData: true
 RoxygenNote: 7.0.2
 URL: https://github.com/rezakj/iCellR
 NeedsCompilation: no
-Packaged: 2020-01-16 18:31:42 UTC; khodaa01
+Packaged: 2020-01-16 19:02:18 UTC; khodaa01
 Author: Alireza Khodadadi-Jamayran [aut, cre]
     (<https://orcid.org/0000-0003-2495-7504>),
   Joseph Pucella [aut],
