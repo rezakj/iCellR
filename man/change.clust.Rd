@@ -4,8 +4,7 @@
 \alias{change.clust}
 \title{Change the cluster number or re-name them}
 \usage{
-change.clust(x = NULL, change.clust = 0, to.clust = 0,
-  clust.reset = FALSE)
+change.clust(x = NULL, change.clust = 0, to.clust = 0, clust.reset = FALSE)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

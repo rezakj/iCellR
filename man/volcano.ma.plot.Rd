@@ -4,11 +4,21 @@
 \alias{volcano.ma.plot}
 \title{Create MA and Volcano plots.}
 \usage{
-volcano.ma.plot(x = NULL, sig.value = "padj", sig.line = 0.1,
-  plot.type = "volcano", x.limit = 2, y.limit = 2,
-  limit.force = FALSE, scale.ax = TRUE, dot.size = 1.75,
-  dot.transparency = 0.5, dot.col = c("#E64B35", "#3182bd", "#636363"),
-  interactive = TRUE, out.name = "plot")
+volcano.ma.plot(
+  x = NULL,
+  sig.value = "padj",
+  sig.line = 0.1,
+  plot.type = "volcano",
+  x.limit = 2,
+  y.limit = 2,
+  limit.force = FALSE,
+  scale.ax = TRUE,
+  dot.size = 1.75,
+  dot.transparency = 0.5,
+  dot.col = c("#E64B35", "#3182bd", "#636363"),
+  interactive = TRUE,
+  out.name = "plot"
+)
 }
 \arguments{
 \item{x}{A data frame containing differential expression (DE) analysis results.}
@@ -35,7 +45,7 @@ volcano.ma.plot(x = NULL, sig.value = "padj", sig.line = 0.1,
 
 \item{interactive}{If set to TRUE an interactive HTML file will be created, default = TRUE.}
 
-\item{out.name}{If "interactive" is set to TRUE, the out put name for HTML, default = "plot".}
+\item{out.name}{If "interactive" is set to TRUE, the output name for HTML, default = "plot".}
 }
 \value{
 Plots

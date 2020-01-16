@@ -2,6 +2,8 @@ setClass("iCellR", representation (raw.data = "data.frame",
                                    main.data = "data.frame",
                                    imputed.data = "data.frame",
                                    scaled.data = "data.frame",
+                                   batch.aligned.data = "data.frame",
+                                   metadata = "data.frame",
                                    stats = "data.frame",
                                    my.filters = "character",
                                    gene.model = "character",
@@ -27,7 +29,9 @@ setClass("iCellR", representation (raw.data = "data.frame",
                                    cluster.data = "list",
                                    best.clust = "data.frame",
                                    data.conditions = "character",
-                                   norm.factors = "data.frame"))
+                                   norm.factors = "data.frame",
+                                   extra.data1 = "data.frame",
+                                   extra.data2 = "data.frame"))
 # hide slots
 setMethod("show",
           "iCellR",
@@ -41,17 +45,19 @@ setMethod("show",
             message("###################################","")
             message(object@obj.info,"")
             message("###################################","")
-            message("   QC stats performed:",dim(object@stats)[1] != 0,", ","PCA performed:",dim(object@pca.data)[1] != 0,", ","CCA performed:",dim(object@cca.data)[1] != 0)
+            message("   QC stats performed:",dim(object@stats)[1] != 0,", ","PCA performed:",dim(object@pca.data)[1] != 0)
             message("   Clustering performed:",!is.null(object@best.clust$clusters),", ","Number of clusters:",length(unique(object@best.clust$clusters)))
             message("   tSNE performed:",dim(object@tsne.data)[1] != 0,", ","UMAP performed:",dim(object@umap.data)[1] != 0,", ","DiffMap performed:",dim(object@diffusion.data)[1] != 0)
-            message("   Main data dimentions (rows,columns):",dim(object@main.data)[1],",",dim(object@main.data)[2])
+            message("   Main data dimensions (rows,columns):",dim(object@main.data)[1],",",dim(object@main.data)[2])
+            #InFO <- table(data.frame(do.call('rbind', strsplit(as.character(colnames(object@main.data)),'_',fixed=TRUE)))[1])
+            #message("   ",paste(as.character(as.data.frame(InFO)$Var1) , collapse=","),"(",paste(as.character(as.data.frame(InFO)$Freq) , collapse=","),")")
             message("   Normalization factors:",head(object@norm.factors,1),",","... ")
-            message("   Imputed data dimentions (rows,columns):",dim(object@imputed.data)[1],",",dim(object@imputed.data)[2])
+            message("   Imputed data dimensions (rows,columns):",dim(object@imputed.data)[1],",",dim(object@imputed.data)[2])
             message("############## scVDJ-Seq ###########","")
             message("VDJ data dimentions (rows,columns):",dim(object@vdj.data)[1],",",dim(object@vdj.data)[2])
             message("############## CITE-Seq ############","")
-            message("   ADT raw data dimentions (rows,columns):",dim(object@adt.raw)[1],",",dim(object@adt.raw)[2])
-            message("   ADT main data dimentions (rows,columns):",dim(object@adt.main)[1],",",dim(object@adt.main)[2])
+            message("   ADT raw data  dimensions (rows,columns):",dim(object@adt.raw)[1],",",dim(object@adt.raw)[2])
+            message("   ADT main data  dimensions (rows,columns):",dim(object@adt.main)[1],",",dim(object@adt.main)[2])
             message("   ADT columns names:",head(colnames(object@adt.main),1),"... ")
             message("   ADT row names:",head(row.names(object@adt.main),1),"... ")
             message("########### iCellR object ##########","")

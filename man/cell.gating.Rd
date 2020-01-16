@@ -4,7 +4,7 @@
 \alias{cell.gating}
 \title{Cell gating}
 \usage{
-cell.gating(x = NULL, my.plot = NULL, plot.type = NULL)
+cell.gating(x = NULL, my.plot = NULL, plot.type = "tsne")
 }
 \arguments{
 \item{x}{An object of class iCellR.}

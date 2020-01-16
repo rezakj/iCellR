@@ -4,11 +4,24 @@
 \alias{run.impute}
 \title{Impute the main data}
 \usage{
-run.impute(x = NULL, imp.method = "iCellR.imp", dims = 1:10,
-  nn = 10, data.type = "pca", genes = "all_genes", k = 10,
-  alpha = 15, t = "auto", npca = 100, init = NULL, t.max = 20,
-  knn.dist.method = "euclidean", verbose = 1, n.jobs = 1,
-  seed = NULL)
+run.impute(
+  x = NULL,
+  imp.method = "iCellR.imp",
+  dims = 1:10,
+  nn = 10,
+  data.type = "pca",
+  genes = "all_genes",
+  k = 10,
+  alpha = 15,
+  t = "auto",
+  npca = 100,
+  init = NULL,
+  t.max = 20,
+  knn.dist.method = "euclidean",
+  verbose = 1,
+  n.jobs = 1,
+  seed = NULL
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

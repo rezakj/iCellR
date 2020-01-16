@@ -4,9 +4,13 @@
 \alias{cell.type.pred}
 \title{Create heatmaps or dot plots for genes in clusters to find thier cell types using ImmGen data.}
 \usage{
-cell.type.pred(immgen.data = "rna", gene = "NULL",
-  top.cell.types = 50, plot.type = "heatmap", heat.colors = c("blue",
-  "white", "red"))
+cell.type.pred(
+  immgen.data = "rna",
+  gene = "NULL",
+  top.cell.types = 50,
+  plot.type = "heatmap",
+  heat.colors = c("blue", "white", "red")
+)
 }
 \arguments{
 \item{immgen.data}{Choose from "rna", "uli.rna" or "mca", default = "rna"}

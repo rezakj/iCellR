@@ -4,11 +4,21 @@
 \alias{heatmap.gg.plot}
 \title{Create heatmaps for genes in clusters or conditions.}
 \usage{
-heatmap.gg.plot(x = NULL, gene = "NULL", cell.sort = FALSE,
-  data.type = "main", cluster.by = "clusters", min.scale = -2.5,
-  max.scale = 2.5, interactive = TRUE, cex.col = 10, cex.row = 10,
-  no.key = FALSE, out.name = "plot", heat.colors = c("blue", "white",
-  "red"))
+heatmap.gg.plot(
+  x = NULL,
+  gene = "NULL",
+  cell.sort = FALSE,
+  data.type = "main",
+  cluster.by = "clusters",
+  min.scale = -2.5,
+  max.scale = 2.5,
+  interactive = TRUE,
+  cex.col = 10,
+  cex.row = 10,
+  no.key = FALSE,
+  out.name = "plot",
+  heat.colors = c("blue", "white", "red")
+)
 }
 \arguments{
 \item{x}{A data frame containing gene counts for cells.}

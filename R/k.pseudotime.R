@@ -23,8 +23,8 @@ pseudotime <- function (x = NULL, marker.genes = "NULL", dims = 1:10) {
   dataPCA = data.frame(counts.pca$rotation)
   DATA <- dataPCA
   DATA <- DATA[dims]
-  myUMAP = umap(DATA, method = "umap-learn")
-  myUMAP = as.data.frame((myUMAP$layout))
+  myUMAP = umap(DATA)
+  myUMAP = as.data.frame((myUMAP))
 ### return
 #attributes(x)$pca.data <- myUMAP
 #attributes(x)$pca.data <- dataPCA

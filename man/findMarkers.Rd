@@ -4,8 +4,15 @@
 \alias{findMarkers}
 \title{Find marker genes for each cluster}
 \usage{
-findMarkers(x = NULL, data.type = "main", fold.change = 2,
-  padjval = 0.1, Inf.FCs = FALSE, uniq = FALSE, positive = TRUE)
+findMarkers(
+  x = NULL,
+  data.type = "main",
+  fold.change = 2,
+  padjval = 0.1,
+  Inf.FCs = FALSE,
+  uniq = FALSE,
+  positive = TRUE
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

@@ -4,15 +4,32 @@
 \alias{run.anchor}
 \title{Run anchor alignment on the main data.}
 \usage{
-run.anchor(x = NULL, method = "base.mean.rank", top.rank = 500,
-  gene.list = "character", data.type = "main",
-  normalization.method = "LogNormalize", scale.factor = 10000,
-  margin = 1, block.size = NULL, selection.method = "vst",
-  nfeatures = 2000, anchor.features = 2000, scale = TRUE,
-  sct.clip.range = NULL, reduction = c("cca", "rpca"),
-  l2.norm = TRUE, dims = 1:30, k.anchor = 5, k.filter = 200,
-  k.score = 30, max.features = 200, nn.method = "rann", eps = 0,
-  k.weight = 100)
+run.anchor(
+  x = NULL,
+  method = "base.mean.rank",
+  top.rank = 500,
+  gene.list = "character",
+  data.type = "main",
+  normalization.method = "LogNormalize",
+  scale.factor = 10000,
+  margin = 1,
+  block.size = NULL,
+  selection.method = "vst",
+  nfeatures = 2000,
+  anchor.features = 2000,
+  scale = TRUE,
+  sct.clip.range = NULL,
+  reduction = c("cca", "rpca"),
+  l2.norm = TRUE,
+  dims = 1:30,
+  k.anchor = 5,
+  k.filter = 200,
+  k.score = 30,
+  max.features = 200,
+  nn.method = "rann",
+  eps = 0,
+  k.weight = 100
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

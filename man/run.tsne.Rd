@@ -4,14 +4,29 @@
 \alias{run.tsne}
 \title{Run tSNE on the Main Data. Barnes-Hut implementation of t-Distributed Stochastic Neighbor Embedding}
 \usage{
-run.tsne(x = NULL, clust.method = "base.mean.rank", top.rank = 500,
-  gene.list = "character", initial_dims = 50, perplexity = 30,
-  theta = 0.5, check_duplicates = TRUE, pca = TRUE,
-  max_iter = 1000, verbose = FALSE, is_distance = FALSE,
-  Y_init = NULL, pca_center = TRUE, pca_scale = FALSE,
+run.tsne(
+  x = NULL,
+  clust.method = "base.mean.rank",
+  top.rank = 500,
+  gene.list = "character",
+  initial_dims = 50,
+  perplexity = 30,
+  theta = 0.5,
+  check_duplicates = TRUE,
+  pca = TRUE,
+  max_iter = 1000,
+  verbose = FALSE,
+  is_distance = FALSE,
+  Y_init = NULL,
+  pca_center = TRUE,
+  pca_scale = FALSE,
   stop_lying_iter = ifelse(is.null(Y_init), 250L, 0L),
-  mom_switch_iter = ifelse(is.null(Y_init), 250L, 0L), momentum = 0.5,
-  final_momentum = 0.8, eta = 200, exaggeration_factor = 12)
+  mom_switch_iter = ifelse(is.null(Y_init), 250L, 0L),
+  momentum = 0.5,
+  final_momentum = 0.8,
+  eta = 200,
+  exaggeration_factor = 12
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

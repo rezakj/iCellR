@@ -4,13 +4,27 @@
 \alias{run.mnn}
 \title{Run MNN alignment on the main data.}
 \usage{
-run.mnn(x = NULL, method = "base.mean.rank", top.rank = 500,
-  gene.list = "character", data.type = "main", k = 20,
-  cos.norm = TRUE, ndist = 3, d = 50, approximate = FALSE,
-  irlba.args = list(), subset.row = NULL, auto.order = FALSE,
-  pc.input = FALSE, compute.variances = FALSE,
-  assay.type = "logcounts", get.spikes = FALSE, BNPARAM = NULL,
-  BPPARAM = SerialParam())
+run.mnn(
+  x = NULL,
+  method = "base.mean.rank",
+  top.rank = 500,
+  gene.list = "character",
+  data.type = "main",
+  k = 20,
+  cos.norm = TRUE,
+  ndist = 3,
+  d = 50,
+  approximate = FALSE,
+  irlba.args = list(),
+  subset.row = NULL,
+  auto.order = FALSE,
+  pc.input = FALSE,
+  compute.variances = FALSE,
+  assay.type = "logcounts",
+  get.spikes = FALSE,
+  BNPARAM = NULL,
+  BPPARAM = SerialParam()
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

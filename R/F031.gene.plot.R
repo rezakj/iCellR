@@ -313,11 +313,17 @@ DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
     }
   # add p-val
   if (box.to.test == 0) {
-    AvData <- x@clust.avg
-    row.names(AvData) <- AvData$gene
-    AvData <- AvData[,-1]
-    AvData <- subset(AvData,row.names(AvData) == gene)
-    box.to.test <- as.numeric(which.max(AvData))
+    #########
+    if (dim(x@clust.avg)[1] != 0) {
+      AvData <- x@clust.avg
+      row.names(AvData) <- AvData$gene
+      AvData <- AvData[,-1]
+      AvData <- subset(AvData,row.names(AvData) == gene)
+      box.to.test <- as.numeric(which.max(AvData))
+    }
+    if (dim(x@clust.avg)[1] == 0) {
+      box.to.test = 1
+    }
   }
   if (box.pval == "sig.signs") {
     myPLOT <- myPLOT + stat_compare_means(label = "p.signif", ref.group = box.to.test)

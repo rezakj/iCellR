@@ -33,7 +33,7 @@
 #' @export
 run.diffusion.map <- function (x = NULL,
                       dims = 1:10,
-                      method = "phate",
+                      method = "destiny",
                       ndim = 3,
                       k = 5, alpha = 40, n.landmark = 2000,
                       gamma = 1, t = "auto", knn.dist.method = "euclidean",
@@ -47,9 +47,6 @@ run.diffusion.map <- function (x = NULL,
     stop("x should be an object of class iCellR")
   }
   ###########
-  if(!"phateR" %in% (.packages())){
-    stop("Please load phateR package: library(phateR)")
-  }
   ##########
   # https://github.com/lmcinnes/umap
   # get PCA data
@@ -59,6 +56,9 @@ run.diffusion.map <- function (x = NULL,
   #  if (clust.dim == 2) {
   # TransPosed <- t(TopNormLogScale)
   if (method == "phate") {
+    if(!"phateR" %in% (.packages())){
+      stop("Please load phateR package: library(phateR)")
+    }
   DD <- phate(DATA, ndim = ndim, k = k, alpha = alpha, n.landmark = n.landmark,
               gamma = gamma, t = t, knn.dist.method = knn.dist.method,
               init = init, mds.method = mds.method, mds.dist.method = mds.dist.method,
@@ -69,8 +69,25 @@ run.diffusion.map <- function (x = NULL,
               diff.op.t = diff.op.t, dist.method = dist.method)
   DATA <- as.data.frame(DD$embedding)
 #  DATA <- as.data.frame(scale(DD$embedding))
+  }
+  if (method == "destiny") {
+    if(!"destiny" %in% (.packages())){
+      stop("Please load destiny package: library(destiny)")
+    }
+    DD <- DiffusionMap(DATA)
+    HH <- as.data.frame(cbind(row.names(DATA),
+                              as.numeric(DD$DC2),
+                              as.numeric(DD$DC3),
+                              as.numeric(DD$DC1)))
+    colnames(HH) <- c("Ids","V1","V2","V3")
+    row.names(HH) <- HH$Ids
+    HH <- (HH)[,-1]
+    DATA <- HH
+    DATA$V1 <- as.numeric(scale(as.numeric(DATA$V1)))
+    DATA$V2 <- as.numeric(scale(as.numeric(DATA$V2)))
+    DATA$V3 <- as.numeric(scale(as.numeric(DATA$V3)))
+  }
   attributes(x)$diffusion.data <- DATA
   # return
   return(x)
-  }
 }

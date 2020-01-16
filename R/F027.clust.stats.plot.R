@@ -1,4 +1,4 @@
-#' QC on clusters (nGenes, UMIs and percent mito)
+#' Plotting tSNE, PCA, UMAP, Diffmap and other dim reductions
 #'
 #' This function takes an object of class iCellR and creates QC plot.
 #' @param x An object of class iCellR.
@@ -12,6 +12,7 @@
 #' @param cell.transparency Color transparency for points in "scatterplot" and "boxplot", default = 0.5.
 #' @param interactive If set to TRUE an interactive HTML file will be created, default = TRUE.
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
+#' @param conds.to.plot Choose the conditions you want to see in the plot, default = NULL (all conditions).
 #' @return An object of class iCellR.
 #' @examples
 #' clust.stats.plot(demo.obj,
@@ -21,6 +22,7 @@
 #' @export
 clust.stats.plot <- function (x = NULL,
                         plot.type = "box.mito",
+                        conds.to.plot = NULL,
                         cell.color = "slategray3",
                         cell.size = 1,
                         cell.transparency = 0.5,
@@ -41,7 +43,15 @@ clust.stats.plot <- function (x = NULL,
   MyClusts <- x@best.clust
   # merge
   DATA <- merge(DATA, MyClusts, by = "row.names", all.x=FALSE, all.y=TRUE)
-######  # plot
+##### conditions
+  Cells <- as.character(DATA$CellIds)
+  MYConds <- data.frame(do.call('rbind', strsplit(as.character(Cells),'_',fixed=TRUE)))[1]
+  colnames(MYConds) <- "conditions"
+  DATA <- cbind(DATA,MYConds)
+  if (!is.null(conds.to.plot)) {
+    DATA <- subset(DATA, DATA$conditions %in% conds.to.plot)
+  }
+  ######  # plot
 # cell cycle
   # bar
   COUNTS <- c(1:length(DATA$Phase))
