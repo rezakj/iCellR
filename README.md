@@ -381,7 +381,7 @@ head(my.obj@gene.model)
 #	interactive = T,
 #	out.name = "plot4_gene.model")
 ```
-To view an the html intractive plot click on this links: [Dispersion plot](https://rawgit.com/rezakj/scSeqR/dev/doc/gene.model.html)
+To view an the html interactive plot click on this links: [Dispersion plot](https://rawgit.com/rezakj/scSeqR/dev/doc/gene.model.html)
 
 
 <p align="center">
@@ -424,7 +424,7 @@ Here we cluster the first 10 dimensions of the data which is converted to princi
 
  With the following indexing methods: "kl", "ch", "hartigan", "ccc", "scott", "marriot", "trcovw", "tracew", "friedman", "rubin", "cindex", "db", "silhouette", "duda", "pseudot2", "beale", "ratkowsky", "ball", "ptbiserial", "gap", "frey", "mcclain", "gamma", "gplus", "tau", "dunn", "hubert", "sdindex", "dindex", "sdbw"
 
-We recomand to use the defult options as below:
+We recomend to use the defult options as below:
 
 ```r
 my.obj <- run.clustering(my.obj, 
@@ -476,7 +476,12 @@ my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
 # my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
 
 # diffusion map
-# this requires python packge phate 
+# this requires python packge phate or destiny
+# How to install destiny
+# if (!requireNamespace("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+# BiocManager::install("destiny")
+# How to install phate
 # pip install --user phate
 # Install phateR version 2.9
 # wget https://cran.r-project.org/src/contrib/Archive/phateR/phateR_0.2.9.tar.gz
@@ -487,6 +492,9 @@ my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
 
 
 # optional 
+# library(destiny)
+# my.obj <- run.diffusion.map(my.obj, dims = 1:10)
+# or 
 # library(phateR)
 # my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
 ```
@@ -518,7 +526,7 @@ grid.arrange(A,B,C,D)
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/2_AllConds.png"/>      
 </p>
 
-- 3D plots, density plots and intractive plots 
+- 3D plots, density plots and interactive plots 
 
 ```r
 # 2D
@@ -532,7 +540,7 @@ cluster.plot(my.obj,
 	clust.dim = 2,
 	interactive = F)
 	
-# intractive 2D
+# interactive 2D
 cluster.plot(my.obj,
 	plot.type = "tsne",
 	col.by = "clusters",
@@ -540,7 +548,7 @@ cluster.plot(my.obj,
 	interactive = T,
 	out.name = "tSNE_2D_clusters")
 
-# intractive 3D
+# interactive 3D
 cluster.plot(my.obj,
 	plot.type = "tsne",
 	col.by = "clusters",
@@ -650,7 +658,7 @@ my.obj <- clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = F)
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/4_clust_cond_freq_info_pie.png" width="400"/> 	
 </p>
 
-- Avrage expression per cluster
+- Average expression per cluster
 
 ```r
 # remember to run this command again if you recluster the data (change the number of clusters). 
@@ -972,9 +980,9 @@ a-Comparing a cluster/clusters with different cluster/clusters (e.g. cluster 1 a
 
 b-Comparing a cluster/clusters with different cluster/clusters only in one/more condition/conditions (e.g. cluster 1 vs cluster 2 but only the WT sample)
 
-c-Comparing a condtion/condtions with different condtion/condtions (e.g. WT vs KO)
+c-Comparing a condition/conditions with different condition/conditions (e.g. WT vs KO)
 
-d-Comparing a condtion/condtions with different condtion/condtions only in one/more cluster/clusters (e.g. cluster 1 WT vs cluster 1 KO)
+d-Comparing a condition/conditions with different condition/conditions only in one/more cluster/clusters (e.g. cluster 1 WT vs cluster 1 KO)
 
 ```r
 diff.res <- run.diff.exp(my.obj, de.by = "clusters", cond.1 = c(1,4), cond.2 = c(2))
@@ -998,13 +1006,13 @@ head(diff.res1)
 
 # more examples 
 
-# Comparing a condtion/condtions with different condtion/condtions (e.g. WT vs KO)
+# Comparing a condition/conditions with different condition/conditions (e.g. WT vs KO)
 diff.res <- run.diff.exp(my.obj, de.by = "conditions", cond.1 = c("WT"), cond.2 = c("KO"))
 
 # Comparing a cluster/clusters with different cluster/clusters (e.g. cluster 1 and 2 vs. 4)
 diff.res <- run.diff.exp(my.obj, de.by = "clusters", cond.1 = c(1,4), cond.2 = c(2))
 
-# Comparing a condtion/condtions with different condtion/condtions only in one/more cluster/clusters (e.g. cluster 1 WT vs cluster 1 KO)
+# Comparing a condition/conditions with different condition/conditions only in one/more cluster/clusters (e.g. cluster 1 WT vs cluster 1 KO)
 diff.res <- run.diff.exp(my.obj, de.by = "clustBase.condComp", cond.1 = c("WT"), cond.2 = c("KO"), base.cond = 1)
 
 # Comparing a cluster/clusters with different cluster/clusters only in one/more condition/conditions (e.g. cluster 1 vs cluster 2 but only the WT sample)
@@ -1100,7 +1108,7 @@ cell.gating(my.obj, my.plot = my.plot, plot.type = "tsne")
 </p>
 
 
-After downloading the cell ids, use the following cammand to rename their cluster. 
+After downloading the cell ids, use the following command to rename their cluster. 
 
 ```r
 my.obj <- gate.to.clust(my.obj, my.gate = "cellGating.txt", to.clust = 10)
@@ -1937,7 +1945,7 @@ add.vdj(my.obj, vdj.data = my.vdj.data)
 
 # How to analyze large bulk RNA-Seq data (TCGA)
 
-In this example the samples are normalized using DESeq2 so no noramalizaion is needed.
+In this example the samples are normalized using DESeq2 so no normalization is needed.
 
 ```r
 sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/TCGA_sample_Normalized_data.tsv.gz"
