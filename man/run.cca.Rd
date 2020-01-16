@@ -4,10 +4,17 @@
 \alias{run.cca}
 \title{Run CCA on the main data}
 \usage{
-run.cca(x = NULL, top.vari.genes = 1000, cc.number = 30,
-  dims.align = 1:20, normalize.data = TRUE, scale.data = TRUE,
-  normalization.method = "LogNormalize", scale.factor = 10000,
-  display.progress = TRUE)
+run.cca(
+  x = NULL,
+  top.vari.genes = 1000,
+  cc.number = 30,
+  dims.align = 1:20,
+  normalize.data = TRUE,
+  scale.data = TRUE,
+  normalization.method = "LogNormalize",
+  scale.factor = 10000,
+  display.progress = TRUE
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

@@ -4,11 +4,23 @@
 \alias{cluster.plot}
 \title{Plot nGenes, UMIs and perecent mito}
 \usage{
-cluster.plot(x = NULL, cell.size = 1, plot.type = "tsne",
-  cell.color = "black", back.col = "white", col.by = "clusters",
-  cond.shape = FALSE, cell.transparency = 0.5, clust.dim = 2,
-  angle = 20, clonotype.max = 10, density = FALSE,
-  interactive = TRUE, static3D = FALSE, out.name = "plot")
+cluster.plot(
+  x = NULL,
+  cell.size = 1,
+  plot.type = "tsne",
+  cell.color = "black",
+  back.col = "white",
+  col.by = "clusters",
+  cond.shape = FALSE,
+  cell.transparency = 0.5,
+  clust.dim = 2,
+  angle = 20,
+  clonotype.max = 10,
+  density = FALSE,
+  interactive = TRUE,
+  static3D = FALSE,
+  out.name = "plot"
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

@@ -4,10 +4,17 @@
 \alias{pseudotime.tree}
 \title{Pseudotime Tree}
 \usage{
-pseudotime.tree(x = NULL, marker.genes = "NULL",
-  clust.names = "NULL", dist.method = "euclidean",
-  clust.method = "complete", label.offset = 0.5, type = "classic",
-  hang = 1, cex = 1)
+pseudotime.tree(
+  x = NULL,
+  marker.genes = "NULL",
+  clust.names = "NULL",
+  dist.method = "euclidean",
+  clust.method = "complete",
+  label.offset = 0.5,
+  type = "classic",
+  hang = 1,
+  cex = 1
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

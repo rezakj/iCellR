@@ -2,17 +2,29 @@
 % Please edit documentation in R/F027.clust.stats.plot.R
 \name{clust.stats.plot}
 \alias{clust.stats.plot}
-\title{QC on clusters (nGenes, UMIs and percent mito)}
+\title{Plotting tSNE, PCA, UMAP, Diffmap and other dim reductions}
 \usage{
-clust.stats.plot(x = NULL, plot.type = "box.mito",
-  cell.color = "slategray3", cell.size = 1, cell.transparency = 0.5,
-  box.color = "red", box.line.col = "green", back.col = "white",
-  notch = FALSE, interactive = TRUE, out.name = "plot")
+clust.stats.plot(
+  x = NULL,
+  plot.type = "box.mito",
+  conds.to.plot = NULL,
+  cell.color = "slategray3",
+  cell.size = 1,
+  cell.transparency = 0.5,
+  box.color = "red",
+  box.line.col = "green",
+  back.col = "white",
+  notch = FALSE,
+  interactive = TRUE,
+  out.name = "plot"
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
 
 \item{plot.type}{Choose from "bar.cc", "pie.cc" , box.umi", "box.mito", "box.gene", default = "box.mito".}
+
+\item{conds.to.plot}{Choose the conditions you want to see in the plot, default = NULL (all conditions).}
 
 \item{cell.color}{Choose a color for points in the plot.}
 

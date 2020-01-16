@@ -4,8 +4,14 @@
 \alias{run.diff.exp}
 \title{Differential expression (DE) analysis}
 \usage{
-run.diff.exp(x = NULL, data.type = "main", de.by = "clusters",
-  cond.1 = "array", cond.2 = "array", base.cond = 0)
+run.diff.exp(
+  x = NULL,
+  data.type = "main",
+  de.by = "clusters",
+  cond.1 = "array",
+  cond.2 = "array",
+  base.cond = 0
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

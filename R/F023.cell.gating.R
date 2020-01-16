@@ -10,7 +10,7 @@
 #' @export
 cell.gating <- function(x = NULL,
                          my.plot = NULL,
-                         plot.type = NULL) {
+                         plot.type = "tsne") {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }

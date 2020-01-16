@@ -4,8 +4,13 @@
 \alias{top.markers}
 \title{Choose top marker genes}
 \usage{
-top.markers(x = NULL, topde = 10, min.base.mean = 0.2,
-  filt.ambig = TRUE, cluster = 0)
+top.markers(
+  x = NULL,
+  topde = 10,
+  min.base.mean = 0.2,
+  filt.ambig = TRUE,
+  cluster = 0
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

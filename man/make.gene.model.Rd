@@ -4,13 +4,24 @@
 \alias{make.gene.model}
 \title{Make a gene model for clustering}
 \usage{
-make.gene.model(x = NULL, dispersion.limit = 1.5,
-  base.mean.rank = 500, non.sig.col = "darkgray",
-  right.sig.col = "chartreuse3", left.sig.col = "cadetblue3",
-  disp.line.col = "black", rank.line.col = "red",
-  my.out.put = "data", cell.size = 1.75, cell.transparency = 0.5,
-  no.mito.model = TRUE, no.cell.cycle = TRUE, mark.mito = TRUE,
-  interactive = TRUE, out.name = "plot")
+make.gene.model(
+  x = NULL,
+  dispersion.limit = 1.5,
+  base.mean.rank = 500,
+  non.sig.col = "darkgray",
+  right.sig.col = "chartreuse3",
+  left.sig.col = "cadetblue3",
+  disp.line.col = "black",
+  rank.line.col = "red",
+  my.out.put = "data",
+  cell.size = 1.75,
+  cell.transparency = 0.5,
+  no.mito.model = TRUE,
+  no.cell.cycle = TRUE,
+  mark.mito = TRUE,
+  interactive = TRUE,
+  out.name = "plot"
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

@@ -4,8 +4,13 @@
 \alias{norm.data}
 \title{Normalize data}
 \usage{
-norm.data(x = NULL, norm.method = "ranked.glsf", top.rank = 500,
-  spike.in.factors = NULL, rpm.factor = 1000)
+norm.data(
+  x = NULL,
+  norm.method = "ranked.glsf",
+  top.rank = 500,
+  spike.in.factors = NULL,
+  rpm.factor = 1000
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
@@ -17,7 +22,7 @@ Choose from "global.glsf", "ranked.glsf","spike.in" or no.norm, default = "ranke
 
 \item{spike.in.factors}{A numeric vector of spike-in values with the same cell id order as the main data.}
 
-\item{rpm.factor}{If the norm.method is set to "rpm" the library sizes would be diveded by this number, default = 1000 (higher numbers recomanded for bulk RNA-Seq).}
+\item{rpm.factor}{If the norm.method is set to "rpm" the library sizes would be divided by this number, default = 1000 (higher numbers recomanded for bulk RNA-Seq).}
 }
 \value{
 An object of class iCellR.

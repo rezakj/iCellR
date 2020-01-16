@@ -5,9 +5,17 @@
 \title{Gene-gene correlation.
 This function helps to visulaize and calculate gene-gene correlations.}
 \usage{
-gg.cor(x = NULL, data.type = "imputed", gene1 = NULL, gene2 = NULL,
-  conds = NULL, cell.size = 1, cell.transparency = 0.5,
-  interactive = TRUE, out.name = "plot")
+gg.cor(
+  x = NULL,
+  data.type = "imputed",
+  gene1 = NULL,
+  gene2 = NULL,
+  conds = NULL,
+  cell.size = 1,
+  cell.transparency = 0.5,
+  interactive = TRUE,
+  out.name = "plot"
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

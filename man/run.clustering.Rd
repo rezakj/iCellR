@@ -4,9 +4,15 @@
 \alias{run.clustering}
 \title{Clustering the data}
 \usage{
-run.clustering(x = NULL, clust.method = "kmeans",
-  dist.method = "euclidean", index.method = "silhouette",
-  max.clust = 25, min.clust = 2, dims = 1:10)
+run.clustering(
+  x = NULL,
+  clust.method = "kmeans",
+  dist.method = "euclidean",
+  index.method = "silhouette",
+  max.clust = 25,
+  min.clust = 2,
+  dims = 1:10
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}

@@ -4,10 +4,19 @@
 \alias{clono.plot}
 \title{Make 2D and 3D scatter plots for clonotypes.}
 \usage{
-clono.plot(x = NULL, plot.data.type = "tsne", clono = 1,
-  clust.dim = 2, cell.size = 1, cell.colors = c("red", "gray"),
-  box.cell.col = "black", back.col = "white",
-  cell.transparency = 0.5, interactive = TRUE, out.name = "plot")
+clono.plot(
+  x = NULL,
+  plot.data.type = "tsne",
+  clono = 1,
+  clust.dim = 2,
+  cell.size = 1,
+  cell.colors = c("red", "gray"),
+  box.cell.col = "black",
+  back.col = "white",
+  cell.transparency = 0.5,
+  interactive = TRUE,
+  out.name = "plot"
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
