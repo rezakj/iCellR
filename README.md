@@ -1293,7 +1293,7 @@ my.obj <- make.gene.model(my.obj)
 ###### See data without CCA
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
 
-my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
+my.obj <- run.umap(my.obj, dims = 1:10) 
 
 UMAP_NoCCA <- cluster.plot(my.obj,plot.type = "umap",cell.color = "black",col.by = "conditions",cell.transparency = 0.5)
 
@@ -1404,7 +1404,7 @@ my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500)
 
 ## run tSNE 
 my.obj <- run.pc.tsne(my.obj, dims = 1:10)
-my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn")
+my.obj <- run.umap(my.obj, dims = 1:10)
 
 cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F)
 
@@ -1489,7 +1489,7 @@ my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500)
 
 ## run tSNE 
 my.obj <- run.pc.tsne(my.obj, dims = 1:10)
-my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn")
+my.obj <- run.umap(my.obj, dims = 1:10)
 
 cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F)
 
