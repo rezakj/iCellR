@@ -22,7 +22,6 @@
 #'
 #' # make iCellR object
 #' myDemo.obj <- make.obj(demo)
-#' myDemo.obj
 #'
 #' @export
 data.aggregation <- function (samples = NULL,
@@ -37,6 +36,11 @@ if (length(samples) != length(condition.names)) {
 # fix condition names in the header
   for(i in 1:length(samples)){
     sampledata = get(samples[i])
+    colnames(sampledata) <- gsub("_",".",colnames(sampledata))
+    colnames(sampledata) <- gsub("-",".",colnames(sampledata))
+    colnames(sampledata) <- gsub("/",".or.",colnames(sampledata))
+    colnames(sampledata) <- gsub(" ",".",colnames(sampledata))
+    colnames(sampledata) <- make.names(colnames(sampledata), unique=TRUE)
     conds = condition.names[i]
     colnames(sampledata) <- paste(conds, colnames(sampledata), sep = "_")
     MyName <- samples[i]
