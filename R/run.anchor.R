@@ -80,7 +80,7 @@ run.anchor <- function (x = NULL,
     stop("You need more then one condition/sample to run this function")
   }
   ## get data
-  Patt <- paste(Conds, "_",sep="")
+  Patt <- paste("^",Conds, "_",sep="")
   ################
   ###########
   if(!"Seurat" %in% (.packages())){

@@ -59,7 +59,7 @@ vdj.stats <- function (my.vdj = "data.frame") {
     theme(axis.title.y=element_blank(),
           axis.text.y=element_blank(),
           axis.ticks.y=element_blank()) + coord_polar(theta="y") + facet_wrap(~ chain, ncol =1)
-#
+  #
   data <- (unique(subset(ChainB, ChainB$Quantile == "Q3")))
   data <- (data[order(data$my.vdj.clonotype.Freq, decreasing = TRUE),])
   data1 <- (unique(subset(ChainA, ChainA$Quantile == "Q3")))
@@ -72,7 +72,7 @@ vdj.stats <- function (my.vdj = "data.frame") {
   myPLOT <- ggplot(DATA,aes(x= freq, y=cdr3, col=chain)) +
     geom_line() + geom_point(size = freq) +
     theme_bw(base_size = 16)
-#  write.table((my.vdj),file="my.vdj.tsv",sep="\t",row.names =F)
-#  grid.arrange(myPLOT,myPIE, ncol=2, widths=c(2,1), heights=c(10,1))
+  #  write.table((my.vdj),file="my.vdj.tsv",sep="\t",row.names =F)
+  #  grid.arrange(myPLOT,myPIE, ncol=2, widths=c(2,1), heights=c(10,1))
   return(grid.arrange(myPLOT,myPIE, ncol=2))
 }

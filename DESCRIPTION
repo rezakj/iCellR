@@ -1,36 +1,29 @@
 Package: iCellR
 Type: Package
 Title: Analyzing High-Throughput Single Cell Sequencing Data
-Version: 1.2.9
+Version: 1.3.0
 Authors@R: c(
-  person(given = 'Alireza', family = 'Khodadadi-Jamayran', email = 'alireza.khodadadi.j@gmail.com', role = c('aut', 'cre'), comment = c(ORCID = '0000-0003-2495-7504')),
-  person(given = 'Joseph', family = 'Pucella', role = 'aut'),
-  person(given = 'Hua', family = 'Zhou', role = 'aut'),
-  person(given = 'Nicole', family = 'Doudican', role = 'aut'),
-  person(given = 'John', family = 'Carucci', role = 'aut'),
-  person(given = 'Adriana', family = 'Heguy', role = 'aut'),
-  person(given = 'Boris', family = 'Reizis', role = 'aut'),
-  person(given = "Aristotelis", family = "Tsirigos", role = 'aut', comment = c(ORCID = '0000-0002-7512-8477'))
+  person(given = 'Alireza', family = 'Khodadadi-Jamayran',role = c('cre'), email = 'alireza.khodadadi.j@gmail.com', comment = c(ORCID = '0000-0003-2495-7504')),
+  person(given = 'Joseph', family = 'Pucella'),
+  person(given = 'Hua', family = 'Zhou'),
+  person(given = 'Nicole', family = 'Doudican'),
+  person(given = 'John', family = 'Carucci'),
+  person(given = 'Adriana', family = 'Heguy'),
+  person(given = 'Boris', family = 'Reizis'),
+  person(given = "Aristotelis", family = "Tsirigos", comment = c(ORCID = '0000-0002-7512-8477'))
   )
 Maintainer: Alireza Khodadadi-Jamayran <alireza.khodadadi.j@gmail.com>
 Description: A toolkit that allows scientists to work with data from single cell sequencing technologies such as scRNA-seq, scVDJ-seq and CITE-Seq. Single (i) Cell R package ('iCellR') provides unprecedented flexibility at every step of the analysis pipeline, including normalization, clustering, dimensionality reduction, imputation, visualization, and so on. Users can design both unsupervised and supervised models to best suit their research. In addition, the toolkit provides 2D and 3D interactive visualizations, differential expression analysis, filters based on cells, genes and clusters, data merging, normalizing for dropouts, data imputation methods, correcting for batch differences, pathway analysis, tools to find marker genes for clusters and conditions, predict cell types and pseudotime analysis.
 Depends: R (>= 3.3.0), ggplot2, plotly
 Imports: Matrix, Rtsne, gridExtra, ggrepel, ggpubr, scatterplot3d,
         RColorBrewer, knitr, NbClust, shiny, pheatmap, ape, ggdendro,
-        plyr, reshape, Hmisc, htmlwidgets, methods, uwot
+        plyr, reshape, Hmisc, htmlwidgets, methods, uwot, hdf5r
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
 URL: https://github.com/rezakj/iCellR
 NeedsCompilation: no
-Packaged: 2020-01-16 19:02:18 UTC; khodaa01
-Author: Alireza Khodadadi-Jamayran [aut, cre]
-    (<https://orcid.org/0000-0003-2495-7504>),
-  Joseph Pucella [aut],
-  Hua Zhou [aut],
-  Nicole Doudican [aut],
-  John Carucci [aut],
-  Adriana Heguy [aut],
-  Boris Reizis [aut],
-  Aristotelis Tsirigos [aut] (<https://orcid.org/0000-0002-7512-8477>)
+Packaged: 2020-01-24 17:32:01 UTC; khodaa01
+Author: Alireza Khodadadi-Jamayran [cre]
+    (<https://orcid.org/0000-0003-2495-7504>)
