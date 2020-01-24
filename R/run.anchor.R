@@ -80,7 +80,7 @@ run.anchor <- function (x = NULL,
     stop("You need more then one condition/sample to run this function")
   }
   ## get data
-  Patt <- paste("^",Conds, "_",sep="")
+  Patt <- paste(Conds, "_",sep="")
   ################
   ###########
   if(!"Seurat" %in% (.packages())){
@@ -89,7 +89,7 @@ run.anchor <- function (x = NULL,
   ##########
   message(" Preparing samples ...")
   for(i in Patt){
-    IDs = grep(i, Cells, value = TRUE)
+    IDs = grep(paste("^",i,sep=""), Cells, value = TRUE)
     mydata <- DATA[ , which(names(DATA) %in% IDs)]
     MyMassg <- paste("    Preparing sample:",as.character(as.matrix(strsplit(i,'_',fixed=TRUE))))
     message(MyMassg)

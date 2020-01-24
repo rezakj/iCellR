@@ -68,7 +68,7 @@ run.mnn <- function (x = NULL,
     stop("You need more then one condition/sample to run this function")
   }
   ## get data
-  Patt <- paste("^",Conds, "_",sep="")
+  Patt <- paste(Conds, "_",sep="")
 ################
   ###########
   if(!"scran" %in% (.packages())){
@@ -77,7 +77,7 @@ run.mnn <- function (x = NULL,
   ##########
   message(" Preparing samples ...")
   for(i in Patt){
-    IDs = grep(i, Cells, value = TRUE)
+    IDs = grep(paste("^",i,sep=""), Cells, value = TRUE)
     mydata <- DATA[ , which(names(DATA) %in% IDs)]
     SampNam <- paste("iCellRSample",i,sep="_")
     mydata <- SingleCellExperiment(list(counts=as.matrix(mydata)))
