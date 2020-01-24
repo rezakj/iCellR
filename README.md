@@ -1301,7 +1301,7 @@ PCA <- cluster.plot(my.obj,plot.type = "pca",cell.color = "black",col.by = "cond
 # replace PCA with CCA
 attributes(my.obj)$pca.data <- my.obj@cca.data
 
-my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
+my.obj <- run.umap(my.obj, dims = 1:10) 
 
 UMAP_CCA <- cluster.plot(my.obj,plot.type = "umap",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
 
@@ -1811,7 +1811,7 @@ my.obj <- find.dim.genes(my.obj, dims = 1:20,top.pos = 20, top.neg = 20)
 # second round PC
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
 
-my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn")
+my.obj <- run.umap(my.obj, dims = 1:10)
 
 # check your object 
 my.obj
