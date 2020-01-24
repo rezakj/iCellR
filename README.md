@@ -471,9 +471,7 @@ my.obj <- run.phenograph(my.obj,k = 100,dims = 1:10)
 my.obj <- run.pc.tsne(my.obj, dims = 1:10)
 
 # UMAP
-my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
-# or 
-# my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
+my.obj <- run.umap(my.obj, dims = 1:10)
 
 # diffusion map
 # this requires python packge phate or destiny
