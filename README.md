@@ -620,34 +620,46 @@ cluster.plot(my.obj,
 	cond.shape = T,
 	interactive = T,
 	out.name = "2d_UMAP_clusters_conds")
+	
+# or 
+cluster.plot(my.obj,
+              cell.size = 0.5,
+              plot.type = "umap",
+              cell.color = "black",
+              back.col = "white",
+              col.by = "conditions",
+              cell.transparency = 0.5,
+              clust.dim = 2,
+              interactive = F,cond.facet = T)
 ```
 
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds_clusts.gif"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds_clusts.gif" width="400"/>
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds_clusts.png" width="400"/>
 </p>
 
 
 - Normalized cell frequencies in clusters and conditions
 
 ```r
-# If normalize.ncell = TRUE it would down sample the conditions randomly so all the conditions have equal number of cells, if FALSE it would output the raw cell counts.
+# If normalize.ncell = TRUE it would normalize based on total cell counts (main.data) in each condition. 
 
 # bar plot
-clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = FALSE, my.out.put = "plot")
+clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = TRUE, my.out.put = "plot")
 # Pie chart 
-clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = FALSE, ,my.out.put = "plot")
+clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE, ,my.out.put = "plot")
 
 # data 
-my.obj <- clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = F)
+my.obj <- clust.cond.info(my.obj, plot.type = "bar")
 #head(my.obj@my.freq)
-#  conditions clusters Freq
-#1       ctrl        1  199
-#2         KO        1  170
-#3         WT        1  182
-#4       ctrl        2  106
-#5         KO        2  116
-#6         WT        2  113
+#  conditions  TC SF clusters Freq Norm.Freq
+#1       Ctrl 897  1        1  124       124
+#2       Ctrl 897  1        4  167       167
+#3       Ctrl 897  1        3   52        52
+#4       Ctrl 897  1        2   59        59
+#5       Ctrl 897  1        5    5         5
+#6       Ctrl 897  1        8  132       132
 ```
 <p align="center">
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/3_clust_cond_freq_info_bar.png" width="400"/>
