@@ -8,6 +8,7 @@
 #' @param back.col Choose background color, default = "black".
 #' @param col.by Choose between "clusters", "conditions", "cc" (cell cycle) or "monochrome", default = "clusters".
 #' @param cond.shape If TRUE the conditions will be shown in shapes.
+#' @param cond.facet Show the conditions in separate plots.
 #' @param cell.transparency A numeric value between 0 to 1, default = 0.5.
 #' @param clonotype.max Number of clonotype to plot, default = 10.
 #' @param clust.dim A numeric value for plot dimensions. Choose either 2 or 3, default = 2.
@@ -46,6 +47,7 @@ cluster.plot <- function (x = NULL,
                           cell.color = "black",
                           back.col = "white",
                           col.by = "clusters",
+                          cond.facet = FALSE,
                           cond.shape = FALSE,
                           cell.transparency = 0.5,
                           clust.dim = 2,
@@ -233,6 +235,23 @@ cluster.plot <- function (x = NULL,
             ggtitle(MyTitle) +
             scale_color_discrete(name="") +
             theme_bw()
+      }
+      }
+    if (cond.facet == TRUE) {
+      if (interactive == FALSE) {
+      conds.sh <- data.frame(do.call('rbind', strsplit(as.character(rownames(DATA)),'_',fixed=TRUE)))[1]
+      cond.shape <- factor(as.matrix(conds.sh))
+      myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
+                                 text = row.names(DATA), color = col.legend)) +
+        geom_point(size = cell.size, alpha = cell.transparency) +
+        guides(colour = guide_legend(override.aes = list(size=5))) +
+        xlab("Dim1") +
+        ylab("Dim2") +
+        ggtitle(MyTitle) +
+        scale_color_discrete(name="") +
+        theme(panel.background = element_rect(fill = back.col, colour = "black"),
+              panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+              legend.key = element_rect(fill = back.col)) + facet_wrap(cond.shape)
       }
     }
   }

@@ -31,6 +31,7 @@ run.cca <- function (x = NULL,
     stop("Please load Seurat package: library(Seurat)")
   }
   ##########
+  start_time1 <- Sys.time()
 #  require(Seurat)
   # Get data
   DATA <- x@main.data
@@ -87,5 +88,9 @@ run.cca <- function (x = NULL,
     ToCCA <- as.data.frame(combined@dr$cca.aligned@cell.embeddings)
   # object
   attributes(x)$cca.data <- ToCCA
+  end_time1 <- Sys.time()
+  Time = difftime(end_time1,start_time1,units = "mins")
+  Time = round(as.numeric(Time),digits = 2)
+  message(paste("Total time",Time,"mins"))
   return(x)
 }

@@ -7,6 +7,7 @@
 #' @return The data frame object
 #' @import hdf5r
 #' @import Matrix
+#' @import methods
 #' @export
 load.h5 <- function (filename, feature.names = TRUE, uniq.rows = TRUE)
 {

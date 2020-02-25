@@ -26,10 +26,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and calculates cluster and conditions frequencies.
 }
-\examples{
-clust.cond.info(demo.obj, plot.type = "pie", normalize.ncell = TRUE, my.out.put = "data")
-
-head(demo.obj@my.freq)
-
-clust.cond.info(demo.obj, plot.type = "pie", normalize.ncell = TRUE, my.out.put = "plot")
-}

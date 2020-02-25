@@ -69,6 +69,11 @@ clono.plot <- function (x = NULL,
       colnames(colono) <- c("Clonotypes")
       MyRows <- rownames(DATA)
       rownames(DATA) <- gsub("-",".",MyRows)
+      if (dim(do.call('rbind', strsplit(as.character(rownames(colono)),'_',fixed=TRUE)))[2] == 1) {
+        if (dim(do.call('rbind', strsplit(as.character(rownames(DATA)),'_',fixed=TRUE)))[2] == 2) {
+          rownames(DATA) <- as.character(as.matrix(as.data.frame((do.call('rbind', strsplit(as.character(rownames(DATA)),'_',fixed=TRUE))))[2]))
+        }
+      }
       colonoData <- merge(DATA,colono, by="row.names", all.x=TRUE, all.y=FALSE)
       colonoData$Clonotypes <- gsub( " ", "", colonoData$Clonotypes)
       colonoData$Clonotypes[is.na(colonoData$Clonotypes)] <- "NA"

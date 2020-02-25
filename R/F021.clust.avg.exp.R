@@ -4,6 +4,7 @@
 #' @param x An object of class iCellR.
 #' @param data.type Choose from "main" and "imputed", default = "main"
 #' @return An object of class iCellR.
+#' @import progress
 #' @examples
 #' demo.obj <- clust.avg.exp(demo.obj)
 #'

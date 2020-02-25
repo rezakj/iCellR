@@ -35,20 +35,29 @@ run.anchor <- function (x = NULL,
                      data.type = "main",
                      normalization.method = "LogNormalize",
                      scale.factor = 10000,
-                     margin = 1, block.size = NULL,
+                     margin = 1,
+                     block.size = NULL,
                      selection.method = "vst",
                      nfeatures = 2000,
                      anchor.features = 2000,
                      scale = TRUE,
-                     sct.clip.range = NULL, reduction = c("cca", "rpca"),
-                     l2.norm = TRUE, dims = 1:30, k.anchor = 5, k.filter = 200,
-                     k.score = 30, max.features = 200, nn.method = "rann", eps = 0,
+                     sct.clip.range = NULL,
+                     reduction = c("cca", "rpca"),
+                     l2.norm = TRUE,
+                     dims = 1:30,
+                     k.anchor = 5,
+                     k.filter = 200,
+                     k.score = 30,
+                     max.features = 200,
+                     nn.method = "rann",
+                     eps = 0,
                      k.weight = 100) {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
   #
   ##########
+  start_time1 <- Sys.time()
   #  require(Seurat)
   # Get data
   ## get main data
@@ -80,7 +89,7 @@ run.anchor <- function (x = NULL,
     stop("You need more then one condition/sample to run this function")
   }
   ## get data
-  Patt <- paste("^",Conds, "_",sep="")
+  Patt <- paste(Conds, "_",sep="")
   ################
   ###########
   if(!"Seurat" %in% (.packages())){
@@ -89,12 +98,12 @@ run.anchor <- function (x = NULL,
   ##########
   message(" Preparing samples ...")
   for(i in Patt){
-    IDs = grep(i, Cells, value = TRUE)
+    IDs = grep(paste("^",i,sep=""), Cells, value = TRUE)
     mydata <- DATA[ , which(names(DATA) %in% IDs)]
     MyMassg <- paste("    Preparing sample:",as.character(as.matrix(strsplit(i,'_',fixed=TRUE))))
     message(MyMassg)
     mydata <- CreateSeuratObject(counts = mydata, project = i)
-    mydata <- NormalizeData(mydata, normalization.method=normalization.method,
+    mydata <- NormalizeData(mydata, normalization.method = "LogNormalize",
                             scale.factor =scale.factor,
                             margin = margin, block.size=block.size)
     mydata <- FindVariableFeatures(mydata,
@@ -105,7 +114,17 @@ run.anchor <- function (x = NULL,
   }
   ######## get objects
   filenames <- ls(pattern="iCellRSample_")
-  Myanchors <- FindIntegrationAnchors(object.list = mget(filenames),
+  object.list <- mget(filenames)
+#####
+  if (normalization.method == "SCT") {
+    for (i in names(object.list)) {
+      object.list[[i]] <- SCTransform(object.list[[i]], verbose = TRUE)
+    }
+    anchor.features <- SelectIntegrationFeatures(object.list = object.list, nfeatures = nfeatures)
+    object.list <- PrepSCTIntegration(object.list = object.list, anchor.features = anchor.features)
+  }
+######
+  Myanchors <- FindIntegrationAnchors(object.list = object.list,
                                       anchor.features = anchor.features, scale = scale,
                                       normalization.method = normalization.method,
                                       sct.clip.range = sct.clip.range, reduction = reduction,
@@ -130,5 +149,9 @@ run.anchor <- function (x = NULL,
   dataPCA = data.frame(counts.pca$rotation) # [1:max.dim]
   message("All done!")
   attributes(x)$pca.data <- dataPCA
+  end_time1 <- Sys.time()
+  Time = difftime(end_time1,start_time1,units = "mins")
+  Time = round(as.numeric(Time),digits = 2)
+  message(paste("Total time",Time,"mins"))
   return(x)
 }

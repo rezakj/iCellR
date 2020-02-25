@@ -7,7 +7,6 @@
 #'
 #' my.obj <- down.sample(demo.obj)
 #'
-#' my.obj
 #'
 #' @export
 down.sample <- function (x = NULL) {

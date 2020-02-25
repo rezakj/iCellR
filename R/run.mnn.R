@@ -37,7 +37,7 @@ run.mnn <- function (x = NULL,
   }
   #
   ##########
-  #  require(Seurat)
+  start_time1 <- Sys.time()
   # Get data
   ## get main data
   if (data.type == "main") {
@@ -68,7 +68,7 @@ run.mnn <- function (x = NULL,
     stop("You need more then one condition/sample to run this function")
   }
   ## get data
-  Patt <- paste("^",Conds, "_",sep="")
+  Patt <- paste(Conds, "_",sep="")
 ################
   ###########
   if(!"scran" %in% (.packages())){
@@ -77,7 +77,7 @@ run.mnn <- function (x = NULL,
   ##########
   message(" Preparing samples ...")
   for(i in Patt){
-    IDs = grep(i, Cells, value = TRUE)
+    IDs = grep(paste("^",i,sep=""), Cells, value = TRUE)
     mydata <- DATA[ , which(names(DATA) %in% IDs)]
     SampNam <- paste("iCellRSample",i,sep="_")
     mydata <- SingleCellExperiment(list(counts=as.matrix(mydata)))
@@ -122,5 +122,9 @@ run.mnn <- function (x = NULL,
   dataPCA = data.frame(counts.pca$rotation) # [1:max.dim]
   message("All done!")
   attributes(x)$pca.data <- dataPCA
+  end_time1 <- Sys.time()
+  Time = difftime(end_time1,start_time1,units = "mins")
+  Time = round(as.numeric(Time),digits = 2)
+  message(paste("Total time",Time,"mins"))
   return(x)
 }
