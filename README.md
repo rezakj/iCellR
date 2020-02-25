@@ -5,9 +5,7 @@ Link to Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/
 
 Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
 
-For citation please use this link (our manuscript is in preparation): https://github.com/rezakj/iCellR
-
-iCellR publications: [PMID 31744829](https://pubmed.ncbi.nlm.nih.gov/31744829-in-vivo-epigenetic-crispr-screen-identifies-asf1a-as-an-immunotherapeutic-target-in-kras-mutant-lung-adenocarcinoma/?from_term=alireza+khodadadi-jamayran&from_filter=years.2019-2019&from_pos=5)
+iCellR publications: [PMID 31744829](https://www.ncbi.nlm.nih.gov/pubmed/31744829) (scRNA-seq), [PMID: 31934613](https://www.ncbi.nlm.nih.gov/pubmed/31934613) (bulk RNA-seq from TCGA)
 
 If you are using FlowJo or SeqGeq, they have made plugins for iCellR and other single cell tools: https://www.flowjo.com/exchange/#/ (list of all plugins) and https://www.flowjo.com/exchange/#/plugin/profile?id=34 (iCellR plugin). [SeqGeq DE tutorial](https://www.youtube.com/watch?v=gXFmWRpdwow)
 
@@ -471,9 +469,7 @@ my.obj <- run.phenograph(my.obj,k = 100,dims = 1:10)
 my.obj <- run.pc.tsne(my.obj, dims = 1:10)
 
 # UMAP
-my.obj <- run.umap(my.obj, dims = 1:10, method = "naive")
-# or 
-# my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
+my.obj <- run.umap(my.obj, dims = 1:10)
 
 # diffusion map
 # this requires python packge phate or destiny
@@ -1303,7 +1299,7 @@ PCA <- cluster.plot(my.obj,plot.type = "pca",cell.color = "black",col.by = "cond
 # replace PCA with CCA
 attributes(my.obj)$pca.data <- my.obj@cca.data
 
-my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn") 
+my.obj <- run.umap(my.obj, dims = 1:10) 
 
 UMAP_CCA <- cluster.plot(my.obj,plot.type = "umap",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
 
@@ -1813,7 +1809,7 @@ my.obj <- find.dim.genes(my.obj, dims = 1:20,top.pos = 20, top.neg = 20)
 # second round PC
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
 
-my.obj <- run.umap(my.obj, dims = 1:10, method = "umap-learn")
+my.obj <- run.umap(my.obj, dims = 1:10)
 
 # check your object 
 my.obj
