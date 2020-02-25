@@ -11,6 +11,7 @@ cluster.plot(
   cell.color = "black",
   back.col = "white",
   col.by = "clusters",
+  cond.facet = FALSE,
   cond.shape = FALSE,
   cell.transparency = 0.5,
   clust.dim = 2,
@@ -34,6 +35,8 @@ cluster.plot(
 \item{back.col}{Choose background color, default = "black".}
 
 \item{col.by}{Choose between "clusters", "conditions", "cc" (cell cycle) or "monochrome", default = "clusters".}
+
+\item{cond.facet}{Show the conditions in separate plots.}
 
 \item{cond.shape}{If TRUE the conditions will be shown in shapes.}
 

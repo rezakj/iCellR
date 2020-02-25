@@ -19,6 +19,5 @@ This function takes an object of class iCellR and down samples the condition to 
 
 my.obj <- down.sample(demo.obj)
 
-my.obj
 
 }

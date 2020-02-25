@@ -16,7 +16,6 @@
 #' dim(My.VDJ)
 #'
 #' my.obj <- add.vdj(demo.obj, vdj.data = My.VDJ)
-#' my.obj
 #'
 #' @export
 add.vdj <- function (x = NULL, vdj.data = "data.frame") {

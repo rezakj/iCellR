@@ -18,6 +18,7 @@
 #' @param n.jobs 'int', optional (default: 1) The number of jobs to use for the computation. If -1 all CPUs are used. If 1 is given, no parallel computing code is used at all, which is useful for debugging. For n_jobs below -1, (n.cpus + 1 + n.jobs) are used. Thus for n_jobs = -2, all CPUs but one are used
 #' @param seed int or 'NULL', random state (default: 'NULL')
 #' @return An object of class iCellR.
+#' @import progress
 #' @export
 run.impute <- function (x = NULL,
                         imp.method = "iCellR.imp", dims = 1:10, nn = 10,
@@ -29,6 +30,8 @@ run.impute <- function (x = NULL,
     stop("x should be an object of class iCellR")
   }
   # get data
+  start_time1 <- Sys.time()
+  #####
   DATA <- x@main.data
   message(paste(" main data dimentions:",dim(DATA)[1],"genes and",dim(DATA)[2],"cells"))
   message(" Genes with no coverage are being removed from the matrix ...")
@@ -52,24 +55,45 @@ run.impute <- function (x = NULL,
       my.data.my.pca = t(x@diffusion.data)
     }
 #########
+    start_time <- Sys.time()
     message(paste("   Calculating distance ..."))
     My.distances = as.matrix(dist(t(my.data.my.pca), method = knn.dist.method))
+    end_time <- Sys.time()
+    Time = difftime(end_time,start_time,units = "mins")
+    Time = round(as.numeric(Time),digits = 2)
+    message(paste("   Calculated distance in",Time,"mins"))
     ncells = dim(my.data)[2]
 #    cell.num = ceiling(cell.ratio/100 * ncells)
     cell.num = nn
 #    message(paste("    ",cell.ratio,"percent of ",ncells, "cells is", cell.num))
     message(paste("    Finding",cell.num, "neighboring cells per cell ..."))
     message("     To change the number of neighboring cells cahnge nn option")
+    ### time
+    pb <- progress_bar$new(total = ncells,
+                           format = "[:bar] :current/:total (:percent) :elapsedfull eta: :eta",
+                           clear = FALSE, width= 60)
+#######
     KNN1 = lapply(1:ncells, function(findKNN){
+      pb$tick()
       order(My.distances[,findKNN])[1:cell.num]})
     ############
     message(paste("   correcting the coverage of the neighboring cells (mean) ..."))
+    ### time
+    pb <- progress_bar$new(total = ncells,
+                           format = "[:bar] :current/:total (:percent) :elapsedfull eta: :eta",
+                           clear = FALSE, width= 60)
+    ##########
     data.sum1 = sapply(KNN1, function(sum.cov){
+      pb$tick()
       rowMeans(my.data[, sum.cov])})
     ############
     data.sum1 <- as.data.frame(data.sum1)
     colnames(data.sum1) <- colnames(my.data)
     message(paste("All done!"))
+    end_time1 <- Sys.time()
+    Time = difftime(end_time1,start_time1,units = "mins")
+    Time = round(as.numeric(Time),digits = 2)
+    message(paste("Total time",Time,"mins"))
     attributes(x)$imputed.data <- data.sum1
     return(x)
   }

@@ -27,7 +27,7 @@ load10x <- function (dir.10x = NULL, gene.name = 2) {
     cell.barcodes <- readLines(cell.barcodes)
     cell.barcodes <- gsub("-",".",cell.barcodes)
   ## get gene name or ID
-    gene.names.ids <- as.character(as.matrix(read.table(gene.names.ids,header=F)[gene.name]))
+    gene.names.ids <- as.character(as.matrix(read.table(gene.names.ids,header=F,sep="\t")[gene.name]))
     gene.names.ids <- gsub("-",".",gene.names.ids)
     ##
   colnames(x = MTX10x) <- cell.barcodes

@@ -37,7 +37,7 @@ run.mnn <- function (x = NULL,
   }
   #
   ##########
-  #  require(Seurat)
+  start_time1 <- Sys.time()
   # Get data
   ## get main data
   if (data.type == "main") {
@@ -122,5 +122,9 @@ run.mnn <- function (x = NULL,
   dataPCA = data.frame(counts.pca$rotation) # [1:max.dim]
   message("All done!")
   attributes(x)$pca.data <- dataPCA
+  end_time1 <- Sys.time()
+  Time = difftime(end_time1,start_time1,units = "mins")
+  Time = round(as.numeric(Time),digits = 2)
+  message(paste("Total time",Time,"mins"))
   return(x)
 }
