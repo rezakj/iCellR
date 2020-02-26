@@ -1900,6 +1900,104 @@ grid.arrange(A,B,C,D)
 Here is an example of how to add VDJ data.
 
  ```r
+ ###### an example file 
+ my.vdj <- read.csv(file = system.file('extdata', 'all_contig_annotations.csv',
+               package = 'iCellR'),
+               as.is = TRUE)
+	       
+###
+head(My.VDJ)
+#  raw_clonotype_id            barcode is_cell                   contig_id
+#1       clonotype1 ACGCCAGCAAGCGCTC.1    True ACGCCAGCAAGCGCTC-1_contig_2
+#2       clonotype1 AACGTTGAGTACGATA.1    True AACGTTGAGTACGATA-1_contig_2
+#3       clonotype1 AACTCTTGTCAAAGCG.1    True AACTCTTGTCAAAGCG-1_contig_1
+#4       clonotype1 AACGTTGAGTACGATA.1    True AACGTTGAGTACGATA-1_contig_1
+#5       clonotype1 ACGCCAGCAAGCGCTC.1    True ACGCCAGCAAGCGCTC-1_contig_1
+#6       clonotype1 ACGATGTTCTGGTATG.1    True ACGATGTTCTGGTATG-1_contig_2
+#  high_confidence length chain  v_gene d_gene  j_gene c_gene full_length
+#1            True    571   TRA  TRAV27   None  TRAJ37   TRAC        True
+#2            True    730   TRA  TRAV27   None  TRAJ37   TRAC        True
+#3            True    722   TRB TRBV6-3  TRBD2 TRBJ1-1  TRBC1        True
+#4            True    723   TRB TRBV6-3  TRBD2 TRBJ1-1  TRBC1        True
+#5            True    722   TRB TRBV6-3  TRBD2 TRBJ1-1  TRBC1        True
+#6            True    726   TRA  TRAV27   None  TRAJ37   TRAC        True
+#  productive           cdr3                                    cdr3_nt reads
+#1       True CAGGRSSNTGKLIF TGTGCAGGAGGACGCTCTAGCAACACAGGCAAACTAATCTTT 14241
+#2       True CAGGRSSNTGKLIF TGTGCAGGAGGACGCTCTAGCAACACAGGCAAACTAATCTTT 27679
+#3       True CASRTGAGATEAFF TGTGCCAGCAGGACCGGGGCGGGAGCCACTGAAGCTTTCTTT 51844
+#4       True CASRTGAGATEAFF TGTGCCAGCAGGACCGGGGCGGGAGCCACTGAAGCTTTCTTT 38120
+#5       True CASRTGAGATEAFF TGTGCCAGCAGGACCGGGGCGGGAGCCACTGAAGCTTTCTTT 24635
+#6       True CAGGRSSNTGKLIF TGTGCAGGAGGACGCTCTAGCAACACAGGCAAACTAATCTTT 13720
+#  umis       raw_consensus_id my.raw_clonotype_id clonotype.Freq proportion
+#1    8 clonotype1_consensus_2          clonotype1             43  0.1572212
+#2   10 clonotype1_consensus_2          clonotype1             43  0.1572212
+#3   24 clonotype1_consensus_1          clonotype1             43  0.1572212
+#4   23 clonotype1_consensus_1          clonotype1             43  0.1572212
+#5   11 clonotype1_consensus_1          clonotype1             43  0.1572212
+#6    7 clonotype1_consensus_2          clonotype1             43  0.1572212
+#  total.colonotype
+#1              109
+#2              109
+33              109
+#4              109
+#5              109
+#6              109
+
+#### Prepare the vdj file
+     My.VDJ <- prep.vdj(vdj.data = my.vdj, cond.name = "NULL")
+###
+head(My.VDJ)
+#  raw_clonotype_id            barcode is_cell                   contig_id
+#1       clonotype1 ACGCCAGCAAGCGCTC.1    True ACGCCAGCAAGCGCTC-1_contig_2
+#2       clonotype1 AACGTTGAGTACGATA.1    True AACGTTGAGTACGATA-1_contig_2
+#3       clonotype1 AACTCTTGTCAAAGCG.1    True AACTCTTGTCAAAGCG-1_contig_1
+#4       clonotype1 AACGTTGAGTACGATA.1    True AACGTTGAGTACGATA-1_contig_1
+#5       clonotype1 ACGCCAGCAAGCGCTC.1    True ACGCCAGCAAGCGCTC-1_contig_1
+#6       clonotype1 ACGATGTTCTGGTATG.1    True ACGATGTTCTGGTATG-1_contig_2
+#  high_confidence length chain  v_gene d_gene  j_gene c_gene full_length
+#1            True    571   TRA  TRAV27   None  TRAJ37   TRAC        True
+#2            True    730   TRA  TRAV27   None  TRAJ37   TRAC        True
+#3            True    722   TRB TRBV6-3  TRBD2 TRBJ1-1  TRBC1        True
+#4            True    723   TRB TRBV6-3  TRBD2 TRBJ1-1  TRBC1        True
+#5            True    722   TRB TRBV6-3  TRBD2 TRBJ1-1  TRBC1        True
+#6            True    726   TRA  TRAV27   None  TRAJ37   TRAC        True
+#  productive           cdr3                                    cdr3_nt reads
+#1       True CAGGRSSNTGKLIF TGTGCAGGAGGACGCTCTAGCAACACAGGCAAACTAATCTTT 14241
+#2       True CAGGRSSNTGKLIF TGTGCAGGAGGACGCTCTAGCAACACAGGCAAACTAATCTTT 27679
+#3       True CASRTGAGATEAFF TGTGCCAGCAGGACCGGGGCGGGAGCCACTGAAGCTTTCTTT 51844
+#4       True CASRTGAGATEAFF TGTGCCAGCAGGACCGGGGCGGGAGCCACTGAAGCTTTCTTT 38120
+#5       True CASRTGAGATEAFF TGTGCCAGCAGGACCGGGGCGGGAGCCACTGAAGCTTTCTTT 24635
+#6       True CAGGRSSNTGKLIF TGTGCAGGAGGACGCTCTAGCAACACAGGCAAACTAATCTTT 13720
+#  umis       raw_consensus_id my.raw_clonotype_id clonotype.Freq proportion
+#1    8 clonotype1_consensus_2          clonotype1             43  0.1572212
+#2   10 clonotype1_consensus_2          clonotype1             43  0.1572212
+#3   24 clonotype1_consensus_1          clonotype1             43  0.1572212
+#4   23 clonotype1_consensus_1          clonotype1             43  0.1572212
+#5   11 clonotype1_consensus_1          clonotype1             43  0.1572212
+#6    7 clonotype1_consensus_2          clonotype1             43  0.1572212
+#  total.colonotype
+#1              109
+#2              109
+#3              109
+#4              109
+#5              109
+#6              109
+
+####
+png('vdj.stats.png',width = 16, height = 8, units = 'in', res = 300)
+vdj.stats(My.VDJ)
+dev.off()
+
+### add vdj data to you object 
+my.obj <- add.vdj(demo.obj, vdj.data = My.VDJ)
+```
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/vdj.stats.png" />
+</p>
+
+Another example with multiple files 
+```r
 # first prepare the files. 
 # this function would filter the files, calculate clonotype frequencies and proportions and add conditions to the cell ids.
 my.vdj.1 <- prep.vdj(vdj.data = "all_contig_annotations.csv", cond.name = "WT")
