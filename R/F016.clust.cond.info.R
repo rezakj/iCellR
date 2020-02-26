@@ -46,7 +46,7 @@ clust.cond.info <- function (x = NULL,
 # as.data.frame(table(Conds))
   # bar
   myBP <- ggplot(DATA,aes(y=Freq, x=conditions, fill = conditions)) +
-    geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ clusters)
+    geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ clusters, scales = "free")
   # pie
   myPIE <- ggplot(DATA,aes(y=Freq, x="", fill = conditions)) +
     geom_bar(stat = "identity", position = "fill") + theme_bw() + facet_wrap(~ clusters) +
@@ -57,7 +57,7 @@ clust.cond.info <- function (x = NULL,
   if (normalize.ncell == TRUE) {
     # bar
     myBP <- ggplot(DATA,aes(y=Norm.Freq, x=conditions, fill = conditions)) +
-      geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ clusters)
+      geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ clusters, scales = "free")
     # pie
     myPIE <- ggplot(DATA,aes(y=Norm.Freq, x="", fill = conditions)) +
       geom_bar(stat = "identity", position = "fill") + theme_bw() + facet_wrap(~ clusters) +
