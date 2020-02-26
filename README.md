@@ -1938,7 +1938,7 @@ head(My.VDJ)
 #  total.colonotype
 #1              109
 #2              109
-33              109
+#3              109
 #4              109
 #5              109
 #6              109
@@ -2047,6 +2047,35 @@ head(my.vdj.data)
 
 # add it to iCellR object
 add.vdj(my.obj, vdj.data = my.vdj.data)
+ ```
+ How to plot colonotypes
+ 
+ ```r
+Plot colonotype 1
+clono.plot(my.obj, plot.data.type = "umap", 
+	clono = 1,
+	cell.transparency = 1,
+	clust.dim = 2,
+	interactive = F)
+	
+# plot multiple
+
+clono.list = c(1:12)
+
+for(i in clono.list){
+MyPlot <- clono.plot(my.obj, plot.data.type = "umap", 
+	clono = i,
+	cell.transparency = 1,
+	clust.dim = 2,
+	interactive = F)
+	NameCol=paste("PL",i,sep="_")
+	eval(call("<-", as.name(NameCol), MyPlot))
+}
+
+library(cowplot)
+filenames <- ls(pattern="PL_")
+
+plot_grid(plotlist=mget(filenames))
  ```
 
 # How to analyze large bulk RNA-Seq data (TCGA)
