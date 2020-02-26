@@ -2051,7 +2051,7 @@ add.vdj(my.obj, vdj.data = my.vdj.data)
  How to plot colonotypes
  
  ```r
-Plot colonotype 1
+# Plot colonotype 1
 clono.plot(my.obj, plot.data.type = "umap", 
 	clono = 1,
 	cell.transparency = 1,
