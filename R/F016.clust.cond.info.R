@@ -16,7 +16,7 @@ clust.cond.info <- function (x = NULL,
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
-  ##################
+  ###################
   Cells <- colnames(x@main.data)
   MYConds <- as.character((unique(data.frame(do.call('rbind', strsplit(as.character(Cells),'_',fixed=TRUE)))[1]))$X1)
   if (length(MYConds) == 1) {
@@ -50,14 +50,10 @@ clust.cond.info <- function (x = NULL,
   # bar
   myBP <- ggplot(DATA,aes(y=Freq, x=conditions, fill = conditions)) +
     geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ clusters, scales = "free")
-<<<<<<< HEAD
   # bar2
   myBP2 <- ggplot(DATA,aes(y=Freq, x=conditions, fill = clusters)) +
     geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ conditions, scales = "free")
     # pie
-=======
-  # pie
->>>>>>> 2cdac49486927c27089255bf847231d92bdcb9fc
   myPIE <- ggplot(DATA,aes(y=Freq, x="", fill = conditions)) +
     geom_bar(stat = "identity", position = "fill") + theme_bw() + facet_wrap(~ clusters) +
       theme(axis.title.y=element_blank(),
@@ -76,12 +72,9 @@ clust.cond.info <- function (x = NULL,
     # bar
     myBP <- ggplot(DATA,aes(y=Norm.Freq, x=conditions, fill = conditions)) +
       geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ clusters, scales = "free")
-<<<<<<< HEAD
     # bar2
     myBP2 <- ggplot(DATA,aes(y=Norm.Freq, x=conditions, fill = clusters)) +
       geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ conditions, scales = "free")
-=======
->>>>>>> 2cdac49486927c27089255bf847231d92bdcb9fc
     # pie
     myPIE <- ggplot(DATA,aes(y=Norm.Freq, x="", fill = conditions)) +
       geom_bar(stat = "identity", position = "fill") + theme_bw() + facet_wrap(~ clusters) +
