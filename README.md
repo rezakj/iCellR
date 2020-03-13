@@ -620,34 +620,46 @@ cluster.plot(my.obj,
 	cond.shape = T,
 	interactive = T,
 	out.name = "2d_UMAP_clusters_conds")
+	
+# or 
+cluster.plot(my.obj,
+              cell.size = 0.5,
+              plot.type = "umap",
+              cell.color = "black",
+              back.col = "white",
+              col.by = "conditions",
+              cell.transparency = 0.5,
+              clust.dim = 2,
+              interactive = F,cond.facet = T)
 ```
 
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds_clusts.gif"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds_clusts.gif" width="400"/>
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds_clusts.png" width="400"/>
 </p>
 
 
 - Normalized cell frequencies in clusters and conditions
 
 ```r
-# If normalize.ncell = TRUE it would down sample the conditions randomly so all the conditions have equal number of cells, if FALSE it would output the raw cell counts.
+# If normalize.ncell = TRUE it would normalize based on total cell counts (main.data) in each condition. 
 
 # bar plot
-clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = FALSE, my.out.put = "plot")
+clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = TRUE, my.out.put = "plot")
 # Pie chart 
-clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = FALSE, ,my.out.put = "plot")
+clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE, ,my.out.put = "plot")
 
 # data 
-my.obj <- clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = F)
+my.obj <- clust.cond.info(my.obj, plot.type = "bar")
 #head(my.obj@my.freq)
-#  conditions clusters Freq
-#1       ctrl        1  199
-#2         KO        1  170
-#3         WT        1  182
-#4       ctrl        2  106
-#5         KO        2  116
-#6         WT        2  113
+#  conditions  TC SF clusters Freq Norm.Freq
+#1       Ctrl 897  1        1  124       124
+#2       Ctrl 897  1        4  167       167
+#3       Ctrl 897  1        3   52        52
+#4       Ctrl 897  1        2   59        59
+#5       Ctrl 897  1        5    5         5
+#6       Ctrl 897  1        8  132       132
 ```
 <p align="center">
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/3_clust_cond_freq_info_bar.png" width="400"/>
@@ -1888,6 +1900,104 @@ grid.arrange(A,B,C,D)
 Here is an example of how to add VDJ data.
 
  ```r
+ ###### an example file 
+ my.vdj <- read.csv(file = system.file('extdata', 'all_contig_annotations.csv',
+               package = 'iCellR'),
+               as.is = TRUE)
+	       
+###
+head(My.VDJ)
+#  raw_clonotype_id            barcode is_cell                   contig_id
+#1       clonotype1 ACGCCAGCAAGCGCTC.1    True ACGCCAGCAAGCGCTC-1_contig_2
+#2       clonotype1 AACGTTGAGTACGATA.1    True AACGTTGAGTACGATA-1_contig_2
+#3       clonotype1 AACTCTTGTCAAAGCG.1    True AACTCTTGTCAAAGCG-1_contig_1
+#4       clonotype1 AACGTTGAGTACGATA.1    True AACGTTGAGTACGATA-1_contig_1
+#5       clonotype1 ACGCCAGCAAGCGCTC.1    True ACGCCAGCAAGCGCTC-1_contig_1
+#6       clonotype1 ACGATGTTCTGGTATG.1    True ACGATGTTCTGGTATG-1_contig_2
+#  high_confidence length chain  v_gene d_gene  j_gene c_gene full_length
+#1            True    571   TRA  TRAV27   None  TRAJ37   TRAC        True
+#2            True    730   TRA  TRAV27   None  TRAJ37   TRAC        True
+#3            True    722   TRB TRBV6-3  TRBD2 TRBJ1-1  TRBC1        True
+#4            True    723   TRB TRBV6-3  TRBD2 TRBJ1-1  TRBC1        True
+#5            True    722   TRB TRBV6-3  TRBD2 TRBJ1-1  TRBC1        True
+#6            True    726   TRA  TRAV27   None  TRAJ37   TRAC        True
+#  productive           cdr3                                    cdr3_nt reads
+#1       True CAGGRSSNTGKLIF TGTGCAGGAGGACGCTCTAGCAACACAGGCAAACTAATCTTT 14241
+#2       True CAGGRSSNTGKLIF TGTGCAGGAGGACGCTCTAGCAACACAGGCAAACTAATCTTT 27679
+#3       True CASRTGAGATEAFF TGTGCCAGCAGGACCGGGGCGGGAGCCACTGAAGCTTTCTTT 51844
+#4       True CASRTGAGATEAFF TGTGCCAGCAGGACCGGGGCGGGAGCCACTGAAGCTTTCTTT 38120
+#5       True CASRTGAGATEAFF TGTGCCAGCAGGACCGGGGCGGGAGCCACTGAAGCTTTCTTT 24635
+#6       True CAGGRSSNTGKLIF TGTGCAGGAGGACGCTCTAGCAACACAGGCAAACTAATCTTT 13720
+#  umis       raw_consensus_id my.raw_clonotype_id clonotype.Freq proportion
+#1    8 clonotype1_consensus_2          clonotype1             43  0.1572212
+#2   10 clonotype1_consensus_2          clonotype1             43  0.1572212
+#3   24 clonotype1_consensus_1          clonotype1             43  0.1572212
+#4   23 clonotype1_consensus_1          clonotype1             43  0.1572212
+#5   11 clonotype1_consensus_1          clonotype1             43  0.1572212
+#6    7 clonotype1_consensus_2          clonotype1             43  0.1572212
+#  total.colonotype
+#1              109
+#2              109
+#3              109
+#4              109
+#5              109
+#6              109
+
+#### Prepare the vdj file
+     My.VDJ <- prep.vdj(vdj.data = my.vdj, cond.name = "NULL")
+###
+head(My.VDJ)
+#  raw_clonotype_id            barcode is_cell                   contig_id
+#1       clonotype1 ACGCCAGCAAGCGCTC.1    True ACGCCAGCAAGCGCTC-1_contig_2
+#2       clonotype1 AACGTTGAGTACGATA.1    True AACGTTGAGTACGATA-1_contig_2
+#3       clonotype1 AACTCTTGTCAAAGCG.1    True AACTCTTGTCAAAGCG-1_contig_1
+#4       clonotype1 AACGTTGAGTACGATA.1    True AACGTTGAGTACGATA-1_contig_1
+#5       clonotype1 ACGCCAGCAAGCGCTC.1    True ACGCCAGCAAGCGCTC-1_contig_1
+#6       clonotype1 ACGATGTTCTGGTATG.1    True ACGATGTTCTGGTATG-1_contig_2
+#  high_confidence length chain  v_gene d_gene  j_gene c_gene full_length
+#1            True    571   TRA  TRAV27   None  TRAJ37   TRAC        True
+#2            True    730   TRA  TRAV27   None  TRAJ37   TRAC        True
+#3            True    722   TRB TRBV6-3  TRBD2 TRBJ1-1  TRBC1        True
+#4            True    723   TRB TRBV6-3  TRBD2 TRBJ1-1  TRBC1        True
+#5            True    722   TRB TRBV6-3  TRBD2 TRBJ1-1  TRBC1        True
+#6            True    726   TRA  TRAV27   None  TRAJ37   TRAC        True
+#  productive           cdr3                                    cdr3_nt reads
+#1       True CAGGRSSNTGKLIF TGTGCAGGAGGACGCTCTAGCAACACAGGCAAACTAATCTTT 14241
+#2       True CAGGRSSNTGKLIF TGTGCAGGAGGACGCTCTAGCAACACAGGCAAACTAATCTTT 27679
+#3       True CASRTGAGATEAFF TGTGCCAGCAGGACCGGGGCGGGAGCCACTGAAGCTTTCTTT 51844
+#4       True CASRTGAGATEAFF TGTGCCAGCAGGACCGGGGCGGGAGCCACTGAAGCTTTCTTT 38120
+#5       True CASRTGAGATEAFF TGTGCCAGCAGGACCGGGGCGGGAGCCACTGAAGCTTTCTTT 24635
+#6       True CAGGRSSNTGKLIF TGTGCAGGAGGACGCTCTAGCAACACAGGCAAACTAATCTTT 13720
+#  umis       raw_consensus_id my.raw_clonotype_id clonotype.Freq proportion
+#1    8 clonotype1_consensus_2          clonotype1             43  0.1572212
+#2   10 clonotype1_consensus_2          clonotype1             43  0.1572212
+#3   24 clonotype1_consensus_1          clonotype1             43  0.1572212
+#4   23 clonotype1_consensus_1          clonotype1             43  0.1572212
+#5   11 clonotype1_consensus_1          clonotype1             43  0.1572212
+#6    7 clonotype1_consensus_2          clonotype1             43  0.1572212
+#  total.colonotype
+#1              109
+#2              109
+#3              109
+#4              109
+#5              109
+#6              109
+
+####
+png('vdj.stats.png',width = 16, height = 8, units = 'in', res = 300)
+vdj.stats(My.VDJ)
+dev.off()
+
+### add vdj data to you object 
+my.obj <- add.vdj(demo.obj, vdj.data = My.VDJ)
+```
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/vdj.stats.png" />
+</p>
+
+Another example with multiple files 
+```r
 # first prepare the files. 
 # this function would filter the files, calculate clonotype frequencies and proportions and add conditions to the cell ids.
 my.vdj.1 <- prep.vdj(vdj.data = "all_contig_annotations.csv", cond.name = "WT")
@@ -1937,6 +2047,35 @@ head(my.vdj.data)
 
 # add it to iCellR object
 add.vdj(my.obj, vdj.data = my.vdj.data)
+ ```
+ How to plot colonotypes
+ 
+ ```r
+# Plot colonotype 1
+clono.plot(my.obj, plot.data.type = "umap", 
+	clono = 1,
+	cell.transparency = 1,
+	clust.dim = 2,
+	interactive = F)
+	
+# plot multiple
+
+clono.list = c(1:12)
+
+for(i in clono.list){
+MyPlot <- clono.plot(my.obj, plot.data.type = "umap", 
+	clono = i,
+	cell.transparency = 1,
+	clust.dim = 2,
+	interactive = F)
+	NameCol=paste("PL",i,sep="_")
+	eval(call("<-", as.name(NameCol), MyPlot))
+}
+
+library(cowplot)
+filenames <- ls(pattern="PL_")
+
+plot_grid(plotlist=mget(filenames))
  ```
 
 # How to analyze large bulk RNA-Seq data (TCGA)
