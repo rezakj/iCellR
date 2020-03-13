@@ -115,13 +115,14 @@ run.mnn <- function (x = NULL,
   BestOrder <- colnames(DATA)
 #### order colnames by the original data
   MNN <- MNN[ , order(match(names(MNN),BestOrder))]
-  message(" Running PCA ...")
   ### PCA
+  message(" Running PCA ...")
   counts.pca <- prcomp((MNN), center = TRUE, scale. = FALSE)
   attributes(x)$pca.info <- counts.pca
   dataPCA = data.frame(counts.pca$rotation) # [1:max.dim]
-  message("All done!")
   attributes(x)$pca.data <- dataPCA
+#########
+  message("All done!")
   end_time1 <- Sys.time()
   Time = difftime(end_time1,start_time1,units = "mins")
   Time = round(as.numeric(Time),digits = 2)

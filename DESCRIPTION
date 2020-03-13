@@ -1,7 +1,7 @@
 Package: iCellR
 Type: Package
 Title: Analyzing High-Throughput Single Cell Sequencing Data
-Version: 1.3.1
+Version: 1.3.3
 Authors@R: c(
   person(given = 'Alireza', family = 'Khodadadi-Jamayran',role = c('aut','cre'), email = 'alireza.khodadadi.j@gmail.com', comment = c(ORCID = '0000-0003-2495-7504')),
   person(given = 'Joseph', family = 'Pucella',role = c('ctb')),
@@ -25,7 +25,7 @@ LazyData: true
 RoxygenNote: 7.0.2
 URL: https://github.com/rezakj/iCellR
 NeedsCompilation: no
-Packaged: 2020-02-25 16:58:49 UTC; khodaa01
+Packaged: 2020-03-13 15:58:22 UTC; khodaa01
 Author: Alireza Khodadadi-Jamayran [aut, cre]
     (<https://orcid.org/0000-0003-2495-7504>),
   Joseph Pucella [ctb],

@@ -4,6 +4,7 @@
 #' @param x An object of class iCellR.
 #' @param dispersion.limit A number for taking the genes that have dispersion above this number, default = 1.5.
 #' @param base.mean.rank A number taking the top genes ranked by base mean, default = 500.
+#' @param gene.num.max Maximum number of genes , default = 2000.
 #' @param non.sig.col Color for the genes not used for the model, default = "darkgray".
 #' @param right.sig.col Color for the genes above the dispersion limit, default = "chartreuse3".
 #' @param left.sig.col Color for the genes above the rank limit, default = "cadetblue3".
@@ -43,6 +44,7 @@
 make.gene.model <- function (x = NULL,
                              dispersion.limit = 1.5,
                              base.mean.rank = 500,
+                             gene.num.max = 2000,
                              non.sig.col = "darkgray",
                              right.sig.col = "chartreuse3",
                              left.sig.col = "cadetblue3",
@@ -174,7 +176,8 @@ if (interactive == FALSE) {
  }
 }
   if (my.out.put == "data") {
-    attributes(x)$gene.model <- as.character(as.matrix(my.clust.genes))
+    data <- as.character(as.matrix(my.clust.genes))
+    attributes(x)$gene.model <- head(data, gene.num.max)
     return(x)
   }
 }

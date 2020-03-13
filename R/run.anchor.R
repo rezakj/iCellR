@@ -143,15 +143,17 @@ run.anchor <- function (x = NULL,
   #### order colnames by the original data
   data <- data[ , order(match(names(data),BestOrder))]
   ### PCA
+  ###
   message(" Running PCA ...")
   counts.pca <- prcomp(data, center = TRUE, scale. = FALSE)
   attributes(x)$pca.info <- counts.pca
   dataPCA = data.frame(counts.pca$rotation) # [1:max.dim]
-  message("All done!")
   attributes(x)$pca.data <- dataPCA
+  #########
   end_time1 <- Sys.time()
   Time = difftime(end_time1,start_time1,units = "mins")
   Time = round(as.numeric(Time),digits = 2)
   message(paste("Total time",Time,"mins"))
+  message("All done!")
   return(x)
 }
