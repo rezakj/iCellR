@@ -8,6 +8,7 @@ make.gene.model(
   x = NULL,
   dispersion.limit = 1.5,
   base.mean.rank = 500,
+  gene.num.max = 2000,
   non.sig.col = "darkgray",
   right.sig.col = "chartreuse3",
   left.sig.col = "cadetblue3",
@@ -29,6 +30,8 @@ make.gene.model(
 \item{dispersion.limit}{A number for taking the genes that have dispersion above this number, default = 1.5.}
 
 \item{base.mean.rank}{A number taking the top genes ranked by base mean, default = 500.}
+
+\item{gene.num.max}{Maximum number of genes , default = 2000.}
 
 \item{non.sig.col}{Color for the genes not used for the model, default = "darkgray".}
 

@@ -67,7 +67,7 @@ run.impute <- function (x = NULL,
     cell.num = nn
 #    message(paste("    ",cell.ratio,"percent of ",ncells, "cells is", cell.num))
     message(paste("    Finding",cell.num, "neighboring cells per cell ..."))
-    message("     To change the number of neighboring cells cahnge nn option")
+    message("     To change the number of neighboring cells change it using the nn option")
     ### time
     pb <- progress_bar$new(total = ncells,
                            format = "[:bar] :current/:total (:percent) :elapsedfull eta: :eta",

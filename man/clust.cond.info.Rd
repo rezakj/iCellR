@@ -8,17 +8,20 @@ clust.cond.info(
   x = NULL,
   plot.type = "pie",
   my.out.put = "data",
-  normalize.ncell = TRUE
+  normalize.ncell = TRUE,
+  normalize.by = "sf"
 )
 }
 \arguments{
 \item{x}{An object of class iCellR.}
 
-\item{plot.type}{Choose from pie or bar, defult = pie.}
+\item{plot.type}{Choose from pie/pie.cond or bar/bar.cond, defult = pie.}
 
 \item{my.out.put}{Chose from "data" or "plot", default = "data".}
 
 \item{normalize.ncell}{If TRUE the values will be normalized to the number of cells by downsampling.}
+
+\item{normalize.by}{Chose from "sf" (size factor) or "percentage", default = "sf".}
 }
 \value{
 An object of class iCellR.

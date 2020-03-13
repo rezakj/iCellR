@@ -38,7 +38,7 @@ run.umap(
   fast_sgd = FALSE,
   ret_model = FALSE,
   ret_nn = FALSE,
-  n_threads = max(1, RcppParallel::defaultNumThreads()/2),
+  n_threads = 1,
   n_sgd_threads = 0,
   grain_size = 1,
   tmpdir = tempdir(),
@@ -347,11 +347,7 @@ could be sensitive to data scaling, so be wary of reusing nearest neighbor
 data if modifying the \code{scale} parameter. This parameter can be used in
 conjunction with \code{ret_model}.}
 
-\item{n_threads}{Number of threads to use (except during stochastic gradient
-descent). Default is half that recommended by RcppParallel. For
-nearest neighbor search, only applies if \code{nn_method = "annoy"}. If
-\code{n_threads > 1}, then the Annoy index will be temporarily written to
-disk in the location determined by \code{\link[base]{tempfile}}.}
+\item{n_threads}{Number of threads to use.}
 
 \item{n_sgd_threads}{Number of threads to use during stochastic gradient
 descent. If set to > 1, then results will not be reproducible, even if

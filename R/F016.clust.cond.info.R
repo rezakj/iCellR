@@ -2,15 +2,17 @@
 #'
 #' This function takes an object of class iCellR and calculates cluster and conditions frequencies.
 #' @param x An object of class iCellR.
-#' @param plot.type Choose from pie or bar, defult = pie.
+#' @param plot.type Choose from pie/pie.cond or bar/bar.cond, defult = pie.
 #' @param my.out.put Chose from "data" or "plot", default = "data".
 #' @param normalize.ncell If TRUE the values will be normalized to the number of cells by downsampling.
+#' @param normalize.by Chose from "sf" (size factor) or "percentage", default = "sf".
 #' @return An object of class iCellR.
 #' @export
 clust.cond.info <- function (x = NULL,
                              plot.type = "pie",
                              my.out.put = "data",
-                             normalize.ncell = TRUE) {
+                             normalize.ncell = TRUE,
+                             normalize.by = "sf") {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
@@ -42,28 +44,70 @@ clust.cond.info <- function (x = NULL,
   colnames(ForNorm1) <- c("conditions","TC","SF")
   DATA <- merge(ForNorm1,DATA,by="conditions")
   DATA$Norm.Freq <- round(DATA$Freq/DATA$SF,3)
+  DATA$percentage <- round((DATA$Freq/DATA$TC)*100,2)
 ################
 # as.data.frame(table(Conds))
   # bar
   myBP <- ggplot(DATA,aes(y=Freq, x=conditions, fill = conditions)) +
-    geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ clusters)
-  # pie
+    geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ clusters, scales = "free")
+  # bar2
+  myBP2 <- ggplot(DATA,aes(y=Freq, x=conditions, fill = clusters)) +
+    geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ conditions, scales = "free")
+    # pie
   myPIE <- ggplot(DATA,aes(y=Freq, x="", fill = conditions)) +
     geom_bar(stat = "identity", position = "fill") + theme_bw() + facet_wrap(~ clusters) +
       theme(axis.title.y=element_blank(),
       axis.text.y=element_blank(),
       axis.ticks.y=element_blank()) + coord_polar(theta="y")
+  # pie2
+  myPIE2 <- ggplot(DATA,aes(y=Freq, x="", fill = clusters)) +
+    geom_bar(stat = "identity", position = "fill") + theme_bw() + facet_wrap(~ conditions) +
+    theme(axis.title.y=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks.y=element_blank()) + coord_polar(theta="y")
+
   #############
   if (normalize.ncell == TRUE) {
+    if(normalize.by == "sf") {
     # bar
     myBP <- ggplot(DATA,aes(y=Norm.Freq, x=conditions, fill = conditions)) +
-      geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ clusters)
+      geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ clusters, scales = "free")
+    # bar2
+    myBP2 <- ggplot(DATA,aes(y=Norm.Freq, x=conditions, fill = clusters)) +
+      geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ conditions, scales = "free")
     # pie
     myPIE <- ggplot(DATA,aes(y=Norm.Freq, x="", fill = conditions)) +
       geom_bar(stat = "identity", position = "fill") + theme_bw() + facet_wrap(~ clusters) +
       theme(axis.title.y=element_blank(),
             axis.text.y=element_blank(),
             axis.ticks.y=element_blank()) + coord_polar(theta="y")
+    # pie2
+    myPIE2 <- ggplot(DATA,aes(y=Norm.Freq, x="", fill = clusters)) +
+      geom_bar(stat = "identity", position = "fill") + theme_bw() + facet_wrap(~ conditions) +
+      theme(axis.title.y=element_blank(),
+            axis.text.y=element_blank(),
+            axis.ticks.y=element_blank()) + coord_polar(theta="y")
+    }
+    if (normalize.by == "percentage") {
+      # bar
+      myBP <- ggplot(DATA,aes(y=percentage, x=conditions, fill = conditions)) +
+        geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ clusters, scales = "free")
+      # bar2
+      myBP2 <- ggplot(DATA,aes(y=percentage, x=conditions, fill = clusters)) +
+        geom_bar(stat = "identity") + theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ conditions, scales = "free")
+      # pie
+      myPIE <- ggplot(DATA,aes(y=percentage, x="", fill = conditions)) +
+        geom_bar(stat = "identity", position = "fill") + theme_bw() + facet_wrap(~ clusters) +
+        theme(axis.title.y=element_blank(),
+              axis.text.y=element_blank(),
+              axis.ticks.y=element_blank()) + coord_polar(theta="y")
+      # pie2
+      myPIE2 <- ggplot(DATA,aes(y=percentage, x="", fill = clusters)) +
+        geom_bar(stat = "identity", position = "fill") + theme_bw() + facet_wrap(~ conditions) +
+        theme(axis.title.y=element_blank(),
+              axis.text.y=element_blank(),
+              axis.ticks.y=element_blank()) + coord_polar(theta="y")
+    }
   }
 #  write.table((DATA), file="clust_cond_freq_info.txt", sep="\t", row.names =FALSE)
 #  message("clust_cond_freq_info.txt file has beed generated.")
@@ -71,8 +115,14 @@ clust.cond.info <- function (x = NULL,
     if (plot.type == "bar") {
       return(myBP)
     }
+    if (plot.type == "bar.cond") {
+      return(myBP2)
+    }
     if (plot.type == "pie") {
       return(myPIE)
+    }
+    if (plot.type == "pie.cond") {
+      return(myPIE2)
     }
   }
 #

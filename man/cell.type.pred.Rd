@@ -13,7 +13,7 @@ cell.type.pred(
 )
 }
 \arguments{
-\item{immgen.data}{Choose from "rna", "uli.rna" or "mca", default = "rna"}
+\item{immgen.data}{Choose from ,"GSE109125","GSE122108","GSE122597","GSE124829","GSE15907","GSE37448", rna", "uli.rna" or "mca", default = "rna"}
 
 \item{gene}{A set of gene names to used to predict cell type.}
 
