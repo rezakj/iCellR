@@ -291,7 +291,7 @@ DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
                  outlier.shape = NA,
                  alpha = cell.transparency) +
     ylab("scaled normalized expression") +
-    stat_summary(fun.y=mean, geom="point", size=2, color="blue") +
+    stat_summary(fun=mean, geom="point", size=2, color="blue") +
     xlab(".")
     }
     if (cond.shape == TRUE) {
@@ -307,13 +307,12 @@ DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
                      outlier.shape = NA,
                      alpha = cell.transparency) +
         ylab("scaled normalized expression") +
-        stat_summary(fun.y=mean, geom="point", size=2, color="blue") +
+        stat_summary(fun=mean, geom="point", size=2, color="blue") +
         xlab(".")
       myPLOT <- myPLOT + facet_wrap(~ Conditions)
     }
   # add p-val
   if (box.to.test == 0) {
-    #########
     if (dim(x@clust.avg)[1] != 0) {
       AvData <- x@clust.avg
       row.names(AvData) <- AvData$gene
@@ -321,10 +320,14 @@ DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
       AvData <- subset(AvData,row.names(AvData) == gene)
       box.to.test <- as.numeric(which.max(AvData))
     }
-    if (dim(x@clust.avg)[1] == 0) {
-      box.to.test = 1
-    }
   }
+##########
+    if (box.to.test == 0) {
+      if (dim(x@clust.avg)[1] == 0) {
+        box.to.test = 1
+        }
+      }
+############
   if (box.pval == "sig.signs") {
     myPLOT <- myPLOT + stat_compare_means(label = "p.signif", ref.group = box.to.test)
   }
@@ -353,7 +356,7 @@ DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
     myPLOT <- ggplot(df2, aes(x = Clusters, y = Expression, fill = Clusters)) +
       geom_errorbar(aes(ymin=Expression, ymax=Expression+sd), width=.2,
                     position=position_dodge(.9)) +
-      stat_summary(fun.y="mean",
+      stat_summary(fun="mean",
                    geom="bar",
                    alpha = cell.transparency,
                    show.legend = FALSE) +
@@ -368,7 +371,7 @@ DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
     myPLOT <- ggplot(df2, aes(x = Clusters, y = Expression, fill = Clusters)) +
       geom_errorbar(aes(ymin=Expression, ymax=Expression+sd), width=.2,
                     position=position_dodge(.9)) +
-      stat_summary(fun.y="mean",
+      stat_summary(fun="mean",
                    geom="bar",
                    alpha = cell.transparency,
                    show.legend = FALSE) +

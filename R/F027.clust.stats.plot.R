@@ -56,7 +56,7 @@ clust.stats.plot <- function (x = NULL,
   # bar
   COUNTS <- c(1:length(DATA$Phase))
   myBP <- ggplot(DATA,aes(y=COUNTS,
-                          x=clusters, fill = Phase)) +
+                          x=as.factor(clusters), fill = Phase)) +
     geom_bar(stat = "identity") + theme_bw() +
     theme(axis.text.x=element_text(angle=90)) +
     ylab("Cell number ratio")
@@ -72,7 +72,7 @@ clust.stats.plot <- function (x = NULL,
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot(fill = box.color, col = "green", notch = notch, outlier.shape = NA, alpha = cell.transparency) +
     xlab("clusters") + ylab("percent of mito genes per cell") +
-    stat_summary(fun.y=mean, geom="point", size=2, color="black") +
+    stat_summary(fun=mean, geom="point", size=2, color="black") +
     theme_bw() + theme(axis.text.x=element_text(angle=90))
   # nGenes
   nGenes.plot <- ggplot(DATA,aes(y=nGenes,x=as.factor(clusters))) +
@@ -80,7 +80,7 @@ clust.stats.plot <- function (x = NULL,
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot(fill = box.color, col = box.line.col, notch = notch, outlier.shape = NA, alpha = cell.transparency) +
     xlab("clusters") + ylab("number of genes per cell") +
-    stat_summary(fun.y=mean, geom="point", size=2, color="black") +
+    stat_summary(fun=mean, geom="point", size=2, color="black") +
     theme_bw() + theme(axis.text.x=element_text(angle=90))
   # UMIs
   UMIsplot <- ggplot(DATA,aes(y=UMIs,x=as.factor(clusters))) +
@@ -88,7 +88,7 @@ clust.stats.plot <- function (x = NULL,
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot(fill = box.color, col = box.line.col, notch = notch, outlier.shape = NA, alpha = cell.transparency) +
     xlab("clusters") + ylab("number of UMIs per cell") +
-    stat_summary(fun.y=mean, geom="point", size=2, color="black") +
+    stat_summary(fun=mean, geom="point", size=2, color="black") +
     theme_bw() + theme(axis.text.x=element_text(angle=90))
 # return
   if (plot.type == "box.umi") {
