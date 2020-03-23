@@ -1,7 +1,7 @@
 Package: iCellR
 Type: Package
 Title: Analyzing High-Throughput Single Cell Sequencing Data
-Version: 1.3.3
+Version: 1.3.4
 Authors@R: c(
   person(given = 'Alireza', family = 'Khodadadi-Jamayran',role = c('aut','cre'), email = 'alireza.khodadadi.j@gmail.com', comment = c(ORCID = '0000-0003-2495-7504')),
   person(given = 'Joseph', family = 'Pucella',role = c('ctb')),
