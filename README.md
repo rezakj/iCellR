@@ -73,7 +73,8 @@ To run a test sample follow these steps:
 library("iCellR")
 my.data <- load10x("filtered_gene_bc_matrices/hg19/")
 
-# This directory includes; barcodes.tsv, genes.tsv/features.tsv and matrix.mtx files (data could be zipped or unzipped).
+# This directory includes; barcodes.tsv, genes.tsv/features.tsv and matrix.mtx files
+# Data could be zipped or unzipped.
 
 # if your data is in a csv or tsv format read it like this example
 # my.data <- read.delim("CITE-Seq_sample_RNA.tsv.gz",header=TRUE)
