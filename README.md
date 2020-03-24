@@ -77,6 +77,9 @@ my.data <- load10x("filtered_gene_bc_matrices/hg19/")
 
 # if your data is in a csv or tsv format read it like this example
 # my.data <- read.delim("CITE-Seq_sample_RNA.tsv.gz",header=TRUE)
+
+# if your data is in a h5 format read it like this example
+# data <- load.h5("filtered_feature_bc_matrix.h5")
 ```
 
 To see the help page for each function use question mark as: 
