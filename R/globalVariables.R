@@ -87,4 +87,5 @@ utils::globalVariables(c("%>%",
                          "Immgen.GSE122597.83",
                          "Immgen.GSE122108.412",
                          "Immgen.GSE109125.205",
-                         "yend"))
+                         "yend",
+                         "annotate"))
