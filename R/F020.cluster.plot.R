@@ -9,6 +9,8 @@
 #' @param col.by Choose between "clusters", "conditions", "cc" (cell cycle) or "monochrome", default = "clusters".
 #' @param cond.shape If TRUE the conditions will be shown in shapes.
 #' @param cond.facet Show the conditions in separate plots.
+#' @param anno.clust Annotate cluster names on the plot, default = TRUE.
+#' @param anno.size If anno.clust is TRUE set font size, default = 3.
 #' @param cell.transparency A numeric value between 0 to 1, default = 0.5.
 #' @param clonotype.max Number of clonotype to plot, default = 10.
 #' @param clust.dim A numeric value for plot dimensions. Choose either 2 or 3, default = 2.
@@ -49,6 +51,8 @@ cluster.plot <- function (x = NULL,
                           col.by = "clusters",
                           cond.facet = FALSE,
                           cond.shape = FALSE,
+                          anno.clust = FALSE,
+                          anno.size = 4,
                           cell.transparency = 0.5,
                           clust.dim = 2,
                           angle = 20,
@@ -196,6 +200,23 @@ cluster.plot <- function (x = NULL,
           theme(panel.background = element_rect(fill = back.col, colour = "black"),
                 panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                 legend.key = element_rect(fill = back.col))
+############# Annotation
+        if (col.by == "clusters") {
+          if (anno.clust == TRUE) {
+            df <- cbind(x@best.clust, DATA)
+            cords <- aggregate(df[, 2:3], list(df$clusters), mean)
+            MYX=cords$V1
+            MYY=cords$V2
+            MYZ=cords$Group.1
+            myPLOT <- myPLOT +  annotate("text",
+                                         x = MYX,
+                                         y = MYY,
+                                         label = MYZ,
+                                         colour = "black",
+                                         size = anno.size)
+          }
+        }
+#############
       }
       if (interactive == TRUE) {
         myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],

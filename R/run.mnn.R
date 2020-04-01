@@ -79,11 +79,17 @@ run.mnn <- function (x = NULL,
   for(i in Patt){
     IDs = grep(paste("^",i,sep=""), Cells, value = TRUE)
     mydata <- DATA[ , which(names(DATA) %in% IDs)]
+    CellN <- dim(mydata)[2]
     SampNam <- paste("iCellRSample",i,sep="_")
     mydata <- SingleCellExperiment(list(counts=as.matrix(mydata)))
-    MyMassg <- paste("    Normalizing sample:",as.character(as.matrix(strsplit(i,'_',fixed=TRUE))))
+    MyMassg <- paste("    Preparing sample:",as.character(as.matrix(strsplit(i,'_',fixed=TRUE))))
     message(MyMassg)
-    mydata <- computeSumFactors(mydata)
+    #mydata <- computeSumFactors(mydata)
+    # not normalize
+    MyList <- list(rep(1,CellN))
+    names(MyList) <- "size_factor"
+    mydata@int_colData@listData <- MyList
+    ####
     mydata <- normalize(mydata)
     eval(call("<-", as.name(SampNam), mydata))
   }

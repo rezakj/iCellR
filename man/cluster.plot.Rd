@@ -13,6 +13,8 @@ cluster.plot(
   col.by = "clusters",
   cond.facet = FALSE,
   cond.shape = FALSE,
+  anno.clust = FALSE,
+  anno.size = 4,
   cell.transparency = 0.5,
   clust.dim = 2,
   angle = 20,
@@ -39,6 +41,10 @@ cluster.plot(
 \item{cond.facet}{Show the conditions in separate plots.}
 
 \item{cond.shape}{If TRUE the conditions will be shown in shapes.}
+
+\item{anno.clust}{Annotate cluster names on the plot, default = TRUE.}
+
+\item{anno.size}{If anno.clust is TRUE set font size, default = 3.}
 
 \item{cell.transparency}{A numeric value between 0 to 1, default = 0.5.}
 

@@ -3,7 +3,7 @@
 #' This function takes an object of class iCellR and runs PCA on the main data.
 #' @param x An object of class iCellR.
 #' @param method Choose from "base.mean.rank" or "gene.model", default is "base.mean.rank". If gene.model is chosen you need to provide gene.list.
-#' @param top.rank A number taking the top genes ranked by base mean, default = 500.
+#' @param top.rank A number. Taking the top genes ranked by base mean, default = 500.
 #' @param data.type Choose from "main" and "imputed", default = "main"
 #' @param plus.log.value A number to add to each value in the matrix before log transformasion to aviond Inf numbers, default = 0.1.
 #' @param gene.list A charactor vector of genes to be used for PCA. If "clust.method" is set to "gene.model", default = "my_model_genes.txt".
