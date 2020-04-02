@@ -1360,6 +1360,11 @@ my.obj <- run.mnn(my.obj,
 detach("package:scran", unload=TRUE)
 ```
 
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/aMNN.png" />
+</p>
+
+
 # 4- How to perform Seurat's MultiCCA (integration) sample alignment 
 
 ```r
@@ -1376,6 +1381,11 @@ my.obj <- run.anchor(my.obj,
     nfeatures = 2000,
     dims = 1:20)
 ```
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/aSeurat.png" />
+</p>
+
 
 # How to demultiplex with hashtag oligos (HTOs)
 
