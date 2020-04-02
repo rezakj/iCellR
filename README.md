@@ -1357,10 +1357,7 @@ my.obj <- iba(my.obj,dims = 1:30, k = 10,ba.method = "CCCA", method = "gene.mode
 # This would automatically run all the samples in your experiment 
 
 library(scran)
-my.obj <- run.mnn(my.obj,
-    top.rank = 500,
-    k=20,
-    d=50)
+my.obj <- run.mnn(my.obj, k=20, d=50, method = "gene.model", gene.list = my.obj@gene.model)
 
 # detach the scran pacakge after MNN as it masks some of the functions 
 detach("package:scran", unload=TRUE)
@@ -1380,7 +1377,6 @@ detach("package:scran", unload=TRUE)
 
 library(Seurat)
 my.obj <- run.anchor(my.obj,
-    top.rank = 500,
     normalization.method = "SCT",
     scale.factor = 10000,
     selection.method = "vst",
