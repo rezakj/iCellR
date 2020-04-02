@@ -1346,7 +1346,7 @@ my.obj <- iba(my.obj,dims = 1:30, k = 10,ba.method = "CCCA", method = "gene.mode
 # 3- How to perform mutual nearest neighbor (MNN) sample alignment 
 
 ```r
-# same as above only change run.mnn function instead of iba.
+# same as above only use run.mnn function instead of iba.
 ###### Run MNN 
 # This would automatically run all the samples in your experiment 
 
@@ -1363,14 +1363,14 @@ detach("package:scran", unload=TRUE)
 # 4- How to perform Seurat's MultiCCA (integration) sample alignment 
 
 ```r
-# same as above only change run.anchor function instead of iba.
+# same as above only use run.anchor function instead of iba.
 ###### Run Anchor 
 # This would automatically run all the samples in your experiment 
 
 library(Seurat)
 my.obj <- run.anchor(my.obj,
     top.rank = 500,
-    normalization.method = "LogNormalize",
+    normalization.method = "SCT",
     scale.factor = 10000,
     selection.method = "vst",
     nfeatures = 2000,
