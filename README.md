@@ -1346,54 +1346,7 @@ my.obj <- iba(my.obj,dims = 1:30, k = 10,ba.method = "CCCA", method = "gene.mode
 # 3- How to perform mutual nearest neighbor (MNN) sample alignment 
 
 ```r
-library(iCellR)
-
-# download sample 1
-sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/sample1_for_CCA.tsv.gz"
-
-download.file(url = sample.file.url, 
-     destfile = "sample1_for_CCA.tsv.gz", 
-     method = "auto")  
-
-
-# download sample 2
-sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/sample2_for_CCA.tsv.gz"
-
-download.file(url = sample.file.url, 
-     destfile = "sample2_for_CCA.tsv.gz", 
-     method = "auto")  
-
-# Read both samples 
-S1 <- read.table("sample1_for_CCA.tsv.gz")
-head(S1)[1:5]
-
-S2 <- read.table("sample2_for_CCA.tsv.gz")
-head(S2)[1:5]
-
-# aggregate both samples  
-my.data <- data.aggregation(samples = c("S1","S2"), condition.names = c("S1","S2"))
-
-# make object
-my.obj <- make.obj(my.data)
-
-# QC
-my.obj <- qc.stats(my.obj,
-s.phase.genes = s.phase, 
-g2m.phase.genes = g2m.phase)
-
-# filter
-my.obj <- cell.filter(my.obj)
-my.obj <- gene.stats(my.obj, which.data = "main.data")
-
-my.obj <- make.gene.model(my.obj, my.out.put = "data",
-	dispersion.limit = 1.5,
-	base.mean.rank = 500,
-	no.mito.model = T,
-	mark.mito = T,
-	interactive = F,
-	no.cell.cycle = T,
-	out.name = "gene.model")
-	
+# same as above only change run.mnn function instead of iba.
 ###### Run MNN 
 # This would automatically run all the samples in your experiment 
 
@@ -1405,90 +1358,12 @@ my.obj <- run.mnn(my.obj,
 
 # detach the scran pacakge after MNN as it masks some of the functions 
 detach("package:scran", unload=TRUE)
-
-# or 
-#my.obj <- run.mnn(my.obj,
-#    method = "gene.model",
-#    gene.list = my.obj@gene.model,
-#    k=20,
-#    d=50)
-
-# By running MNN alignment you replace the PCA data slot and there is no need to run PCA. 
-# If you run PCA, MNN results will be replaced. (Do only if you want to see the results before and after MNN)
-
-# detach scran
-detach("package:scran", unload=TRUE)
-
-# normaliza the main data for iCellR analyses
-my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500)
-
-## run tSNE 
-my.obj <- run.pc.tsne(my.obj, dims = 1:10)
-my.obj <- run.umap(my.obj, dims = 1:10)
-
-cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F)
-
-cluster.plot(my.obj,plot.type = "umap",col.by = "conditions",interactive = F)
 ```
-
-Before and After MNN analysis
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/MNN.png" />
-</p>
-
 
 # 4- How to perform Seurat's MultiCCA (integration) sample alignment 
 
 ```r
-library(iCellR)
-
-# download sample 1
-sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/sample1_for_CCA.tsv.gz"
-
-download.file(url = sample.file.url, 
-     destfile = "sample1_for_CCA.tsv.gz", 
-     method = "auto")  
-
-
-# download sample 2
-sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/sample2_for_CCA.tsv.gz"
-
-download.file(url = sample.file.url, 
-     destfile = "sample2_for_CCA.tsv.gz", 
-     method = "auto")  
-
-# Read both samples 
-S1 <- read.table("sample1_for_CCA.tsv.gz")
-head(S1)[1:5]
-
-S2 <- read.table("sample2_for_CCA.tsv.gz")
-head(S2)[1:5]
-
-# aggregate both samples  
-my.data <- data.aggregation(samples = c("S1","S2"), condition.names = c("S1","S2"))
-
-# make object
-my.obj <- make.obj(my.data)
-
-# QC
-my.obj <- qc.stats(my.obj,
-s.phase.genes = s.phase, 
-g2m.phase.genes = g2m.phase)
-
-# filter
-my.obj <- cell.filter(my.obj)
-my.obj <- gene.stats(my.obj, which.data = "main.data")
-
-my.obj <- make.gene.model(my.obj, my.out.put = "data",
-	dispersion.limit = 1.5,
-	base.mean.rank = 500,
-	no.mito.model = T,
-	mark.mito = T,
-	interactive = F,
-	no.cell.cycle = T,
-	out.name = "gene.model")
-	
+# same as above only change run.anchor function instead of iba.
 ###### Run Anchor 
 # This would automatically run all the samples in your experiment 
 
@@ -1500,27 +1375,7 @@ my.obj <- run.anchor(my.obj,
     selection.method = "vst",
     nfeatures = 2000,
     dims = 1:20)
-
-# By running Anchor alignment you replace the PCA data slot and there is no need to run PCA. 
-# If you run PCA, Anchor results will be replaced. (Do only if you want to see the results before and after MNN)
-
-# normaliza the main data for iCellR analyses
-my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500)
-
-## run tSNE 
-my.obj <- run.pc.tsne(my.obj, dims = 1:10)
-my.obj <- run.umap(my.obj, dims = 1:10)
-
-cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F)
-
-cluster.plot(my.obj,plot.type = "umap",col.by = "conditions",interactive = F)
 ```
-
-Before and After Anchor analysis
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Anchor.png" />
-</p>
 
 # How to demultiplex with hashtag oligos (HTOs)
 
