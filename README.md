@@ -1235,6 +1235,12 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 
 # 1- How to perform Combined Principal Component Alignment (CPCA)
 
+We analyzed nine PBMC sample datasets provided by the Broad Institute to detect batch
+differences. These datasets were generated using varying technologies, including 10x
+Chromium v2 (3 samples), 10x Chromium v3, CEL-Seq2, Drop-seq, inDrop, Seq-Well and
+SMART-Seq. For more info read:
+https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1
+
 ```r
 ## download an object of 9 PBMC samples 
 sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/pbmc_data/my.obj.Robj"
