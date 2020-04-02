@@ -1225,7 +1225,7 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 </p>
 
 # Batch correction (sample alignment) methods:
-1- CPCA (iCellR)* recommended
+1- CPCA (iCellR)** recommended (faster than CCCA)
 
 2- CCCA (iCellR)* recommended
 
