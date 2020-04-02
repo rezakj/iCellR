@@ -1294,10 +1294,39 @@ cluster.plot(my.obj,
               clust.dim = 2,
               interactive = F,cond.facet = T)
 dev.off()
+
+
+genelist = c("PPBP","LYZ","MS4A1","GNLY","FCGR3A","NKG7","CD14","S100A9","CD3E","CD8A","CD4","CD19","IL7R","FOXP3","EPCAM")
+
+for(i in genelist){
+	MyPlot <- gene.plot(my.obj, gene = i, 
+		interactive = F,
+		conds.to.plot = NULL,
+		cell.size = 0.1,
+		data.type = "main",
+		plot.data.type = "umap",
+		scaleValue = T,
+		min.scale = -2.5,max.scale = 2.0,
+		cell.transparency = 1)
+	NameCol=paste("PL",i,sep="_")
+	eval(call("<-", as.name(NameCol), MyPlot))
+}
+
+UMAP = cluster.plot(my.obj,plot.type = "umap",interactive = F,cell.size = 0.1, anno.size=5)
+library(cowplot)
+filenames <- ls(pattern="PL_")
+filenames <- c("UMAP", filenames)
+
+png('genes.png',width = 18, height = 15, units = 'in', res = 300)
+plot_grid(plotlist=mget(filenames))
+dev.off()
+
 ```
 
 <p align="center">
-  <img src="" />
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/aCPCA.png" />
+	<img src="https://github.com/rezakj/scSeqR/blob/master/doc/aS3.png" />
+	<img src="https://github.com/rezakj/scSeqR/blob/master/doc/aS1.png" />
 </p>
 
 
@@ -1308,6 +1337,11 @@ dev.off()
 
 my.obj <- iba(my.obj,dims = 1:30, k = 10,ba.method = "CCCA", method = "gene.model", gene.list = my.obj@gene.model)
 ```
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/aCCCA.png" />
+</p>
+
 
 # 3- How to perform mutual nearest neighbor (MNN) sample alignment 
 
