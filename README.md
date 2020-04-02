@@ -1225,119 +1225,91 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 </p>
 
 # Batch correction (sample alignment) methods:
-1- CCA
+1- CPCA (iCellR)* recommended
 
-2- MNN
+2- CCCA (iCellR)* recommended
 
-3- Anchor 
+3- MNN (scran wraper) optional
 
-# 1- How to perform canonical correlation analysis (CCA) for sample alignment 
+4- MultiCCA (Seurat wraper) optional
+
+# 1- How to perform Combined Principal Component Alignment (CPCA)
 
 ```r
-# this function runs Seurat in the background but only works best if you have 2 samples. 
-# If you have more than 2 samples it's best to run the commands explained in the next code block MNN.
-# After CCA just replace the pca.data slot of iCellR with CCA results from Seurat. 
+## download an object of 9 PBMC samples 
+sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/pbmc_data/my.obj.Robj"
 
-# We recommand running MNN alignment instead of CCA
-
+# download the file
+download.file(url = sample.file.url,
+     destfile = "my.obj.Robj",
+     method = "auto")
+     
+### load iCellR and the object 
 library(iCellR)
-library(Seurat)
+load("my.obj.Robj")
 
-# download sample 1
-sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/sample1_for_CCA.tsv.gz"
+### run PCA on top 2000 genes 
 
-download.file(url = sample.file.url, 
-     destfile = "sample1_for_CCA.tsv.gz", 
-     method = "auto")  
+my.obj <- run.pca(my.obj, top.rank = 2000)
 
+### find best genes for second round PCA or batch alignment
 
-# download sample 2
-sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/sample2_for_CCA.tsv.gz"
+my.obj <- find.dim.genes(my.obj, dims = 1:30,top.pos = 20, top.neg = 20)
+length(my.obj@gene.model)
 
-download.file(url = sample.file.url, 
-     destfile = "sample2_for_CCA.tsv.gz", 
-     method = "auto")  
+########### Batch alignment (CPCA method)
 
-# Read both samples 
-S1 <- read.table("sample1_for_CCA.tsv.gz")
-head(S1)[1:5]
+my.obj <- iba(my.obj,dims = 1:30, k = 10,ba.method = "CPCA", method = "gene.model", gene.list = my.obj@gene.model)
 
-S2 <- read.table("sample2_for_CCA.tsv.gz")
-head(S2)[1:5]
+### impute data 
 
-# aggregate both samples  
-my.data <- data.aggregation(samples = c("S1","S2"), condition.names = c("S1","S2"))
+my.obj <- run.impute(my.obj,dims = 1:10,data.type = "pca", nn = 10)
 
-# make object
-my.obj <- make.obj(my.data)
+### tSNE and UMAP
+my.obj <- run.pc.tsne(my.obj, dims = 1:10)
+my.obj <- run.umap(my.obj, dims = 1:10)
 
-# QC
-my.obj <- qc.stats(my.obj,
-s.phase.genes = s.phase, 
-g2m.phase.genes = g2m.phase)
+### save object 
+save(my.obj, file = "my.obj.Robj")
 
-# filter
-my.obj <- cell.filter(my.obj)
+### plot
 
-## CCA 
+ library(gridExtra)
+A= cluster.plot(my.obj,plot.type = "umap",interactive = F,cell.size = 0.1)
+B= cluster.plot(my.obj,plot.type = "tsne",interactive = F,cell.size = 0.1) 
+C= cluster.plot(my.obj,plot.type = "umap",col.by = "conditions",interactive = F,cell.size = 0.1)
+D=cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F,cell.size = 0.1)
 
-require(devtools)
-install_version("Seurat", version = "2.3.4", repos = "http://cran.us.r-project.org")
-library(Seurat)
-
-# this function runs Seurat in the background but only works best if you have 2 samples. 
-# If you have more than 2 samples it's best to run the commands explained in the next code block MNN.
-# After CCA just replace the pca.data slot of iCellR with CCA results from Seurat. 
-
-my.obj <- run.cca(my.obj,
-	top.vari.genes = 1000,
-	cc.number = 30,
-	dims.align = 1:20,
-	normalize.data = TRUE,
-	scale.data = TRUE,
-	normalization.method = "LogNormalize",
-	scale.factor = 10000,
-	display.progress = TRUE)
-
-################ Normalize, gene stats and gene model for PCA
-my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500) 
-my.obj <- gene.stats(my.obj, which.data = "main.data")
-my.obj <- make.gene.model(my.obj)
-
-###### See data without CCA
-my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
-
-my.obj <- run.umap(my.obj, dims = 1:10) 
-
-UMAP_NoCCA <- cluster.plot(my.obj,plot.type = "umap",cell.color = "black",col.by = "conditions",cell.transparency = 0.5)
-
-PCA <- cluster.plot(my.obj,plot.type = "pca",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
-
-##### See data with CCA
-# replace PCA with CCA
-attributes(my.obj)$pca.data <- my.obj@cca.data
-
-my.obj <- run.umap(my.obj, dims = 1:10) 
-
-UMAP_CCA <- cluster.plot(my.obj,plot.type = "umap",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
-
-Aligned_CCA <- cluster.plot(my.obj,plot.type = "pca",cell.color = "black",col.by = "conditions",cell.transparency = 0.5,interactive = F)
-
-# plot
-library(gridExtra)
-png('Compare.png', width = 8, height = 8, units = 'in', res = 300)
-grid.arrange(UMAP_NoCCA,PCA,UMAP_CCA,Aligned_CCA)
+png('AllClusts.png', width = 12, height = 12, units = 'in', res = 300)
+grid.arrange(A,B,C,D)
 dev.off()
 
+png('AllConds_clusts.png', width = 15, height = 15, units = 'in', res = 300)
+cluster.plot(my.obj,
+              cell.size = 0.5,
+              plot.type = "umap",
+              cell.color = "black",
+              back.col = "white",
+              cell.transparency = 1,
+              clust.dim = 2,
+              interactive = F,cond.facet = T)
+dev.off()
 ```
-Before and After CCA
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Compare.png" />
+  <img src="" />
 </p>
 
 
-# 2- How to perform mutual nearest neighbor (MNN) sample alignment 
+# 2- How to perform Combined Coverage Correction Alignment (CCCA)
+
+```r
+# same as above only change the option to CCCA
+
+my.obj <- iba(my.obj,dims = 1:30, k = 10,ba.method = "CCCA", method = "gene.model", gene.list = my.obj@gene.model)
+```
+
+# 3- How to perform mutual nearest neighbor (MNN) sample alignment 
 
 ```r
 library(iCellR)
@@ -1432,7 +1404,7 @@ Before and After MNN analysis
 </p>
 
 
-# 3- How to perform Seurat's anchor (integration) sample alignment 
+# 4- How to perform Seurat's MultiCCA (integration) sample alignment 
 
 ```r
 library(iCellR)
