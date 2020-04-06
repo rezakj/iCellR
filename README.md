@@ -2026,16 +2026,17 @@ Choose a cluster and take top 10 genes for that cluster and then choose one of t
 
 
 ```r
-# examples
-Cluster = 8
-MyGenes <- top.markers(marker.genes, topde = 40, min.base.mean = 0.2, cluster = Cluster)
+# Choose top 40 genes for cluster 8 for example
+MyGenes <- top.markers(marker.genes, topde = 40, min.base.mean = 0.2, cluster = 8)
+
+####### predict
 # plot 
 cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot")
-# and
+
 cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "point.plot", top.cell.types = 50)
-# or 
+ 
 cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "heatmap")
-# and
+ 
 cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
 
 # And finally check the genes in the cells and find the common ones to predict
