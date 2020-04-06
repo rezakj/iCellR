@@ -2062,6 +2062,28 @@ cell.type.pred(immgen.data = "GSE109125", gene = MyGenes, plot.type = "point.plo
 cell.type.pred(immgen.data = "GSE37448", gene = MyGenes, plot.type = "heatmap", top.cell.types = 50)
 ```
 
+You can automate this for all the clusters as below. Add as many plot as you wish. 
+
+```r
+Clusters = sort(unique(my.obj@best.clust$clusters))
+
+
+for(i in Clusters){
+	Cluster = i
+	MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.2, cluster = Cluster)
+# first plot
+Name <- paste("ImmGen_Cluster_",Cluster,"_pointPlot_RNA.pdf",sep="")
+pdf(Name, width = 10, height = 10)
+print(cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot"))
+dev.off()
+# second plot
+Name <- paste("ImmGen_Cluster_",Cluster,"_check.pdf",sep="")
+pdf(Name, width = 10, height = 10)
+print(heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters"))
+dev.off()
+}
+```
+
  - Pathway analysis
  
 ```r
