@@ -1990,9 +1990,38 @@ cluster.plot(my.obj,plot.type = "umap",cell.color = "black",cell.transparency = 
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/TCGA.png" />
 </p>
 
- - Cell type prediction using ImmGen
+ # Cell type prediction using ImmGen, Mouse and Human Cell Atlas 
  
-Note that ImmGen is mouse genome data and the sample data here is human. For 157 ULI-RNA-Seq samples use this meta data: [metadata](https://github.com/rezakj/scSeqR/blob/dev/doc/uli_RNA_metadat.txt). 
+To do this you need to download the following data.
+ 
+ ```r
+# download the .rda file from here: https://genome.med.nyu.edu/results/external/iCellR/data/ 
+# Load the .rda databases as below
+
+load("/gpfs/home/khodaa01/Projects/iCellR/data/Immgen.GSE109125.205.rda")
+load("/gpfs/home/khodaa01/Projects/iCellR/data/Immgen.GSE122108.412.rda")
+load("/gpfs/home/khodaa01/Projects/iCellR/data/Immgen.GSE122597.83.rda")
+load("/gpfs/home/khodaa01/Projects/iCellR/data/Immgen.GSE124829.190.rda")
+load("/gpfs/home/khodaa01/Projects/iCellR/data/Immgen.microarray.GSE15907.653.rda")
+load("/gpfs/home/khodaa01/Projects/iCellR/data/Immgen.microarray.GSE37448.189.rda")
+load("/gpfs/home/khodaa01/Projects/iCellR/data/immgen.rna.rda")
+load("/gpfs/home/khodaa01/Projects/iCellR/data/immgen.uli.rna.rda")
+load("/gpfs/home/khodaa01/Projects/iCellR/data/mouse.cell.atlas.rda") 
+ ```
+ 
+ 
+| Data        | from           | number of samples  | info  |
+| ------------- |:-------------:| -----:| -----:|
+| [GSE109125](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE109125) | ImmGen | 205 | |
+| [GSE122108](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122108) | ImmGen | 412 | |
+| [GSE122597](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122597) | ImmGen | 83 | |
+| [GSE124829](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE124829) | ImmGen | 190 | |
+| [GSE15907](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE15907) | ImmGen | 653 | |
+| [GSE37448](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE37448) | ImmGen | 189 | |
+| PRJNA281360(https://www.ncbi.nlm.nih.gov/sra?linkname=bioproject_sra_all&from_uid=281360) | ImmGen | 23 | |
+| uli.rna(https://github.com/rezakj/scSeqR/blob/dev/doc/uli_RNA_metadat.txt) | ImmGen | 157 | |
+| [mouse.cell.atlas](https://www.ncbi.nlm.nih.gov/pubmed/29474909) | MCA | 43 tissues | |
+ 
 
 ```r
 Cluster = 8
