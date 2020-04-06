@@ -7,7 +7,7 @@ Link to Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/
 
 Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
 
-For citation use this: https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1
+For citation use this: https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1.full
 
 iCellR publications: [PMID 31744829](https://www.ncbi.nlm.nih.gov/pubmed/31744829) (scRNA-seq), [PMID: 31934613](https://www.ncbi.nlm.nih.gov/pubmed/31934613) (bulk RNA-seq from TCGA)
 
@@ -1100,7 +1100,7 @@ We analyzed nine PBMC sample datasets provided by the Broad Institute to detect 
 differences. These datasets were generated using varying technologies, including 10x
 Chromium v2 (3 samples), 10x Chromium v3, CEL-Seq2, Drop-seq, inDrop, Seq-Well and
 SMART-Seq. For more info read:
-https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1
+https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1.full
 
 ```r
 ## download an object of 9 PBMC samples 
