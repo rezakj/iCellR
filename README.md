@@ -1998,15 +1998,15 @@ To do this you need to download the following databses from our iCellR data link
 # download the .rda file from here: https://genome.med.nyu.edu/results/external/iCellR/data/ 
 # Load the .rda databases as below
 
-load("/gpfs/home/khodaa01/Projects/iCellR/data/Immgen.GSE109125.205.rda")
-load("/gpfs/home/khodaa01/Projects/iCellR/data/Immgen.GSE122108.412.rda")
-load("/gpfs/home/khodaa01/Projects/iCellR/data/Immgen.GSE122597.83.rda")
-load("/gpfs/home/khodaa01/Projects/iCellR/data/Immgen.GSE124829.190.rda")
-load("/gpfs/home/khodaa01/Projects/iCellR/data/Immgen.microarray.GSE15907.653.rda")
-load("/gpfs/home/khodaa01/Projects/iCellR/data/Immgen.microarray.GSE37448.189.rda")
-load("/gpfs/home/khodaa01/Projects/iCellR/data/immgen.rna.rda")
-load("/gpfs/home/khodaa01/Projects/iCellR/data/immgen.uli.rna.rda")
-load("/gpfs/home/khodaa01/Projects/iCellR/data/mouse.cell.atlas.rda") 
+load("Immgen.GSE109125.205.rda")
+load("Immgen.GSE122108.412.rda")
+load("Immgen.GSE122597.83.rda")
+load("Immgen.GSE124829.190.rda")
+load("Immgen.microarray.GSE15907.653.rda")
+load("Immgen.microarray.GSE37448.189.rda")
+load("immgen.rna.rda")
+load("immgen.uli.rna.rda")
+load("mouse.cell.atlas.rda") 
  ```
  
  
@@ -2014,13 +2014,13 @@ load("/gpfs/home/khodaa01/Projects/iCellR/data/mouse.cell.atlas.rda")
 | ------------- |:-------------:| -----:| -----:| -----:|
 | [GSE109125](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE109125) | ImmGen | 205 | 83 populations representing all lineages and several differentiation cascades prepared from unchallenged mice and after LPS, anti-CD3, viral infection cell activation. | B Cells, Stromal Cells, Dendritic Cells, Granulocytes, Innate Lymphocytes, Stem Cells, Macrophages, ab T Cells, gd T Cells |
 | [GSE122108](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122108) | ImmGen | 412 | 130 populations comprising progenitors, residents, and stimulated (C.alb, LPS, injury, APAP+ starved overnight and pIC) mononuclear phagocytes for OpenSource MNP Project. | Macrophages, Kupffer Cell/Macrophages, Dendritic Cells, Microglia, Monocytes. |
-| [GSE122597](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122597) | ImmGen | 83 | |
-| [GSE124829](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE124829) | ImmGen | 190 | |
-| [GSE15907](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE15907) | ImmGen | 653 | |
-| [GSE37448](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE37448) | ImmGen | 189 | |
-| [PRJNA281360](https://www.ncbi.nlm.nih.gov/sra?linkname=bioproject_sra_all&from_uid=281360) | ImmGen | 23 | |
-| [uli.rna](https://github.com/rezakj/scSeqR/blob/dev/doc/uli_RNA_metadat.txt) | ImmGen | 157 | |
-| [GSE108097](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE108097) | Mouse Cell Atlas | 43 tissues | |
+| [GSE122597](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122597) | ImmGen | 83 | Five highly purified immunocyte populations profiled to unusual depth as multiple replicates (8 to 16). Suitable for exploration of genes expressed at very low levels. | NK Cells, Follicular B, Naive CD4+ abT, gdT cells and peritoneal macrophages. |
+| [GSE124829](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE124829) | ImmGen | 190 | 11 diverse immunocyte populations from male and female mice of varying ages stimulated with different dose of IFN to understand the immune system's sexual differences. | B Cells, Dendritic Cells, Neutrophils, Macrophages, Natural Killer T Cells, ab T Cells, gd T Cells, Microglia, Regulatory T Cells. |
+| [GSE15907](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE15907) | ImmGen | 653 | 178 populations compromiing of gene-expression microarray datasets ("version1" labeling) from primary cells from multiple immune lineages are isolated ex-vivo, primarily from 6weeks B6 male mice. | gd T Cells, ab T Cells, Dendritic Cells, Macrophages, Stem Cells, B Cells, Stromal Cells, Neutrophils, Fibroblast, NK Cells, NK T Cells, Monocytes, CD4 Naive T Cell. |
+| [GSE37448](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE37448) | ImmGen | 189 | 80 populations compromising of gene-expression microarray datasets ("version2" labeling) from primary cells from multiple immune lineages are isolated ex-vivo, primarily from 6weeks B6 male mice. Complements the V1 compendium with additional cells. Unfortunately, the version change in the labeling process, while more efficient, introduced some biases such that the two sections of the data can be compared grossly, but not at fine resolution (we tried...). | gd T Cells, ab T Cells, Dendritic Cells, Macrophages, Stem Cells, B Cells, Stromal Cells, Neutrophils, Fibroblast, NK Cells, NK T Cells, Monocytes, CD4 Naive T Cell. |
+| [PRJNA281360](https://www.ncbi.nlm.nih.gov/sra?linkname=bioproject_sra_all&from_uid=281360) | ImmGen | 23 | Full depth directional RNA sequencing was performed on the core ImmGen populations to generate reference datasets for the tissues from 5 week-old C57BL/6J (Jackson Laboratory) males and females, double-sorted by flow cytometry, per ImmGen cell preparation SOP.  | B, CD4T, CD8T, DC, MQ,NK, NKT, Treg|
+| [uli.rna](https://github.com/rezakj/scSeqR/blob/dev/doc/uli_RNA_metadat.txt) | ImmGen | 157 | | |
+| [GSE108097](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE108097) | Mouse Cell Atlas | 43 tissues | | Uterus,TrophoblastStemCells,Thymus,Testis,Stomach,Spleen,SmallIntestine,Prostate,Placenta,PeripheralBlood,Pancreas,Ovary,NeontalBrain,NeonatalSkin,NeonatalRib,NeonatalMuscle,NeonatalHeart,NeonatalCalvaria,Muscle,Mouse3T3,MesenchymalStemCellsPrimary,MesenchymalStemCells,MammaryGland.Virgin,MammaryGland.Pregnancy,MammaryGland.Lactation,MammaryGland.Involution,Male.fetal.Gonad,Lung,Liver,Kidney,FetalStomach,FetalLung,FetalLiver,FetalKidney,FetalIntestine,FetalBrain,Female.fetal.Gonad,EmbryonicStemCells,EmbryonicMesenchyme,Brain,BoneMarrowcKit,BoneMarrow,Bladder |
  
 
 ```r
