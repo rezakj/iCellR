@@ -2041,18 +2041,18 @@ cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "heatmap")
  
 cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
 
+# As you can see cluster 8 is most likely to be B-cells. 
+
 # more examples
 cell.type.pred(immgen.data = "GSE109125", gene = MyGenes, plot.type = "point.plot", top.cell.types = 50)
 
 cell.type.pred(immgen.data = "GSE37448", gene = MyGenes, plot.type = "heatmap", top.cell.types = 50)
 
-# And finally check the genes in the cells and find the common ones to predict
-# heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
-
-# As you can see cluster 8 is most likely to be B-cells.  
-
 # for tissue type prediction use this:
-#cell.type.pred(immgen.data = "mca", gene = MyGenes, plot.type = "point.plot")
+cell.type.pred(immgen.data = "mca", gene = MyGenes, plot.type = "point.plot")
+
+# And finally check the genes in the cells and find the common ones to predict
+heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters") 
 ```
 
 <p align="center">
