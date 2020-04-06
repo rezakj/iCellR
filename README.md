@@ -1992,7 +1992,7 @@ cluster.plot(my.obj,plot.type = "umap",cell.color = "black",cell.transparency = 
 
  # Cell type prediction using ImmGen, Mouse and Human Cell Atlas 
  
-To do this you need to download the following data.
+To do this you need to download the following databses from our iCellR data link.
  
  ```r
 # download the .rda file from here: https://genome.med.nyu.edu/results/external/iCellR/data/ 
@@ -2018,8 +2018,8 @@ load("/gpfs/home/khodaa01/Projects/iCellR/data/mouse.cell.atlas.rda")
 | [GSE124829](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE124829) | ImmGen | 190 | |
 | [GSE15907](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE15907) | ImmGen | 653 | |
 | [GSE37448](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE37448) | ImmGen | 189 | |
-| PRJNA281360(https://www.ncbi.nlm.nih.gov/sra?linkname=bioproject_sra_all&from_uid=281360) | ImmGen | 23 | |
-| uli.rna(https://github.com/rezakj/scSeqR/blob/dev/doc/uli_RNA_metadat.txt) | ImmGen | 157 | |
+| [PRJNA281360](https://www.ncbi.nlm.nih.gov/sra?linkname=bioproject_sra_all&from_uid=281360) | ImmGen | 23 | |
+| [uli.rna](https://github.com/rezakj/scSeqR/blob/dev/doc/uli_RNA_metadat.txt) | ImmGen | 157 | |
 | [mouse.cell.atlas](https://www.ncbi.nlm.nih.gov/pubmed/29474909) | MCA | 43 tissues | |
  
 
