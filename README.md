@@ -1994,11 +1994,11 @@ cluster.plot(my.obj,plot.type = "umap",cell.color = "black",cell.transparency = 
 
  # Cell type prediction using ImmGen, Mouse and Human Cell Atlas 
  
-To do this you need to download the following databses from our iCellR data link (more data to come soon). 
+To do this you need to download the following databse files from our iCellR data link (more data to come soon). 
  
  ```r
-# download the .rda file from here: https://genome.med.nyu.edu/results/external/iCellR/data/ 
-# Load the .rda databases as below
+# download the .rda files from here: https://genome.med.nyu.edu/results/external/iCellR/data/ 
+# Load the .rda files as below
 
 load("Immgen.GSE109125.205.rda")
 load("Immgen.GSE122108.412.rda")
