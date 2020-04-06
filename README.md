@@ -1992,7 +1992,7 @@ cluster.plot(my.obj,plot.type = "umap",cell.color = "black",cell.transparency = 
 
  # Cell type prediction using ImmGen, Mouse and Human Cell Atlas 
  
-To do this you need to download the following databses from our iCellR data link.
+To do this you need to download the following databses from our iCellR data link (more data to come soon). 
  
  ```r
 # download the .rda file from here: https://genome.med.nyu.edu/results/external/iCellR/data/ 
@@ -2010,10 +2010,10 @@ load("/gpfs/home/khodaa01/Projects/iCellR/data/mouse.cell.atlas.rda")
  ```
  
  
-| Data        | from           | number of samples  | info  |
-| ------------- |:-------------:| -----:| -----:|
-| [GSE109125](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE109125) | ImmGen | 205 | |
-| [GSE122108](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122108) | ImmGen | 412 | |
+| Data        | from           | number of samples  | Description  | Cell Types |
+| ------------- |:-------------:| -----:| -----:| -----:|
+| [GSE109125](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE109125) | ImmGen | 205 | 83 populations representing all lineages and several differentiation cascades prepared from unchallenged mice and after LPS, anti-CD3, viral infection cell activation. | B Cells, Stromal Cells, Dendritic Cells, Granulocytes, Innate Lymphocytes, Stem Cells, Macrophages, ab T Cells, gd T Cells |
+| [GSE122108](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122108) | ImmGen | 412 | 130 populations comprising progenitors, residents, and stimulated (C.alb, LPS, injury, APAP+ starved overnight and pIC) mononuclear phagocytes for OpenSource MNP Project. | Macrophages, Kupffer Cell/Macrophages, Dendritic Cells, Microglia, Monocytes. |
 | [GSE122597](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE122597) | ImmGen | 83 | |
 | [GSE124829](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE124829) | ImmGen | 190 | |
 | [GSE15907](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE15907) | ImmGen | 653 | |
