@@ -2022,7 +2022,7 @@ load("mouse.cell.atlas.rda")
 | [uli.rna](https://github.com/rezakj/scSeqR/blob/dev/doc/uli_RNA_metadat.txt) | ImmGen | 157 | | |
 | [mca](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE108097) | Mouse Cell Atlas | 43 tissues | Constructed as a basic scheme for the Mouse Cell Atlas using Microwell-seq. | Uterus, TrophoblastStemCells, Thymus, Testis, Stomach, Spleen, SmallIntestine, Prostate, Placenta, PeripheralBlood, Pancreas, Ovary, NeontalBrain, NeonatalSkin, NeonatalRib, NeonatalMuscle, NeonatalHeart, NeonatalCalvaria, Muscle, Mouse3T3, MesenchymalStemCellsPrimary, MesenchymalStemCells, MammaryGland.Virgin, MammaryGland.Pregnancy, MammaryGland.Lactation, MammaryGland.Involution, Male.fetal.Gonad, Lung, Liver, Kidney, FetalStomach, FetalLung, FetalLiver, FetalKidney, FetalIntestine, FetalBrain, Female.fetal.Gonad, EmbryonicStemCells, EmbryonicMesenchyme, Brain, BoneMarrowcKit, BoneMarrow, Bladder |
  
-Choose a cluster and take top 10 genes for that cluster and then choose one of the databases as above and predict your cell type. Note that if you have B cells for example and the database of your choice dose not have B cells, it would predict the closest looking cells to B cells. So it's important to use the right data base for the right type of data. 
+Choose a cluster and take for example top 10 genes for that cluster and then choose one of the databases that is best for you from the above list and predict your cell type. Note that if you have B cells for example and the database of your choice dose not have B cells, it would predict the closest looking cells to B cells. So it's important to use the right database for the right type of data. 
 
 
 ```r
