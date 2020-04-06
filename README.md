@@ -2020,7 +2020,7 @@ load("/gpfs/home/khodaa01/Projects/iCellR/data/mouse.cell.atlas.rda")
 | [GSE37448](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE37448) | ImmGen | 189 | |
 | [PRJNA281360](https://www.ncbi.nlm.nih.gov/sra?linkname=bioproject_sra_all&from_uid=281360) | ImmGen | 23 | |
 | [uli.rna](https://github.com/rezakj/scSeqR/blob/dev/doc/uli_RNA_metadat.txt) | ImmGen | 157 | |
-| [mouse.cell.atlas](https://www.ncbi.nlm.nih.gov/pubmed/29474909) | MCA | 43 tissues | |
+| [GSE108097](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE108097) | Mouse Cell Atlas | 43 tissues | |
  
 
 ```r
