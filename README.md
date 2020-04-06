@@ -2075,8 +2075,6 @@ cell.type.pred(immgen.data = "GSE37448", gene = MyGenes, plot.type = "heatmap", 
 </p>
 
 
-
-
 ```r
 sessionInfo()
 R version 3.5.1 (2018-07-02)
