@@ -1082,103 +1082,7 @@ After downloading the cell ids, use the following command to rename their cluste
 ```r
 my.obj <- gate.to.clust(my.obj, my.gate = "cellGating.txt", to.clust = 10)
  ```
-
- - Pseudotime analysis
  
- ```r
-MyGenes <- top.markers(marker.genes, topde = 50, min.base.mean = 0.2)
-MyGenes <- unique(MyGenes)
-
-pseudotime.tree(my.obj,
-	marker.genes = MyGenes,
-	type = "unrooted",
-	clust.method = "complete")
-
-# or 
-
-pseudotime.tree(my.obj,
-	marker.genes = MyGenes,
-	type = "classic",
-	clust.method = "complete")
-	
-pseudotime.tree(my.obj,
-	marker.genes = MyGenes,
-	type = "jitter",
-	clust.method = "complete")	
-
- ```
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/bloodCells.jpg" />
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_unrooted2.png" width="400" />
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_unrooted.png" width="400" />
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_classic.png" width="400" />
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_jitter.png" width="400"/>
-</p>
-
-
- - Pseudotime analysis using monocle
- 
-  ```r
-library(monocle)
-
-MyMTX <- my.obj@main.data
-GeneAnno <- as.data.frame(row.names(MyMTX))
-colnames(GeneAnno) <- "gene_short_name"
-row.names(GeneAnno) <- GeneAnno$gene_short_name
-cell.cluster <- (my.obj@best.clust)
-Ha <- data.frame(do.call('rbind', strsplit(as.character(row.names(cell.cluster)),'_',fixed=TRUE)))[1]
-clusts <- paste("cl.",as.character(cell.cluster$clusters),sep="")
-cell.cluster <- cbind(cell.cluster,Ha,clusts)
-colnames(cell.cluster) <- c("Clusts","iCellR.Conds","iCellR.Clusts")
-Samp <- new("AnnotatedDataFrame", data = cell.cluster)
-Anno <- new("AnnotatedDataFrame", data = GeneAnno)
-my.monoc.obj <- newCellDataSet(as.matrix(MyMTX),phenoData = Samp, featureData = Anno)
-
-## find disperesedgenes 
-my.monoc.obj <- estimateSizeFactors(my.monoc.obj)
-my.monoc.obj <- estimateDispersions(my.monoc.obj)
-disp_table <- dispersionTable(my.monoc.obj)
-
-unsup_clustering_genes <- subset(disp_table, mean_expression >= 0.1)
-my.monoc.obj <- setOrderingFilter(my.monoc.obj, unsup_clustering_genes$gene_id)
-
-# tSNE
-my.monoc.obj <- reduceDimension(my.monoc.obj, max_components = 2, num_dim = 10,reduction_method = 'tSNE', verbose = T)
-# cluster 
-my.monoc.obj <- clusterCells(my.monoc.obj, num_clusters = 10)
-
-## plot conditions and clusters based on iCellR analysis 
-A <- plot_cell_clusters(my.monoc.obj, 1, 2, color = "iCellR.Conds")
-B <- plot_cell_clusters(my.monoc.obj, 1, 2, color = "iCellR.Clusts")
-
-## plot clusters based monocle analysis 
-C <- plot_cell_clusters(my.monoc.obj, 1, 2, color = "Cluster")
-
-# get marker genes from iCellR analysis
-MyGenes <- top.markers(marker.genes, topde = 30, min.base.mean = 0.2)
-my.monoc.obj <- setOrderingFilter(my.monoc.obj, MyGenes)
-
-my.monoc.obj <- reduceDimension(my.monoc.obj, max_components = 2,method = 'DDRTree')
-# order cells 
-my.monoc.obj <- orderCells(my.monoc.obj)
-
-# plot based on iCellR analysis and marker genes from iCellR
-D <- plot_cell_trajectory(my.monoc.obj, color_by = "iCellR.Clusts")
-
-## heatmap genes from iCellR
-
-plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
-	cores = 1,
-	cluster_rows = F,
-	use_gene_short_name = T,
-	show_rownames = T)
- ```
- 
- <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/13_monocol.png" />
-	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/14_monocol.png" />
-</p>
-
 # Batch correction (sample alignment) methods:
 1- CPCA (iCellR)** recommended (faster than CCCA)
 
@@ -1343,6 +1247,101 @@ my.obj <- run.anchor(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/aSeurat.png" />
 </p>
 
+ - Pseudotime analysis
+ 
+ ```r
+MyGenes <- top.markers(marker.genes, topde = 50, min.base.mean = 0.2)
+MyGenes <- unique(MyGenes)
+
+pseudotime.tree(my.obj,
+	marker.genes = MyGenes,
+	type = "unrooted",
+	clust.method = "complete")
+
+# or 
+
+pseudotime.tree(my.obj,
+	marker.genes = MyGenes,
+	type = "classic",
+	clust.method = "complete")
+	
+pseudotime.tree(my.obj,
+	marker.genes = MyGenes,
+	type = "jitter",
+	clust.method = "complete")	
+
+ ```
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/bloodCells.jpg" />
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_unrooted2.png" width="400" />
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_unrooted.png" width="400" />
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_classic.png" width="400" />
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/pseudotime.tree_jitter.png" width="400"/>
+</p>
+
+
+ - Pseudotime analysis using monocle
+ 
+  ```r
+library(monocle)
+
+MyMTX <- my.obj@main.data
+GeneAnno <- as.data.frame(row.names(MyMTX))
+colnames(GeneAnno) <- "gene_short_name"
+row.names(GeneAnno) <- GeneAnno$gene_short_name
+cell.cluster <- (my.obj@best.clust)
+Ha <- data.frame(do.call('rbind', strsplit(as.character(row.names(cell.cluster)),'_',fixed=TRUE)))[1]
+clusts <- paste("cl.",as.character(cell.cluster$clusters),sep="")
+cell.cluster <- cbind(cell.cluster,Ha,clusts)
+colnames(cell.cluster) <- c("Clusts","iCellR.Conds","iCellR.Clusts")
+Samp <- new("AnnotatedDataFrame", data = cell.cluster)
+Anno <- new("AnnotatedDataFrame", data = GeneAnno)
+my.monoc.obj <- newCellDataSet(as.matrix(MyMTX),phenoData = Samp, featureData = Anno)
+
+## find disperesedgenes 
+my.monoc.obj <- estimateSizeFactors(my.monoc.obj)
+my.monoc.obj <- estimateDispersions(my.monoc.obj)
+disp_table <- dispersionTable(my.monoc.obj)
+
+unsup_clustering_genes <- subset(disp_table, mean_expression >= 0.1)
+my.monoc.obj <- setOrderingFilter(my.monoc.obj, unsup_clustering_genes$gene_id)
+
+# tSNE
+my.monoc.obj <- reduceDimension(my.monoc.obj, max_components = 2, num_dim = 10,reduction_method = 'tSNE', verbose = T)
+# cluster 
+my.monoc.obj <- clusterCells(my.monoc.obj, num_clusters = 10)
+
+## plot conditions and clusters based on iCellR analysis 
+A <- plot_cell_clusters(my.monoc.obj, 1, 2, color = "iCellR.Conds")
+B <- plot_cell_clusters(my.monoc.obj, 1, 2, color = "iCellR.Clusts")
+
+## plot clusters based monocle analysis 
+C <- plot_cell_clusters(my.monoc.obj, 1, 2, color = "Cluster")
+
+# get marker genes from iCellR analysis
+MyGenes <- top.markers(marker.genes, topde = 30, min.base.mean = 0.2)
+my.monoc.obj <- setOrderingFilter(my.monoc.obj, MyGenes)
+
+my.monoc.obj <- reduceDimension(my.monoc.obj, max_components = 2,method = 'DDRTree')
+# order cells 
+my.monoc.obj <- orderCells(my.monoc.obj)
+
+# plot based on iCellR analysis and marker genes from iCellR
+D <- plot_cell_trajectory(my.monoc.obj, color_by = "iCellR.Clusts")
+
+## heatmap genes from iCellR
+
+plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
+	cores = 1,
+	cluster_rows = F,
+	use_gene_short_name = T,
+	show_rownames = T)
+ ```
+ 
+ <p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/13_monocol.png" />
+	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/14_monocol.png" />
+</p>
 
 # How to demultiplex with hashtag oligos (HTOs)
 
