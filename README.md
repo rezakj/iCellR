@@ -2041,6 +2041,11 @@ cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "heatmap")
  
 cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
 
+# more examples
+cell.type.pred(immgen.data = "GSE109125", gene = MyGenes, plot.type = "point.plot", top.cell.types = 50)
+
+cell.type.pred(immgen.data = "GSE37448", gene = MyGenes, plot.type = "heatmap", top.cell.types = 50)
+
 # And finally check the genes in the cells and find the common ones to predict
 # heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
 
@@ -2057,12 +2062,6 @@ cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_heatmap_ULI-RNA_Cluster_7.png" />	
 </p>
 
-```r
-# more examples
-cell.type.pred(immgen.data = "GSE109125", gene = MyGenes, plot.type = "point.plot", top.cell.types = 50)
-
-cell.type.pred(immgen.data = "GSE37448", gene = MyGenes, plot.type = "heatmap", top.cell.types = 50)
-```
 
 You can automate this for all the clusters as below. Add as many plot as you wish. 
 
