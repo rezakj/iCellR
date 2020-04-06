@@ -925,51 +925,6 @@ grid.arrange(A,B,C,D)
 </p>
  
  
- - Cell type prediction using ImmGen
- 
-Note that ImmGen is mouse genome data and the sample data here is human. For 157 ULI-RNA-Seq samples use this meta data: [metadata](https://github.com/rezakj/scSeqR/blob/dev/doc/uli_RNA_metadat.txt). 
-
-```r
-Cluster = 8
-MyGenes <- top.markers(marker.genes, topde = 40, min.base.mean = 0.2, cluster = Cluster)
-# plot 
-cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot")
-# and
-cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "point.plot", top.cell.types = 50)
-# or 
-cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "heatmap")
-# and
-cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
-
-# And finally check the genes in the cells and find the common ones to predict
-# heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
-
-# As you can see cluster 8 is most likely to be B-cells.  
-
-# for tissue type prediction use this:
-#cell.type.pred(immgen.data = "mca", gene = MyGenes, plot.type = "point.plot")
-```
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_pointPlot_RNA_Cluster_7.png" />
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_pointPlot_ULI-RNA_Cluster_7.png" /> 
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_heatmap_RNA_Cluster_7.png" /> 
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_heatmap_ULI-RNA_Cluster_7.png" />	
-</p>
-
-
- - Pathway analysis
- 
-```r
-# Pathway  
-# pathways.kegg(my.obj, clust.num = 7) 
-# this function is being improved and soon will be available
-```
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/7_cluster_KEGGpathways.png" />    
-</p>
-
 - QC on clusters 
 
 ```r
@@ -2035,6 +1990,53 @@ cluster.plot(my.obj,plot.type = "umap",cell.color = "black",cell.transparency = 
 <p align="center">
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/TCGA.png" />
 </p>
+
+ - Cell type prediction using ImmGen
+ 
+Note that ImmGen is mouse genome data and the sample data here is human. For 157 ULI-RNA-Seq samples use this meta data: [metadata](https://github.com/rezakj/scSeqR/blob/dev/doc/uli_RNA_metadat.txt). 
+
+```r
+Cluster = 8
+MyGenes <- top.markers(marker.genes, topde = 40, min.base.mean = 0.2, cluster = Cluster)
+# plot 
+cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "point.plot")
+# and
+cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "point.plot", top.cell.types = 50)
+# or 
+cell.type.pred(immgen.data = "rna", gene = MyGenes, plot.type = "heatmap")
+# and
+cell.type.pred(immgen.data = "uli.rna", gene = MyGenes, plot.type = "heatmap")
+
+# And finally check the genes in the cells and find the common ones to predict
+# heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
+
+# As you can see cluster 8 is most likely to be B-cells.  
+
+# for tissue type prediction use this:
+#cell.type.pred(immgen.data = "mca", gene = MyGenes, plot.type = "point.plot")
+```
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_pointPlot_RNA_Cluster_7.png" />
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_pointPlot_ULI-RNA_Cluster_7.png" /> 
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_heatmap_RNA_Cluster_7.png" /> 
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/ImmGen_heatmap_ULI-RNA_Cluster_7.png" />	
+</p>
+
+
+ - Pathway analysis
+ 
+```r
+# Pathway  
+# pathways.kegg(my.obj, clust.num = 7) 
+# this function is being improved and soon will be available
+```
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/7_cluster_KEGGpathways.png" />    
+</p>
+
+
 
 
 ```r
