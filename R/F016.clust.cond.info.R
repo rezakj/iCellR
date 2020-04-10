@@ -5,14 +5,14 @@
 #' @param plot.type Choose from pie/pie.cond or bar/bar.cond, defult = pie.
 #' @param my.out.put Chose from "data" or "plot", default = "data".
 #' @param normalize.ncell If TRUE the values will be normalized to the number of cells by downsampling.
-#' @param normalize.by Chose from "sf" (size factor) or "percentage", default = "sf".
+#' @param normalize.by Chose from "sf" (size factor) or "percentage", default = "percentage".
 #' @return An object of class iCellR.
 #' @export
 clust.cond.info <- function (x = NULL,
                              plot.type = "pie",
                              my.out.put = "data",
                              normalize.ncell = TRUE,
-                             normalize.by = "sf") {
+                             normalize.by = "percentage") {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }

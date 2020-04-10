@@ -17,13 +17,6 @@ run.phenograph <- function (x = NULL,
   #  DATA <- x@umap.data
   #  DATA <- x@tsne.data.3d
     ######
-    if(!"Rphenograph" %in% (.packages())){
-      stop("Please load Rphenograph package: library(Rphenograph)
-         To install:
-         library('devtools')
-         devtools::install_github('JinmiaoChenLab/Rphenograph')
-         ")
-    }
   ######
       data <- as.matrix(DATA)
       Rphenograph_out <- Rphenograph(data, k = k)

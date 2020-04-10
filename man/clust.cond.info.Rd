@@ -9,7 +9,7 @@ clust.cond.info(
   plot.type = "pie",
   my.out.put = "data",
   normalize.ncell = TRUE,
-  normalize.by = "sf"
+  normalize.by = "percentage"
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ clust.cond.info(
 
 \item{normalize.ncell}{If TRUE the values will be normalized to the number of cells by downsampling.}
 
-\item{normalize.by}{Chose from "sf" (size factor) or "percentage", default = "sf".}
+\item{normalize.by}{Chose from "sf" (size factor) or "percentage", default = "percentage".}
 }
 \value{
 An object of class iCellR.
