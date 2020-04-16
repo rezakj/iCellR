@@ -421,7 +421,7 @@ my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,d
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/Opt_Number_Of_PCs.png" />
 </p>
 
-- Clustering methods:
+### Clustering
 
 We provide three functions to run the clustering method of your choice:
 
