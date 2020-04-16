@@ -425,11 +425,14 @@ my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,d
 
 We provide three functions to run the clustering method of your choice:
 
-#### 1- iclust (** recommended): Faster and optimized for iCellR. This function can take PCA, UMAP and tSNE as input, however we recommend using the PCA data as in default. This function is using Louvain algorithm for clustering a graph made using KNN based on the input data (PCA by default). This is very similar to PhenoGraph (Levine et al., Cell, 2015) however instead of Jaccard similarity values we use distance (euclidean by default) values for the weights.
+#### 1- iclust (** recommended): 
+	Faster and optimized for iCellR. This function can take PCA, UMAP and tSNE as input, however we recommend using the PCA data as in default. This function is using Louvain algorithm for clustering a graph made using KNN based on the input data (PCA by default). This is very similar to PhenoGraph (Levine et al., Cell, 2015) however instead of Jaccard similarity values we use distance (euclidean by default) values for the weights.
 
-2- run.phenograph: A popular method using Rphenograph (Levine et al., Cell, 2015). 
+##### 2- run.phenograph: 
+	A popular method using Rphenograph (Levine et al., Cell, 2015). 
 
-3- run.clustering: In this function we provide a variety of many other options for you to explore the data with different flavours of clustering and indexing methods. Choose any combinations from the table below.
+##### 3- run.clustering: 
+	In this function we provide a variety of many other options for you to explore the data with different flavours of clustering and indexing methods. Choose any combinations from the table below.
 
 | clustering methods | distance methods | indexing methods | 
 | ------------- | ------------- | ------------- |
@@ -442,6 +445,8 @@ my.obj <- iclust(my.obj,
     k = 100,
     dims = 1:10,
     data.type = "pca")
+
+# or
 
 #library(Rphenograph)
 #my.obj <- run.phenograph(my.obj,k = 100,dims = 1:10)
