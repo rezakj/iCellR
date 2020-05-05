@@ -3,11 +3,14 @@ iCellR is an interactive R package to work with high-throughput single cell sequ
 
 News (april 2020): see our imputation/coverage correction (CC) and batch alignment (CCCA and CPCA) methods. More databases added for cell type prediction (ImmGen and MCA). 
 
+# News (May 2020): see our dimensionality reduction called KNetL map. Coming in May 10th (iCellR version 1.4.5)! 
+https://www.biorxiv.org/content/10.1101/2020.05.05.078550v1
+
 Link to Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/packages/iCellR/index.html).  Link to manual: [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.pdf)
 
 Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
 
-For citation use this: https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1.full
+For citation use this: https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1.full and https://www.biorxiv.org/content/10.1101/2020.05.05.078550v1
 
 iCellR publications: [PMID 31744829](https://www.ncbi.nlm.nih.gov/pubmed/31744829) (scRNA-seq), [PMID: 31934613](https://www.ncbi.nlm.nih.gov/pubmed/31934613) (bulk RNA-seq from TCGA)
 
