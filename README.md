@@ -1,9 +1,10 @@
 # iCellR
 iCellR is an interactive R package to work with high-throughput single cell sequencing technologies (i.e scRNA-seq, scVDJ-seq and CITE-seq).
 
-News (April 2020): see our imputation/coverage correction (CC) and batch alignment (CCCA and CPCA) methods. More databases added for cell type prediction (ImmGen and MCA). 
 
-### News (May 2020): see our dimensionality reduction called [KNetL map](https://www.biorxiv.org/content/10.1101/2020.05.05.078550v1) (pronounced like "nettle"). Wait for iCellR version 1.4.5 to be released on May 10th!
+### *News* (May 2020): see our dimensionality reduction called [KNetL map](https://www.biorxiv.org/content/10.1101/2020.05.05.078550v1) (pronounced like "nettle"). Wait for iCellR version 1.4.5 to be released on May 10th!
+
+News (April 2020): see our imputation/coverage correction (CC) and batch alignment (CCCA and CPCA) methods. More databases added for cell type prediction (ImmGen and MCA). 
 
 Link to Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/packages/iCellR/index.html).  Link to manual: [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.pdf)
 
