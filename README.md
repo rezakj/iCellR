@@ -26,6 +26,7 @@ iCellR Viewer (web GUI app): https://compbio.nyumc.org/icellr/
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/first.gif" width="400"/>
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out2.gif" width="400"/>
 		 <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Slide1_1.png"/>
+			 <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Slide5_1.png"/>
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out3.gif" width="400"/>
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out4.gif" width="400"/> 
 	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/gating2.gif"/>
