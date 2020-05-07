@@ -45,7 +45,7 @@ gene.plot(
 
 \item{box.pval}{Choose from "sig.values" and "sig.signs". If set to "sig.signs" p values would be replaced with signs ("na", "*", "**", "***"), default = "sig.signs".}
 
-\item{plot.data.type}{Choose between "tsne", "pca", "umap", "diffusion", "pseudo.A" and "pseudo.B", default = "tsne".}
+\item{plot.data.type}{Choose between "tsne", "pca", "umap", "knetl", "diffusion", "pseudo.A" and "pseudo.B", default = "tsne".}
 
 \item{scaleValue}{Scale the colors, default = FALSE.}
 

@@ -42,8 +42,9 @@ run.impute <- function (x = NULL,
   if (imp.method == "iCellR.imp"){
     my.data = DATA
     if(data.type == "pca") {
-      num.of.PCs = c(dims)
-      my.data.my.pca = t(x@pca.info$rotation)[num.of.PCs, ]
+      my.data.my.pca= (t(x@pca.data))[dims, ]
+#      num.of.PCs = c(dims)
+#      my.data.my.pca = t(x@pca.info$rotation)[num.of.PCs, ]
     }
     if(data.type == "umap") {
       my.data.my.pca = t(x@umap.data)
@@ -79,6 +80,15 @@ run.impute <- function (x = NULL,
     ############
     message(paste("   correcting the coverage of the neighboring cells (mean) ..."))
     ### time
+#    pb <- progress_bar$new(total = ncells,
+#                           format = "[:bar] :current/:total (:percent) :elapsedfull eta: :eta",
+#                           clear = FALSE, width= 60)
+    ##########
+#    data.sum1 = sapply(KNN1, function(sum.cov){
+#      pb$tick()
+#      rowMeans(my.data[, sum.cov])})
+    #######
+    my.data <- as.matrix(my.data)
     pb <- progress_bar$new(total = ncells,
                            format = "[:bar] :current/:total (:percent) :elapsedfull eta: :eta",
                            clear = FALSE, width= 60)
@@ -86,13 +96,18 @@ run.impute <- function (x = NULL,
     data.sum1 = sapply(KNN1, function(sum.cov){
       pb$tick()
       rowMeans(my.data[, sum.cov])})
+#    GETmean(my.data[, sum.cov])})
     ############
+    #my.data <- as.data.frame(my.data)
     data.sum1 <- as.data.frame(data.sum1)
+    row.names(data.sum1) <- row.names(my.data)
     colnames(data.sum1) <- colnames(my.data)
+    data.sum1 <- round(data.sum1, digits = 3)
+######
     message(paste("All done!"))
     end_time1 <- Sys.time()
     Time = difftime(end_time1,start_time1,units = "mins")
-    Time = round(as.numeric(Time),digits = 2)
+    Time = round(as.numeric(Time),digits = 3)
     message(paste("Total time",Time,"mins"))
     attributes(x)$imputed.data <- data.sum1
     return(x)

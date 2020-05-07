@@ -4,12 +4,14 @@
 \alias{run.phenograph}
 \title{Clustering the data}
 \usage{
-run.phenograph(x = NULL, k = 45, dims = 1:10)
+run.phenograph(x = NULL, k = 100, data.type = "pca", dims = 1:10)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
 
 \item{k}{integer; number of nearest neighbours (default:45)}
+
+\item{data.type}{Choose between "tsne", "pca", "umap", default = "pca".}
 
 \item{dims}{PCA dimentions to be use for clustering, default = 1:10.}
 }

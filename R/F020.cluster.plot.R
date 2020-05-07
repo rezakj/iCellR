@@ -3,7 +3,7 @@
 #' This function takes an object of class iCellR and creates plots to see the clusters.
 #' @param x An object of class iCellR.
 #' @param cell.size A numeric value for the size of the cells, default = 1.
-#' @param plot.type Choose between "tsne", "pca", "umap", "diffusion", "pseudo.A" and "pseudo.B", default = "tsne".
+#' @param plot.type Choose between "tsne", "pca", "umap", "knetl", "diffusion", default = "tsne".
 #' @param cell.color Choose cell color if col.by = "monochrome", default = "black".
 #' @param back.col Choose background color, default = "black".
 #' @param col.by Choose between "clusters", "conditions", "cc" (cell cycle) or "monochrome", default = "clusters".
@@ -86,13 +86,9 @@ cluster.plot <- function (x = NULL,
       MyTitle = "Diffusion Map Plot"
       DATA <- x@diffusion.data
     }
-    if (plot.type == "pseudo.A") {
-      MyTitle = "Pseudo Map A Plot"
-      DATA <- x@pseudo.mapA
-    }
-    if (plot.type == "pseudo.B") {
-      MyTitle = "Pseudo Map B Plot"
-      DATA <- x@pseudo.mapB
+    if (plot.type == "knetl") {
+      MyTitle = "KNetL Plot"
+      DATA <- x@knetl.data
     }
   }
   # 3 dimentions
@@ -109,6 +105,10 @@ cluster.plot <- function (x = NULL,
       MyTitle = "3D PCA Plot"
       DATA <- x@pca.data
     }
+    if (plot.type == "knetl") {
+      MyTitle = "KNetL Plot"
+      DATA <- x@knetl.data.3d
+    }
     if (plot.type == "diffusion") {
       MyTitle = "3D Diffusion Map Plot"
         DATA <- x@diffusion.data
@@ -120,7 +120,7 @@ cluster.plot <- function (x = NULL,
   }
   # conditions
   if (col.by == "conditions") {
-    Cells <- colnames(x@main.data)
+    Cells <- rownames(DATA)
     MYConds <- as.character((unique(data.frame(do.call('rbind', strsplit(as.character(Cells),'_',fixed=TRUE)))[1]))$X1)
     if (length(MYConds) == 1) {
       stop("You need more then one condition/sample to run this")

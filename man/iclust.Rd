@@ -9,19 +9,22 @@ iclust(
   dist.method = "euclidean",
   k = 100,
   data.type = "pca",
-  dims = 1:10
+  dims = 1:10,
+  return.graph = FALSE
 )
 }
 \arguments{
 \item{x}{An object of class iCellR.}
 
-\item{dist.method}{the distance measure to be used to compute the dissimilarity matrix. This must be one of: "euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski" or "NULL". By default, distance="euclidean". If the distance is "NULL", the dissimilarity matrix (diss) should be given by the user. If distance is not "NULL", the dissimilarity matrix should be "NULL".}
+\item{dist.method}{the distance measure to be used to compute the dissimilarity matrix. This must be one of: "euclidean", "maximum", "mandatattan", "canberra", "binary", "minkowski" or "NULL". By default, distance="euclidean". If the distance is "NULL", the dissimilarity matrix (diss) should be given by the user. If distance is not "NULL", the dissimilarity matrix should be "NULL".}
 
 \item{k}{KNN the higher the number the less sensitivity, default = 100.}
 
 \item{data.type}{Choose between "tsne", "pca", "umap", default = "pca".}
 
 \item{dims}{PCA dimentions to be use for clustering, default = 1:10.}
+
+\item{return.graph}{return igraph object, default = FALSE.}
 }
 \value{
 An object of class iCellR.

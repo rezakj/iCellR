@@ -30,7 +30,7 @@ cluster.plot(
 
 \item{cell.size}{A numeric value for the size of the cells, default = 1.}
 
-\item{plot.type}{Choose between "tsne", "pca", "umap", "diffusion", "pseudo.A" and "pseudo.B", default = "tsne".}
+\item{plot.type}{Choose between "tsne", "pca", "umap", "knetl", "diffusion", default = "tsne".}
 
 \item{cell.color}{Choose cell color if col.by = "monochrome", default = "black".}
 

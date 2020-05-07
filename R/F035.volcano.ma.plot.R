@@ -66,12 +66,14 @@ volcano.ma.plot <- function (x = NULL,
     data <- data.frame(gene = row.names(results),
                        pvalue = -log10(results$padj),
                        lfc = results$log2FoldChange)
+    Myylab <- "-log10 (adjusted p-value)"
   }
   if (sig.value == "pval") {
     results <- subset(DATA,select=c(log2FoldChange,pval))
     data <- data.frame(gene = row.names(results),
                        pvalue = -log10(results$pval),
                        lfc = results$log2FoldChange)
+    Myylab <- "-log10 (p-value)"
   }
   # Modify dataset to add new coloumn of colors
   data <- data %>%
@@ -87,7 +89,7 @@ volcano.ma.plot <- function (x = NULL,
     theme(legend.position = "none") + # remove legend
     ggtitle(label = "Volcano Plot", subtitle = "Colored by directionality") +  # add title
     xlab("log2 (Fold Change)") + # x-axis label
-    ylab("-log10 (adjusted p-value)") + # y-axis label
+    ylab(Myylab) + # y-axis label
     geom_vline(xintercept = 0, colour = "black") + # add line at 0
     geom_hline(yintercept = Pval, colour = "black") + # p(0.05) = 1.3
     scale_color_manual(values = c("Treated" = dot.col[1],
