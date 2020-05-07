@@ -64,7 +64,7 @@ if (do == 2) {
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot( fill = box.color, col = "green", notch = FALSE, outlier.shape = NA, alpha = cell.transparency) +
     xlab("mito.percent") + ylab("percent of mito genes per cell") +
-    stat_summary(fun.y=mean, geom="point", size=2, color="black") +
+    stat_summary(fun=mean, geom="point", size=2, color="black") +
     theme_bw() + theme(axis.text.x=element_text(angle=90))
     # nGenes
   nGenes.plot <- ggplot(DATA,aes(y=nGenes,x=col.legend)) +
@@ -72,7 +72,7 @@ if (do == 2) {
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot( fill = box.color, col = box.line.col, notch = FALSE, outlier.shape = NA, alpha = cell.transparency) +
     xlab("nGenes") + ylab("number of genes per cell") +
-    stat_summary(fun.y=mean, geom="point", size=2, color="black") +
+    stat_summary(fun=mean, geom="point", size=2, color="black") +
     theme_bw() + theme(axis.text.x=element_text(angle=90))
     # UMIs
   UMIsplot <- ggplot(DATA,aes(y=UMIs,x=col.legend)) +
@@ -80,7 +80,7 @@ if (do == 2) {
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot( fill = box.color, col = box.line.col, notch = FALSE, outlier.shape = NA, alpha = cell.transparency) +
     xlab("UMIs") + ylab("number of UMIs per cell") +
-    stat_summary(fun.y=mean, geom="point", size=2, color="black") +
+    stat_summary(fun=mean, geom="point", size=2, color="black") +
     theme_bw() + theme(axis.text.x=element_text(angle=90))
   # s.phase
   s.plot <- ggplot(DATA,aes(y=S.phase.probability,x=col.legend)) +
@@ -88,7 +88,7 @@ if (do == 2) {
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot( fill = box.color, col = box.line.col, notch = FALSE, outlier.shape = NA, alpha = cell.transparency) +
     xlab("S phase") + ylab("S phase probability") +
-    stat_summary(fun.y=mean, geom="point", size=2, color="black") +
+    stat_summary(fun=mean, geom="point", size=2, color="black") +
     theme_bw() + theme(axis.text.x=element_text(angle=90))
   # g2m.phase.probability
   g2m.plot <- ggplot(DATA,aes(y=g2m.phase.probability,x=col.legend)) +
@@ -96,12 +96,12 @@ if (do == 2) {
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot( fill = box.color, col = box.line.col, notch = FALSE, outlier.shape = NA, alpha = cell.transparency) +
     xlab("G2 and M phase") + ylab("G2 and M phase probability") +
-    stat_summary(fun.y=mean, geom="point", size=2, color="black") +
+    stat_summary(fun=mean, geom="point", size=2, color="black") +
     theme_bw() + theme(axis.text.x=element_text(angle=90))
 # scatter plots
   if (col.legend[1] == ".") {
     Mito.UMIs <- ggplot(DATA,aes(y=mito.percent,x=UMIs,
-                                 text = paste("UMIs =",DATA$UMIs,",",DATA$CellIds,sep=" "))) +
+                                 text = paste("UMIs =",UMIs,",",CellIds,sep=" "))) +
       geom_point(color = cell.color, size = cell.size, alpha = cell.transparency) +
       scale_x_continuous(trans = "log1p") +
       scale_color_discrete(name="") +
@@ -110,7 +110,7 @@ if (do == 2) {
             legend.key = element_rect(fill = back.col)) + theme_bw()
     #
     Genes.UMIs <- ggplot(DATA,aes(y=nGenes,x=UMIs,
-                                  text = paste("nGenes =",DATA$nGenes,",",DATA$CellIds,sep=" "))) +
+                                  text = paste("nGenes =",nGenes,",",CellIds,sep=" "))) +
       geom_point(color = cell.color, size = cell.size, alpha = cell.transparency) +
       scale_x_continuous(trans = "log1p") +
       scale_y_continuous(trans = "log1p") +
@@ -120,7 +120,7 @@ if (do == 2) {
             legend.key = element_rect(fill = back.col)) + theme_bw()
   } else {
     Mito.UMIs <- ggplot(DATA,aes(y=mito.percent,x=UMIs, col = col.legend,
-                                 text = paste("UMIs =",DATA$UMIs,",",DATA$CellIds,sep=" "))) +
+                                 text = paste("UMIs =",UMIs,",",CellIds,sep=" "))) +
       geom_point( size = cell.size, alpha = cell.transparency) +
       scale_x_continuous(trans = "log1p") +
       scale_color_discrete(name="") +
@@ -129,7 +129,7 @@ if (do == 2) {
             legend.key = element_rect(fill = back.col)) + theme_bw()
     #
     Genes.UMIs <- ggplot(DATA,aes(y=nGenes,x=UMIs, col = col.legend,
-                                  text = paste("nGenes =",DATA$nGenes,",",DATA$CellIds,sep=" "))) +
+                                  text = paste("nGenes =",nGenes,",",CellIds,sep=" "))) +
       geom_point(size = cell.size, alpha = cell.transparency) +
       scale_x_continuous(trans = "log1p") +
       scale_y_continuous(trans = "log1p") +
