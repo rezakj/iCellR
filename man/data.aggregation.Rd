@@ -35,5 +35,4 @@ head(demo)[1:4]
 
 # make iCellR object
 myDemo.obj <- make.obj(demo)
-
 }

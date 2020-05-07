@@ -5,7 +5,7 @@
 #' @param gene A gene name to be plotted.
 #' @param box.to.test A cluster number so that all the boxes in the box plot would be compared to. If set to "0" the cluster with the highest avrage would be choosen, default = 0.
 #' @param box.pval Choose from "sig.values" and "sig.signs". If set to "sig.signs" p values would be replaced with signs ("na", "*", "**", "***"), default = "sig.signs".
-#' @param plot.data.type Choose between "tsne", "pca", "umap", "diffusion", "pseudo.A" and "pseudo.B", default = "tsne".
+#' @param plot.data.type Choose between "tsne", "pca", "umap", "knetl", "diffusion", "pseudo.A" and "pseudo.B", default = "tsne".
 #' @param clust.dim 2 for 2D plots and 3 for 3D plots, default = 2.
 #' @param col.by Choose from "clusters" and "conditions", default = "clusters".
 #' @param data.type Choose from "main" or "imputed", default = "main".
@@ -85,7 +85,7 @@ gene.plot <- function (x = NULL,
   }
   ## get main data
   if (data.type == "main") {
-  DATAmain <- x@main.data
+    DATAmain <- x@main.data
   }
   if (data.type == "imputed") {
     DATAmain <- x@imputed.data
@@ -116,13 +116,9 @@ gene.plot <- function (x = NULL,
       MyTitle = "Diffusion Map Plot"
       DATA <- x@diffusion.data
     }
-    if (plot.type == "pseudo.A") {
-      MyTitle = "Pseudo Map A Plot"
-      DATA <- x@pseudo.mapA
-    }
-    if (plot.type == "pseudo.B") {
-      MyTitle = "Pseudo Map B Plot"
-      DATA <- x@pseudo.mapB
+    if (plot.data.type == "knetl") {
+      MyTitle = "KNetL Plot"
+      DATA <- x@knetl.data
     }
   }
   # 3 dimentions
@@ -135,9 +131,9 @@ gene.plot <- function (x = NULL,
       MyTitle = "3D PCA Plot"
       DATA <- x@pca.data
     }
-    if (plot.data.type == "dst") {
-      MyTitle = "3D DST Plot"
-      DATA <- x@diff.st.data
+    if (plot.data.type == "knetl") {
+      MyTitle = "KNetL Plot"
+      DATA <- x@knetl.data.3d
     }
     if (plot.data.type == "diffusion") {
       MyTitle = "Diffusion Map Plot"
@@ -157,74 +153,74 @@ gene.plot <- function (x = NULL,
     } else {
       col.legend.box <- x@best.clust
       col.legend.box <- factor(x@best.clust$clusters)
-#      col.legend.box$clusters <- sub("^", "cl.",col.legend.box$clusters)
-#      col.legend.box <- factor(col.legend.box$clusters)
+      #      col.legend.box$clusters <- sub("^", "cl.",col.legend.box$clusters)
+      #      col.legend.box <- factor(col.legend.box$clusters)
     }
   }
   # get the gene from the main data
   sub.data <- subset(DATAmain,rownames(DATAmain) == gene)
   data.t <- t(sub.data)
   data.expr <- as.data.frame(data.t)
-###### make binary
-#  data.binary <- data.t > 0
-#  data.binary <- as.data.frame(data.binary)
-#  col.legend.bin = data.binary[[gene]]
-#### make heamap
+  ###### make binary
+  #  data.binary <- data.t > 0
+  #  data.binary <- as.data.frame(data.binary)
+  #  col.legend.bin = data.binary[[gene]]
+  #### make heamap
   col.legend = log2(data.expr + 1)
   col.legend <- as.numeric(as.matrix(col.legend))
-# fix scale
+  # fix scale
   FixScale <- function (mydata, min, max){
     Mydat <- mydata
     Mydat[Mydat > max] <- max
     Mydat[Mydat < min] <- min
     return(Mydat)
   }
-# fix color for ADTs
+  # fix color for ADTs
   if (scaleValue == FALSE) {
-      if ( length(grep("^ADT_", gene, value = TRUE)) == 1) {
-        Lo3=(quantile(col.legend,0.05)) # 1
-        Lo2=(quantile(col.legend,0.10)) # 2
-        Lo1=(quantile(col.legend,0.25)) # 3
-        MID=(quantile(col.legend,0.50)) # 4
-        Up1=(quantile(col.legend,0.75)) # 5
-        Up2=(quantile(col.legend,0.90)) # 6
-        Up3=(quantile(col.legend,0.95)) # 7
-        col.legend <- replace(col.legend, col.legend > Up3, Up3)
-        col.legend <- replace(col.legend, col.legend > Up2 & col.legend < Up3 ,Up2)
-        col.legend <- replace(col.legend, col.legend > Up1 & col.legend < Up2 ,Up1)
-        col.legend <- replace(col.legend, col.legend > MID & col.legend < Up1 ,MID)
-        col.legend <- replace(col.legend, col.legend > Lo1 & col.legend < MID ,Lo1)
-        col.legend <- replace(col.legend, col.legend < Lo2 ,Lo1)
-      }
+    if ( length(grep("^ADT_", gene, value = TRUE)) == 1) {
+      Lo3=(quantile(col.legend,0.05)) # 1
+      Lo2=(quantile(col.legend,0.10)) # 2
+      Lo1=(quantile(col.legend,0.25)) # 3
+      MID=(quantile(col.legend,0.50)) # 4
+      Up1=(quantile(col.legend,0.75)) # 5
+      Up2=(quantile(col.legend,0.90)) # 6
+      Up3=(quantile(col.legend,0.95)) # 7
+      col.legend <- replace(col.legend, col.legend > Up3, Up3)
+      col.legend <- replace(col.legend, col.legend > Up2 & col.legend < Up3 ,Up2)
+      col.legend <- replace(col.legend, col.legend > Up1 & col.legend < Up2 ,Up1)
+      col.legend <- replace(col.legend, col.legend > MID & col.legend < Up1 ,MID)
+      col.legend <- replace(col.legend, col.legend > Lo1 & col.legend < MID ,Lo1)
+      col.legend <- replace(col.legend, col.legend < Lo2 ,Lo1)
+    }
   }
-#      if ( length(grep("^ADT_", gene, value = T)) == 0) {
-#        col.legend = col.legend
-#      }
-###
+  #      if ( length(grep("^ADT_", gene, value = T)) == 0) {
+  #        col.legend = col.legend
+  #      }
+  ###
   if (scaleValue == TRUE) {
     col.legend <- scale(col.legend)
     col.legend <- FixScale(mydata = col.legend, min = min.scale, max = max.scale)
   }
-###
-# fix the dataframe
-MyConds <- data.frame(do.call('rbind', strsplit(as.character(rownames(DATA)),'_',fixed=TRUE)))[1]
-MyConds <- factor(as.matrix(MyConds))
+  ###
+  # fix the dataframe
+  MyConds <- data.frame(do.call('rbind', strsplit(as.character(rownames(DATA)),'_',fixed=TRUE)))[1]
+  MyConds <- factor(as.matrix(MyConds))
 
-if (length(col.legend.box) == 0){
-  DATA <- cbind(DATA, Expression = col.legend, Conditions = MyConds)
-}
-if (length(col.legend.box) != 0){
-  DATA <- cbind(DATA, Expression = col.legend, Clusters = col.legend.box, Conditions = MyConds)
-}
-####
-if (!is.null(conds.to.plot)) {
-DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
-}
-###
+  if (length(col.legend.box) == 0){
+    DATA <- cbind(DATA, Expression = col.legend, Conditions = MyConds)
+  }
+  if (length(col.legend.box) != 0){
+    DATA <- cbind(DATA, Expression = col.legend, Clusters = col.legend.box, Conditions = MyConds)
+  }
+  ####
+  if (!is.null(conds.to.plot)) {
+    DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
+  }
+  ###
   if (plot.type == "scatterplot") {
-  # plot 2d
-#    Conditions = col.legend.box
-  if (clust.dim == 2) {
+    # plot 2d
+    #    Conditions = col.legend.box
+    if (clust.dim == 2) {
       if (cond.shape == FALSE) {
         myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
                                    text = row.names(DATA), color = Expression)) +
@@ -237,65 +233,65 @@ DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
                 panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                 legend.key = element_rect(fill = back.col))
       }
-        if (cond.shape == TRUE) {
-          myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
-                                     text = row.names(DATA), shape = Conditions,color = Expression)) +
-            geom_point(size = cell.size, alpha = cell.transparency) +
-            scale_colour_gradient(low = cell.colors[1], high = cell.colors[2], name="") +
-            xlab("Dim1") +
-            ylab("Dim2") +
-            ggtitle(paste(MyTitle,"for (",gene,")")) +
-            theme(panel.background = element_rect(fill = back.col, colour = "black"),
-                  panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                  legend.key = element_rect(fill = back.col))
-    } #else {
-#      myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
-#                                 text = row.names(DATA), color = Expression)) +
-#        geom_point(size = cell.size, alpha = cell.transparency) +
-#        scale_colour_gradient(low = cell.colors[1], high = cell.colors[2], name="") +
-#        xlab("Dim1") +
-#        ylab("Dim2") +
-#        ggtitle(paste(MyTitle,"for (",gene,")")) +
-#        theme_bw()
-#    }
-  }
-  # plot 3d
-  if (clust.dim == 3) {
-    myPLOT <- plot_ly(DATA, x = DATA[,1], y = DATA[,2], z = DATA[,3], text = row.names(DATA),
-                      color = col.legend.bin, opacity = cell.transparency, marker = list(size = cell.size + 2)) %>%
-      layout(DATA, x = DATA[,1], y = DATA[,2], z = DATA[,3]) %>%
-      layout(plot_bgcolor = back.col) %>%
-      layout(paper_bgcolor = back.col) %>%
-      layout(title = MyTitle,
-             scene = list(xaxis = list(title = "Dim1"),
-                          yaxis = list(title = "Dim2"),
-                          zaxis = list(title = "Dim3")))
+      if (cond.shape == TRUE) {
+        myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
+                                   text = row.names(DATA), shape = Conditions,color = Expression)) +
+          geom_point(size = cell.size, alpha = cell.transparency) +
+          scale_colour_gradient(low = cell.colors[1], high = cell.colors[2], name="") +
+          xlab("Dim1") +
+          ylab("Dim2") +
+          ggtitle(paste(MyTitle,"for (",gene,")")) +
+          theme(panel.background = element_rect(fill = back.col, colour = "black"),
+                panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                legend.key = element_rect(fill = back.col))
+      } #else {
+      #      myPLOT <- ggplot(DATA, aes(DATA[,1], y = DATA[,2],
+      #                                 text = row.names(DATA), color = Expression)) +
+      #        geom_point(size = cell.size, alpha = cell.transparency) +
+      #        scale_colour_gradient(low = cell.colors[1], high = cell.colors[2], name="") +
+      #        xlab("Dim1") +
+      #        ylab("Dim2") +
+      #        ggtitle(paste(MyTitle,"for (",gene,")")) +
+      #        theme_bw()
+      #    }
+    }
+    # plot 3d
+    if (clust.dim == 3) {
+      myPLOT <- plot_ly(DATA, x = DATA[,1], y = DATA[,2], z = DATA[,3], text = row.names(DATA),
+                        color = col.legend.bin, opacity = cell.transparency, marker = list(size = cell.size + 2)) %>%
+        layout(DATA, x = DATA[,1], y = DATA[,2], z = DATA[,3]) %>%
+        layout(plot_bgcolor = back.col) %>%
+        layout(paper_bgcolor = back.col) %>%
+        layout(title = MyTitle,
+               scene = list(xaxis = list(title = "Dim1"),
+                            yaxis = list(title = "Dim2"),
+                            zaxis = list(title = "Dim3")))
     }
   }
   #######
   # plot box plot
-#  Yaxis1 = data.expr[[gene]]
-#  Yaxis = Yaxis1 + 1
-#  Yaxis = log2(Yaxis)
-#
+  #  Yaxis1 = data.expr[[gene]]
+  #  Yaxis = Yaxis1 + 1
+  #  Yaxis = log2(Yaxis)
+  #
   if (plot.type == "boxplot") {
     if (cond.shape == FALSE) {
-  myPLOT <- ggplot(DATA, aes(x = Clusters, y=log2(Expression + 1))) +
-    theme_bw() + theme(axis.text.x=element_text(angle=90)) +
-    geom_jitter(color = box.cell.col, size = cell.size, alpha = cell.transparency) +
-    ggtitle(gene) +
-    geom_violin(trim=TRUE, col = "black", alpha = cell.transparency) +
-    geom_boxplot(fill = box.color,
-                 col = "green",
-                 notch = FALSE,
-                 outlier.shape = NA,
-                 alpha = cell.transparency) +
-    ylab("scaled normalized expression") +
-    stat_summary(fun=mean, geom="point", size=2, color="blue") +
-    xlab(".")
+      myPLOT <- ggplot(DATA, aes(x = Clusters, y=log2(Expression + 1))) +
+        theme_bw() + theme(axis.text.x=element_text(angle=90)) +
+        geom_jitter(color = box.cell.col, size = cell.size, alpha = cell.transparency) +
+        ggtitle(gene) +
+        geom_violin(trim=TRUE, col = "black", alpha = cell.transparency) +
+        geom_boxplot(fill = box.color,
+                     col = "green",
+                     notch = FALSE,
+                     outlier.shape = NA,
+                     alpha = cell.transparency) +
+        ylab("scaled normalized expression") +
+        stat_summary(fun=mean, geom="point", size=2, color="blue") +
+        xlab(".")
     }
     if (cond.shape == TRUE) {
-#      Conditions = DATA$Conditions
+      #      Conditions = DATA$Conditions
       myPLOT <- ggplot(DATA, aes(x = Clusters, y=log2(Expression + 1))) +
         theme_bw() + theme(axis.text.x=element_text(angle=90)) +
         geom_jitter(color = box.cell.col, size = cell.size, alpha = cell.transparency) +
@@ -311,32 +307,32 @@ DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
         xlab(".")
       myPLOT <- myPLOT + facet_wrap(~ Conditions)
     }
-  # add p-val
-  if (box.to.test == 0) {
-    if (dim(x@clust.avg)[1] != 0) {
-      AvData <- x@clust.avg
-      row.names(AvData) <- AvData$gene
-      AvData <- AvData[,-1]
-      AvData <- subset(AvData,row.names(AvData) == gene)
-      box.to.test <- as.numeric(which.max(AvData))
+    # add p-val
+    if (box.to.test == 0) {
+      if (dim(x@clust.avg)[1] != 0) {
+        AvData <- x@clust.avg
+        row.names(AvData) <- AvData$gene
+        AvData <- AvData[,-1]
+        AvData <- subset(AvData,row.names(AvData) == gene)
+        box.to.test <- as.numeric(which.max(AvData))
+      }
     }
-  }
-##########
+    ##########
     if (box.to.test == 0) {
       if (dim(x@clust.avg)[1] == 0) {
         box.to.test = 1
-        }
       }
-############
-  if (box.pval == "sig.signs") {
-    myPLOT <- myPLOT + stat_compare_means(label = "p.signif", ref.group = box.to.test)
-  }
-  if (box.pval == "sig.values") {
-    myPLOT <- myPLOT + stat_compare_means(aes(label = paste0("p = ", ..p.format..)),ref.group = box.to.test)
-  }
+    }
+    ############
+    if (box.pval == "sig.signs") {
+      myPLOT <- myPLOT + stat_compare_means(label = "p.signif", ref.group = box.to.test)
+    }
+    if (box.pval == "sig.values") {
+      myPLOT <- myPLOT + stat_compare_means(aes(label = paste0("p = ", ..p.format..)),ref.group = box.to.test)
+    }
   }
   ############################ Bar plot
-#  mydata=cbind(data.expr,Yaxis1,col.legend.box)
+  #  mydata=cbind(data.expr,Yaxis1,col.legend.box)
   ## function to make sd
   data_summary <- function(data, varname, groupnames){
     summary_func <- function(x, col){
@@ -350,36 +346,36 @@ DATA <- subset(DATA, DATA$Conditions %in% conds.to.plot)
   }
   ### get sd data ready
   if (plot.type == "barplot") {
-  if (cond.shape == FALSE) {
-    df2 <- data_summary(DATA, varname="Expression",
-                        groupnames=c("Clusters"))
-    myPLOT <- ggplot(df2, aes(x = Clusters, y = Expression, fill = Clusters)) +
-      geom_errorbar(aes(ymin=Expression, ymax=Expression+sd), width=.2,
-                    position=position_dodge(.9)) +
-      stat_summary(fun="mean",
-                   geom="bar",
-                   alpha = cell.transparency,
-                   show.legend = FALSE) +
-      ylab("avraged normalized expression") +
-      xlab(".") +
-      ggtitle(gene) +
-      theme_bw() + theme(axis.text.x=element_text(angle=90))
-  }
-  if (cond.shape == TRUE) {
-    df2 <- data_summary(DATA, varname="Expression",
-                        groupnames=c("Conditions","Clusters"))
-    myPLOT <- ggplot(df2, aes(x = Clusters, y = Expression, fill = Clusters)) +
-      geom_errorbar(aes(ymin=Expression, ymax=Expression+sd), width=.2,
-                    position=position_dodge(.9)) +
-      stat_summary(fun="mean",
-                   geom="bar",
-                   alpha = cell.transparency,
-                   show.legend = FALSE) +
-      ylab("avraged normalized expression") +
-      xlab(".") +
-      ggtitle(gene) +
-      theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ Conditions)
-   }
+    if (cond.shape == FALSE) {
+      df2 <- data_summary(DATA, varname="Expression",
+                          groupnames=c("Clusters"))
+      myPLOT <- ggplot(df2, aes(x = Clusters, y = Expression, fill = Clusters)) +
+        geom_errorbar(aes(ymin=Expression, ymax=Expression+sd), width=.2,
+                      position=position_dodge(.9)) +
+        stat_summary(fun="mean",
+                     geom="bar",
+                     alpha = cell.transparency,
+                     show.legend = FALSE) +
+        ylab("avraged normalized expression") +
+        xlab(".") +
+        ggtitle(gene) +
+        theme_bw() + theme(axis.text.x=element_text(angle=90))
+    }
+    if (cond.shape == TRUE) {
+      df2 <- data_summary(DATA, varname="Expression",
+                          groupnames=c("Conditions","Clusters"))
+      myPLOT <- ggplot(df2, aes(x = Clusters, y = Expression, fill = Clusters)) +
+        geom_errorbar(aes(ymin=Expression, ymax=Expression+sd), width=.2,
+                      position=position_dodge(.9)) +
+        stat_summary(fun="mean",
+                     geom="bar",
+                     alpha = cell.transparency,
+                     show.legend = FALSE) +
+        ylab("avraged normalized expression") +
+        xlab(".") +
+        ggtitle(gene) +
+        theme_bw() + theme(axis.text.x=element_text(angle=90)) + facet_wrap(~ Conditions)
+    }
   }
   # return
   if (interactive == TRUE) {

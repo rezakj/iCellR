@@ -22,7 +22,7 @@
 #'
 #' # make iCellR object
 #' myDemo.obj <- make.obj(demo)
-#'
+#' @importFrom data.table setDT data.table
 #' @export
 data.aggregation <- function (samples = NULL,
                               condition.names = NULL) {
@@ -44,12 +44,16 @@ if (length(samples) != length(condition.names)) {
     conds = condition.names[i]
     colnames(sampledata) <- paste(conds, colnames(sampledata), sep = "_")
     MyName <- samples[i]
+    sampledata <- setDT(sampledata, keep.rownames = TRUE)[]
     eval(call("<-", as.name(MyName), sampledata))
   }
   # merge all by row names
   datalist <- mget(samples)
-  mymrgd <- Reduce(merge, lapply(datalist, function(x) data.frame(x, Row.names = row.names(x))))
-  row.names(mymrgd) <- mymrgd$Row.names
+  mymrgd <- as.data.frame(Reduce(function(x,y) {merge(x,y)}, datalist))
+  row.names(mymrgd) <- mymrgd$rn
+  # mymrgd <- Reduce(merge, lapply(datalist, function(x) data.frame(x, Row.names = row.names(x))))
+  # row.names(mymrgd) <- mymrgd$Row.names
   mymrgd <- mymrgd[,-1]
+#  head(mymrgd)[1:5]
       return(mymrgd)
 }

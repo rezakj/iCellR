@@ -88,4 +88,8 @@ utils::globalVariables(c("%>%",
                          "Immgen.GSE122108.412",
                          "Immgen.GSE109125.205",
                          "yend",
+                         "gg_color_hue",
+                         "hcl",
+                         "V",
+                         "V<-",
                          "annotate"))

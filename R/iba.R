@@ -66,7 +66,7 @@ iba <- function (x = NULL,
   conditions <- ha
   #####
   #### function
-  message(paste("   Calculating mutual distance ... "))
+  message(paste("   Calculating joint distance ... "))
   ### time
   pb <- progress_bar$new(total = ncells,
                          format = "[:bar] :current/:total (:percent) :elapsedfull eta: :eta",
@@ -82,6 +82,7 @@ iba <- function (x = NULL,
     ######### loop
     for(i in conditions){
       ha <- paste("^",i,"_",sep="")
+#      CellOrd <- colnames(My.distances)[(GETord(My.distances[,findKNN]))]
       CellOrd <- colnames(My.distances)[(order(My.distances[,findKNN]))]
       CellsId <- subset(CellOrd, grepl(ha, CellOrd))[1:myNN]
       #          CellsId <- grep(ha,CellOrd,value=T, invert=F)[1:myNN]
@@ -108,16 +109,20 @@ iba <- function (x = NULL,
   }
   ######
   ### time
+  my.data <- as.matrix(my.data)
   pb <- progress_bar$new(total = ncells,
                          format = "[:bar] :current/:total (:percent) :elapsedfull eta: :eta",
                          clear = FALSE, width= 60)
   ### end time
   data.sum1 = sapply(KNN1, function(sum.cov){
     pb$tick()
+#    GETmean(my.data[, sum.cov])})
     rowMeans(my.data[, sum.cov])})
   ############
   data.sum1 <- as.data.frame(data.sum1)
+  row.names(data.sum1) <- row.names(my.data)
   colnames(data.sum1) <- colnames(my.data)
+#  data.sum1 <- round(data.sum1, digits = 3)
   #### order samples (order colnames by the original data)
   BestOrder <- colnames(DATA)
   data.sum1 <- data.sum1[ , order(match(names(data.sum1),BestOrder))]

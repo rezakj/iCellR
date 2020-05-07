@@ -3,7 +3,7 @@
 #' This function takes an object of class iCellR and a 2D tSNE or UMAP plot and gates around cells to get their ids.
 #' @param x An object of class iCellR.
 #' @param my.plot The plot to use for gating. Must be a 2D plot.
-#' @param plot.type Choose from UMAP and tSNE, default = NULL.
+#' @param plot.type Choose from knetl, umap and tsne, default = NULL.
 #' @return An object of class iCellR.
 #' @import shiny
 #' @importFrom plotly ggplotly layout plot_ly
@@ -24,11 +24,14 @@ cell.gating <- function(x = NULL,
   if (plot.type == "tsne") {
     MyClusts <- x@tsne.data
   }
+  if (plot.type == "knetl") {
+    MyClusts <- x@knetl.data
+  }
   if (plot.type == "umap") {
     MyClusts <- x@umap.data
   }
-  if (plot.type != "umap" && plot.type != "tsne") {
-    stop("plot type should be chosen. Choose from tsne or umap.")
+  if (plot.type != "umap" && plot.type != "tsne" && plot.type != "knetl") {
+    stop("plot type should be chosen. Choose from knetl, tsne or umap.")
   }
   data1 <- paste(MyClusts$V1,MyClusts$V2, sep="_")
   MyClusts <- as.data.frame(cbind(data1,row.names(MyClusts)))

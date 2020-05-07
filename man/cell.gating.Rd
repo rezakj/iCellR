@@ -11,7 +11,7 @@ cell.gating(x = NULL, my.plot = NULL, plot.type = "tsne")
 
 \item{my.plot}{The plot to use for gating. Must be a 2D plot.}
 
-\item{plot.type}{Choose from UMAP and tSNE, default = NULL.}
+\item{plot.type}{Choose from knetl, umap and tsne, default = NULL.}
 }
 \value{
 An object of class iCellR.
