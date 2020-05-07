@@ -7,9 +7,9 @@
 run.knetl(
   x = NULL,
   dist.method = "euclidean",
-  k = 20,
+  k = 400,
   data.type = "pca",
-  dims = 1:50,
+  dims = 1:20,
   joint = FALSE,
   col.by = "clusters",
   my.seed = 1,
@@ -27,11 +27,11 @@ run.knetl(
 
 \item{dist.method}{the distance measure to be used to compute the dissimilarity matrix. This must be one of: "euclidean", "maximum", "mandatattan", "canberra", "binary", "minkowski" or "NULL". By default, distance="euclidean". If the distance is "NULL", the dissimilarity matrix (diss) should be given by the user. If distance is not "NULL", the dissimilarity matrix should be "NULL".}
 
-\item{k}{KNN the higher the number the less sensitivity, default = 100.}
+\item{k}{KNN the higher the number the less sensitivity, default = 400.}
 
 \item{data.type}{Choose between "tsne", "pca", "umap", default = "pca".}
 
-\item{dims}{PCA dimentions to be use for clustering, default = 1:10.}
+\item{dims}{PCA dimentions to be use for clustering, default = 1:20.}
 
 \item{joint}{Run in Combined or joint fashion as in CCCA and CPCA, default = FALSE.}
 

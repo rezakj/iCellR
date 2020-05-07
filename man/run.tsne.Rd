@@ -38,7 +38,7 @@ run.tsne(
 
 \item{gene.list}{A list of genes to be used for tSNE analysis. If "clust.method" is set to "gene.model", defult = "my_model_genes.txt".}
 
-\item{add.3d}{Add 3D tSNE as well, default = FALSE.}
+\item{add.3d}{Add 3D tSNE as well, default = TRUE.}
 
 \item{initial_dims}{integer; the number of dimensions that should be retained in the initial PCA step (default: 50)}
 

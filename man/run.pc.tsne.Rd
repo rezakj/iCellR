@@ -8,7 +8,7 @@ run.pc.tsne(
   x = NULL,
   dims = 1:10,
   my.seed = 0,
-  add.3d = FALSE,
+  add.3d = TRUE,
   initial_dims = 50,
   perplexity = 30,
   theta = 0.5,
@@ -35,7 +35,7 @@ run.pc.tsne(
 
 \item{my.seed}{seed number, default = 0.}
 
-\item{add.3d}{Add 3D tSNE as well, default = FALSE.}
+\item{add.3d}{Add 3D tSNE as well, default = TRUE.}
 
 \item{initial_dims}{integer; the number of dimensions that should be retained in the initial PCA step (default: 50)}
 
