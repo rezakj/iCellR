@@ -1250,7 +1250,7 @@ detach("package:scran", unload=TRUE)
 </p>
 
 
-# 4- How to perform Seurat's MultiCCA (integration) sample alignment 
+# 4- How to perform Seurat's MultiCCA sample alignment 
 
 ```r
 # same as above only use run.anchor function instead of iba.
@@ -1269,6 +1269,38 @@ my.obj <- run.anchor(my.obj,
 <p align="center">
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/aSeurat.png" />
 </p>
+
+# 5- How to perform CPCA + KNetL based clustering for sample alignment/integration 
+
+```r
+# After running CPCA (same as above) 
+
+### run KNetL 
+my.obj <- run.knetl(my.obj, dims = 1:20, k = 400)
+
+### cluster based on KNetL coordinates 
+my.obj <- iclust(my.obj, k = 200, data.type = "knetl")
+
+### plot 
+A= cluster.plot(my.obj,plot.type = "pca",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=F)
+B= cluster.plot(my.obj,plot.type = "umap",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=F)
+C= cluster.plot(my.obj,plot.type = "tsne",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=F)
+D= cluster.plot(my.obj,plot.type = "knetl",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=F)
+
+library(gridExtra)
+grid.arrange(A,B,C,D)
+
+cluster.plot(my.obj,
+              cell.size = 0.5,
+              plot.type = "knetl",
+              cell.color = "black",
+              back.col = "white",
+              cell.transparency = 1,
+              clust.dim = 2,
+              interactive = F,cond.facet = T)
+```
+
+
 
  - Pseudotime analysis
  
