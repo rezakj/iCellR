@@ -1113,7 +1113,7 @@ my.obj <- gate.to.clust(my.obj, my.gate = "cellGating.txt", to.clust = 10)
 
 4- MultiCCA (Seurat wraper) optional
 
-### 5- CPCA + <img src="https://github.com/rezakj/scSeqR/blob/master/doc/logo.png" alt="drawing" width="30"/> KNetL based clustering (iCellR)*** recommended for best results!
+5- CPCA + <img src="https://github.com/rezakj/scSeqR/blob/master/doc/logo.png" alt="drawing" width="30"/> KNetL based clustering (iCellR)*** recommended for best results!
 
 # 1- How to perform Combined Principal Component Alignment (CPCA)
 
