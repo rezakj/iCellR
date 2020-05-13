@@ -1125,7 +1125,7 @@ https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1.full
 
 ```r
 ## download an object of 9 PBMC samples 
-sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/example2/my.obj.Robj"
+sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/pbmc_data/my.obj.Robj"
 
 # download the file
 download.file(url = sample.file.url,
@@ -1273,13 +1273,46 @@ my.obj <- run.anchor(my.obj,
 # 5- How to perform CPCA + KNetL based clustering for sample alignment/integration 
 
 ```r
-# After running CPCA (same as above) 
+## download an object of 9 PBMC samples 
+sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/example2/my.obj.Robj"
 
+# download the file
+download.file(url = sample.file.url,
+     destfile = "my.obj.Robj",
+     method = "auto")
+     
+### load iCellR and the object 
+library(iCellR)
+load("my.obj.Robj")
+
+### run PCA on top 2000 genes 
+
+my.obj <- run.pca(my.obj, top.rank = 2000)
+
+### find best genes for second round PCA or batch alignment
+
+my.obj <- find.dim.genes(my.obj, dims = 1:30,top.pos = 20, top.neg = 20)
+length(my.obj@gene.model)
+
+########### Batch alignment (CPCA method)
+
+my.obj <- iba(my.obj,dims = 1:30, k = 10,ba.method = "CPCA", method = "gene.model", gene.list = my.obj@gene.model)
+
+### impute data 
+
+my.obj <- run.impute(my.obj,dims = 1:10,data.type = "pca", nn = 10)
+
+### tSNE and UMAP
+my.obj <- run.pc.tsne(my.obj, dims = 1:10)
+my.obj <- run.umap(my.obj, dims = 1:10)
 ### run KNetL 
 my.obj <- run.knetl(my.obj, dims = 1:20, k = 400)
 
 ### cluster based on KNetL coordinates 
-my.obj <- iclust(my.obj, k = 200, data.type = "knetl")
+my.obj <- iclust(my.obj, k = 300, data.type = "knetl")
+
+### save object 
+save(my.obj, file = "my.obj.Robj")
 
 ### plot 
 A= cluster.plot(my.obj,plot.type = "pca",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=F)
