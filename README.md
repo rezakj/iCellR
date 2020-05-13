@@ -1125,7 +1125,7 @@ https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1.full
 
 ```r
 ## download an object of 9 PBMC samples 
-sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/pbmc_data/my.obj.Robj"
+sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/example2/my.obj.Robj"
 
 # download the file
 download.file(url = sample.file.url,
