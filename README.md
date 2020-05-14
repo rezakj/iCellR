@@ -1309,12 +1309,12 @@ my.obj <- run.umap(my.obj, dims = 1:10)
 my.obj <- run.knetl(my.obj, dims = 1:20, k = 400)
 
 ### cluster based on KNetL coordinates 
-my.obj <- iclust(my.obj, k = 300, data.type = "knetl")
+# my.obj <- iclust(my.obj, k = 300, data.type = "knetl")
 
 ### save object 
 save(my.obj, file = "my.obj.Robj")
 
-### plot 
+### plot 1 
 A= cluster.plot(my.obj,plot.type = "pca",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=F)
 B= cluster.plot(my.obj,plot.type = "umap",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=F)
 C= cluster.plot(my.obj,plot.type = "tsne",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=F)
@@ -1323,6 +1323,7 @@ D= cluster.plot(my.obj,plot.type = "knetl",interactive = F,cell.size = 0.5,cell.
 library(gridExtra)
 grid.arrange(A,B,C,D)
 
+### plot 2
 cluster.plot(my.obj,
               cell.size = 0.5,
               plot.type = "knetl",
@@ -1331,8 +1332,39 @@ cluster.plot(my.obj,
               cell.transparency = 1,
               clust.dim = 2,
               interactive = F,cond.facet = T)
+	      
+### plot 3	      	      
+genelist = c("LYZ","MS4A1","GNLY","FCGR3A","NKG7","CD14","S100A9","CD3E","CD8A","CD4","CD19","KLRB1","LTB","IL7R","GZMH","CD68","CCR7","CD68","CD69","CXCR4","IFITM3","IL32","JCHAIN","VCAN","PPBP")	      
+
+
+rm(list = ls(pattern="PL_"))
+for(i in genelist){
+    MyPlot <- gene.plot(my.obj, gene = i,
+        interactive = F,
+        cell.size = 0.1,
+        plot.data.type = "knetl",
+        data.type = "main",
+        scaleValue = T,
+        min.scale = -2.5,max.scale = 2.0,
+        cell.transparency = 1)
+    NameCol=paste("PL",i,sep="_")
+    eval(call("<-", as.name(NameCol), MyPlot))
+}
+
+library(cowplot)
+filenames <- ls(pattern="PL_")
+
+B <- cluster.plot(my.obj,plot.type = "knetl",interactive = F,cell.size = 0.1,cell.transparency = 1,anno.clust=T)
+filenames <- c("B",filenames)
+
+plot_grid(plotlist=mget(filenames))	      
 ```
 
+<p align="center">
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example2/AllClusts.png" />
+<img src="https://genome.med.nyu.edu/results/external/iCellR/example2/AllConds_clusts_knetl.png" />	
+<img src="https://genome.med.nyu.edu/results/external/iCellR/example2/genes_KNetL.png" />	
+</p>
 
 
  - Pseudotime analysis
