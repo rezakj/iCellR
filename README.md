@@ -1361,9 +1361,9 @@ plot_grid(plotlist=mget(filenames))
 ```
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example2/AllClusts.png" />
-<img src="https://genome.med.nyu.edu/results/external/iCellR/example2/AllConds_clusts_knetl.png" />	
-<img src="https://genome.med.nyu.edu/results/external/iCellR/example2/genes_KNetL.png" />	
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example2/AllClusters.png" />
+<img src="https://genome.med.nyu.edu/results/external/iCellR/example2/AllCondsClusts.png" />	
+<img src="https://genome.med.nyu.edu/results/external/iCellR/example2/genes_KNetL-plot.png" />	
 </p>
 
 
