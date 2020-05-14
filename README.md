@@ -655,7 +655,6 @@ cluster.plot(my.obj,
               plot.type = "umap",
               cell.color = "black",
               back.col = "white",
-              col.by = "conditions",
               cell.transparency = 0.5,
               clust.dim = 2,
               interactive = F,cond.facet = T)
