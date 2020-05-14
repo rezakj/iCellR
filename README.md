@@ -1309,6 +1309,7 @@ my.obj <- run.umap(my.obj, dims = 1:10)
 my.obj <- run.knetl(my.obj, dims = 1:20, k = 400)
 
 ### cluster based on KNetL coordinates 
+# The object is already clustered but here is an example: 
 # my.obj <- iclust(my.obj, k = 300, data.type = "knetl")
 
 ### save object 
