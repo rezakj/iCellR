@@ -16,8 +16,8 @@ iCellR Viewer (web GUI app): https://compbio.nyumc.org/icellr/
 If you are using FlowJo or SeqGeq, they have made plugins for iCellR and other single cell tools: https://www.flowjo.com/exchange/#/ (list of all plugins) and https://www.flowjo.com/exchange/#/plugin/profile?id=34 (iCellR plugin). [SeqGeq DE tutorial](https://www.youtube.com/watch?v=gXFmWRpdwow)
  
 For citing iCellR use these:
-- citation for batch alignment https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1.full
-- citation for KNetL map: https://www.biorxiv.org/content/10.1101/2020.05.05.078550v1.full
+- Citation for batch alignment: https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1.full
+- Citation for KNetL map: https://www.biorxiv.org/content/10.1101/2020.05.05.078550v1.full
 
 ### Single (i) Cell R package (iCellR)
 
