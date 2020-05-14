@@ -6,7 +6,8 @@ News (April 2020): see our imputation/coverage correction (CC) and batch alignme
 - Tutorial: [example 1 code](https://genome.med.nyu.edu/results/external/iCellR/example1/code.txt) and [results](https://genome.med.nyu.edu/results/external/iCellR/example1/) (based on KNetL map <img src="https://github.com/rezakj/scSeqR/blob/master/doc/logo.png" alt="drawing" width="30"/>) 
 - Tutorial: [example 2 code](https://genome.med.nyu.edu/results/external/iCellR/example2/code.txt) and [results](https://genome.med.nyu.edu/results/external/iCellR/example2/) (based on CPCA batch alignment and KNetL map <img src="https://github.com/rezakj/scSeqR/blob/master/doc/logo.png" alt="drawing" width="30"/>) 
 - Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
-- Link to manual [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.pdf) and Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/packages/iCellR/index.html).  
+- Link to manual [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.pdf) and Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/packages/iCellR/index.html). 
+
 iCellR Viewer (web GUI app): https://compbio.nyumc.org/icellr/
 
 If you are using FlowJo or SeqGeq, they have made plugins for iCellR and other single cell tools: https://www.flowjo.com/exchange/#/ (list of all plugins) and https://www.flowjo.com/exchange/#/plugin/profile?id=34 (iCellR plugin). [SeqGeq DE tutorial](https://www.youtube.com/watch?v=gXFmWRpdwow)
