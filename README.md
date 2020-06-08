@@ -545,7 +545,7 @@ my.obj <- run.knetl(my.obj, dims = 1:20, k = 100)
 - Visualize data
 
 ```r
-# plot clusters (clustering is done based on KNetL) 
+# plot clusters (in the figures below clustering is done based on KNetL) 
 # example: # my.obj <- iclust(my.obj, k = 150, data.type = "knetl") 
 
 A <- cluster.plot(my.obj,plot.type = "pca",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T)
@@ -571,7 +571,7 @@ grid.arrange(A,B,C,D)
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds.png"/>    
 </p>
 
-- 3D plots, density plots and interactive plots 
+- 3D plots, density plots and interactive plots examples 
 
 ```r
 # 2D
