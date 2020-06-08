@@ -511,7 +511,7 @@ my.obj <- run.knetl(my.obj, dims = 1:20, k = 100)
 ###################################################################################
 
 # diffusion map
-# this requires python packge phate or destiny
+# this requires python packge phate or bioconductor R package destiny
 # How to install destiny
 # if (!requireNamespace("BiocManager", quietly = TRUE))
 #    install.packages("BiocManager")
