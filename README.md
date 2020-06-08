@@ -495,6 +495,9 @@ my.obj <- run.pc.tsne(my.obj, dims = 1:10)
 # UMAP
 my.obj <- run.umap(my.obj, dims = 1:10)
 
+# KNetL
+my.obj <- run.knetl(my.obj, dims = 1:20, k = 100)
+
 # diffusion map
 # this requires python packge phate or destiny
 # How to install destiny
@@ -545,6 +548,14 @@ grid.arrange(A,B,C,D)
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds.png"/>
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllClusts.png"/>      
 </p>
+
+- Clustering based on UMAP, tSNE, KNetL instead of PCA (optional)
+
+```r
+# my.obj <- iclust(my.obj, k = 150, data.type = "knetl")
+# my.obj <- iclust(my.obj, k = 150, data.type = "umap")
+# my.obj <- iclust(my.obj, k = 150, data.type = "tsne")
+```
 
 - 3D plots, density plots and interactive plots 
 
