@@ -91,5 +91,6 @@ utils::globalVariables(c("%>%",
                          "gg_color_hue",
                          "hcl",
                          "V",
+                         "CellIds",
                          "V<-",
                          "annotate"))
