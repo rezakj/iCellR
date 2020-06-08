@@ -495,8 +495,18 @@ my.obj <- run.pc.tsne(my.obj, dims = 1:10)
 # UMAP
 my.obj <- run.umap(my.obj, dims = 1:10)
 
-# KNetL
+# KNetL (for lager than 5000 cell use a k of about 400) 
 my.obj <- run.knetl(my.obj, dims = 1:20, k = 100)
+
+########################### IMPORTANT NOTE ########################################
+#### if you have more than 5000 cells use a higher k (like 400) for KNetL (see below)
+#### k of 400 is usually good with biger data but adjust it for intended resolution.
+#### Here we use a k of 100 but this might not be ideal for your data.
+#### example: # my.obj <- run.knetl(my.obj, dims = 1:20, k = 400)
+###################################################################################
+###################################################################################
+###################################################################################
+###################################################################################
 
 # diffusion map
 # this requires python packge phate or destiny
@@ -545,8 +555,8 @@ grid.arrange(A,B,C,D)
 ```
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds.png"/>
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllClusts.png"/>      
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllClusts.png"/>  
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds.png"/>    
 </p>
 
 - Clustering based on UMAP, tSNE, KNetL instead of PCA (optional)
