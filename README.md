@@ -532,7 +532,7 @@ my.obj <- run.knetl(my.obj, dims = 1:20, k = 100)
 # my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
 ```
 
-- Clustering based on UMAP, tSNE, KNetL instead of PCA (optional)
+- Clustering based on UMAP, tSNE or KNetL instead of PCA (optional)
 
 ```r
 # my.obj <- iclust(my.obj, k = 150, data.type = "knetl") 
