@@ -523,27 +523,27 @@ my.obj <- run.umap(my.obj, dims = 1:10)
 
 ```r
 # clusters
-A= cluster.plot(my.obj,plot.type = "pca",interactive = F)
-B= cluster.plot(my.obj,plot.type = "umap",interactive = F)
-C= cluster.plot(my.obj,plot.type = "tsne",interactive = F) 
-D= cluster.plot(my.obj,plot.type = "diffusion",interactive = F)
+A <- cluster.plot(my.obj,plot.type = "pca",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T)
+B <- cluster.plot(my.obj,plot.type = "umap",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=T)
+C <- cluster.plot(my.obj,plot.type = "tsne",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=T)
+D <- cluster.plot(my.obj,plot.type = "knetl",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=T)
 
 library(gridExtra)
 grid.arrange(A,B,C,D)
 
 # conditions 
-A= cluster.plot(my.obj,plot.type = "pca",col.by = "conditions",interactive = F)
-B= cluster.plot(my.obj,plot.type = "umap",col.by = "conditions",interactive = F)
-C= cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F)
-D= cluster.plot(my.obj,plot.type = "diffusion",col.by = "conditions",interactive = F)
+A <- cluster.plot(my.obj,plot.type = "pca",col.by = "conditions",interactive = F,cell.size = 0.5)
+B <- cluster.plot(my.obj,plot.type = "umap",col.by = "conditions",interactive = F,cell.size = 0.5)
+C <- cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F,cell.size = 0.5)
+D <- cluster.plot(my.obj,plot.type = "knetl",col.by = "conditions",interactive = F,cell.size = 0.5)
 
 library(gridExtra)
 grid.arrange(A,B,C,D)
 ```
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/1_AllClusts.png"/>
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/2_AllConds.png"/>      
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds.png"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllClusts.png"/>      
 </p>
 
 - 3D plots, density plots and interactive plots 
