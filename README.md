@@ -496,6 +496,7 @@ my.obj <- run.pc.tsne(my.obj, dims = 1:10)
 my.obj <- run.umap(my.obj, dims = 1:10)
 
 # KNetL (for lager than 5000 cell use a k of about 400) 
+# Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
 my.obj <- run.knetl(my.obj, dims = 1:20, k = 100)
 
 ########################### IMPORTANT NOTE ########################################
@@ -503,6 +504,7 @@ my.obj <- run.knetl(my.obj, dims = 1:20, k = 100)
 #### k of 400 is usually good with biger data but adjust it for intended resolution.
 #### Here we use a k of 100 but this might not be ideal for your data.
 #### example: # my.obj <- run.knetl(my.obj, dims = 1:20, k = 400)
+#### Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
 ###################################################################################
 ###################################################################################
 ###################################################################################
