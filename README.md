@@ -691,27 +691,33 @@ cluster.plot(my.obj,
 - Normalized cell frequencies in clusters and conditions
 
 ```r
-# If normalize.ncell = TRUE it would normalize based on total cell counts (main.data) in each condition. 
+# Examples for plots:
 
-# bar plot
-clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = TRUE, my.out.put = "plot")
-# Pie chart 
-clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE, ,my.out.put = "plot")
+clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE, my.out.put = "plot", normalize.by = "percentage")
 
-# data 
-my.obj <- clust.cond.info(my.obj, plot.type = "bar")
+clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = TRUE,my.out.put = "plot", normalize.by = "percentage")
+
+clust.cond.info(my.obj, plot.type = "pie.cond", normalize.ncell = TRUE, my.out.put = "plot", normalize.by = "percentage")
+
+clust.cond.info(my.obj, plot.type = "bar.cond", normalize.ncell = TRUE,my.out.put = "plot", normalize.by = "percentage")
+
+# get the data 
+my.obj <- clust.cond.info(my.obj, normalize.ncell = TRUE)
+
 #head(my.obj@my.freq)
-#  conditions  TC SF clusters Freq Norm.Freq
-#1       Ctrl 897  1        1  124       124
-#2       Ctrl 897  1        4  167       167
-#3       Ctrl 897  1        3   52        52
-#4       Ctrl 897  1        2   59        59
-#5       Ctrl 897  1        5    5         5
-#6       Ctrl 897  1        8  132       132
+#  conditions  TC SF clusters Freq Norm.Freq percentage
+#1       Ctrl 879  1        1   62        62       7.05
+#2       Ctrl 879  1        4   53        53       6.03
+#3       Ctrl 879  1        3   60        60       6.83
+#4       Ctrl 879  1        2  195       195      22.18
+#5       Ctrl 879  1        5   58        58       6.60
+#6       Ctrl 879  1        8   56        56       6.37
 ```
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/3_clust_cond_freq_info_bar.png" width="400"/>
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/4_clust_cond_freq_info_pie.png" width="400"/> 	
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/clust_cond_freq_info_pie.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/clust_cond_freq_info_bar.png" width="400"/>
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/clust_cond_freq_info_pie.cond.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/clust_cond_freq_info_bar.cond.png" width="400"/> 
 </p>
 
 - Average expression per cluster
