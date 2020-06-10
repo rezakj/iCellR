@@ -500,8 +500,10 @@ my.obj <- run.umap(my.obj, dims = 1:10)
 my.obj <- run.knetl(my.obj, dims = 1:20, k = 100)
 
 ########################### IMPORTANT NOTE ########################################
-#### if you have more than 5000 cells use a higher k (like 400) for KNetL (see below)
-#### k of 400 is usually good with biger data but adjust it for intended resolution.
+#### Because KNetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
+#### For zooming use the k value. For data with more than 5000 cells use a k of about 400. 
+#### A k value of 400 is usually good for big data but adjust it for intended resolution. 
+#### Just like a microscope, you need to zoom to see the intended amount of details. 
 #### Here we use a k of 100 but this might not be ideal for your data.
 #### example: # my.obj <- run.knetl(my.obj, dims = 1:20, k = 400)
 #### Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
