@@ -497,7 +497,7 @@ my.obj <- run.umap(my.obj, dims = 1:10)
 
 # KNetL (for lager than 5000 cell use a k of about 400) 
 # Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
-my.obj <- run.knetl(my.obj, dims = 1:20, k = 100)
+my.obj <- run.knetl(my.obj, dims = 1:20, k = 100, dim.redux = "umap")
 
 ########################### IMPORTANT NOTE ########################################
 #### Because KNetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
