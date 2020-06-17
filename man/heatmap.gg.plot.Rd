@@ -30,7 +30,7 @@ heatmap.gg.plot(
 
 \item{data.type}{Choose from "main" and "imputed", default = "main".}
 
-\item{cluster.by}{Choose from "clusters", "conditions" or "none", default = "clusters".}
+\item{cluster.by}{Choose from "clusters" or "none", default = "clusters".}
 
 \item{conds.to.plot}{Choose the conditions you want to see in the plot, default = NULL (all conditions).}
 

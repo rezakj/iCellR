@@ -3,7 +3,7 @@
 #' This function takes an object of class iCellR and genes and provides a heatmap.
 #' @param x A data frame containing gene counts for cells.
 #' @param gene A set of gene names to be heatmapped.
-#' @param cluster.by Choose from "clusters", "conditions" or "none", default = "clusters".
+#' @param cluster.by Choose from "clusters" or "none", default = "clusters".
 #' @param conds.to.plot Choose the conditions you want to see in the plot, default = NULL (all conditions).
 #' @param heat.colors Colors for heatmap, default = c("blue" ,"white", "red").
 #' @param cell.sort If FALSE the cells will not be sorted based on their distance, default = TRUE.

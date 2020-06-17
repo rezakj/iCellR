@@ -16,7 +16,7 @@ run.knetl(
   layout.2d = "layout_nicely",
   layout.3d = "layout_with_fr",
   add.3d = FALSE,
-  dim.redux = "tsne",
+  dim.redux = "umap",
   do.redux = TRUE,
   run.iclust = FALSE,
   return.graph = FALSE

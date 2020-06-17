@@ -116,7 +116,11 @@ cluster.plot <- function (x = NULL,
   }
   # cell cycle
   if (col.by == "cc") {
-  col.legend <- factor(x@stats$Phase)
+    d1 <- as.character(x@stats$Phase)
+    d2 <- rownames(x@stats)
+    d3 <- as.data.frame(cbind(d2,d1))
+    d4 <- subset(d3, d3$d2 %in% row.names(DATA))
+  col.legend <- factor(d4$d1)
   }
   # conditions
   if (col.by == "conditions") {

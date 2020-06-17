@@ -4,9 +4,6 @@
 #' @param x A data frame containing gene counts for cells.
 #' @param clust.to.rm The name of the cluster to be removed.
 #' @return An object of class iCellR
-#' @examples
-#' demo.obj <- clust.rm(demo.obj, clust.to.rm = 1)
-#'
 #' @export
 clust.rm <- function (x = NULL, clust.to.rm = "numeric") {
   if ("iCellR" != class(x)[1]) {

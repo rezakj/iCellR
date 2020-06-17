@@ -17,7 +17,3 @@ An object of class iCellR
 \description{
 This function removes the cells from a designated cluster. Notice the cells will be removed from the main data (raw data would still have the original data).
 }
-\examples{
-demo.obj <- clust.rm(demo.obj, clust.to.rm = 1)
-
-}

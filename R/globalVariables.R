@@ -93,4 +93,6 @@ utils::globalVariables(c("%>%",
                          "V",
                          "CellIds",
                          "V<-",
+                         "AddModuleScoreme",
+                         "genes.list",
                          "annotate"))
