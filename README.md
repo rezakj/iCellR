@@ -850,6 +850,7 @@ grid.arrange(A,B,C,D)
 
 ```r
 genelist = c("PPBP","LYZ","MS4A1","GNLY","LTB","NKG7","IFITM2","CD14","S100A9")
+rm(list = ls(pattern="PL_"))
 ###
 for(i in genelist){
 	MyPlot <- gene.plot(my.obj, gene = i, 
