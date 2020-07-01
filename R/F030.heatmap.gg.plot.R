@@ -3,7 +3,8 @@
 #' This function takes an object of class iCellR and genes and provides a heatmap.
 #' @param x A data frame containing gene counts for cells.
 #' @param gene A set of gene names to be heatmapped.
-#' @param cluster.by Choose from "clusters", "conditions" or "none", default = "clusters".
+#' @param cluster.by Choose from "clusters" or "none", default = "clusters".
+#' @param conds.to.plot Choose the conditions you want to see in the plot, default = NULL (all conditions).
 #' @param heat.colors Colors for heatmap, default = c("blue" ,"white", "red").
 #' @param cell.sort If FALSE the cells will not be sorted based on their distance, default = TRUE.
 #' @param interactive If TRUE an html interactive file will be made, default = TRUE.
@@ -41,6 +42,7 @@ heatmap.gg.plot <- function (x = NULL,
                           cell.sort = FALSE,
                           data.type = "main",
                           cluster.by = "clusters",
+                          conds.to.plot = NULL,
                           min.scale = -2.5,
                           max.scale = 2.5,
                           interactive = TRUE,
@@ -135,8 +137,18 @@ heatmap.gg.plot <- function (x = NULL,
   col.low = heat.colors[1]
   col.mid = heat.colors[2]
   col.high = heat.colors[3]
+  ############ get the conditions you need
+  if (!is.null(conds.to.plot)) {
+    MyCondsIndata <-  data.frame(do.call('rbind', strsplit(as.character(rownames(data)),'_',fixed=TRUE)))[1]
+    MyCondsIndata <- cbind(MyCondsIndata,rownames(data))
+    colnames(MyCondsIndata) <- c("conds","MYrows")
+    MyCondsIndata <- subset(MyCondsIndata, MyCondsIndata$conds %in% conds.to.plot)
+    MyCondsIndata <- MyCondsIndata$MYrows
+#    dim(data)
+    data <- subset(data, row.names(data) %in% MyCondsIndata)
+#    dim(data)
+  }
   ############ ggplot 2
-  # fix order
   data <- melt(data)
 #  head(data)
   names(x = data)[names(x = data) == "X1"] <- "cell"

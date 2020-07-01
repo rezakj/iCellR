@@ -3,7 +3,7 @@
 #' This function takes an object of class iCellR and runs tSNE on PCA data. Wrapper for the C++ implementation of Barnes-Hut t-Distributed Stochastic Neighbor Embedding. t-SNE is a method for constructing a low dimensional embedding of high-dimensional data, distances or similarities. Exact t-SNE can be computed by setting theta=0.0.
 #' @param x An object of class iCellR.
 #' @param dims PC dimentions to be used for tSNE analysis.
-#' @param add.3d Add 3D tSNE as well, default = FALSE.
+#' @param add.3d Add 3D tSNE as well, default = TRUE.
 #' @param my.seed seed number, default = 0.
 #' @param initial_dims integer; the number of dimensions that should be retained in the initial PCA step (default: 50)
 #' @param perplexity numeric; Perplexity parameter
@@ -31,7 +31,7 @@
 #' @import Rtsne
 #' @export
 run.pc.tsne <- function (x = NULL,
-                      dims = 1:10, my.seed = 0,add.3d = FALSE,
+                      dims = 1:10, my.seed = 0,add.3d = TRUE,
                       initial_dims = 50, perplexity = 30,
                       theta = 0.5, check_duplicates = FALSE, pca = TRUE, max_iter = 1000,
                       verbose = FALSE, is_distance = FALSE, Y_init = NULL,

@@ -10,6 +10,7 @@ heatmap.gg.plot(
   cell.sort = FALSE,
   data.type = "main",
   cluster.by = "clusters",
+  conds.to.plot = NULL,
   min.scale = -2.5,
   max.scale = 2.5,
   interactive = TRUE,
@@ -29,7 +30,9 @@ heatmap.gg.plot(
 
 \item{data.type}{Choose from "main" and "imputed", default = "main".}
 
-\item{cluster.by}{Choose from "clusters", "conditions" or "none", default = "clusters".}
+\item{cluster.by}{Choose from "clusters" or "none", default = "clusters".}
+
+\item{conds.to.plot}{Choose the conditions you want to see in the plot, default = NULL (all conditions).}
 
 \item{min.scale}{Set a minimum color scale, default = -2.5.}
 

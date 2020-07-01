@@ -91,5 +91,8 @@ utils::globalVariables(c("%>%",
                          "gg_color_hue",
                          "hcl",
                          "V",
+                         "CellIds",
                          "V<-",
+                         "AddModuleScoreme",
+                         "genes.list",
                          "annotate"))

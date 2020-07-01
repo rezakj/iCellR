@@ -4,7 +4,9 @@
 \name{s.phase}
 \alias{s.phase}
 \title{A dataset of S phase genes}
-\format{A character with 43 genes}
+\format{
+A character with 43 genes
+}
 \source{
 \url{https://science.sciencemag.org/content/352/6282/189}
 }

@@ -94,8 +94,10 @@ gene.plot <- function (x = NULL,
   gene.availability = gene %in% AllGenes
   if(gene.availability != TRUE)
   {
-    stop("Your gene name is not in the main data. To see the gene names issue this command:
-         row.names(YOURobject@main.data)")
+    ToPrint <- paste(gene, "gene is not available in your data.
+     See all gene names: row.names(YOURobject@main.data)", sep=" ")
+    stop(message(ToPrint))
+
   }
   ##### get cluster data
   # 2 dimentions

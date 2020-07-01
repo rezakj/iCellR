@@ -3,7 +3,7 @@
 #' This function takes an object of class iCellR and runs tSNE on main data. Wrapper for the C++ implementation of Barnes-Hut t-Distributed Stochastic Neighbor Embedding. t-SNE is a method for constructing a low dimensional embedding of high-dimensional data, distances or similarities. Exact t-SNE can be computed by setting theta=0.0.
 #' @param x An object of class iCellR.
 #' @param clust.method Choose from "base.mean.rank" or "gene.model", defult is "base.mean.rank".
-#' @param add.3d Add 3D tSNE as well, default = FALSE.
+#' @param add.3d Add 3D tSNE as well, default = TRUE.
 #' @param top.rank A number taking the top genes ranked by base mean, defult = 500.
 #' @param gene.list A list of genes to be used for tSNE analysis. If "clust.method" is set to "gene.model", defult = "my_model_genes.txt".
 #' @param initial_dims integer; the number of dimensions that should be retained in the initial PCA step (default: 50)

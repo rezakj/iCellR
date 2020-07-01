@@ -1,7 +1,7 @@
 Package: iCellR
 Type: Package
 Title: Analyzing High-Throughput Single Cell Sequencing Data
-Version: 1.5.0
+Version: 1.5.4
 Authors@R: c(
   person(given = 'Alireza', family = 'Khodadadi-Jamayran',role = c('aut','cre'), email = 'alireza.khodadadi.j@gmail.com', comment = c(ORCID = '0000-0003-2495-7504')),
   person(given = 'Joseph', family = 'Pucella',role = c('aut','ctb'), comment = c(ORCID = '0000-0003-0875-8046')),
@@ -37,10 +37,13 @@ Imports: Matrix,
   hdf5r,
   progress,
   igraph,
-  data.table
+  data.table,
+  Rcpp,
+  RANN
 License: GPL-2
+LinkingTo: Rcpp
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 BugReports: https://github.com/rezakj/iCellR/issues
 URL: https://github.com/rezakj/iCellR
