@@ -449,15 +449,11 @@ my.obj <- iclust(my.obj,
     data.type = "pca")
 
 # or
-
-#library(Rphenograph)
+# run.phenograph
 #my.obj <- run.phenograph(my.obj,k = 100,dims = 1:10)
 
-# if Rphenograph not installed
-#devtools::install_github("JinmiaoChenLab/Rphenograph")
-
 # or 
-
+# run.clustering
 #my.obj <- run.clustering(my.obj, 
 #	clust.method = "kmeans", 
 #	dist.method = "euclidean",
