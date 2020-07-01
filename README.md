@@ -15,7 +15,7 @@ If you are using FlowJo or SeqGeq, they have made plugins for iCellR and other s
 For citing iCellR use these:
 - Citation for batch alignment and imputation: https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1.full
 - Citation for KNetL map: https://www.biorxiv.org/content/10.1101/2020.05.05.078550v1.full
-- iCellR publications: [PMID 31744829](https://www.ncbi.nlm.nih.gov/pubmed/31744829) (scRNA-seq), [PMID: 31934613](https://www.ncbi.nlm.nih.gov/pubmed/31934613) (bulk RNA-seq from TCGA)
+- iCellR publications: [PMID 31744829](https://www.ncbi.nlm.nih.gov/pubmed/31744829) (scRNA-seq), [PMID: 31934613](https://www.ncbi.nlm.nih.gov/pubmed/31934613) (bulk RNA-seq from TCGA), [PMID: 32550269](https://pubmed.ncbi.nlm.nih.gov/32550269/) (scVDJ-seq)
 
 ### Single (i) Cell R package (iCellR)
 
