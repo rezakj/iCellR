@@ -7,7 +7,7 @@
 qc.stats(
   x = NULL,
   which.data = "raw.data",
-  mito.genes = "default.genes",
+  mito.genes = NULL,
   s.phase.genes = s.phase,
   g2m.phase.genes = g2m.phase
 )

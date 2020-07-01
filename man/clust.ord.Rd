@@ -2,13 +2,14 @@
 % Please edit documentation in R/clust.ord.R
 \name{clust.ord}
 \alias{clust.ord}
-\title{Sort and relabel the clusters based on pseudotime}
+\title{Sort and relabel the clusters randomly or based on pseudotime}
 \usage{
 clust.ord(
   x = NULL,
   top.rank = 500,
   dist.method = "euclidean",
-  clust.method = "complete"
+  clust.method = "complete",
+  how.to.order = "distance"
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ clust.ord(
 \item{dist.method}{Choose from "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski", default = "euclidean".}
 
 \item{clust.method}{Choose from "ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median" or "centroid", default = "complete".}
+
+\item{how.to.order}{Choose from "distance" and "random".}
 }
 \value{
 An object of class iCellR.

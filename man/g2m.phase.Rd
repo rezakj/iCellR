@@ -4,7 +4,9 @@
 \name{g2m.phase}
 \alias{g2m.phase}
 \title{A dataset of G2 and M phase genes}
-\format{A character with 54 genes}
+\format{
+A character with 54 genes
+}
 \source{
 \url{https://science.sciencemag.org/content/352/6282/189}
 }

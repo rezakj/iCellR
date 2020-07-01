@@ -1,7 +1,7 @@
 Package: iCellR
 Type: Package
 Title: Analyzing High-Throughput Single Cell Sequencing Data
-Version: 1.5.3
+Version: 1.5.4
 Authors@R: c(
   person(given = 'Alireza', family = 'Khodadadi-Jamayran',role = c('aut','cre'), email = 'alireza.khodadadi.j@gmail.com', comment = c(ORCID = '0000-0003-2495-7504')),
   person(given = 'Joseph', family = 'Pucella',role = c('aut','ctb'), comment = c(ORCID = '0000-0003-0875-8046')),
@@ -18,15 +18,16 @@ Depends: R (>= 3.3.0), ggplot2, plotly
 Imports: Matrix, Rtsne, gridExtra, ggrepel, ggpubr, scatterplot3d,
         RColorBrewer, knitr, NbClust, shiny, pheatmap, ape, ggdendro,
         plyr, reshape, Hmisc, htmlwidgets, methods, uwot, hdf5r,
-        progress, igraph, data.table
+        progress, igraph, data.table, Rcpp, RANN
 License: GPL-2
+LinkingTo: Rcpp
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 BugReports: https://github.com/rezakj/iCellR/issues
 URL: https://github.com/rezakj/iCellR
-NeedsCompilation: no
-Packaged: 2020-06-24 20:26:57 UTC; khodaa01
+NeedsCompilation: yes
+Packaged: 2020-07-01 14:10:13 UTC; khodaa01
 Author: Alireza Khodadadi-Jamayran [aut, cre]
     (<https://orcid.org/0000-0003-2495-7504>),
   Joseph Pucella [aut, ctb] (<https://orcid.org/0000-0003-0875-8046>),
