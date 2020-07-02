@@ -27,7 +27,7 @@ RoxygenNote: 7.1.1
 BugReports: https://github.com/rezakj/iCellR/issues
 URL: https://github.com/rezakj/iCellR
 NeedsCompilation: yes
-Packaged: 2020-07-01 14:10:13 UTC; khodaa01
+Packaged: 2020-07-02 19:13:09 UTC; khodaa01
 Author: Alireza Khodadadi-Jamayran [aut, cre]
     (<https://orcid.org/0000-0003-2495-7504>),
   Joseph Pucella [aut, ctb] (<https://orcid.org/0000-0003-0875-8046>),

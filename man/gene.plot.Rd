@@ -13,8 +13,8 @@ gene.plot(
   box.to.test = 0,
   box.pval = "sig.signs",
   plot.data.type = "tsne",
-  scaleValue = FALSE,
-  min.scale = -2.5,
+  scaleValue = TRUE,
+  min.scale = 0,
   max.scale = 2.5,
   clust.dim = 2,
   col.by = "clusters",
@@ -25,7 +25,8 @@ gene.plot(
   box.color = "red",
   box.line.col = "green",
   back.col = "white",
-  cell.transparency = 0.5,
+  cell.transparency = 1,
+  box.transparency = 0.5,
   interactive = TRUE,
   out.name = "plot"
 )
@@ -71,7 +72,7 @@ gene.plot(
 
 \item{back.col}{A color for the plot background, default = "black".}
 
-\item{cell.transparency}{Color transparency for points in "scatterplot" and "boxplot", default = 0.5.}
+\item{cell.transparency}{Color transparency for box in "boxplot", default = 0.5.}
 
 \item{interactive}{If set to TRUE an interactive HTML file will be created, default = TRUE.}
 

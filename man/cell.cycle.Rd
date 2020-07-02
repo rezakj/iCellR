@@ -8,7 +8,7 @@ cell.cycle(
   object = NULL,
   scoring.List = NULL,
   return.stats = FALSE,
-  scoring.method = "coverage"
+  scoring.method = "tirosh"
 )
 }
 \arguments{

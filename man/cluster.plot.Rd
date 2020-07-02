@@ -15,7 +15,7 @@ cluster.plot(
   cond.shape = FALSE,
   anno.clust = FALSE,
   anno.size = 4,
-  cell.transparency = 0.5,
+  cell.transparency = 1,
   clust.dim = 2,
   angle = 20,
   clonotype.max = 10,
