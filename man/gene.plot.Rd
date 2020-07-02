@@ -72,7 +72,9 @@ gene.plot(
 
 \item{back.col}{A color for the plot background, default = "black".}
 
-\item{cell.transparency}{Color transparency for box in "boxplot", default = 0.5.}
+\item{cell.transparency}{Color transparency for points in "scatterplot" and "boxplot", default = 1.}
+
+\item{box.transparency}{Color transparency for box in "boxplot", default = 0.5.}
 
 \item{interactive}{If set to TRUE an interactive HTML file will be created, default = TRUE.}
 

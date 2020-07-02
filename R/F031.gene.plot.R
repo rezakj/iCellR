@@ -22,7 +22,7 @@
 #' @param box.line.col A color for the lines around the "boxplot", default = "green".
 #' @param back.col A color for the plot background, default = "black".
 #' @param cell.transparency Color transparency for points in "scatterplot" and "boxplot", default = 1.
-#' @param cell.transparency Color transparency for box in "boxplot", default = 0.5.
+#' @param box.transparency Color transparency for box in "boxplot", default = 0.5.
 #' @param interactive If set to TRUE an interactive HTML file will be created, default = TRUE.
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
 #' @return An object of class iCellR.
