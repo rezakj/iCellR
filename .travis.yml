@@ -25,10 +25,6 @@ env:
     - HDF5_VERSION=1.8.17
     - HDF5_RELEASE_URL="https://support.hdfgroup.org/ftp/HDF5/releases"
 
-before_install:
-  - chmod +x travis_setup.sh
-  - ./travis_setup.sh
-
 addons:
   apt:
     packages:
