@@ -20,8 +20,24 @@ matrix:
 env:
   global:
     - _R_CHECK_FORCE_SUGGESTS_=FALSE
+    - ASAN="-fsanitize=address -fno-omit-frame-pointer"
     - HDF5_VERSION=1.8.17
     - HDF5_RELEASE_URL="https://support.hdfgroup.org/ftp/HDF5/releases"
 
+before_install:
+  - chmod +x travis_build.sh
+  - ./travis_build.sh
+
+addons:
+  apt:
+    packages:
+      - subversion
+      - autoconf
+      - build-essential
+      - libtool
+      - libmagick++-dev
+  homebrew:
+    packages:
+      - libgit2
 
 warnings_are_errors: false
