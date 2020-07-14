@@ -11,6 +11,7 @@ gg.cor(
   gene1 = NULL,
   gene2 = NULL,
   conds = NULL,
+  clusts = NULL,
   cell.size = 1,
   cell.transparency = 0.5,
   interactive = TRUE,
@@ -27,6 +28,8 @@ gg.cor(
 \item{gene2}{Second gene name.}
 
 \item{conds}{Filter only one condition (only one), default is all conditions.}
+
+\item{clusts}{Choose clusters to plot.}
 
 \item{cell.size}{A numeric value for the size of the cells, default = 1.}
 
