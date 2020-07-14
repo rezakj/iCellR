@@ -18,7 +18,7 @@
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "Abstract.KNetL".
 #' @return A plot.
 #' @import progress
-#' @importFrom igraph graph.data.frame cluster_louvain modularity membership layout_nicely layout_with_fr V
+#' @importFrom igraph graph.data.frame E as.undirected cluster_fast_greedy get.edgelist simplify cluster_louvain modularity membership layout_nicely layout_with_fr V
 #' @export
 pseudotime.knetl <- function (x = NULL,
                        dist.method = "euclidean",
