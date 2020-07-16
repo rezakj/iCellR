@@ -739,8 +739,8 @@ dev.off()
 <p align="center">
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/All.cc.png" />
 	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds_cc.png" />
-	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc_pie.png" />
-	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc_bar.png" />
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc_pie.png" width="400"/>
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc_bar.png" width="400"/>
 </p>
 
 - Cell frequencies and proportions
@@ -765,10 +765,10 @@ head(my.obj@my.freq)
 #6       Ctrl 491 1.265        9   86    67.984      17.52
 ```
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_pie.png" />
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_bar.png" />
-	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_pie.cond.png" />
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_bar.cond.png" /> 
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_pie.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_bar.png" width="400"/>
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_pie.cond.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_bar.cond.png" width="400"/> 
 </p>
 
 
