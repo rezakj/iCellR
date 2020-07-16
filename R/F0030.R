@@ -64,12 +64,26 @@ heatmap.gg.plot <- function (x = NULL,
   AllGenes = row.names(DATAmain)
   absent = which((gene %in% AllGenes) == FALSE)
   absentgenes = gene[absent]
+  #######
+  DATAmain <- DATAmain[ rowSums(DATAmain) > 0, ]
+  AllGenes2 = row.names(DATAmain)
+  Gene0 <- setdiff(AllGenes,AllGenes2)
+  Gene0List = which((gene %in% Gene0) == TRUE)
+  Gene0List = gene[Gene0List]
+  NotInHeatmap <- c(absentgenes,Gene0List)
+  gene <- setdiff(gene,NotInHeatmap)
+#####
   if(length(absentgenes) != 0)
   {
     absentgenes = paste(absentgenes, collapse=",")
-    ToPrint <- paste(absentgenes, "not available in your data.
-                     To see the gene names issue this command: row.names(YOURobject@main.data)", sep=" ")
-    stop(message(ToPrint))
+    ToPrint <- paste("WARNING:",absentgenes, "not available in your data", sep=" ")
+    message(ToPrint)
+    Gene0List = paste(Gene0List, collapse=",")
+    ToPrint1 <- paste("WARNING:",Gene0List, "not expressed in your data", sep=" ")
+    message(ToPrint1)
+    presentgenes = paste(gene, collapse=",")
+    ToPrint2 <- paste("WARNING:","plotting",presentgenes, sep=" ")
+    message(ToPrint2)
   }
   ##### get cluster data
   DATA <- x@best.clust

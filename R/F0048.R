@@ -52,7 +52,7 @@ pseudotime.knetl <- function (x = NULL,
     message(paste("Getting tSNE data"))
   }
   #####
-  MYtitle = "Pseudotime Abstract KNetL"
+  MYtitle = "Pseudotime Abstract KNetL (PAK)"
   MyClusters <- x@best.clust
   if (!is.null(conds.to.plot)) {
     Conditions <- data.frame(do.call('rbind', strsplit(as.character(colnames(DATA)),'_',fixed=TRUE)))[1]
