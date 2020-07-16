@@ -608,7 +608,7 @@ cluster.plot(my.obj,
 
 <p align="center">
       <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds.png"/> 
-	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds_clusts.png"/> 
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds_clusts.png"/> 
 </p>
 
 - Plotting clusters and conditions at the same time
