@@ -488,6 +488,7 @@ In this function we provide a variety of many other options for you to explore t
 | ward.D, ward.D2, single, complete, average, mcquitty, median, centroid, kmeans| euclidean, maximum, manhattan, canberra, binary, minkowski or NULL | kl, ch, hartigan, ccc, scott, marriot, trcovw, tracew, friedman, rubin, cindex, db, silhouette, duda, pseudot2, beale, ratkowsky, ball, ptbiserial, gap, frey, mcclain, gamma, gplus, tau, dunn, hubert, sdindex, dindex, sdbw |
 
 ### Conventionally people cluster based on PCA data however because KNetL map is more powerful we recommend clustering based on KNetL map.
+
 This is one of the harder parts of the analysis and sometimes you need to adjust your clustering based on marker genes. This means you might need to merge some clusters, gate (see our cell gating tools) or try different sensitivities to find more or less communities.
 
 ```r
@@ -560,6 +561,7 @@ grid.arrange(A,B,C,D)
 
 
 - Re-numbering clusters based on their distances, this is so that the are more in consecutive order (optional)
+
 This is visually helpful to look at your heatmap after finding marker genes and can help you decide which clusters need to be merged and adjusted. 
 
 ```r
