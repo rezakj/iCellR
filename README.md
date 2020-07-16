@@ -1096,7 +1096,7 @@ grid.arrange(A,B,C,D)
 	<img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds.png" />
 </p>
 
-- Example 3D plots, density plots and interactive plots examples 
+- Some example 2D and 3D plots
 
 ```r
 # 2D
@@ -1139,20 +1139,7 @@ cluster.plot(my.obj,
 	col.by = "conditions",
 	interactive = F,
 	density=T)
-```
-## To see the above made interactive plots click on these links: [2Dplot](https://genome.med.nyu.edu/results/external/iCellR/example1/2d_tSNE_clusters.html) and [3Dplot](https://genome.med.nyu.edu/results/external/iCellR/example1/3d_tSNE_clusters.html)
-        
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_2D_clusters.png" width="400"/>
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_3D.png" width="400"/> 
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/density_conditions.png" width="400"/>
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/density_clusters.png" width="400"/> 	
-</p>
-
-- More example plots
-
-```r
-# plot 
+	
 cluster.plot(my.obj,
 	cell.size = 1,
 	plot.type = "diffusion",
@@ -1172,15 +1159,17 @@ cluster.plot(my.obj,
 	cell.transparency = 0.5,
 	clust.dim = 3,
 	interactive = F)	
-	
 ```
-
+## To see the above made interactive plots click on these links: [2Dplot](https://genome.med.nyu.edu/results/external/iCellR/example1/2d_tSNE_clusters.html) and [3Dplot](https://genome.med.nyu.edu/results/external/iCellR/example1/3d_tSNE_clusters.html)
+        
 <p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_2D_clusters.png" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_3D.png" width="400"/> 
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/density_conditions.png" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/density_clusters.png" width="400"/> 	
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/Diffusion.png" width="400"/>
-	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/diffiusion3D.gif" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/diffiusion3D.gif" width="400"/>
 </p>
-
-
 
 - Differential Expression Analysis 
 
