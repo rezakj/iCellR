@@ -578,7 +578,7 @@ grid.arrange(A,B,C,D)
 ```
 
 <p align="center">
-    <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllClusts.png"/>    
+    <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/All_Clusts.png"/>    
 </p>
 
 - Look at conditions
