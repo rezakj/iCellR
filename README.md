@@ -552,20 +552,10 @@ D <- cluster.plot(my.obj,plot.type = "knetl",interactive = F,cell.size = 0.5,cel
 
 library(gridExtra)
 grid.arrange(A,B,C,D)
-
-# conditions 
-A <- cluster.plot(my.obj,plot.type = "pca",col.by = "conditions",interactive = F,cell.size = 0.5)
-B <- cluster.plot(my.obj,plot.type = "umap",col.by = "conditions",interactive = F,cell.size = 0.5)
-C <- cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F,cell.size = 0.5)
-D <- cluster.plot(my.obj,plot.type = "knetl",col.by = "conditions",interactive = F,cell.size = 0.5)
-
-library(gridExtra)
-grid.arrange(A,B,C,D)
 ```
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllClusts_not_in_order.png"/>  
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds.png"/>    
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllClusts_not_in_order.png"/>   
 </p>
 
 
@@ -589,6 +579,76 @@ grid.arrange(A,B,C,D)
 
 <p align="center">
     <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllClusts.png"/>    
+</p>
+
+- Look at conditions
+
+```r
+# conditions 
+A <- cluster.plot(my.obj,plot.type = "pca",col.by = "conditions",interactive = F,cell.size = 0.5)
+B <- cluster.plot(my.obj,plot.type = "umap",col.by = "conditions",interactive = F,cell.size = 0.5)
+C <- cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F,cell.size = 0.5)
+D <- cluster.plot(my.obj,plot.type = "knetl",col.by = "conditions",interactive = F,cell.size = 0.5)
+
+library(gridExtra)
+grid.arrange(A,B,C,D)
+
+### or 
+
+cluster.plot(my.obj,
+              cell.size = 0.5,
+              plot.type = "knetl",
+              cell.color = "black",
+              back.col = "white",
+              col.by = "conditions",
+              cell.transparency = 1,
+              clust.dim = 2,
+              interactive = F,cond.facet = T)
+```
+
+<p align="center">
+      <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds.png"/> 
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds_clusts.png"/> 
+</p>
+
+- Plotting clusters and conditions at the same time
+
+```r
+# example
+#cluster.plot(my.obj,
+#	cell.size = 1,
+#	plot.type = "umap",
+#	cell.color = "black",
+#	back.col = "white",
+#	col.by = "clusters",
+#	cell.transparency = 0.5,
+#	clust.dim = 2,
+#	cond.shape = T,
+#	interactive = T,
+#	out.name = "2d_UMAP_clusters_conds")
+```
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds_clusts.gif"/>
+</p>
+
+- Pseudotime Abstract KNetL map (PAK map)
+This is very helpful to see the distances or similarities between different communities. The shorter and thiker the lines/links (rubber bands) are the more similar the communities. The nodes are the clusters and the edges or links are the distance between them. 
+
+```r
+pseudotime.knetl(my.obj,interactive = F,cluster.membership = F,conds.to.plot = NULL)
+
+## with memberships 
+pseudotime.knetl(my.obj,interactive = F,cluster.membership = T,conds.to.plot = NULL)
+
+
+### intractive plot
+pseudotime.knetl(my.obj,interactive = T)
+```
+
+<p align="center">
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.knetl.png" width="400"/>
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.knetl.membered.png" width="400"/>
 </p>
 
 - Examples 3D plots, density plots and interactive plots examples 
@@ -674,39 +734,6 @@ cluster.plot(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/Diffusion.png" width="400"/>
 	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/diffiusion3D.gif" width="400"/>
 </p>
-
-- Plotting clusters and conditions at the same time
-
-```r
-cluster.plot(my.obj,
-	cell.size = 1,
-	plot.type = "umap",
-	cell.color = "black",
-	back.col = "white",
-	col.by = "clusters",
-	cell.transparency = 0.5,
-	clust.dim = 2,
-	cond.shape = T,
-	interactive = T,
-	out.name = "2d_UMAP_clusters_conds")
-	
-# or 
-cluster.plot(my.obj,
-              cell.size = 0.5,
-              plot.type = "umap",
-              cell.color = "black",
-              back.col = "white",
-              cell.transparency = 0.5,
-              clust.dim = 2,
-              interactive = F,cond.facet = T)
-```
-
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds_clusts.gif" width="400"/>
-	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds_clusts.png" width="400"/>
-</p>
-
 
 - Normalized cell frequencies in clusters and conditions
 
