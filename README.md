@@ -109,13 +109,17 @@ dim(my.data)
 # [1] 32738  2700
 
 # divide your sample into three samples for this example 
-  sample1 <- my.data[1:900]
-  sample2 <- my.data[901:1800]
-  sample3 <- my.data[1801:2700]
-  
-# merge all of your samples to make a single aggregated file.    
-my.data <- data.aggregation(samples = c("sample1","sample2","sample3"), 
-	condition.names = c("WT","KO","Ctrl"))
+
+sample1 <- my.data[1:900]
+sample2 <- my.data[901:1800]
+sample3 <- my.data[1801:2300]
+sample4 <- my.data[2301:2700]
+   
+   
+# merge all of your samples to make a single aggregated file.  
+
+my.data <- data.aggregation(samples = c("sample1","sample2","sample3","sample4"),
+	condition.names = c("WT","KO","Ctrl","KD"))
 ```
 
 - Check the head of your file.
@@ -146,26 +150,34 @@ my.obj
 |  |'  '--'\   --. |  ||  ||  |
 `--' `-----' `----'`--'`--'`--' '--'
 ###################################
-An object of class iCellR version: 0.99.0 
-    Raw/original data dimentions (rows,columns): 32738,2700 
-    Data conditions in raw data: Ctrl,KO,WT (900,900,900) 
-    Row names: A1BG,A1BG.AS1,A1CF ... 
-    Columns names: WT_AAACATACAACCAC.1,WT_AAACATTGAGCTAC.1,WT_AAACATTGATCAGC.1 ... 
+An object of class iCellR version: 1.5.5
+Raw/original data dimentions (rows,columns): 32738,2700
+Data conditions in raw data: Ctrl,KD,KO,WT (500,400,900,900)
+Row names: A1BG,A1BG.AS1,A1CF ...
+Columns names: WT_AAACATACAACCAC.1,WT_AAACATTGAGCTAC.1,WT_AAACATTGATCAGC.1 ...
 ###################################
-   QC stats performed: FALSE , PCA performed: FALSE , CCA performed: FALSE
-   Clustering performed: FALSE , Number of clusters: 0
-   tSNE performed: FALSE , UMAP performed: FALSE , DiffMap performed: FALSE
-   Main data dimentions (rows,columns): 0 0
-   Normalization factors:  ...
-   Imputed data dimentions (rows,columns): 0 0
-############## scVDJ-Seq ###########
-   VDJ data dimentions (rows,columns): 0 0
-############## CITE-Seq ############
-   ADT raw data dimentions (rows,columns): 0 0
-   ADT main data dimentions (rows,columns): 0 0
-   ADT columns names:  ...
-   ADT row names:  ...
-######## iCellR object made ########
+   QC stats performed:TRUE, PCA performed:TRUE
+   Clustering performed:FALSE, Number of clusters:0
+   tSNE performed:TRUE, UMAP performed:TRUE, DiffMap performed:FALSE
+   Main data dimensions (rows,columns): 32738,2643
+   Data conditions in main data:Ctrl,KD,KO,WT(491,388,879,885)
+   Normalization factors:1.06283342125181,...
+   Imputed data dimensions (rows,columns):0,0
+############## scVDJ-seq ###########
+VDJ data dimentions (rows,columns):0,0
+############## CITE-seq ############
+   ADT raw data  dimensions (rows,columns):0,0
+   ADT main data  dimensions (rows,columns):0,0
+   ADT columns names:...
+   ADT row names:...
+############## scATAC-seq ############
+   ATAC raw data  dimensions (rows,columns):0,0
+   ATAC main data  dimensions (rows,columns):0,0
+   ATAC columns names:...
+   ATAC row names:...
+############## Spatial ###########
+Spatial data dimentions (rows,columns):0,0
+########### iCellR object ##########
 ```
 
 - Perform some QC 
@@ -173,44 +185,6 @@ An object of class iCellR version: 0.99.0
 ```r
 my.obj <- qc.stats(my.obj)
 ``` 
-
-
-- Cell cycle prediction 
-
-```r
-my.obj <- cc(my.obj, s.genes = s.phase, g2m.genes = g2m.phase)
-head(my.obj@stats)
-
-#                                CellIds nGenes UMIs mito.percent
-#WT_AAACATACAACCAC.1 WT_AAACATACAACCAC.1    781 2421  0.030152829
-#WT_AAACATTGAGCTAC.1 WT_AAACATTGAGCTAC.1   1352 4903  0.037935958
-#WT_AAACATTGATCAGC.1 WT_AAACATTGATCAGC.1   1131 3149  0.008891712
-#WT_AAACCGTGCTTCCG.1 WT_AAACCGTGCTTCCG.1    960 2639  0.017430845
-#WT_AAACCGTGTATGCG.1 WT_AAACCGTGTATGCG.1    522  981  0.012232416
-#WT_AAACGCACTGGTAC.1 WT_AAACGCACTGGTAC.1    782 2164  0.016635860
-#                    S.phase.probability g2m.phase.probability      S.Score
-#WT_AAACATACAACCAC.1        0.0012391574          0.0004130525  0.030569081
-#WT_AAACATTGAGCTAC.1        0.0002039568          0.0004079135 -0.077860621
-#WT_AAACATTGATCAGC.1        0.0003175611          0.0019053668 -0.028560560
-#WT_AAACCGTGCTTCCG.1        0.0007578628          0.0011367942  0.001917225
-#WT_AAACCGTGTATGCG.1        0.0000000000          0.0020387360 -0.020085210
-#WT_AAACGCACTGGTAC.1        0.0000000000          0.0000000000 -0.038953135
-#                        G2M.Score Phase
-#WT_AAACATACAACCAC.1 -0.0652390011     S
-#WT_AAACATTGAGCTAC.1 -0.1277015099    G1
-#WT_AAACATTGATCAGC.1 -0.0036505733    G1
-#WT_AAACCGTGCTTCCG.1 -0.0499511543     S
-#WT_AAACCGTGTATGCG.1  0.0009426363   G2M
-#WT_AAACGCACTGGTAC.1 -0.0680240629    G1
-
-
-# plot cell cycle rate
-pie(table(my.obj@stats$Phase))
-```
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/iCellR_1.png" width="400"/>
-</p>
 
 - Plot QC
 
@@ -220,7 +194,7 @@ By default all the plotting functions would create interactive html files unless
 # plot UMIs, genes and percent mito all at once and in one plot. 
 # you can make them individually as well, see the arguments ?stats.plot.
 stats.plot(my.obj,
-	plot.type = "all.in.one",
+	plot.type = "three.in.one",
 	out.name = "UMI-plot",
 	interactive = FALSE,
 	cell.color = "slategray3", 
@@ -231,7 +205,7 @@ stats.plot(my.obj,
 ```
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/stats.png" />
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/plot1_QC_stats.png" />
 </p>
 
 ```r  
@@ -303,26 +277,22 @@ my.obj <- norm.data(my.obj,
 #my.obj <- norm.data(my.obj, norm.method = "no.norm") # if the data is already normalized
 ```
 
-- Perform second QC 
+- Perform second QC (optioal)
 
 ```r
-my.obj <- qc.stats(my.obj,which.data = "main.data")
+#my.obj <- qc.stats(my.obj,which.data = "main.data")
 
-stats.plot(my.obj,
-	plot.type = "all.in.one",
-	out.name = "UMI-plot",
-	interactive = F,
-	cell.color = "slategray3", 
-	cell.size = 1, 
-	cell.transparency = 0.5,
-	box.color = "red",
-	box.line.col = "green",
-	back.col = "white")
+#stats.plot(my.obj,
+#	plot.type = "all.in.one",
+#	out.name = "UMI-plot",
+#	interactive = F,
+#	cell.color = "slategray3", 
+#	cell.size = 1, 
+#	cell.transparency = 0.5,
+#	box.color = "red",
+#	box.line.col = "green",
+#	back.col = "white")
 ``` 
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/stats2.png" />
-</p>
 
 - Scale data (optional)
 
@@ -411,83 +381,29 @@ my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,d
 
 opt.pcs.plot(my.obj)
 
-# 2 round PCA (to find top genes in the first 10 PCs and re-run PCA for better clustering
+# 2 round PCA (optional)
+# This is to find top genes in the first 10 PCs and re-run PCA for better clustering. 
 ## This is optional and might not be good in some cases
-length(my.obj@gene.model)
-# 681
-my.obj <- find.dim.genes(my.obj, dims = 1:10,top.pos = 20, top.neg = 20) # (optional)
 
-length(my.obj@gene.model)
-# 214
+#length(my.obj@gene.model)
+# 683
+#my.obj <- find.dim.genes(my.obj, dims = 1:10,top.pos = 20, top.neg = 20) # (optional)
+
+#length(my.obj@gene.model)
+# 211
 
 # second round PC
-my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
+#my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
 ```        
 
 <p align="center">
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/Opt_Number_Of_PCs.png" />
 </p>
 
-### Clustering
 
-We provide three functions to run the clustering method of your choice:
+- Perform other dimensionality reductiond (tSNE, UMAP, KNetL, PHATE, diffusion map)
 
-### 1- iclust (** recommended): 
-Faster and optimized for iCellR. This function takes PCA, UMAP or tSNE as input, however we recommend using the PCA data as in default. This function is using Louvain algorithm for clustering a graph made using KNN. Similar to PhenoGraph (Levine et al., Cell, 2015) however instead of Jaccard similarity values we use distance (euclidean by default) values for the weights.
-
-##### 2- run.phenograph: 
-R implementation of the PhenoGraph algorithm. [Rphenograph](https://github.com/JinmiaoChenLab/Rphenograph) wrapper (Levine et al., Cell, 2015). 
-
-##### 3- run.clustering: 
-In this function we provide a variety of many other options for you to explore the data with different flavours of clustering and indexing methods. Choose any combinations from the table below.
-
-| clustering methods | distance methods | indexing methods | 
-| ------------- | ------------- | ------------- |
-| ward.D, ward.D2, single, complete, average, mcquitty, median, centroid, kmeans| euclidean, maximum, manhattan, canberra, binary, minkowski or NULL | kl, ch, hartigan, ccc, scott, marriot, trcovw, tracew, friedman, rubin, cindex, db, silhouette, duda, pseudot2, beale, ratkowsky, ball, ptbiserial, gap, frey, mcclain, gamma, gplus, tau, dunn, hubert, sdindex, dindex, sdbw |
-
-
-```r
-my.obj <- iclust(my.obj,
-    dist.method = "euclidean",
-    k = 100,
-    dims = 1:10,
-    data.type = "pca")
-
-# or
-# run.phenograph
-#my.obj <- run.phenograph(my.obj,k = 100,dims = 1:10)
-
-# or 
-# run.clustering
-#my.obj <- run.clustering(my.obj, 
-#	clust.method = "kmeans", 
-#	dist.method = "euclidean",
-#	index.method = "silhouette",
-#	max.clust = 25,
-#	min.clust = 2,
-#	dims = 1:10)
-
-# If you want to manually set the number of clusters, and not used the predicted optimal number, set the minimum and maximum to the number you want:
-#my.obj <- run.clustering(my.obj, 
-#	clust.method = "ward.D",
-#	dist.method = "euclidean",
-#	index.method = "ccc",
-#	max.clust = 8,
-#	min.clust = 8,
-#	dims = 1:10)
-
-# more examples 
-
-#my.obj <- run.clustering(my.obj, 
-#	clust.method = "ward.D", 
-#	dist.method = "euclidean",
-#	index.method = "kl",
-#	max.clust = 25,
-#	min.clust = 2,
-#	dims = 1:10)
-```
-
-- Perform Dimensionality reduction
+We recommend tSNE, UMAP and KNetL. KNetL is fundamentally more powerful. 
 
 ```r
 # tSNE
@@ -537,12 +453,88 @@ my.obj <- run.knetl(my.obj, dims = 1:20, k = 100, dim.redux = "umap")
 # my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
 ```
 
-- Clustering based on UMAP, tSNE or KNetL instead of PCA (optional)
+- Visualizing the results of dimensionality reductions before clustering (optional)
 
 ```r
-# my.obj <- iclust(my.obj, k = 150, data.type = "knetl") 
-# my.obj <- iclust(my.obj, k = 150, data.type = "umap")
-# my.obj <- iclust(my.obj, k = 150, data.type = "tsne")
+A= cluster.plot(my.obj,plot.type = "pca",interactive = F)
+B= cluster.plot(my.obj,plot.type = "umap",interactive = F)
+C= cluster.plot(my.obj,plot.type = "tsne",interactive = F)
+D= cluster.plot(my.obj,plot.type = "knetl",interactive = F)
+
+library(gridExtra)
+grid.arrange(A,B,C,D)
+```
+
+<p align="center">
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/All.not.clustered.png"/>   
+</p>
+
+
+### Clustering
+
+We provide three functions to run the clustering method of your choice:
+
+### 1- iclust (** recommended): 
+Faster and optimized for iCellR. This function takes PCA, UMAP or tSNE as input, however we recommend using the PCA data as in default. This function is using Louvain algorithm for clustering a graph made using KNN. Similar to PhenoGraph (Levine et al., Cell, 2015) however instead of Jaccard similarity values we use distance (euclidean by default) values for the weights.
+
+##### 2- run.phenograph: 
+R implementation of the PhenoGraph algorithm. [Rphenograph](https://github.com/JinmiaoChenLab/Rphenograph) wrapper (Levine et al., Cell, 2015). 
+
+##### 3- run.clustering: 
+In this function we provide a variety of many other options for you to explore the data with different flavours of clustering and indexing methods. Choose any combinations from the table below.
+
+| clustering methods | distance methods | indexing methods | 
+| ------------- | ------------- | ------------- |
+| ward.D, ward.D2, single, complete, average, mcquitty, median, centroid, kmeans| euclidean, maximum, manhattan, canberra, binary, minkowski or NULL | kl, ch, hartigan, ccc, scott, marriot, trcovw, tracew, friedman, rubin, cindex, db, silhouette, duda, pseudot2, beale, ratkowsky, ball, ptbiserial, gap, frey, mcclain, gamma, gplus, tau, dunn, hubert, sdindex, dindex, sdbw |
+
+### Conventionally people cluster based on PCA data however because KNetL map is more powerful we recommend clustering based on KNetL map.
+This is one of the harder parts of the analysis and sometimes you need to adjust your clustering based on marker genes. This means you might need to merge some clusters, gate (see our cell gating tools) or try different sensitivities to find more or less communities.
+
+```r
+# clustering based on KNetL
+
+my.obj <- iclust(my.obj, k = 150, data.type = "knetl") 
+
+# clustering based on PCA
+
+#my.obj <- iclust(my.obj,
+#    dist.method = "euclidean",
+#    k = 100,
+#    dims = 1:10,
+#    data.type = "pca")
+
+# or
+# run.phenograph
+#my.obj <- run.phenograph(my.obj,k = 100,dims = 1:10)
+
+# or 
+# run.clustering
+#my.obj <- run.clustering(my.obj, 
+#	clust.method = "kmeans", 
+#	dist.method = "euclidean",
+#	index.method = "silhouette",
+#	max.clust = 25,
+#	min.clust = 2,
+#	dims = 1:10)
+
+# If you want to manually set the number of clusters, and not used the predicted optimal number, set the minimum and maximum to the number you want:
+#my.obj <- run.clustering(my.obj, 
+#	clust.method = "ward.D",
+#	dist.method = "euclidean",
+#	index.method = "ccc",
+#	max.clust = 8,
+#	min.clust = 8,
+#	dims = 1:10)
+
+# more examples 
+
+#my.obj <- run.clustering(my.obj, 
+#	clust.method = "ward.D", 
+#	dist.method = "euclidean",
+#	index.method = "kl",
+#	max.clust = 25,
+#	min.clust = 2,
+#	dims = 1:10)
 ```
 
 - Visualize data
@@ -2301,3 +2293,43 @@ loaded via a namespace (and not attached):
 [76] parallel_3.5.1       fastmap_1.0.1        survival_2.44-1.1
 [79] colorspace_1.4-1     cluster_2.1.0        knitr_1.25
 ```
+
+
+
+- Cell cycle prediction 
+
+```r
+my.obj <- cc(my.obj, s.genes = s.phase, g2m.genes = g2m.phase)
+head(my.obj@stats)
+
+#                                CellIds nGenes UMIs mito.percent
+#WT_AAACATACAACCAC.1 WT_AAACATACAACCAC.1    781 2421  0.030152829
+#WT_AAACATTGAGCTAC.1 WT_AAACATTGAGCTAC.1   1352 4903  0.037935958
+#WT_AAACATTGATCAGC.1 WT_AAACATTGATCAGC.1   1131 3149  0.008891712
+#WT_AAACCGTGCTTCCG.1 WT_AAACCGTGCTTCCG.1    960 2639  0.017430845
+#WT_AAACCGTGTATGCG.1 WT_AAACCGTGTATGCG.1    522  981  0.012232416
+#WT_AAACGCACTGGTAC.1 WT_AAACGCACTGGTAC.1    782 2164  0.016635860
+#                    S.phase.probability g2m.phase.probability      S.Score
+#WT_AAACATACAACCAC.1        0.0012391574          0.0004130525  0.030569081
+#WT_AAACATTGAGCTAC.1        0.0002039568          0.0004079135 -0.077860621
+#WT_AAACATTGATCAGC.1        0.0003175611          0.0019053668 -0.028560560
+#WT_AAACCGTGCTTCCG.1        0.0007578628          0.0011367942  0.001917225
+#WT_AAACCGTGTATGCG.1        0.0000000000          0.0020387360 -0.020085210
+#WT_AAACGCACTGGTAC.1        0.0000000000          0.0000000000 -0.038953135
+#                        G2M.Score Phase
+#WT_AAACATACAACCAC.1 -0.0652390011     S
+#WT_AAACATTGAGCTAC.1 -0.1277015099    G1
+#WT_AAACATTGATCAGC.1 -0.0036505733    G1
+#WT_AAACCGTGCTTCCG.1 -0.0499511543     S
+#WT_AAACCGTGTATGCG.1  0.0009426363   G2M
+#WT_AAACGCACTGGTAC.1 -0.0680240629    G1
+
+
+# plot cell cycle rate
+pie(table(my.obj@stats$Phase))
+```
+
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/iCellR_1.png" width="400"/>
+</p>
+
