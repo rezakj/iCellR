@@ -868,11 +868,65 @@ cluster.plot(my.obj,
 	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/diffiusion3D.gif" width="400"/>
 </p>
 
+ - Run data imputation
+
+```r
+my.obj <- run.impute(my.obj, dims = 1:10, nn = 10, data.type = "pca")
+```
+
 - Save your object
 
 ```r
 save(my.obj, file = "my.obj.Robj")
 ```        
+
+- gene gene correlation 
+
+```r
+# impute more cells by increasing nn for better resulst. 
+my.obj <- run.impute(my.obj,dims = 1:10,data.type = "pca", nn = 50)
+
+# main data
+A <- gg.cor(my.obj, 
+	interactive = F, 
+	gene1 = "GNLY",
+	gene2 = "NKG7", 
+	conds = NULL,
+	clusts = NULL,
+	data.type = "main")
+
+# imputed data 
+B <- gg.cor(my.obj, 
+	interactive = F, 
+	gene1 = "GNLY",
+	gene2 = "NKG7", 
+	conds = NULL,
+	clusts = NULL,
+	data.type = "imputed")
+
+C <- gg.cor(my.obj, 
+	interactive = F, 
+	gene1 = "GNLY",
+	gene2 = "NKG7", 
+	conds = NULL,
+	clusts = c(3,2),
+	data.type = "imputed")
+
+
+# imputed data 
+D <- gg.cor(my.obj, 
+	interactive = F, 
+	gene1 = "GNLY",
+	gene2 = "NKG7", 
+	conds = c("WT"),
+	clusts = NULL,
+	data.type = "imputed")
+
+grid.arrange(A,B,C,D)
+```
+<p align="center">
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/gene-gene_correlation.png"/>
+</p>
 
 - Find marker genes
 
@@ -927,10 +981,39 @@ head(marker.genes)
 # the rest are the average expression for each cluster
 ```
 
+- Heatmap
+
+```r
+# find top genes
+MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.2,filt.ambig = F)
+MyGenes <- unique(MyGenes)
+
+# main data 
+heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters", conds.to.plot = NULL)
+
+# imputed data 
+heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters", data.type = "imputed", conds.to.plot = NULL)
+
+# sort cells and plot only one condition
+heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters", data.type = "imputed", cell.sort = TRUE, conds.to.plot = c("WT"))
+
+# Pseudotime stile
+heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "none", data.type = "imputed", cell.sort = TRUE)
+
+# intractive 
+# heatmap.gg.plot(my.obj, gene = MyGenes, interactive = T, out.name = "heatmap_gg", cluster.by = "clusters")
+````
+
+<p align="center">
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_gg.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_gg_imputed.png" width="400"/>  
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_gg_imputed_sorted_WT.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_gg_imputed_sudo.png" width="400"/> 
+</p>
+
 - Plot genes
 
 ```r
-# tSNE 2D
 A <- gene.plot(my.obj, gene = "MS4A1", 
 	plot.type = "scatterplot",
 	interactive = F,
@@ -940,7 +1023,7 @@ B <- gene.plot(my.obj, gene = "MS4A1",
 	plot.type = "scatterplot",
 	interactive = F,
 	out.name = "scatter_plot",
-	plot.data.type = "pca")
+	plot.data.type = "umap")
 	
 # Box Plot
 C <- gene.plot(my.obj, gene = "MS4A1", 
@@ -959,96 +1042,97 @@ D <- gene.plot(my.obj, gene = "MS4A1",
 	out.name = "bar_plot")
 	
 library(gridExtra)
+png('gene.plots.png', width = 8, height = 8, units = 'in', res = 300)
 grid.arrange(A,B,C,D)	
+dev.off()
+
+### more plots
+
+A <- gene.plot(my.obj, gene = "MS4A1", 
+	plot.type = "scatterplot",
+	interactive = F,
+	data.type = "imputed",
+	out.name = "scatter_plot")
+# PCA 2D	
+B <- gene.plot(my.obj, gene = "MS4A1", 
+	plot.type = "scatterplot",
+	interactive = F,
+	out.name = "scatter_plot",
+	data.type = "imputed",
+	plot.data.type = "umap")
+	
+# Box Plot
+C <- gene.plot(my.obj, gene = "MS4A1", 
+	box.to.test = 0, 
+	box.pval = "sig.signs",
+	col.by = "clusters",
+	plot.type = "boxplot",
+	interactive = F,
+	data.type = "imputed",
+	out.name = "box_plot")
+	
+# Bar plot (to visualize fold changes)	
+D <- gene.plot(my.obj, gene = "MS4A1", 
+	col.by = "clusters",
+	plot.type = "barplot",
+	interactive = F,
+	data.type = "imputed",
+	out.name = "bar_plot")
+	
+library(gridExtra)
+png('gene.plots_imputed.png', width = 8, height = 8, units = 'in', res = 300)
+grid.arrange(A,B,C,D)	
+dev.off()
+	
 ```
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/7_genePlots.png"/>
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/gene.plots.png" />
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/gene.plots_imputed.png" />
 </p>
-
 
 - Multiple plots
 
+Change the section in between #### signs for different plots (e.g. boxplot, bar, ...). 
+
 ```r
-genelist = c("PPBP","LYZ","MS4A1","GNLY","LTB","NKG7","IFITM2","CD14","S100A9")
+genelist = c("MS4A1","GNLY","FCGR3A","NKG7","CD14","CD3E","CD8A","CD4","GZMH","CCR7","CD68")
+
 rm(list = ls(pattern="PL_"))
-###
 for(i in genelist){
-	MyPlot <- gene.plot(my.obj, gene = i, 
-		interactive = F,
-		plot.data.type = "umap",
-		cell.transparency = 1)
-	NameCol=paste("PL",i,sep="_")
-	eval(call("<-", as.name(NameCol), MyPlot))
+####
+    MyPlot <- gene.plot(my.obj, gene = i,
+        interactive = F,
+        cell.size = 0.1,
+        plot.data.type = "knetl",
+        data.type = "main",
+        scaleValue = T,
+        min.scale = 0,max.scale = 2.0,
+        cell.transparency = 1)
+####
+    NameCol=paste("PL",i,sep="_")
+    eval(call("<-", as.name(NameCol), MyPlot))
 }
-###
+
 library(cowplot)
 filenames <- ls(pattern="PL_")
-plot_grid(plotlist=mget(filenames[1:9]))
+
+B <- cluster.plot(my.obj,plot.type = "knetl",interactive = F,cell.size = 0.1,cell.transparency = 1,anno.clust=T)
+filenames <- c("B",filenames)
+
+png('genes_KNetL.png',width = 15, height = 12, units = 'in', res = 300)
+plot_grid(plotlist=mget(filenames))
+dev.off()
+
+# or heatmap 
+# heatmap.gg.plot(my.obj, gene = genelist, interactive = F, cluster.by = "clusters")
 ```
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/8_genePlots.png" />
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes_KNetL.png" />
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes_heatmap_gg.png" />
 </p>
 
-- Heatmap
-
-```r
-# find top genes
-MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.2,filt.ambig = F)
-MyGenes <- unique(MyGenes)
-# plot
-heatmap.gg.plot(my.obj, gene = MyGenes, interactive = T, out.name = "plot", cluster.by = "clusters")
-# or 
-heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters")
-```
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/9_heatmap_gg.png" />
-</p>
-
- - Run data imputation
-
-```r
-my.obj <- run.impute(my.obj, dims = 1:10, nn = 10, data.type = "pca")
-
-# more examples
-# my.obj <- run.impute(my.obj, cell.ratio = 2, data.type = "tsne")
-# my.obj <- run.impute(my.obj, cell.ratio = 2, data.type = "umap")
-
-# save after imputation 
-save(my.obj, file = "my.obj.Robj")
-
-# some more plots from another analysis 
-A=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters", cell.sort = TRUE)
-B=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters", data.type = "imputed", cell.sort = TRUE)
-C=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "conditions", cell.sort = TRUE)
-D=heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "none", data.type = "imputed", cell.sort = TRUE)
-
-# If cluster.by = "none", your heamap would have like a Pseudotime effect.
-# It calculates the distance between the cells based on the genes in the heatmap. 
-
-library(gridExtra)
-grid.arrange(A,B,C,D)
-
-# main data 
-gene.plot(my.obj, gene = "MS4A1", 
-    plot.type = "scatterplot",
-    interactive = F,
-    data.type = "main")
-
-# imputed data 
-gene.plot(my.obj, gene = "MS4A1", 
-    plot.type = "scatterplot",
-    interactive = F,
-    data.type = "imputed")		
-```
-
-<p align="center">
-	<img src="https://github.com/rezakj/scSeqR/blob/master/doc/heatmaps.png" />
-	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/imputed_dotPlot.png" />
-	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/imputed_BoxPlot.png" />
-</p>
 
  - Plotting conditions and clusters for genes
  
