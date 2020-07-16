@@ -21,7 +21,8 @@
 #' @param box.color A color for the boxes in the "boxplot", default = "red".
 #' @param box.line.col A color for the lines around the "boxplot", default = "green".
 #' @param back.col A color for the plot background, default = "black".
-#' @param cell.transparency Color transparency for points in "scatterplot" and "boxplot", default = 0.5.
+#' @param cell.transparency Color transparency for points in "scatterplot" and "boxplot", default = 1.
+#' @param box.transparency Color transparency for box in "boxplot", default = 0.5.
 #' @param interactive If set to TRUE an interactive HTML file will be created, default = TRUE.
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
 #' @return An object of class iCellR.
@@ -59,8 +60,8 @@ gene.plot <- function (x = NULL,
                        box.to.test = 0,
                        box.pval = "sig.signs",
                        plot.data.type = "tsne",
-                       scaleValue = FALSE,
-                       min.scale = -2.5,
+                       scaleValue = TRUE,
+                       min.scale = 0,
                        max.scale = 2.5,
                        clust.dim = 2,
                        col.by = "clusters",
@@ -71,7 +72,8 @@ gene.plot <- function (x = NULL,
                        box.color = "red",
                        box.line.col = "green",
                        back.col = "white",
-                       cell.transparency = 0.5,
+                       cell.transparency = 1,
+                       box.transparency = 0.5,
                        interactive = TRUE,
                        out.name = "plot") {
   if ("iCellR" != class(x)[1]) {
@@ -280,14 +282,14 @@ gene.plot <- function (x = NULL,
     if (cond.shape == FALSE) {
       myPLOT <- ggplot(DATA, aes(x = Clusters, y=log2(Expression + 1))) +
         theme_bw() + theme(axis.text.x=element_text(angle=90)) +
-        geom_jitter(color = box.cell.col, size = cell.size, alpha = cell.transparency) +
+        geom_jitter(height = 0,color = box.cell.col, size = cell.size, alpha = cell.transparency) +
         ggtitle(gene) +
         geom_violin(trim=TRUE, col = "black", alpha = cell.transparency) +
         geom_boxplot(fill = box.color,
                      col = "green",
                      notch = FALSE,
                      outlier.shape = NA,
-                     alpha = cell.transparency) +
+                     alpha = box.transparency) +
         ylab("scaled normalized expression") +
         stat_summary(fun=mean, geom="point", size=2, color="blue") +
         xlab(".")
@@ -296,14 +298,14 @@ gene.plot <- function (x = NULL,
       #      Conditions = DATA$Conditions
       myPLOT <- ggplot(DATA, aes(x = Clusters, y=log2(Expression + 1))) +
         theme_bw() + theme(axis.text.x=element_text(angle=90)) +
-        geom_jitter(color = box.cell.col, size = cell.size, alpha = cell.transparency) +
+        geom_jitter(height = 0,color = box.cell.col, size = cell.size, alpha = cell.transparency) +
         ggtitle(gene) +
         geom_violin(trim=TRUE, col = "black", alpha = cell.transparency) +
         geom_boxplot(fill = box.color,
                      col = "green",
                      notch = FALSE,
                      outlier.shape = NA,
-                     alpha = cell.transparency) +
+                     alpha = box.transparency) +
         ylab("scaled normalized expression") +
         stat_summary(fun=mean, geom="point", size=2, color="blue") +
         xlab(".")

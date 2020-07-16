@@ -2,7 +2,7 @@
 #'
 #' This function takes an object of class iCellR and creates QC plot.
 #' @param x An object of class iCellR.
-#' @param plot.type Choose from "box.umi", "box.mito", "box.gene", "box.s.phase", "box.g2m.phase","all.in.one", "point.mito.umi", "point.gene.umi".
+#' @param plot.type Choose from "box.umi", "box.mito", "box.gene", "box.s.phase", "box.g2m.phase","all.in.one","three.in.one", "point.mito.umi", "point.gene.umi".
 #' @param cell.color Choose a color for points in the plot.
 #' @param cell.size A number for the size of the points in the plot, default = 1.
 #' @param back.col Background color, default = "white"
@@ -14,7 +14,7 @@
 #' @return An object of class iCellR.
 #' @examples
 #' stats.plot(demo.obj,
-#'           plot.type = "all.in.one",
+#'           plot.type = "three.in.one",
 #'           out.name = "UMI-plot",
 #'           interactive = FALSE,
 #'           cell.color = "slategray3",
@@ -33,7 +33,7 @@
 #' @importFrom ggplot2 ggplot geom_segment geom_violin guide_colorbar guide_legend guides scale_color_discrete scale_colour_gradient scale_fill_gradient2 scale_x_continuous scale_y_continuous scale_y_discrete stat_summary coord_polar element_rect element_text element_blank facet_wrap scale_color_manual geom_hline geom_jitter geom_vline ylab xlab ggtitle theme_bw aes theme geom_bar geom_point geom_boxplot geom_errorbar position_dodge geom_tile geom_density geom_line
 #' @export
 stats.plot <- function (x = NULL,
-                        plot.type = "box.umi",
+                        plot.type = "three.in.one",
                         cell.color = "slategray3",
                         cell.size = 1,
                         cell.transparency = 0.5,
@@ -60,7 +60,7 @@ if (do == 2) {
   # Box plots
   # mito
   mito.percent.plot <- ggplot(DATA,aes(y=mito.percent,x=col.legend)) +
-    geom_jitter(color = cell.color, size = cell.size, alpha = cell.transparency) +
+    geom_jitter(height = 0,color = cell.color, size = cell.size, alpha = cell.transparency) +
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot( fill = box.color, col = "green", notch = FALSE, outlier.shape = NA, alpha = cell.transparency) +
     xlab("mito.percent") + ylab("percent of mito genes per cell") +
@@ -68,7 +68,7 @@ if (do == 2) {
     theme_bw() + theme(axis.text.x=element_text(angle=90))
     # nGenes
   nGenes.plot <- ggplot(DATA,aes(y=nGenes,x=col.legend)) +
-    geom_jitter(color = cell.color, size = cell.size, alpha = cell.transparency) +
+    geom_jitter(height = 0,color = cell.color, size = cell.size, alpha = cell.transparency) +
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot( fill = box.color, col = box.line.col, notch = FALSE, outlier.shape = NA, alpha = cell.transparency) +
     xlab("nGenes") + ylab("number of genes per cell") +
@@ -76,7 +76,7 @@ if (do == 2) {
     theme_bw() + theme(axis.text.x=element_text(angle=90))
     # UMIs
   UMIsplot <- ggplot(DATA,aes(y=UMIs,x=col.legend)) +
-    geom_jitter(color = cell.color, size = cell.size, alpha = cell.transparency) +
+    geom_jitter(height = 0,color = cell.color, size = cell.size, alpha = cell.transparency) +
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot( fill = box.color, col = box.line.col, notch = FALSE, outlier.shape = NA, alpha = cell.transparency) +
     xlab("UMIs") + ylab("number of UMIs per cell") +
@@ -84,7 +84,7 @@ if (do == 2) {
     theme_bw() + theme(axis.text.x=element_text(angle=90))
   # s.phase
   s.plot <- ggplot(DATA,aes(y=S.phase.probability,x=col.legend)) +
-    geom_jitter(color = cell.color, size = cell.size, alpha = cell.transparency) +
+    geom_jitter(height = 0,color = cell.color, size = cell.size, alpha = cell.transparency) +
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot( fill = box.color, col = box.line.col, notch = FALSE, outlier.shape = NA, alpha = cell.transparency) +
     xlab("S phase") + ylab("S phase probability") +
@@ -92,7 +92,7 @@ if (do == 2) {
     theme_bw() + theme(axis.text.x=element_text(angle=90))
   # g2m.phase.probability
   g2m.plot <- ggplot(DATA,aes(y=g2m.phase.probability,x=col.legend)) +
-    geom_jitter(color = cell.color, size = cell.size, alpha = cell.transparency) +
+    geom_jitter(height = 0,color = cell.color, size = cell.size, alpha = cell.transparency) +
     geom_violin(trim=FALSE, col = "black", alpha = cell.transparency) +
     geom_boxplot( fill = box.color, col = box.line.col, notch = FALSE, outlier.shape = NA, alpha = cell.transparency) +
     xlab("G2 and M phase") + ylab("G2 and M phase probability") +
@@ -212,5 +212,15 @@ if (do == 2) {
                         s.plot,
                         g2m.plot,
                         ncol = 5))
+  }
+  #
+  if (plot.type == "three.in.one") {
+    if (interactive == TRUE) {
+      message("for interactive mode use single plots (i.e. box.mito, box.gene, etc.) in plot.type")
+    }
+    return(grid.arrange(nGenes.plot,
+                        UMIsplot,
+                        mito.percent.plot,
+                        ncol = 3))
   }
 }

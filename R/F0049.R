@@ -11,7 +11,7 @@
 cell.cycle <- function (object = NULL,
                 scoring.List = NULL,
                 return.stats = FALSE,
-                scoring.method = "coverage") {
+                scoring.method = "tirosh") {
   if ("iCellR" != class(object)[1]) {
     stop("object should be an object of class iCellR")
   }
@@ -22,6 +22,7 @@ cell.cycle <- function (object = NULL,
   ##### get data
   all.genes <- row.names(object@raw.data)
   DATA <- object@raw.data
+  object <- qc.stats(object)
   object <- cc(object)
   ####
   AddModuleScoreme <- function (object, genes.list = NULL, genes.pool = NULL, n.bin = 25,

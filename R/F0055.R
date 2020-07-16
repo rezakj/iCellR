@@ -5,6 +5,7 @@
 #' @param gene1 First gene name.
 #' @param gene2 Second gene name.
 #' @param conds Filter only one condition (only one), default is all conditions.
+#' @param clusts Choose clusters to plot.
 #' @param cell.size A numeric value for the size of the cells, default = 1.
 #' @param cell.transparency A numeric value between 0 to 1, default = 0.5.
 #' @param interactive If TRUE an html interactive file will be made, default = TRUE.
@@ -17,6 +18,7 @@ gg.cor <- function (x = NULL,
                     gene1 = NULL,
                     gene2 = NULL,
                     conds = NULL,
+                    clusts = NULL,
                     cell.size = 1,
                     cell.transparency = 0.5,
                     interactive = TRUE,
@@ -34,7 +36,7 @@ gg.cor <- function (x = NULL,
   ###
   AllGenes = row.names(DATA)
   check1 = gene1 %in% AllGenes
-  check2 =gene2 %in% AllGenes
+  check2 = gene2 %in% AllGenes
   if (check1 == FALSE) {
     stop("gene 1 is not in the data")
   }
@@ -60,11 +62,16 @@ gg.cor <- function (x = NULL,
   DATA <- cbind(DATA, col.legend)
 ###### conditions
   ####### Subset 2
-  if (is.null(conds)) {
-    DATA <- DATA
-  } else {
-    TAKE = grep(conds,row.names(DATA), value = TRUE)
-    DATA <- subset(DATA, row.names(DATA) %in% TAKE)
+  MY.conds <- as.data.frame(do.call('rbind', strsplit(as.character(rownames(DATA)),'_',fixed=TRUE)))[1]
+  MY.conds <- as.character(as.matrix(MY.conds))
+  DATA <- as.data.frame(cbind(DATA,MY.conds))
+#############
+  if (!is.null(conds)) {
+    DATA <- subset(DATA, DATA$MY.conds %in% conds)
+  }
+  ####
+  if (!is.null(clusts)) {
+    DATA <- subset(DATA, DATA$clusters %in% clusts)
   }
 ########
   # cor
@@ -80,7 +87,7 @@ gg.cor <- function (x = NULL,
   Sub <- paste(PVal, MyCorelation, sep= " | ")
   # plot
   Clusters <- factor(DATA$clusters)
-  myPLOT <- ggplot(DATA, aes(x=log2(DATA[,1] +1 ), y=log2(DATA[,2] + 1), text = row.names(DATA), color = Clusters)) +
+  myPLOT <- ggplot(DATA, aes(x=log2(DATA[,2] +1 ), y=log2(DATA[,1] + 1), text = row.names(DATA), color = Clusters)) +
     geom_point(size = cell.size, alpha = cell.transparency) +
     xlab(paste("log2 expression (", gene1,")", sep="")) +
     ylab(paste("log2 expression (", gene2,")", sep="")) +
