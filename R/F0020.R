@@ -141,7 +141,7 @@ cluster.plot <- function (x = NULL,
       row.names(ha) <- ha$rows
       ha <- as.data.frame(as.matrix(ha)[,-1])
       colnames(ha) <- "clusters"
-      ha$clusters <- as.numeric(ha$clusters)
+#      ha$clusters <- as.numeric(ha$clusters)
       x@best.clust <- ha
       col.legend <- factor(x@best.clust$clusters)
     } else {
