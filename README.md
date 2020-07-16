@@ -1093,7 +1093,7 @@ grid.arrange(A,B,C,D)
  ```
  
  <p align="center">
-	<img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds.png" />
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes_in_conditions_and_clusters.png" />
 </p>
 
 - Some example 2D and 3D plots
