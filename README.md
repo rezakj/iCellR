@@ -495,6 +495,8 @@ This is one of the harder parts of the analysis and sometimes you need to adjust
 
 my.obj <- iclust(my.obj, k = 150, data.type = "knetl") 
 
+###### more examples 
+
 # clustering based on PCA
 
 #my.obj <- iclust(my.obj,
@@ -537,7 +539,7 @@ my.obj <- iclust(my.obj, k = 150, data.type = "knetl")
 #	dims = 1:10)
 ```
 
-- Visualize data
+- Visualize data clustering results 
 
 ```r
 # plot clusters (in the figures below clustering is done based on KNetL) 
@@ -562,11 +564,34 @@ grid.arrange(A,B,C,D)
 ```
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllClusts.png"/>  
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllClusts_not_in_order.png"/>  
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds.png"/>    
 </p>
 
-- 3D plots, density plots and interactive plots examples 
+
+- Re-numbering clusters based on their distances, this is so that the are more in consecutive order (optional)
+This is visually helpful to look at your heatmap after finding marker genes and can help you decide which clusters need to be merged and adjusted. 
+
+```r
+
+my.obj <- clust.ord(my.obj,top.rank = 500, how.to.order = "distance")
+#my.obj <- clust.ord(my.obj,top.rank = 500, how.to.order = "random")
+
+
+A= cluster.plot(my.obj,plot.type = "pca",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T)
+B= cluster.plot(my.obj,plot.type = "umap",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=T)
+C= cluster.plot(my.obj,plot.type = "tsne",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=T)
+D= cluster.plot(my.obj,plot.type = "knetl",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=T)
+
+library(gridExtra)
+grid.arrange(A,B,C,D)
+```
+
+<p align="center">
+    <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllClusts.png"/>    
+</p>
+
+- Examples 3D plots, density plots and interactive plots examples 
 
 ```r
 # 2D
@@ -610,7 +635,7 @@ cluster.plot(my.obj,
 	interactive = F,
 	density=T)
 ```
-## To see the above made interactive plots click on these links: [2Dplot](https://rawgit.com/rezakj/scSeqR/dev/doc/tSNE_2D_clusters.html) and [3Dplot](https://rawgit.com/rezakj/scSeqR/dev/doc/tSNE_3D_clusters.html)
+## To see the above made interactive plots click on these links: [2Dplot](https://genome.med.nyu.edu/results/external/iCellR/example1/2d_tSNE_clusters.html) and [3Dplot](https://genome.med.nyu.edu/results/external/iCellR/example1/3d_tSNE_clusters.html)
         
 <p align="center">
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_2D_clusters.png" width="400"/>
@@ -619,7 +644,7 @@ cluster.plot(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/density_clusters.png" width="400"/> 	
 </p>
 
-- More plots
+- More example plots
 
 ```r
 # plot 
