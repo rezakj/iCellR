@@ -44,7 +44,7 @@
 #' @importFrom ggplot2 ggplot theme_classic geom_segment geom_violin guide_colorbar guide_legend guides scale_color_discrete scale_colour_gradient scale_fill_gradient2 scale_x_continuous scale_y_continuous scale_y_discrete stat_summary coord_polar element_rect element_text element_blank facet_wrap scale_color_manual geom_hline geom_jitter geom_vline ylab xlab ggtitle theme_bw aes theme geom_bar geom_point geom_boxplot geom_errorbar position_dodge geom_tile geom_density geom_line
 #' @export
 cluster.plot <- function (x = NULL,
-                          cell.size = 1,
+                          cell.size = 0.5,
                           plot.type = "tsne",
                           cell.color = "black",
                           back.col = "white",
@@ -136,7 +136,14 @@ cluster.plot <- function (x = NULL,
   # always use hierarchical (k means changes everytime you run)
   if (col.by == "clusters") {
     if (dim(x@best.clust)[1] == 0) {
-      col.legend <- factor(rep(0,dim(DATA)[1]))
+      ha <- as.data.frame(cbind(row.names(DATA),rep(0,dim(DATA)[1])))
+      colnames(ha) <- c("rows","clusters")
+      row.names(ha) <- ha$rows
+      ha <- as.data.frame(as.matrix(ha)[,-1])
+      colnames(ha) <- "clusters"
+      ha$clusters <- as.numeric(ha$clusters)
+      x@best.clust <- ha
+      col.legend <- factor(x@best.clust$clusters)
     } else {
       col.legend <- factor(x@best.clust$clusters)
     }

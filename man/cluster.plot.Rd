@@ -6,7 +6,7 @@
 \usage{
 cluster.plot(
   x = NULL,
-  cell.size = 1,
+  cell.size = 0.5,
   plot.type = "tsne",
   cell.color = "black",
   back.col = "white",
