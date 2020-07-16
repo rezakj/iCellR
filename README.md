@@ -784,90 +784,6 @@ clust.stats.plot(my.obj, plot.type = "box.gene", interactive = F)
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_gene_cov.png" width="400"/>
 </p>
 
-- Examples 3D plots, density plots and interactive plots examples 
-
-```r
-# 2D
-cluster.plot(my.obj,
-	cell.size = 1,
-	plot.type = "tsne",
-	cell.color = "black",
-	back.col = "white",
-	col.by = "clusters",
-	cell.transparency = 0.5,
-	clust.dim = 2,
-	interactive = F)
-	
-# interactive 2D
-cluster.plot(my.obj,
-	plot.type = "tsne",
-	col.by = "clusters",
-	clust.dim = 2,
-	interactive = T,
-	out.name = "tSNE_2D_clusters")
-
-# interactive 3D
-cluster.plot(my.obj,
-	plot.type = "tsne",
-	col.by = "clusters",
-	clust.dim = 3,
-	interactive = T,
-	out.name = "tSNE_3D_clusters")
-
-# Density plot for clusters 
-cluster.plot(my.obj,
-	plot.type = "pca",
-	col.by = "clusters",
-	interactive = F,
-	density=T)
-
-# Density plot for conditions 
-cluster.plot(my.obj,
-	plot.type = "pca",
-	col.by = "conditions",
-	interactive = F,
-	density=T)
-```
-## To see the above made interactive plots click on these links: [2Dplot](https://genome.med.nyu.edu/results/external/iCellR/example1/2d_tSNE_clusters.html) and [3Dplot](https://genome.med.nyu.edu/results/external/iCellR/example1/3d_tSNE_clusters.html)
-        
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_2D_clusters.png" width="400"/>
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_3D.png" width="400"/> 
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/density_conditions.png" width="400"/>
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/density_clusters.png" width="400"/> 	
-</p>
-
-- More example plots
-
-```r
-# plot 
-cluster.plot(my.obj,
-	cell.size = 1,
-	plot.type = "diffusion",
-	cell.color = "black",
-	back.col = "white",
-	col.by = "clusters",
-	cell.transparency = 0.5,
-	clust.dim = 2,
-	interactive = F)
-	
-cluster.plot(my.obj,
-	cell.size = 1,
-	plot.type = "diffusion",
-	cell.color = "black",
-	back.col = "white",
-	col.by = "clusters",
-	cell.transparency = 0.5,
-	clust.dim = 3,
-	interactive = F)	
-	
-```
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/Diffusion.png" width="400"/>
-	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/diffiusion3D.gif" width="400"/>
-</p>
-
  - Run data imputation
 
 ```r
@@ -1046,7 +962,7 @@ png('gene.plots.png', width = 8, height = 8, units = 'in', res = 300)
 grid.arrange(A,B,C,D)	
 dev.off()
 
-### more plots
+### same on imputed data 
 
 A <- gene.plot(my.obj, gene = "MS4A1", 
 	plot.type = "scatterplot",
@@ -1179,22 +1095,91 @@ grid.arrange(A,B,C,D)
  <p align="center">
 	<img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds.png" />
 </p>
- 
- 
-- QC on clusters 
+
+- Example 3D plots, density plots and interactive plots examples 
 
 ```r
-clust.stats.plot(my.obj, plot.type = "box.mito", interactive = F)
-clust.stats.plot(my.obj, plot.type = "box.gene", interactive = F)
-clust.stats.plot(my.obj, plot.type = "pie.cc", interactive = F)
+# 2D
+cluster.plot(my.obj,
+	cell.size = 1,
+	plot.type = "tsne",
+	cell.color = "black",
+	back.col = "white",
+	col.by = "clusters",
+	cell.transparency = 0.5,
+	clust.dim = 2,
+	interactive = F)
+	
+# interactive 2D
+cluster.plot(my.obj,
+	plot.type = "tsne",
+	col.by = "clusters",
+	clust.dim = 2,
+	interactive = T,
+	out.name = "tSNE_2D_clusters")
+
+# interactive 3D
+cluster.plot(my.obj,
+	plot.type = "tsne",
+	col.by = "clusters",
+	clust.dim = 3,
+	interactive = T,
+	out.name = "tSNE_3D_clusters")
+
+# Density plot for clusters 
+cluster.plot(my.obj,
+	plot.type = "pca",
+	col.by = "clusters",
+	interactive = F,
+	density=T)
+
+# Density plot for conditions 
+cluster.plot(my.obj,
+	plot.type = "pca",
+	col.by = "conditions",
+	interactive = F,
+	density=T)
+```
+## To see the above made interactive plots click on these links: [2Dplot](https://genome.med.nyu.edu/results/external/iCellR/example1/2d_tSNE_clusters.html) and [3Dplot](https://genome.med.nyu.edu/results/external/iCellR/example1/3d_tSNE_clusters.html)
+        
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_2D_clusters.png" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_3D.png" width="400"/> 
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/density_conditions.png" width="400"/>
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/density_clusters.png" width="400"/> 	
+</p>
+
+- More example plots
+
+```r
+# plot 
+cluster.plot(my.obj,
+	cell.size = 1,
+	plot.type = "diffusion",
+	cell.color = "black",
+	back.col = "white",
+	col.by = "clusters",
+	cell.transparency = 0.5,
+	clust.dim = 2,
+	interactive = F)
+	
+cluster.plot(my.obj,
+	cell.size = 1,
+	plot.type = "diffusion",
+	cell.color = "black",
+	back.col = "white",
+	col.by = "clusters",
+	cell.transparency = 0.5,
+	clust.dim = 3,
+	interactive = F)	
+	
 ```
 
 <p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/6_cluster_mito_ratio.png" width="400"/>
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/5_cluster_gene_cov.png" width="400"/>  
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc.png" width="400"/>
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc2.png" width="400"/> 
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/Diffusion.png" width="400"/>
+	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/diffiusion3D.gif" width="400"/>
 </p>
+
 
 
 - Differential Expression Analysis 
