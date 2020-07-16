@@ -653,6 +653,126 @@ pseudotime.knetl(my.obj,interactive = T)
 	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.knetl.membered.png" width="400"/>
 </p>
 
+- Average expression per cluster
+
+```r
+# for all cunditions
+my.obj <- clust.avg.exp(my.obj, conds.to.avg = NULL)
+
+# for one cundition
+#my.obj <- clust.avg.exp(my.obj, conds.to.avg = "WT")
+
+# for two cundition
+#my.obj <- clust.avg.exp(my.obj, conds.to.avg = c("WT","KO"))
+
+head(my.obj@clust.avg)
+#      gene cluster_1   cluster_2   cluster_3   cluster_4   cluster_5  cluster_6
+#1     A1BG         0 0.027386076 0.034000000 0.071179775 0.094606987 0.05605521
+#2 A1BG.AS1         0 0.000000000 0.006062147 0.019280899 0.004925764 0.02260123
+#3     A1CF         0 0.000000000 0.000000000 0.000000000 0.000000000 0.00000000
+#4      A2M         0 0.007056962 0.003491525 0.000000000 0.000000000 0.00000000
+#5  A2M.AS1         0 0.057221519 0.000000000 0.005224719 0.007122271 0.00000000
+#6    A2ML1         0 0.000000000 0.000000000 0.000000000 0.000000000 0.00000000
+#    cluster_7   cluster_8   cluster_9 cluster_10  cluster_11
+#1 0.034617143 0.092847791 0.063236162 0.07868452 0.070720280
+#2 0.008782857 0.013243863 0.011535055 0.00000000 0.007734266
+#3 0.000000000 0.000000000 0.000000000 0.00000000 0.000000000
+#4 0.000000000 0.001371522 0.003728782 0.00000000 0.000000000
+#5 0.000000000 0.011774141 0.010169742 0.07021429 0.007790210
+#6 0.000000000 0.000000000 0.000000000 0.00000000 0.000000000
+```
+
+- Cell cycle prediction 
+
+```r
+# old method 
+# my.obj <- cc(my.obj, s.genes = s.phase, g2m.genes = g2m.phase)
+
+# new method 
+
+G0 <- readLines(system.file('extdata', 'G0.txt', package = 'iCellR'))
+G1S <- readLines(system.file('extdata', 'G1S.txt', package = 'iCellR'))
+G2M <- readLines(system.file('extdata', 'G2M.txt', package = 'iCellR'))
+M <- readLines(system.file('extdata', 'M.txt', package = 'iCellR'))
+MG1 <- readLines(system.file('extdata', 'MG1.txt', package = 'iCellR'))
+S <- readLines(system.file('extdata', 'S.txt', package = 'iCellR'))
+
+# Tirosh scoring method (recomanded)
+my.obj <- cell.cycle(my.obj, scoring.List = c("G0","G1S","G2M","M","MG1","S"), scoring.method = "tirosh")
+
+# Coverage scoring method (recomanded)
+# my.obj <- cell.cycle(my.obj, scoring.List = c("G0","G1S","G2M","M","MG1","S"), scoring.method = "coverage")
+
+# plot cell cycle
+
+A= cluster.plot(my.obj,plot.type = "pca",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T,col.by = "cc")
+B= cluster.plot(my.obj,plot.type = "umap",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=T, col.by = "cc")
+C= cluster.plot(my.obj,plot.type = "tsne",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=T, col.by = "cc")
+D= cluster.plot(my.obj,plot.type = "knetl",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=T, col.by = "cc")
+
+library(gridExtra)
+grid.arrange(A,B,C,D)
+
+## or 
+cluster.plot(my.obj,
+              cell.size = 0.5,
+              plot.type = "knetl",
+              col.by = "cc",
+              cell.color = "black",
+              back.col = "white",
+              cell.transparency = 1,
+              clust.dim = 2,
+              interactive = F,cond.facet = T)
+
+# Pie
+clust.stats.plot(my.obj, plot.type = "pie.cc", interactive = F, conds.to.plot = NULL)
+dev.off()
+
+# bar
+clust.stats.plot(my.obj, plot.type = "bar.cc", interactive = F, conds.to.plot = NULL)
+dev.off()
+
+# or per condition
+# clust.stats.plot(my.obj, plot.type = "pie.cc", interactive = F, conds.to.plot = "WT")
+```
+
+<p align="center">
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/All.cc.png" />
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds_cc.png" />
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc_pie.png" />
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc_bar.png" />
+</p>
+
+- Cell frequencies and proportions
+
+```r
+clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE, my.out.put = "plot", normalize.by = "percentage")
+
+clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = TRUE,my.out.put = "plot", normalize.by = "percentage")
+
+clust.cond.info(my.obj, plot.type = "pie.cond", normalize.ncell = T, my.out.put = "plot", normalize.by = "percentage")
+
+clust.cond.info(my.obj, plot.type = "bar.cond", normalize.ncell = T,my.out.put = "plot", normalize.by = "percentage")
+
+my.obj <- clust.cond.info(my.obj)
+head(my.obj@my.freq)
+#  conditions  TC    SF clusters Freq Norm.Freq percentage
+#1       Ctrl 491 1.265        1    4     3.162       0.81
+#2       Ctrl 491 1.265       11   32    25.296       6.52
+#3       Ctrl 491 1.265        8  114    90.119      23.22
+#4       Ctrl 491 1.265        5   43    33.992       8.76
+#5       Ctrl 491 1.265        2   33    26.087       6.72
+#6       Ctrl 491 1.265        9   86    67.984      17.52
+```
+<p align="center">
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_pie.png" />
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_bar.png" />
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_pie.cond.png" />
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_bar.cond.png" /> 
+</p>
+
+
+
 - Examples 3D plots, density plots and interactive plots examples 
 
 ```r
@@ -736,63 +856,6 @@ cluster.plot(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/Diffusion.png" width="400"/>
 	<img src="https://github.com/rezakj/scSeqR/blob/dev/doc/diffiusion3D.gif" width="400"/>
 </p>
-
-- Normalized cell frequencies in clusters and conditions
-
-```r
-# Examples for plots:
-
-clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE, my.out.put = "plot", normalize.by = "percentage")
-
-clust.cond.info(my.obj, plot.type = "bar", normalize.ncell = TRUE,my.out.put = "plot", normalize.by = "percentage")
-
-clust.cond.info(my.obj, plot.type = "pie.cond", normalize.ncell = TRUE, my.out.put = "plot", normalize.by = "percentage")
-
-clust.cond.info(my.obj, plot.type = "bar.cond", normalize.ncell = TRUE,my.out.put = "plot", normalize.by = "percentage")
-
-# get the data 
-my.obj <- clust.cond.info(my.obj, normalize.ncell = TRUE)
-
-#head(my.obj@my.freq)
-#  conditions  TC SF clusters Freq Norm.Freq percentage
-#1       Ctrl 879  1        1   62        62       7.05
-#2       Ctrl 879  1        4   53        53       6.03
-#3       Ctrl 879  1        3   60        60       6.83
-#4       Ctrl 879  1        2  195       195      22.18
-#5       Ctrl 879  1        5   58        58       6.60
-#6       Ctrl 879  1        8   56        56       6.37
-```
-<p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/clust_cond_freq_info_pie.png" width="400"/>
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/clust_cond_freq_info_bar.png" width="400"/>
-	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/clust_cond_freq_info_pie.cond.png" width="400"/>
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/clust_cond_freq_info_bar.cond.png" width="400"/> 
-</p>
-
-- Average expression per cluster
-
-```r
-# remember to run this command again if you recluster the data (change the number of clusters). 
-# This is because this data slot with avrage expressions per cluster is used for finding markers and downstream analysis. 
-
-my.obj <- clust.avg.exp(my.obj)
-
-head(my.obj@clust.avg)
-#      gene   cluster_1   cluster_2  cluster_3 cluster_4   cluster_5   cluster_6
-#1     A1BG 0.072214723 0.092648973 0.08258609         0 0.027183115 0.072291636
-#2 A1BG.AS1 0.014380756 0.003280237 0.01817982         0 0.000000000 0.011545546
-#3     A1CF 0.000000000 0.000000000 0.00000000         0 0.000000000 0.000000000
-#4      A2M 0.000000000 0.000000000 0.00000000         0 0.007004131 0.004672857
-#5  A2M.AS1 0.003520828 0.039985296 0.00876364         0 0.056596203 0.018445562
-#6    A2ML1 0.000000000 0.000000000 0.00000000         0 0.000000000 0.000000000
-#   cluster_7  cluster_8   cluster_9
-#1 0.09058946 0.04466827 0.027927923
-#2 0.00000000 0.01534541 0.005930566
-#3 0.00000000 0.00000000 0.000000000
-#4 0.00000000 0.00000000 0.003411938
-#5 0.00000000 0.00000000 0.000000000
-#6 0.00000000 0.00000000 0.000000000
-```
 
 - Save your object
 
@@ -2347,43 +2410,3 @@ loaded via a namespace (and not attached):
 [76] parallel_3.5.1       fastmap_1.0.1        survival_2.44-1.1
 [79] colorspace_1.4-1     cluster_2.1.0        knitr_1.25
 ```
-
-
-
-- Cell cycle prediction 
-
-```r
-my.obj <- cc(my.obj, s.genes = s.phase, g2m.genes = g2m.phase)
-head(my.obj@stats)
-
-#                                CellIds nGenes UMIs mito.percent
-#WT_AAACATACAACCAC.1 WT_AAACATACAACCAC.1    781 2421  0.030152829
-#WT_AAACATTGAGCTAC.1 WT_AAACATTGAGCTAC.1   1352 4903  0.037935958
-#WT_AAACATTGATCAGC.1 WT_AAACATTGATCAGC.1   1131 3149  0.008891712
-#WT_AAACCGTGCTTCCG.1 WT_AAACCGTGCTTCCG.1    960 2639  0.017430845
-#WT_AAACCGTGTATGCG.1 WT_AAACCGTGTATGCG.1    522  981  0.012232416
-#WT_AAACGCACTGGTAC.1 WT_AAACGCACTGGTAC.1    782 2164  0.016635860
-#                    S.phase.probability g2m.phase.probability      S.Score
-#WT_AAACATACAACCAC.1        0.0012391574          0.0004130525  0.030569081
-#WT_AAACATTGAGCTAC.1        0.0002039568          0.0004079135 -0.077860621
-#WT_AAACATTGATCAGC.1        0.0003175611          0.0019053668 -0.028560560
-#WT_AAACCGTGCTTCCG.1        0.0007578628          0.0011367942  0.001917225
-#WT_AAACCGTGTATGCG.1        0.0000000000          0.0020387360 -0.020085210
-#WT_AAACGCACTGGTAC.1        0.0000000000          0.0000000000 -0.038953135
-#                        G2M.Score Phase
-#WT_AAACATACAACCAC.1 -0.0652390011     S
-#WT_AAACATTGAGCTAC.1 -0.1277015099    G1
-#WT_AAACATTGATCAGC.1 -0.0036505733    G1
-#WT_AAACCGTGCTTCCG.1 -0.0499511543     S
-#WT_AAACCGTGTATGCG.1  0.0009426363   G2M
-#WT_AAACGCACTGGTAC.1 -0.0680240629    G1
-
-
-# plot cell cycle rate
-pie(table(my.obj@stats$Phase))
-```
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/iCellR_1.png" width="400"/>
-</p>
-
