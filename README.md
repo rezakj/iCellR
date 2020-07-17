@@ -1026,7 +1026,7 @@ dev.off()
 ```
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes.KNetL.png" />
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes_KNetL.png" />
 	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes.heatmap.png" />
 </p>
 
