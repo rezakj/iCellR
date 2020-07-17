@@ -414,14 +414,14 @@ my.obj <- run.umap(my.obj, dims = 1:10)
 
 # KNetL (for lager than 5000 cell use a k of about 400) 
 # Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
-my.obj <- run.knetl(my.obj, dims = 1:20, k = 100, dim.redux = "umap")
+my.obj <- run.knetl(my.obj, dims = 1:20, k = 110, dim.redux = "umap")
 
 ########################### IMPORTANT NOTE ########################################
 #### Because KNetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
 #### For zooming use the k value. For data with more than 5000 cells use a k of about 400. 
 #### A k value of 400 is usually good for big data but adjust it for intended resolution. 
 #### Just like a microscope, you need to zoom to see the intended amount of details. 
-#### Here we use a k of 100 but this might not be ideal for your data.
+#### Here we use a k of 100 or 110 but this might not be ideal for your data.
 #### example: # my.obj <- run.knetl(my.obj, dims = 1:20, k = 400)
 #### Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
 ###################################################################################
@@ -495,6 +495,8 @@ This is one of the harder parts of the analysis and sometimes you need to adjust
 # clustering based on KNetL
 
 my.obj <- iclust(my.obj, k = 150, data.type = "knetl") 
+
+# play with k to get the clusters right. Usually 150 is good.
 
 ###### more examples 
 
@@ -666,20 +668,20 @@ my.obj <- clust.avg.exp(my.obj, conds.to.avg = NULL)
 #my.obj <- clust.avg.exp(my.obj, conds.to.avg = c("WT","KO"))
 
 head(my.obj@clust.avg)
-#      gene cluster_1   cluster_2   cluster_3   cluster_4   cluster_5  cluster_6
-#1     A1BG         0 0.027386076 0.034000000 0.071179775 0.094606987 0.05605521
-#2 A1BG.AS1         0 0.000000000 0.006062147 0.019280899 0.004925764 0.02260123
-#3     A1CF         0 0.000000000 0.000000000 0.000000000 0.000000000 0.00000000
-#4      A2M         0 0.007056962 0.003491525 0.000000000 0.000000000 0.00000000
-#5  A2M.AS1         0 0.057221519 0.000000000 0.005224719 0.007122271 0.00000000
-#6    A2ML1         0 0.000000000 0.000000000 0.000000000 0.000000000 0.00000000
-#    cluster_7   cluster_8   cluster_9 cluster_10  cluster_11
-#1 0.034617143 0.092847791 0.063236162 0.07868452 0.070720280
-#2 0.008782857 0.013243863 0.011535055 0.00000000 0.007734266
-#3 0.000000000 0.000000000 0.000000000 0.00000000 0.000000000
-#4 0.000000000 0.001371522 0.003728782 0.00000000 0.000000000
-#5 0.000000000 0.011774141 0.010169742 0.07021429 0.007790210
-#6 0.000000000 0.000000000 0.000000000 0.00000000 0.000000000
+#      gene cluster_1   cluster_2   cluster_3   cluster_4   cluster_5
+#1     A1BG         0 0.034248447 0.029590643 0.076486590 0.090270833
+#2 A1BG.AS1         0 0.000000000 0.006274854 0.019724138 0.004700000
+#3     A1CF         0 0.000000000 0.000000000 0.000000000 0.000000000
+#4      A2M         0 0.006925466 0.003614035 0.000000000 0.000000000
+#5  A2M.AS1         0 0.056155280 0.000000000 0.005344828 0.006795833
+#6    A2ML1         0 0.000000000 0.000000000 0.000000000 0.000000000
+#    cluster_6  cluster_7  cluster_8   cluster_9  cluster_10
+#1 0.074360294 0.07623494 0.04522321 0.088735057 0.065292818
+#2 0.000000000 0.00000000 0.01553869 0.013072698 0.013550645
+#3 0.000000000 0.00000000 0.00000000 0.000000000 0.000000000
+#4 0.000000000 0.00000000 0.00000000 0.001810985 0.003200737
+#5 0.008191176 0.06227108 0.00000000 0.011621971 0.012837937
+#6 0.000000000 0.00000000 0.00000000 0.000000000 0.000000000
 ```
 
 - Cell cycle prediction 
@@ -855,7 +857,7 @@ dim(marker.genes)
 # [1] 1070   17
 
 head(marker.genes)
-#       baseMean    baseSD AvExpInCluster AvExpInOtherClusters   foldChange
+#      baseMean    baseSD AvExpInCluster AvExpInOtherClusters   foldChange
 #PPBP  0.8257760 12.144694       181.3945            0.1399852 1295.8120969
 #GPX1  1.3989591  4.344717        57.4034            1.1862571   48.3903523
 #CALM3 0.5469743  1.230942        10.7848            0.5080915   21.2260968
@@ -869,20 +871,20 @@ head(marker.genes)
 #OAZ1        3.300485 7.857814e-07 0.007464137        1  OAZ1   46.7867
 #MYL6        2.827129 1.296112e-06 0.012156230        1  MYL6   21.3690
 #CD74       -1.714970 9.505749e-06 0.083983296        1  CD74    2.6120
-#      cluster_2 cluster_3 cluster_4   cluster_5   cluster_6   cluster_7
-#PPBP  0.0000000  1.196520  0.223161  0.06713974  0.02066258  0.02833714
-#GPX1  0.2314747  1.528294  3.969191  4.44527511  0.87666258  0.38578286
-#CALM3 0.6580190  0.907113  0.622176  0.49815721  0.22276074  0.24325143
-#OAZ1  3.2092152 12.310633  8.764865 10.82781223  3.74782209  3.62638286
-#MYL6  4.9757785  6.060034  4.306813  4.29186900  1.94672393  1.52710286
-#CD74  2.9494747  8.972650 15.514270  5.82209170 33.67615951 38.20673714
-#       cluster_8  cluster_9 cluster_10 cluster_11
-#PPBP  0.01664321 0.06530258  0.1522738 0.01654545
-#GPX1  0.33235679 0.44179889  0.3072560 0.23804196
-#CALM3 0.48068412 0.50202214  0.5118571 0.43646853
-#OAZ1  2.14607038 2.66560886  3.6315536 2.69902797
-#MYL6  1.51720295 2.61398339  3.9524345 2.40885315
-#CD74  1.33867103 2.01692620  3.7854762 2.27688811
+#      cluster_2  cluster_3  cluster_4  cluster_5  cluster_6 cluster_7
+#PPBP  0.0000000  0.1444327  0.2282912  0.0640625 0.01739706 0.1541084
+#GPX1  0.2424969  1.2218772  3.9292720  4.4329583 0.25663235 0.2712831
+#CALM3 0.6537205  0.8149415  0.6071034  0.5245625 0.44687500 0.5081867
+#OAZ1  3.2077826 12.2072339  8.6080077 10.8738208 2.71288971 3.6402289
+#MYL6  4.9660870  5.7945673  4.2813218  4.3046458 2.42854412 3.9030542
+#CD74  2.9385839  8.9848538 15.7646245  5.9454250 2.19555882 3.8323072
+#        cluster_8 cluster_9 cluster_10
+#PPBP   0.02478274 0.3668433 0.01026335
+#GPX1   0.61210714 0.4635153 0.39311786
+#CALM3  0.22591369 0.5210339 0.48856538
+#OAZ1   3.67225595 2.3590420 2.53362063
+#MYL6   1.72344048 1.6460420 2.59901289
+#CD74  36.10877976 1.5638853 1.82587477
 
 # baseMean: average expression in all the cells
 # baseSD: Standard Deviation
