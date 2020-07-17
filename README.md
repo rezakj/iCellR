@@ -615,27 +615,6 @@ cluster.plot(my.obj,
 	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Allconds_clusts.png"/> 
 </p>
 
-- Plotting clusters and conditions at the same time
-
-```r
-# example
-#cluster.plot(my.obj,
-#	cell.size = 1,
-#	plot.type = "umap",
-#	cell.color = "black",
-#	back.col = "white",
-#	col.by = "clusters",
-#	cell.transparency = 0.5,
-#	clust.dim = 2,
-#	cond.shape = T,
-#	interactive = T,
-#	out.name = "2d_UMAP_clusters_conds")
-```
-
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds_clusts.gif"/>
-</p>
-
 - Pseudotime Abstract KNetL map (PAK map)
 This is very helpful to see the distances or similarities between different communities. The shorter and thiker the lines/links (rubber bands) are the more similar the communities. The nodes are the clusters and the edges or links are the distance between them. 
 
@@ -1098,9 +1077,22 @@ grid.arrange(A,B,C,D)
 	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes_in_conditions_and_clusters.png" />
 </p>
 
-- Some example 2D and 3D plots
+- Some example 2D and 3D plots and plotting clusters and conditions at the same time
 
 ```r
+# example
+cluster.plot(my.obj,
+	cell.size = 1,
+	plot.type = "umap",
+	cell.color = "black",
+	back.col = "white",
+	col.by = "clusters",
+	cell.transparency = 0.5,
+	clust.dim = 2,
+	cond.shape = T,
+	interactive = T,
+	out.name = "2d_UMAP_clusters_conds")
+
 # 2D
 cluster.plot(my.obj,
 	cell.size = 1,
@@ -1165,6 +1157,7 @@ cluster.plot(my.obj,
 ## To see the above made interactive plots click on these links: [2Dplot](https://genome.med.nyu.edu/results/external/iCellR/example1/2d_tSNE_clusters.html) and [3Dplot](https://genome.med.nyu.edu/results/external/iCellR/example1/3d_tSNE_clusters.html)
         
 <p align="center">
+	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Conds_clusts.gif"/>
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_2D_clusters.png" width="400"/>
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_3D.png" width="400"/> 
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/density_conditions.png" width="400"/>
