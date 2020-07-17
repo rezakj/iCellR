@@ -630,8 +630,8 @@ pseudotime.knetl(my.obj,interactive = T)
 ```
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.knetl.png" width="400"/>
-	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.knetl.membered.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.KNetL.png" width="400"/>
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.KNetL.membered.png" width="400"/>
 </p>
 
 - Average expression per cluster
@@ -718,10 +718,10 @@ dev.off()
 ```
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/All.cc.png" />
-	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds_cc.png" />
-	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc_pie.png" width="400"/>
-	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cc_bar.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/All_cellcycle.png" />
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds_cellcycle.png" />
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cellcycle_pie.png" width="400"/>
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cellcycle_bar.png" width="400"/>
 </p>
 
 - Cell frequencies and proportions
