@@ -1026,8 +1026,8 @@ dev.off()
 ```
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes-KNetL.png" />
-	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes-heatmap.png" />
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Genes-KNetL.png" />
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Genes-heatmap.png" />
 </p>
 
  - Annotating clusters 
