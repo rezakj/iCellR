@@ -746,10 +746,10 @@ head(my.obj@my.freq)
 #6       Ctrl 491 1.265        9   86    67.984      17.52
 ```
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_pie.png" width="400"/>
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_bar.png" width="400"/>
-	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_pie.cond.png" width="400"/>
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_info_bar.cond.png" width="400"/> 
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_pie.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_bar.png" width="400"/>
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_pie.cond.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Clust_cond_freq_bar.cond.png" width="400"/> 
 </p>
 
 
@@ -761,8 +761,8 @@ clust.stats.plot(my.obj, plot.type = "box.mito", interactive = F)
 clust.stats.plot(my.obj, plot.type = "box.gene", interactive = F)
 ```
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_mito_ratio.png" width="400"/>
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_gene_cov.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster-mito_ratio.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster-gene_cov.png" width="400"/>
 </p>
 
  - Run data imputation
@@ -822,7 +822,7 @@ D <- gg.cor(my.obj,
 grid.arrange(A,B,C,D)
 ```
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/gene-gene_correlation.png"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/gene-gene.correlation.png"/>
 </p>
 
 - Find marker genes
@@ -902,10 +902,10 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "none", da
 ````
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_gg.png" width="400"/>
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_gg_imputed.png" width="400"/>  
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_gg_imputed_sorted_WT.png" width="400"/>
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_gg_imputed_sudo.png" width="400"/> 
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_imputed.png" width="400"/>  
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_imputed_sorted_WT.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_imputed_sudo.png" width="400"/> 
 </p>
 
 - Plot genes
