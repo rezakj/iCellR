@@ -466,7 +466,7 @@ grid.arrange(A,B,C,D)
 ```
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/All.not.clustered.png"/>   
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/All.not.Clustered.png"/>   
 </p>
 
 
@@ -558,7 +558,7 @@ grid.arrange(A,B,C,D)
 ```
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllClusts_not_in_order.png"/>   
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Allclusts_not_in_order.png"/>   
 </p>
 
 
@@ -582,7 +582,7 @@ grid.arrange(A,B,C,D)
 ```
 
 <p align="center">
-    <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/All_Clusts.png"/>    
+    <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Allclusts.png"/>    
 </p>
 
 - Look at conditions
@@ -611,8 +611,8 @@ cluster.plot(my.obj,
 ```
 
 <p align="center">
-      <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/All_Conds.png"/> 
-	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/All_Conds_clusts.png"/> 
+      <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Allconds.png"/> 
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Allconds_clusts.png"/> 
 </p>
 
 - Plotting clusters and conditions at the same time
