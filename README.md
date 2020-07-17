@@ -1043,18 +1043,18 @@ dev.off()
 #CD4: in T4 and some myeloid cells
 #CCR7: expressed more in memory cells 
 #CD14: in CD14+ monocytes
-#CD68: in monocytes
+#CD68: in monocytes/MF
 
-my.obj <- change.clust(my.obj, change.clust = 1, to.clust = "1.MG")
-my.obj <- change.clust(my.obj, change.clust = 2, to.clust = "2.NK")
-my.obj <- change.clust(my.obj, change.clust = 3, to.clust = "3.CD16+.Mono")
-my.obj <- change.clust(my.obj, change.clust = 4, to.clust = "4.MF")
-my.obj <- change.clust(my.obj, change.clust = 5, to.clust = "5.CD14+.Mono")
-my.obj <- change.clust(my.obj, change.clust = 6, to.clust = "6.Naive.T8")
-my.obj <- change.clust(my.obj, change.clust = 7, to.clust = "7.GZMH+.T8")
-my.obj <- change.clust(my.obj, change.clust = 8, to.clust = "8.B")
-my.obj <- change.clust(my.obj, change.clust = 9, to.clust = "9.Memory.T4")
-my.obj <- change.clust(my.obj, change.clust = 10, to.clust = "10.Naive.T4")
+my.obj <- change.clust(my.obj, change.clust = 1, to.clust = "001.MG")
+my.obj <- change.clust(my.obj, change.clust = 2, to.clust = "002.NK")
+my.obj <- change.clust(my.obj, change.clust = 3, to.clust = "003.CD16+.Mono")
+my.obj <- change.clust(my.obj, change.clust = 4, to.clust = "004.MF")
+my.obj <- change.clust(my.obj, change.clust = 5, to.clust = "005.CD14+.Mono")
+my.obj <- change.clust(my.obj, change.clust = 6, to.clust = "006.Naive.T8")
+my.obj <- change.clust(my.obj, change.clust = 7, to.clust = "007.GZMH+.T8")
+my.obj <- change.clust(my.obj, change.clust = 8, to.clust = "008.B")
+my.obj <- change.clust(my.obj, change.clust = 9, to.clust = "009.Memory.T4")
+my.obj <- change.clust(my.obj, change.clust = 10, to.clust = "010.Naive.T4")
 
 A= cluster.plot(my.obj,plot.type = "pca",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T)
 B= cluster.plot(my.obj,plot.type = "umap",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=T)
@@ -1065,7 +1065,7 @@ grid.arrange(A,B,C,D)
  ```
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Allclusts.annotated.png" />
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Allclusts_annotated.png" />
 </p>
 
  - Plotting conditions and clusters for genes
