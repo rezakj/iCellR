@@ -984,8 +984,8 @@ dev.off()
 ```
 
 <p align="center">
-	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/gene.plots.png" />
-	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/gene.plots_imputed.png" />
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/gene_plots.png" />
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/gene_plots_imputed.png" />
 </p>
 
 - Multiple plots
@@ -1026,8 +1026,8 @@ dev.off()
 ```
 
 <p align="center">
-  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes_KNetL.png" />
-	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes_heatmap_gg.png" />
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes.KNetL.png" />
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes.heatmap.png" />
 </p>
 
 
@@ -1074,7 +1074,7 @@ grid.arrange(A,B,C,D)
  ```
  
  <p align="center">
-	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes_in_conditions_and_clusters.png" />
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/genes.in_conditions_and_clusters.png" />
 </p>
 
 - Some example 2D and 3D plots and plotting clusters and conditions at the same time
