@@ -1,0 +1,19 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+language: r
+sudo: required
+cache: packages
+
+os:
+  - osx
+
+r:
+  - release
+  - devel
+  
+matrix:
+  exclude:
+    - r: devel
+      os: osx
+
+warnings_are_errors: false

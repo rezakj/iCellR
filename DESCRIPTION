@@ -1,0 +1,40 @@
+Package: iCellR
+Type: Package
+Title: Analyzing High-Throughput Single Cell Sequencing Data
+Version: 1.6.0
+Authors@R: c(
+  person(given = 'Alireza', family = 'Khodadadi-Jamayran',role = c('aut','cre'), email = 'alireza.khodadadi.j@gmail.com', comment = c(ORCID = '0000-0003-2495-7504')),
+  person(given = 'Joseph', family = 'Pucella',role = c('aut','ctb'), comment = c(ORCID = '0000-0003-0875-8046')),
+  person(given = 'Hua', family = 'Zhou',role = c('aut','ctb'), comment = c(ORCID = '0000-0003-1822-1306')),
+  person(given = 'Nicole', family = 'Doudican',role = c('aut','ctb'), comment = c(ORCID = '0000-0003-3827-9644')),
+  person(given = 'John', family = 'Carucci',role = c('aut','ctb'), comment = c(ORCID = '0000-0001-6817-9439')),
+  person(given = 'Adriana', family = 'Heguy',role = c('aut','ctb')),
+  person(given = 'Boris', family = 'Reizis',role = c('aut','ctb'), comment = c(ORCID = '0000-0003-1140-7853')),
+  person(given = "Aristotelis", family = "Tsirigos",role = c('aut','ctb'), comment = c(ORCID = '0000-0002-7512-8477'))
+  )
+Maintainer: Alireza Khodadadi-Jamayran <alireza.khodadadi.j@gmail.com>
+Description: A toolkit that allows scientists to work with data from single cell sequencing technologies such as scRNA-seq, scVDJ-seq and CITE-Seq. Single (i) Cell R package ('iCellR') provides unprecedented flexibility at every step of the analysis pipeline, including normalization, clustering, dimensionality reduction, imputation, visualization, and so on. Users can design both unsupervised and supervised models to best suit their research. In addition, the toolkit provides 2D and 3D interactive visualizations, differential expression analysis, filters based on cells, genes and clusters, data merging, normalizing for dropouts, data imputation methods, correcting for batch differences, pathway analysis, tools to find marker genes for clusters and conditions, predict cell types and pseudotime analysis. See Khodadadi-Jamayran, et al (2020) <doi:10.1101/2020.05.05.078550>  and Khodadadi-Jamayran, et al (2020) <doi:10.1101/2020.03.31.019109> for more details.
+Depends: R (>= 3.3.0), ggplot2, plotly
+Imports: Matrix, Rtsne, gridExtra, ggrepel, ggpubr, scatterplot3d,
+        RColorBrewer, knitr, NbClust, shiny, pheatmap, ape, ggdendro,
+        plyr, reshape, Hmisc, htmlwidgets, methods, uwot, hdf5r,
+        progress, igraph, data.table, Rcpp, RANN, jsonlite, png
+License: GPL-2
+LinkingTo: Rcpp
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+BugReports: https://github.com/rezakj/iCellR/issues
+URL: https://github.com/rezakj/iCellR
+NeedsCompilation: yes
+Packaged: 2021-01-22 22:54:45 UTC; khodaa01
+Author: Alireza Khodadadi-Jamayran [aut, cre]
+    (<https://orcid.org/0000-0003-2495-7504>),
+  Joseph Pucella [aut, ctb] (<https://orcid.org/0000-0003-0875-8046>),
+  Hua Zhou [aut, ctb] (<https://orcid.org/0000-0003-1822-1306>),
+  Nicole Doudican [aut, ctb] (<https://orcid.org/0000-0003-3827-9644>),
+  John Carucci [aut, ctb] (<https://orcid.org/0000-0001-6817-9439>),
+  Adriana Heguy [aut, ctb],
+  Boris Reizis [aut, ctb] (<https://orcid.org/0000-0003-1140-7853>),
+  Aristotelis Tsirigos [aut, ctb]
+    (<https://orcid.org/0000-0002-7512-8477>)
