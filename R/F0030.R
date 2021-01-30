@@ -214,10 +214,10 @@ heatmap.gg.plot <- function (x = NULL,
   }
   data <- cbind(Myord = row.names(data), data)
   mrgd <- merge(data, clusters, by="cell")
-#
-  MyOrd <- as.numeric(as.character(mrgd$Myord))
+  Myord <- sort(as.numeric(as.character(mrgd$Myord)))
+  ### order
   mrgd <- as.matrix(mrgd)
-  mrgd <- (mrgd[order(MyOrd, decreasing = TRUE),])
+  mrgd <- (mrgd[order(Myord, decreasing = FALSE),])
   mrgd <- as.data.frame(mrgd)
   ######
   data <- mrgd
@@ -227,7 +227,7 @@ heatmap.gg.plot <- function (x = NULL,
     data$cell <- factor(data$cell, levels = My.distances)
   }
   ### plot
-  data$expression <- as.numeric(data$expression)
+  data$expression <- as.numeric(as.character(data$expression))
   #############
   heatmap <- ggplot(data, aes(x = cell, y = gene, fill = expression, text=clusters)) + geom_tile() +
     scale_fill_gradient2(low = col.low, mid = col.mid, high = col.high, name = "",
@@ -242,27 +242,7 @@ heatmap.gg.plot <- function (x = NULL,
                              axis.text.x = element_blank(), axis.ticks.x = element_blank(),
                              axis.line = element_blank(), axis.title.y = element_blank(),
                              axis.ticks.y = element_blank())
-  #
-#  Clust.Ord <- factor(data$clusters, levels = clustOrd)
-#  heatmap <- heatmap + scale_x_discrete(labels = Clust.Ord, position = "top")
-#  heatmap <- heatmap + scale_x_discrete(position = "top")
-#  heatmap <- heatmap + scale_x_discrete(labels = as.character(sort(as.numeric(Clust.Ord))))
-#  heatmap <- heatmap + scale_x_discrete(breaks=as.character(sort(as.numeric(Clust.Ord))),
-#                        labels=as.character(sort(as.numeric(Clust.Ord))),position = "top")
-#  geom_vline(xintercept = top.rank.line, colour = rank.line.col) +
-#  geom_hline(yintercept = SDlimit, colour = disp.line.col) +
-#  my.lines<-data.frame(x=c(.5,4.5), y=c(5.5,.5), xend=c(4.5,4.5), yend=c(5.5,5.5))
-#  geom_segment(data=my.lines, aes(x,y,xend=xend, yend=yend), size=3, inherit.aes=F)
-
-#########
-#  if (clustline == T) {
-#    heatmap <- heatmap + geom_vline(xintercept = MyLines,
-#                                    alpha = line.transparency,
-#                                    size = line.size,
-#                                    colour = "black")
-#  }
-
-  ###
+#################
   if (cluster.by == "clusters") {
   heatmap <- heatmap + facet_wrap( ~ clusters, nrow = 1,scales = "free_x") +
     theme(strip.background = element_rect(fill= NA))
@@ -275,24 +255,10 @@ heatmap.gg.plot <- function (x = NULL,
     heatmap <- heatmap
   }
 
-  # line per group of genes
-#  if (geneline == T) {
-#    PerClust <- length(gene) / tail(clustOrd,1)
-#    PerClust <- (clustOrd * PerClust)
-#    PerClust <- PerClust[1:length(PerClust)-1]
-#    PerClust <- PerClust + 0.5
-#    heatmap <- heatmap + geom_hline(yintercept = PerClust, colour = "black")
-#  }
-  #
-#  panel.spacing <- unit(x = 0.15, units = "lines")
-#  heatmap <- heatmap + theme(strip.background = element_blank(),panel.spacing = panel.spacing)
-  # rmove key
+   # rmove key
   if (no.key == TRUE) {
     heatmap <- heatmap + theme(legend.position = "none")
   }
-#
-#  htmlwidgets::saveWidget(ggplotly(heatmap), "fix.html")
-  # return
   if (interactive == TRUE) {
     OUT.PUT <- paste(out.name, ".html", sep="")
     htmlwidgets::saveWidget(ggplotly(heatmap), OUT.PUT)
