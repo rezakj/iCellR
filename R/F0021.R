@@ -39,6 +39,8 @@ clust.avg.exp <- function (x = NULL,
     Table <- x@imputed.data
   }
 #  Table = x@main.data
+  datalist <- list()
+  ###
   for(i in conditions){
     IDs <- rownames(subset(DATA1, sampleCondition == i))
     DATA <- Table[ , which(names(Table) %in% IDs)]
