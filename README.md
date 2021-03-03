@@ -2595,7 +2595,7 @@ dev.off()
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/7_cluster_KEGGpathways.png" />    
 </p>
 
- - Spatial Transcriptomics (ST) analysis 
+# Spatial Transcriptomics (ST) analysis 
  
  In this example, we have downloaded  2 samples from 10X genomics website. You can get the data from these links: [Anterior](https://support.10xgenomics.com/spatial-gene-expression/datasets/1.0.0/V1_Mouse_Brain_Sagittal_Anterior_Section_2) and [Posterior](https://support.10xgenomics.com/spatial-gene-expression/datasets/1.0.0/V1_Mouse_Brain_Sagittal_Posterior_Section_2). 
  To make it easier you can also use the commands below to download from our server.
