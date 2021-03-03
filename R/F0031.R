@@ -425,6 +425,9 @@ gene.plot <- function (x = NULL,
   }
   # return
 if (write.data == TRUE) {
+  if (scaleValue == FALSE) {
+    DATA$Expression <- 2^(DATA$Expression)-1
+  }
  write.table(DATA,paste(geneNAME,".tsv",sep=""),
              row.names = TRUE,quote = FALSE,sep="\t")
 }

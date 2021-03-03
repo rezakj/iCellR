@@ -2,7 +2,7 @@
 #'
 #' This function takes data frame and calculates the number of UMIs, genes per cell and percentage of mitochondrial genes per cell and cell cycle genes.
 #' @param x A data frame containing gene counts for cells.
-#' @param which.data Choose from raw data or main data, default = "raw.data".
+#' @param which.data Choose from "raw.data" or "main.data", "imputed.data", default = "raw.data".
 #' @param mito.genes A character vector of mitochondrial  genes names , default is the genes starting with mt.
 #' @param s.phase.genes A character vector of gene names for S phase, default = s.phase.
 #' @param g2m.phase.genes A character vector of gene names for G2 and M phase, default = g2m.phase.
@@ -25,6 +25,9 @@ qc.stats <- function (x = NULL,
   }
   if (which.data == "main.data") {
     DATA <- x@main.data
+  }
+  if (which.data == "imputed.data") {
+    DATA <- x@imputed.data
   }
   # get UMIs
   UMIs <- colSums(DATA)

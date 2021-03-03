@@ -7,6 +7,8 @@
 findMarkers(
   x = NULL,
   data.type = "main",
+  pval.test = "t.test",
+  p.adjust.method = "hochberg",
   fold.change = 2,
   padjval = 0.1,
   Inf.FCs = FALSE,
@@ -18,6 +20,10 @@ findMarkers(
 \item{x}{An object of class iCellR.}
 
 \item{data.type}{Choose from "main" and "imputed", default = "main"}
+
+\item{pval.test}{Choose from "t.test", "wilcox.test", default = "t.test".}
+
+\item{p.adjust.method}{Correction method. Choose from "holm", "hochberg", "hommel", "bonferroni", "BH", "BY","fdr", "none", default = "hochberg".}
 
 \item{fold.change}{A number that designates the minimum fold change for out put, default = 2.}
 
@@ -34,9 +40,4 @@ An object of class iCellR
 }
 \description{
 This function takes an object of class iCellR and performs differential expression (DE) analysis to find marker genes for each cluster.
-}
-\examples{
-marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = FALSE)
-
-head(marker.genes)
 }

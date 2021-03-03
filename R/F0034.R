@@ -7,6 +7,8 @@
 #' @param cond.1 First condition to do DE analysis on.
 #' @param cond.2 Second condition to do DE analysis on.
 #' @param base.cond A base condition or cluster if de.by is either cond.clust or clust.cond
+#' @param pval.test Choose from "t.test", "wilcox.test", default = "t.test".
+#' @param p.adjust.method Correction method. Choose from "holm", "hochberg", "hommel", "bonferroni", "BH", "BY","fdr", "none", default = "hochberg".
 #' @return An object of class iCellR
 #' @examples
 #' diff.res <- run.diff.exp(demo.obj, de.by = "clusters", cond.1 = c(1), cond.2 = c(2))
@@ -16,6 +18,8 @@
 #' @export
 run.diff.exp <- function (x = NULL,
                       data.type = "main",
+                      pval.test = "t.test",
+                      p.adjust.method = "hochberg",
                       de.by = "clusters",
                       cond.1 = "array",
                       cond.2 = "array",
@@ -96,10 +100,13 @@ run.diff.exp <- function (x = NULL,
     Cluster1 <- row.names(subset(Table, Table$clusters %in% CondB))
   }
   ############## Filter
-  cond1 <- dat[,Cluster0]
-  cond2 <- dat[,Cluster1]
+#  cond1 <- dat[,Cluster0]
+#  cond2 <- dat[,Cluster1]
+  cond1 <- dat[ , which(names(dat) %in% Cluster0)]
+  cond2 <- dat[ , which(names(dat) %in% Cluster1)]
   ### merge both for pval length not matching error
   mrgd <- cbind(cond1,cond2)
+#  mrgd <- mrgd[ rowSums(mrgd) > 0, ]
   #    mrgd <- merge(cond1, cond2, by="row.names")
   #    row.names(mrgd) <- mrgd$Row.names
   #    mrgd <- mrgd[,-1]
@@ -116,23 +123,43 @@ run.diff.exp <- function (x = NULL,
   Cond1_End <- dim(cond1)[2]
   Cond2_Start <- dim(cond1)[2] + 1
   Cond2_End <- dim(cond1)[2] + dim(cond2)[2]
+  ######
+    FiltData <- subset(FC.log2,FC.log2!="NaN")
+    mrgd <- subset(mrgd, row.names(mrgd) %in% row.names(as.data.frame(FiltData)))
   # pval
-  Pval <- apply(mrgd, 1, function(mrgd) {
-    t.test(x = mrgd[Cond1_Start:Cond1_End], y = mrgd[Cond2_Start:Cond2_End])$p.value
-  })
+    if (pval.test == "t.test") {
+      Pval <- apply(mrgd, 1, function(mrgd) {
+        t.test(x = mrgd[Cond1_Start:Cond1_End], y = mrgd[Cond2_Start:Cond2_End])$p.value
+      })
+    }
+  ############
+  if (pval.test == "wilcox.test") {
+    Pval <- apply(mrgd, 1, function(mrgd) {
+      wilcox.test(x = mrgd[Cond1_Start:Cond1_End], y = mrgd[Cond2_Start:Cond2_End])$p.value
+    })
+  }
   # padj
-  FDR <- p.adjust(Pval)
+  FDR <- p.adjust(Pval, method = p.adjust.method)
   # combine
   Stats <- cbind(
     baseMean = baseMean,
     MeanCond1 = meansCond1,
     MeanCond2 = meansCond2,
     FC=FC,
-    FC.log2=FC.log2,
-    t.test=Pval,
-    t.test.adj=FDR)
+    FC.log2=FC.log2)
+  # make cluster names
+  Stats1 <- cbind(
+    pval = Pval,
+    padj = FDR)
+  # filter
+  Stats <- as.data.frame(Stats)
+  Stats1 <- as.data.frame(Stats1)
+  # merge both pvals and stats
+  mrgdall <- merge(Stats, Stats1, by="row.names")
+  row.names(mrgdall) <- mrgdall$Row.names
+  mrgdall <- mrgdall[,-1]
   # name column
-  colnames(Stats) <- c("baseMean",CondAnames, CondBnames,"foldChange","log2FoldChange","pval","padj")
+  colnames(mrgdall) <- c("baseMean",CondAnames, CondBnames,"foldChange","log2FoldChange","pval","padj")
   # return
-  return(Stats)
+  return(mrgdall)
 }

@@ -19,8 +19,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and creates an average gene expression for every cluster.
 }
-\examples{
-demo.obj <- clust.avg.exp(demo.obj)
-
-head(demo.obj@clust.avg)
-}

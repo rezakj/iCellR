@@ -96,6 +96,8 @@ utils::globalVariables(c("%>%",
                          "AddModuleScoreme",
                          "genes.list",
                          "annotate",
+                         "wilcox.test",
+                         "gsva",
                          "V5",
                          "V6"))
 #########
@@ -169,5 +171,5 @@ utils::globalVariables(c("%>%",
 # image.capture.10x.R | F0068.R
 # add.10x.image.R | F0069.R
 # spatial.plot.R | F0070.R
-
+# i.score.R | F0071.R
 

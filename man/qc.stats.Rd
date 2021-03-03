@@ -15,7 +15,7 @@ qc.stats(
 \arguments{
 \item{x}{A data frame containing gene counts for cells.}
 
-\item{which.data}{Choose from raw data or main data, default = "raw.data".}
+\item{which.data}{Choose from "raw.data" or "main.data", "imputed.data", default = "raw.data".}
 
 \item{mito.genes}{A character vector of mitochondrial  genes names , default is the genes starting with mt.}
 

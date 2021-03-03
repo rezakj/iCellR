@@ -205,7 +205,7 @@ if (scoring.method == "coverage") {
   }
   ######
   if (return.stats == TRUE) {
-    TO <- length(scoring.List)+1
+    TO <- length(scoring.List)+3
     FinalData <- FinalData[1:TO]
     return(FinalData)
   }

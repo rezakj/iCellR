@@ -7,6 +7,8 @@
 run.diff.exp(
   x = NULL,
   data.type = "main",
+  pval.test = "t.test",
+  p.adjust.method = "hochberg",
   de.by = "clusters",
   cond.1 = "array",
   cond.2 = "array",
@@ -17,6 +19,10 @@ run.diff.exp(
 \item{x}{An object of class iCellR.}
 
 \item{data.type}{Choose from "main" and "imputed", default = "main"}
+
+\item{pval.test}{Choose from "t.test", "wilcox.test", default = "t.test".}
+
+\item{p.adjust.method}{Correction method. Choose from "holm", "hochberg", "hommel", "bonferroni", "BH", "BY","fdr", "none", default = "hochberg".}
 
 \item{de.by}{Choose from "clusters", "conditions", "clustBase.condComp" or "condBase.clustComp".}
 

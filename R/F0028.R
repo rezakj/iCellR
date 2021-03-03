@@ -4,19 +4,18 @@
 #' @param x An object of class iCellR.
 #' @param data.type Choose from "main" and "imputed", default = "main"
 #' @param fold.change A number that designates the minimum fold change for out put, default = 2.
+#' @param pval.test Choose from "t.test", "wilcox.test", default = "t.test".
+#' @param p.adjust.method Correction method. Choose from "holm", "hochberg", "hommel", "bonferroni", "BH", "BY","fdr", "none", default = "hochberg".
 #' @param padjval Minimum adjusted p value for out put, default = 0.1.
 #' @param Inf.FCs If set to FALSE the infinite fold changes would be filtered from out put, default = FALSE.
 #' @param uniq If set to TRUE only genes that are a marker for only one cluster would be in the out put, default = FALSE.
 #' @param positive If set to FALSE both the up regulated (positive) and down regulated (negative) markers would be in the out put, default = TRUE.
-#'
 #' @return An object of class iCellR
-#' @examples
-#' marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = FALSE)
-#'
-#' head(marker.genes)
 #' @export
 findMarkers <- function (x = NULL,
           data.type = "main",
+          pval.test = "t.test",
+          p.adjust.method = "hochberg",
           fold.change = 2,
           padjval = 0.1,
           Inf.FCs = FALSE,
@@ -81,11 +80,19 @@ findMarkers <- function (x = NULL,
     }
     mrgd <- subset(mrgd, row.names(mrgd) %in% row.names(as.data.frame(FiltData)))
     # pval
-    Pval <- apply(mrgd, 1, function(mrgd) {
-      t.test(x = mrgd[Cond1_Start:Cond1_End], y = mrgd[Cond2_Start:Cond2_End])$p.value
-    })
+    if (pval.test == "t.test") {
+      Pval <- apply(mrgd, 1, function(mrgd) {
+        t.test(x = mrgd[Cond1_Start:Cond1_End], y = mrgd[Cond2_Start:Cond2_End])$p.value
+      })
+    }
+    ############
+    if (pval.test == "wilcox.test") {
+      Pval <- apply(mrgd, 1, function(mrgd) {
+        wilcox.test(x = mrgd[Cond1_Start:Cond1_End], y = mrgd[Cond2_Start:Cond2_End])$p.value
+      })
+    }
     # padj
-    FDR <- p.adjust(Pval)
+    FDR <- p.adjust(Pval, method = p.adjust.method)
     # combine
     Stats <- cbind(
       baseMean = baseMean,

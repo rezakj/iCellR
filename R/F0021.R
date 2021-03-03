@@ -6,10 +6,6 @@
 #' @param conds.to.avg Choose the conditions you want to average, default = NULL (all conditions).
 #' @return An object of class iCellR.
 #' @import progress
-#' @examples
-#' demo.obj <- clust.avg.exp(demo.obj)
-#'
-#' head(demo.obj@clust.avg)
 #' @export
 clust.avg.exp <- function (x = NULL,
                            data.type = "main",
@@ -57,30 +53,30 @@ clust.avg.exp <- function (x = NULL,
     colnames(DATA) <- NameCol
     DATA <- cbind(gene = rownames(DATA), DATA)
     rownames(DATA) <- NULL
-    eval(call("<-", as.name(NameCol), DATA))
-#    head(DATA)
-#    write.table((DATA),file=Name,sep="\t", row.names =F)
+#    eval(call("<-", as.name(NameCol), DATA))
+    datalist[[i]] <- DATA
   }
 #  multmerge = function(mypath){
 #    filenames=list.files(pattern="meanExp")
 #    datalist = lapply(filenames, function(x){read.table(file=x,header=T)})
 #    Reduce(function(x,y) {merge(x,y)}, datalist)
 #  }
-   filenames <- ls(pattern="cluster_")
-   datalist <- mget(filenames)
+#   filenames <- ls(pattern="cluster_")
+#   datalist <- mget(filenames)
    MeanExpForClusters <- Reduce(function(x,y) {merge(x,y)}, datalist)
 #
 #  MeanExpForClusters <- multmerge()
 #  file.remove(list.files(pattern="meanExp"))
-   MyMat <- as.matrix(MeanExpForClusters)
-   NameS <- colnames(MeanExpForClusters)
-   MeanExpForClusters <- MyMat[,order(nchar(NameS),NameS)]
-   MeanExpForClusters <-as.data.frame(MeanExpForClusters)
+#   MyMat <- as.matrix(MeanExpForClusters)
+#   NameS <- colnames(MeanExpForClusters)
+   #######
+#   MeanExpForClusters <- MyMat[,order(nchar(NameS),NameS)]
+#   MeanExpForClusters <-as.data.frame(MeanExpForClusters)
    ##############
    data <- MeanExpForClusters
    row.names(data) <- data$gene
    data <- data[,-1]
-   data = as.data.frame(sapply(data, as.numeric))
+#   data = as.data.frame(sapply(data, as.numeric))
    data <- round(data,digits=4)
    data <- cbind(gene=MeanExpForClusters$gene,data)
 #   MeanExpForClusters <- MeanExpForClusters[order(nchar(colnames(MeanExpForClusters)),colnames(MeanExpForClusters))]
