@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.com/rezakj/iCellR.svg?branch=master)](https://travis-ci.com/rezakj/iCellR)
 
 # iCellR
-iCellR is an interactive R package to work with high-throughput single cell sequencing technologies (i.e scRNA-seq, scVDJ-seq and CITE-seq).
+iCellR is an interactive R package to work with high-throughput single cell sequencing technologies (i.e scRNA-seq, scVDJ-seq, ST and CITE-seq).
 
 ### News (July 2020): See iCellR version 1.5.5 with new cell cycle analysis for G0, G1S, G2M, M, G1M and S [phase](https://genome.med.nyu.edu/results/external/iCellR/example1/All_cellcycle.png), Pseudotime Abstract KNetL map [(PAK map)](https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.KNetL.png) and gene-gene [correlations](https://genome.med.nyu.edu/results/external/iCellR/example1/gene-gene.correlation.png). See below for how to. 
 
@@ -158,18 +158,17 @@ my.obj
 |  |'  '--'\   --. |  ||  ||  |
 `--' `-----' `----'`--'`--'`--' '--'
 ###################################
-An object of class iCellR version: 1.5.5
+An object of class iCellR version: 1.6.0
 Raw/original data dimentions (rows,columns): 32738,2700
 Data conditions in raw data: Ctrl,KD,KO,WT (500,400,900,900)
 Row names: A1BG,A1BG.AS1,A1CF ...
 Columns names: WT_AAACATACAACCAC.1,WT_AAACATTGAGCTAC.1,WT_AAACATTGATCAGC.1 ...
 ###################################
-   QC stats performed:TRUE, PCA performed:TRUE
+   QC stats performed:FALSE, PCA performed:FALSE
    Clustering performed:FALSE, Number of clusters:0
-   tSNE performed:TRUE, UMAP performed:TRUE, DiffMap performed:FALSE
-   Main data dimensions (rows,columns): 32738,2643
-   Data conditions in main data:Ctrl,KD,KO,WT(491,388,879,885)
-   Normalization factors:1.06283342125181,...
+   tSNE performed:FALSE, UMAP performed:FALSE, DiffMap performed:FALSE
+   Main data dimensions (rows,columns): 0,0
+   Normalization factors:,...
    Imputed data dimensions (rows,columns):0,0
 ############## scVDJ-seq ###########
 VDJ data dimentions (rows,columns):0,0
@@ -999,7 +998,6 @@ library(gridExtra)
 png('gene.plots_imputed.png', width = 8, height = 8, units = 'in', res = 300)
 grid.arrange(A,B,C,D)	
 dev.off()
-	
 ```
 
 <p align="center">
@@ -1048,6 +1046,26 @@ dev.off()
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Genes.KNetL.png" />
 	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Genes.heatmap.png" />
 </p>
+
+- Make your own customized plots
+
+```r
+# You can export the data using this command (one or multiple genes):
+
+gene.plot(my.obj, gene = "MS4A1", write.data = T, scaleValue = F, data.type = "main")
+
+# This would create a text file called "MS4A1.tsv".
+ head(read.table("MS4A1.tsv"))
+#                            V1         V2 Expression Clusters Conditions
+#WT_AAACATACAACCAC.1  12.499481 -11.436633   0.000000        9         WT
+#WT_AAACATTGAGCTAC.1  -8.783793  24.417999   1.942233        8         WT
+#WT_AAACATTGATCAGC.1  -2.650761  10.932273   0.000000       10         WT
+#WT_AAACCGTGCTTCCG.1 -28.916702  -5.542731   0.000000        4         WT
+#WT_AAACCGTGTATGCG.1  21.211557 -31.626822   0.000000        2         WT
+#WT_AAACGCACTGGTAC.1   5.225419  -5.141192   0.000000       10         WT
+
+# you use this to make your own plots in ggplot2 or other visualization packages. 
+```
 
  - Annotating clusters 
  
@@ -2577,65 +2595,142 @@ dev.off()
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/7_cluster_KEGGpathways.png" />    
 </p>
 
+ - Spatial Transcriptomics (ST) analysis 
+ 
+ In this example, we have downloaded  2 samples from 10X genomics website. You can get the data from these links: [Anterior](https://support.10xgenomics.com/spatial-gene-expression/datasets/1.0.0/V1_Mouse_Brain_Sagittal_Anterior_Section_2) and [Posterior](https://support.10xgenomics.com/spatial-gene-expression/datasets/1.0.0/V1_Mouse_Brain_Sagittal_Posterior_Section_2). 
+ To make it easier you can also use the commands below to download from our server.
+ 
+ ```r
+ # download sample data 
+ url = "https://genome.med.nyu.edu/results/external/iCellR/example7_Spatial_Transcriptomic/V1_Mouse_Brain_Sagittal_Anterior_Section_2_filtered_feature_bc_matrix.tar.gz"
 
-```r
-> sessionInfo()
-R version 3.5.1 (2018-07-02)
-Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Red Hat Enterprise Linux
+# download the file
+download.file(url = url,
+     destfile = "V1_Mouse_Brain_Sagittal_Anterior_Section_2_filtered_feature_bc_matrix.tar.gz",
+     method = "auto")
 
-Matrix products: default
-BLAS: /gpfs/share/apps/R/3.5.1/lib64/R/lib/libRblas.so
-LAPACK: /gpfs/share/apps/R/3.5.1/lib64/R/lib/libRlapack.so
 
-locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C
- [9] LC_ADDRESS=C               LC_TELEPHONE=C
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C
+url ="https://genome.med.nyu.edu/results/external/iCellR/example7_Spatial_Transcriptomic/V1_Mouse_Brain_Sagittal_Anterior_Section_2_spatial.tar.gz"
 
-attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base
+# download the file
+download.file(url = url,
+     destfile = "V1_Mouse_Brain_Sagittal_Anterior_Section_2_spatial.tar.gz",
+     method = "auto")
 
-other attached packages:
-[1] iCellR_1.5.5   plotly_4.9.2.1 ggplot2_3.3.2
+url ="https://genome.med.nyu.edu/results/external/iCellR/example7_Spatial_Transcriptomic/V1_Mouse_Brain_Sagittal_Posterior_Section_2_filtered_feature_bc_matrix.tar.gz"
 
-loaded via a namespace (and not attached):
-  [1] nlme_3.1-148         bit64_0.9-7.1        RcppAnnoy_0.0.16
-  [4] RColorBrewer_1.1-2   progress_1.2.2       httr_1.4.1
-  [7] tools_3.5.1          backports_1.1.8      R6_2.4.1
- [10] rpart_4.1-15         Hmisc_4.4-0          uwot_0.1.8
- [13] lazyeval_0.2.2       colorspace_1.4-1     nnet_7.3-14
- [16] withr_2.2.0          tidyselect_1.1.0     prettyunits_1.1.1
- [19] bit_1.1-15.2         curl_4.3             compiler_3.5.1
- [22] htmlTable_2.0.1      Cairo_1.5-12         hdf5r_1.3.2
- [25] ggdendro_0.1-20      labeling_0.3         scales_1.1.1
- [28] checkmate_2.0.0      stringr_1.4.0        digest_0.6.25
- [31] foreign_0.8-76       rio_0.5.16           base64enc_0.1-3
- [34] pkgconfig_2.0.3      htmltools_0.5.0      fastmap_1.0.1
- [37] htmlwidgets_1.5.1    rlang_0.4.7          readxl_1.3.1
- [40] rstudioapi_0.11      shiny_1.5.0          farver_2.0.3
- [43] generics_0.0.2       jsonlite_1.7.0       crosstalk_1.1.0.1
- [46] acepack_1.4.1        dplyr_1.0.0          zip_2.0.4
- [49] car_3.0-8            magrittr_1.5         Formula_1.2-3
- [52] NbClust_3.0          Matrix_1.2-18        Rcpp_1.0.5
- [55] munsell_0.5.0        ape_5.4              abind_1.4-5
- [58] lifecycle_0.2.0      yaml_2.2.1           scatterplot3d_0.3-41
- [61] stringi_1.4.6        carData_3.0-4        MASS_7.3-51.6
- [64] Rtsne_0.15           plyr_1.8.6           grid_3.5.1
- [67] parallel_3.5.1       promises_1.1.1       ggrepel_0.8.2
- [70] forcats_0.5.0        crayon_1.3.4         lattice_0.20-41
- [73] haven_2.3.1          splines_3.5.1        hms_0.5.3
- [76] knitr_1.29           pillar_1.4.6         igraph_1.2.5
- [79] ggpubr_0.4.0         ggsignif_0.6.0       codetools_0.2-16
- [82] glue_1.4.1           latticeExtra_0.6-28  data.table_1.12.8
- [85] vctrs_0.3.2          httpuv_1.5.4         cellranger_1.1.0
- [88] gtable_0.3.0         RANN_2.6.1           purrr_0.3.4
- [91] tidyr_1.1.0          reshape_0.8.8        xfun_0.15
- [94] openxlsx_4.1.5       mime_0.9             xtable_1.8-4
- [97] broom_0.7.0          rstatix_0.6.0        later_1.1.0.1
-[100] survival_3.2-3       viridisLite_0.3.0    tibble_3.0.3
-[103] pheatmap_1.0.12      cluster_2.1.0        ellipsis_0.3.1
+# download the file
+download.file(url = url,
+     destfile = "V1_Mouse_Brain_Sagittal_Posterior_Section_2_filtered_feature_bc_matrix.tar.gz",
+     method = "auto")
+
+url ="https://genome.med.nyu.edu/results/external/iCellR/example7_Spatial_Transcriptomic/V1_Mouse_Brain_Sagittal_Posterior_Section_2_spatial.tar.gz"
+
+# download the file
+download.file(url = url,
+     destfile = "V1_Mouse_Brain_Sagittal_Posterior_Section_2_spatial.tar.gz",
+     method = "auto") 
+#########################
+##### untar
+untar("V1_Mouse_Brain_Sagittal_Anterior_Section_2_filtered_feature_bc_matrix.tar.gz")
+untar("V1_Mouse_Brain_Sagittal_Anterior_Section_2_spatial.tar.gz")
+
+file.rename("spatial","spatial_Anterior2")
+file.rename("filtered_feature_bc_matrix","filtered_feature_bc_matrix_Anterior2")
+
+untar("V1_Mouse_Brain_Sagittal_Posterior_Section_2_filtered_feature_bc_matrix.tar.gz")
+untar("V1_Mouse_Brain_Sagittal_Posterior_Section_2_spatial.tar.gz")
+
+file.rename("spatial","spatial_Posterior2")
+file.rename("filtered_feature_bc_matrix","filtered_feature_bc_matrix_Posterior2")
 ```
+
+ - Load the data 
+ 
+ ```r
+ library(iCellR)
+
+Anterior2 <- load10x("filtered_feature_bc_matrix_Anterior2",gene.name = 2)
+Posterior2 <- load10x("filtered_feature_bc_matrix_Posterior2",gene.name = 2)
+
+# if you want to analyze both samples
+Samples <- c("Anterior2","Posterior2")
+my.data <- data.aggregation(samples = Samples, condition.names = Samples)
+
+# if you want to analyze 1 sample
+# my.data <- load10x("filtered_feature_bc_matrix_Posterior2",gene.name = 2)
+
+my.obj <- make.obj(my.data)
+
+
+Anterior2 <- capture.image.10x("spatial_Anterior2")
+Posterior2 <- capture.image.10x("spatial_Posterior2")
+
+# if you want to analyze both samples
+Samples <- c("Anterior2","Posterior2")
+my.obj <- add.10x.image(my.obj,
+          image.data.list = Samples, condition.names = Samples)
+
+# if one sample
+# My.image <- image.capture.10x("Post2_spatial")
+# my.obj <- add.10x.image(my.obj, image.data.list = "My.image")
+
+my.obj
+###################################
+,--. ,-----.       ,--.,--.,------.
+`--''  .--./ ,---. |  ||  ||  .--. '
+,--.|  |    | .-. :|  ||  ||  '--'.'
+|  |'  '--'\   --. |  ||  ||  |
+`--' `-----' `----'`--'`--'`--' '--'
+###################################
+An object of class iCellR version: 1.6.0
+Raw/original data dimentions (rows,columns): 31053,6118
+Data conditions in raw data: Anterior2,Posterior2 (2825,3293)
+Row names: A030001D20Rik,A030003K21Rik,A030005K14Rik ...
+Columns names: Anterior2_AAACAAGTATCTCCCA.1,Anterior2_AAACACCAATAACTGC.1,Anterior2_AAACAGAGCGACTCCT.1 ...
+###################################
+   QC stats performed:FALSE, PCA performed:FALSE
+   Clustering performed:FALSE, Number of clusters:0
+   tSNE performed:FALSE, UMAP performed:FALSE, DiffMap performed:FALSE
+   Main data dimensions (rows,columns): 0,0
+   Normalization factors:,...
+   Imputed data dimensions (rows,columns):0,0
+############## scVDJ-seq ###########
+VDJ data dimentions (rows,columns):0,0
+############## CITE-seq ############
+   ADT raw data  dimensions (rows,columns):0,0
+   ADT main data  dimensions (rows,columns):0,0
+   ADT columns names:...
+   ADT row names:...
+############## scATAC-seq ############
+   ATAC raw data  dimensions (rows,columns):0,0
+   ATAC main data  dimensions (rows,columns):0,0
+   ATAC columns names:...
+   ATAC row names:...
+############## Spatial ###########
+Spatial data dimentions (rows,columns):9984,5
+########### iCellR object ##########
+ ```
+ 
+ The rest of the analysis is just like regular scRNA-Seq. Filter, normalize, run PCA, tSNE, UMAP, KNetL map and cluster. Then you can start ploting as below:
+ 
+ ```r
+A=spatial.plot(my.obj,col.by = "clusters",conds.to.plot = "Anterior2",interactive= F)
+B=spatial.plot(my.obj,col.by = "clusters",conds.to.plot = "Posterior2",interactive= F)
+C= cluster.plot(my.obj,plot.type = "tsne",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T)
+D= cluster.plot(my.obj,plot.type = "tsne",col.by = "conditions",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T)
+E=spatial.plot(my.obj,col.by = "gene", gene = c("Cd4"), conds.to.plot = "Anterior2",interactive= F, scaleValue = TRUE)
+F=spatial.plot(my.obj,col.by = "gene", gene = c("Cd4"), conds.to.plot = "Posterior2",interactive= F, scaleValue = TRUE)
+
+library(gridExtra)
+png('AllClusts.png', width = 8, height = 8, units = 'in', res = 300)
+grid.arrange(A,B,C,D,E,F)
+dev.off()
+ ```
+ 
+ <p align="center">
+	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example7_Spatial_Transcriptomic/spatial_Anterior2/tissue_lowres_image.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example7_Spatial_Transcriptomic/spatial_Posterior2/tissue_lowres_image.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example7_Spatial_Transcriptomic/AllClusts.png" />    
+</p>
+ 
