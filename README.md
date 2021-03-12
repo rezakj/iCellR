@@ -510,6 +510,10 @@ This is one of the harder parts of the analysis and sometimes you need to adjust
 
 my.obj <- iclust(my.obj, sensitivity = 150, data.type = "knetl") 
 
+# clustering based on PCA
+
+# my.obj <- iclust(my.obj, sensitivity = 150, data.type = "pca", dims=1:10) 
+
 # play with k to get the clusters right. Usually 150 is good.
 
 ###### more examples 
