@@ -422,9 +422,9 @@ my.obj <- run.pc.tsne(my.obj, dims = 1:10)
 # UMAP
 my.obj <- run.umap(my.obj, dims = 1:10)
 
-# KNetL (for lager than 5000 cell use a k of about 400) 
+# KNetL (for lager than 5000 cell use a zoom of about 400) 
 # Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
-my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110, dim.redux = "umap")
+my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110, dim.redux = "umap") # (Important note!) don't forget to set the zoom in the right range  
 
 ########################### IMPORTANT NOTE ########################################
 #### Because KNetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
