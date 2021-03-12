@@ -411,7 +411,7 @@ opt.pcs.plot(my.obj)
 </p>
 
 
-- Perform other dimensionality reductiond (tSNE, UMAP, KNetL, PHATE, diffusion map)
+- Perform other dimensionality reductions (tSNE, UMAP, KNetL, PHATE, destiny, diffusion maps)
 
 We recommend tSNE, UMAP and KNetL. KNetL is fundamentally more powerful. 
 
