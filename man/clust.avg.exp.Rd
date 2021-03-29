@@ -4,7 +4,13 @@
 \alias{clust.avg.exp}
 \title{Create a data frame of mean expression of genes per cluster}
 \usage{
-clust.avg.exp(x = NULL, data.type = "main", conds.to.avg = NULL)
+clust.avg.exp(
+  x = NULL,
+  data.type = "main",
+  conds.to.avg = NULL,
+  rounding.digits = 4,
+  round.num = FALSE
+)
 }
 \arguments{
 \item{x}{An object of class iCellR.}
@@ -12,6 +18,10 @@ clust.avg.exp(x = NULL, data.type = "main", conds.to.avg = NULL)
 \item{data.type}{Choose from "main" and "imputed", default = "main"}
 
 \item{conds.to.avg}{Choose the conditions you want to average, default = NULL (all conditions).}
+
+\item{rounding.digits}{integer indicating the number of decimal places (round) or significant digits (signif) to be used.}
+
+\item{round.num}{Rounding of Numbers, default = FALSE.}
 }
 \value{
 An object of class iCellR.

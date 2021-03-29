@@ -6,7 +6,7 @@
 \usage{
 spatial.plot(
   x = NULL,
-  cell.size = 0.5,
+  cell.size = 1,
   cell.colors = c("gray", "red"),
   back.col = "black",
   col.by = "clusters",

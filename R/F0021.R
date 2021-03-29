@@ -4,12 +4,16 @@
 #' @param x An object of class iCellR.
 #' @param data.type Choose from "main" and "imputed", default = "main"
 #' @param conds.to.avg Choose the conditions you want to average, default = NULL (all conditions).
+#' @param rounding.digits integer indicating the number of decimal places (round) or significant digits (signif) to be used.
+#' @param round.num Rounding of Numbers, default = FALSE.
 #' @return An object of class iCellR.
 #' @import progress
 #' @export
 clust.avg.exp <- function (x = NULL,
                            data.type = "main",
-                           conds.to.avg = NULL) {
+                           conds.to.avg = NULL,
+                           rounding.digits = 4,
+                           round.num = FALSE) {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
@@ -55,16 +59,17 @@ clust.avg.exp <- function (x = NULL,
     colnames(DATA) <- NameCol
     DATA <- cbind(gene = rownames(DATA), DATA)
     rownames(DATA) <- NULL
-#    eval(call("<-", as.name(NameCol), DATA))
-    datalist[[i]] <- DATA
+    eval(call("<-", as.name(NameCol), DATA))
+#    datalist[[i]] <- DATA
   }
 #  multmerge = function(mypath){
 #    filenames=list.files(pattern="meanExp")
 #    datalist = lapply(filenames, function(x){read.table(file=x,header=T)})
 #    Reduce(function(x,y) {merge(x,y)}, datalist)
 #  }
-#   filenames <- ls(pattern="cluster_")
-#   datalist <- mget(filenames)
+   filenames <- ls(pattern="cluster_")
+   filenames <- filenames[order(nchar(filenames))]
+   datalist <- mget(filenames)
    MeanExpForClusters <- Reduce(function(x,y) {merge(x,y)}, datalist)
 #
 #  MeanExpForClusters <- multmerge()
@@ -79,7 +84,9 @@ clust.avg.exp <- function (x = NULL,
    row.names(data) <- data$gene
    data <- data[,-1]
 #   data = as.data.frame(sapply(data, as.numeric))
-   data <- round(data,digits=4)
+   if (round.num == TRUE) {
+     data <- round(data, digits = rounding.digits)
+   }
    data <- cbind(gene=MeanExpForClusters$gene,data)
 #   MeanExpForClusters <- MeanExpForClusters[order(nchar(colnames(MeanExpForClusters)),colnames(MeanExpForClusters))]
       attributes(x)$clust.avg <- data

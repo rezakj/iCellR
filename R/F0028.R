@@ -38,6 +38,9 @@ findMarkers <- function (x = NULL,
   # get avrages
   x <- clust.avg.exp(x, data.type = data.type)
   DATA <- x@best.clust
+  if(!is.numeric(DATA$clusters)){
+    stop("Cluster names have to be numeric")
+  }
   ############## set wich clusters you want as condition 1 and 2
   MyClusts <- as.numeric(unique(DATA$clusters))
   MyClusts <- sort(MyClusts)

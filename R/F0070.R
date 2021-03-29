@@ -31,7 +31,7 @@
 #' @importFrom ggplot2 ggplot theme_classic geom_segment geom_violin guide_colorbar guide_legend guides scale_color_discrete scale_colour_gradient scale_fill_gradient2 scale_x_continuous scale_y_continuous scale_y_discrete stat_summary coord_polar element_rect element_text element_blank facet_wrap scale_color_manual geom_hline geom_jitter geom_vline ylab xlab ggtitle theme_bw aes theme geom_bar geom_point geom_boxplot geom_errorbar position_dodge geom_tile geom_density geom_line
 #' @export
 spatial.plot <- function (x = NULL,
-                          cell.size = 0.5,
+                          cell.size = 1,
                           cell.colors = c("gray","red"),
                           back.col = "black",
                           col.by = "clusters",
@@ -164,6 +164,8 @@ if (col.by == "cc") {
       if (!is.null(conds.to.plot)) {
         data <- subset(data, data$MYconds %in% conds.to.plot)
       }
+################# Fix V5
+#     data$V5 <- data$V5 + ((min(data$V5)) * -1)
 ############################# plot
       if (!is.numeric(data$clusters)) {
       if(length(MYConds) == 1) {
@@ -185,8 +187,10 @@ if (col.by == "cc") {
         ############# Annotation
           if (anno.clust == TRUE) {
             cords <- aggregate(data[, 6:7], list(data$clusters), mean)
-            MYX=(cords$V5) * -1
-            MYY=(cords$V6) * -1
+#            MYX=(cords$V5) * -1
+#            MYY=(cords$V6) * -1
+            MYX=(cords$V6)
+            MYY=(cords$V5)
             MYZ=cords$Group.1
             myPLOT <- myPLOT +  annotate("text",
                                          x = MYX,
@@ -204,9 +208,9 @@ if (col.by == "cc") {
               guides(colour = guide_legend(override.aes = list(size=5))) +
               scale_color_discrete(name="") +
               ggtitle(MyTitle) +
-              theme(panel.background = element_rect(fill = "black", colour = "black"),
+              theme(panel.background = element_rect(fill = back.col, colour = back.col),
                     panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                    legend.key = element_rect(fill = "black")) +
+                    legend.key = element_rect(fill = back.col)) +
               theme(axis.title.x=element_blank(),
                     axis.text.x=element_blank(),
                     axis.ticks.x=element_blank()) +
@@ -216,8 +220,8 @@ if (col.by == "cc") {
             ############# Annotation
               if (anno.clust == TRUE) {
                 cords <- aggregate(data[, 6:7], list(data$clusters), mean)
-                MYX=(cords$V5) * -1
-                MYY=(cords$V6) * -1
+                MYX=(cords$V6)
+                MYY=(cords$V5)
                 MYZ=cords$Group.1
                 myPLOT <- myPLOT +  annotate("text",
                                              x = MYX,
@@ -236,9 +240,9 @@ if (col.by == "cc") {
               guides(colour = guide_legend(override.aes = list(size=5))) +
               scale_color_discrete(name="") +
               ggtitle(MyTitle) +
-              theme(panel.background = element_rect(fill = "black", colour = "black"),
+              theme(panel.background = element_rect(fill = back.col, colour = back.col),
                     panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                    legend.key = element_rect(fill = "black")) +
+                    legend.key = element_rect(fill = back.col)) +
               theme(axis.title.x=element_blank(),
                     axis.text.x=element_blank(),
                     axis.ticks.x=element_blank()) +
@@ -274,9 +278,9 @@ if (col.by == "cc") {
             geom_point(size = cell.size, alpha = cell.transparency) +
             scale_colour_gradient(low = cell.colors[1], high = cell.colors[2], name="") +
             ggtitle(MyTitle) +
-            theme(panel.background = element_rect(fill = "black", colour = "black"),
+            theme(panel.background = element_rect(fill = back.col, colour = back.col),
                   panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                  legend.key = element_rect(fill = "black")) +
+                  legend.key = element_rect(fill = back.col)) +
             theme(axis.title.x=element_blank(),
                   axis.text.x=element_blank(),
                   axis.ticks.x=element_blank()) +
