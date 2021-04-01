@@ -172,8 +172,8 @@ findMarkers <- function (x = NULL,
   dfm <- dfm[order(myClustOrd, decreasing = FALSE),]
   df <- as.data.frame(dfm)
   #######
-  df$clusters <- as.numeric(df$clusters)
-  df$baseMean <- as.numeric(df$baseMean)
+  df$clusters <- as.numeric(as.character(df$clusters))
+  df$baseMean <- as.numeric(as.character(df$baseMean))
 ######
   message("All done!")
   return(df)
