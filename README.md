@@ -15,6 +15,7 @@ iCellR is an interactive R package to work with high-throughput single cell sequ
 - Tutorial: [example 1 code](https://genome.med.nyu.edu/results/external/iCellR/example1/code.txt) and [results](https://genome.med.nyu.edu/results/external/iCellR/example1/) (based on KNetL map <img src="https://github.com/rezakj/scSeqR/blob/master/doc/logo.png" alt="drawing" width="30"/>) 
 - Tutorial: [example 2 code](https://genome.med.nyu.edu/results/external/iCellR/example2/code.txt) and [results](https://genome.med.nyu.edu/results/external/iCellR/example2/) (based on CPCA batch alignment and KNetL map <img src="https://github.com/rezakj/scSeqR/blob/master/doc/logo.png" alt="drawing" width="30"/>) 
 - Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
+- All you need to know about KNetL map: [Video](https://youtu.be/tkoPTVciQm0)
 - Link to manual [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.pdf) and Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/packages/iCellR/index.html). 
 
 iCellR Viewer (web GUI app): https://compbio.nyumc.org/icellr/
@@ -410,7 +411,7 @@ opt.pcs.plot(my.obj)
 </p>
 
 
-- Perform other dimensionality reductiond (tSNE, UMAP, KNetL, PHATE, diffusion map)
+- Perform other dimensionality reductions (tSNE, UMAP, KNetL, PHATE, destiny, diffusion maps)
 
 We recommend tSNE, UMAP and KNetL. KNetL is fundamentally more powerful. 
 
@@ -421,9 +422,9 @@ my.obj <- run.pc.tsne(my.obj, dims = 1:10)
 # UMAP
 my.obj <- run.umap(my.obj, dims = 1:10)
 
-# KNetL (for lager than 5000 cell use a k of about 400) 
+# KNetL (for lager than 5000 cell use a zoom of about 400) 
 # Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
-my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110, dim.redux = "umap")
+my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110, dim.redux = "umap") # (Important note!) don't forget to set the zoom in the right range  
 
 ########################### IMPORTANT NOTE ########################################
 #### Because KNetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
@@ -508,6 +509,10 @@ This is one of the harder parts of the analysis and sometimes you need to adjust
 # clustering based on KNetL
 
 my.obj <- iclust(my.obj, sensitivity = 150, data.type = "knetl") 
+
+# clustering based on PCA
+
+# my.obj <- iclust(my.obj, sensitivity = 150, data.type = "pca", dims=1:10) 
 
 # play with k to get the clusters right. Usually 150 is good.
 
