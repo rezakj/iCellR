@@ -3003,8 +3003,69 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters"
 dev.off()
 ```
 
+Peak analysis
 
+```r
+# make bed file per cluster
+make.bed(marker.peaks)
 
+# load packages 
+library(ChIPseeker)
+library(clusterProfiler)
+
+# load genome
+require(TxDb.Hsapiens.UCSC.hg38.knownGene)
+txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
+Anno="org.Hs.eg.db"
+
+# load bed files
+Mylist1 = list.files(pattern=".bed")
+Mylist1
+ 
+Mylist <- as.list(Mylist1)
+NAMES <- gsub('_peaks.bed','',Mylist1)
+names(Mylist) <- NAMES
+files <- Mylist
+files
+
+# perform analysis (example)
+promoter <- getPromoters(TxDb=txdb, upstream=3000, downstream=3000)
+tagMatrixList <- lapply(files, getTagMatrix, windows=promoter)
+
+pdf("Plot_ProfileLineAll.pdf")
+plotAvgProf(tagMatrixList, xlim=c(-3000, 3000))
+dev.off()
+
+pdf('Plot_ProfileLine.pdf', width = 8, height = 10)
+plotAvgProf(tagMatrixList, xlim=c(-3000, 3000), facet="row")
+dev.off()
+
+pdf("Plot_heatmaps.pdf", width = 50, height = 6)
+tagHeatmap(tagMatrixList, xlim=c(-3000, 3000), color=NULL)
+dev.off()
+ 
+# annotate
+peakAnnoList <- lapply(files, annotatePeak, TxDb=txdb,
+                       tssRegion=c(-3000, 3000), verbose=FALSE)
+# plot annotatin
+pdf("Plot_AnnoBar.pdf")
+plotAnnoBar(peakAnnoList)
+dev.off()
+
+############### peak annotation
+
+peakAnnoList <- lapply(files, annotatePeak, TxDb=txdb,
+                       tssRegion=c(-3000, 3000), verbose=FALSE, annoDb=Anno)
+
+capture.output(peakAnnoList, file = "peakAnnoList.txt")
+
+genes = lapply(peakAnnoList, function(i) as.data.frame(i))
+
+lapply(1:length(genes), function(i) write.table(genes[[i]],
+                                      file = paste0(names(genes[i]), ".xls"),
+                                      row.names = FALSE, sep="\t"))
+
+```
 
 
 
