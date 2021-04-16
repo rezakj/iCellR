@@ -2917,11 +2917,7 @@ marker.genes <- findMarkers(my.obj,
  uniq = F,
  positive = T)
  
- 
-head(marker.genes)
 marker.genes1 <- cbind(row = rownames(marker.genes), marker.genes)
-head(marker.genes1)
-dim(marker.genes1)
 write.table((marker.genes1),file="marker.genes.tsv", sep="\t", row.names =F)
 
 MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.2, filt.ambig = F)
@@ -2932,7 +2928,24 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters"
 dev.off()
  ```
 
+Work on scATAC data
 
+```r
+# normalize ACAT
+my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500, ATAC.data = TRUE, ATAC.filter = TRUE) 
+
+marker.peaks <- findMarkers(my.obj,
+ data.type = "atac",
+ fold.change = 2,
+ padjval = 0.1,
+ uniq = F,
+ positive = T)
+ 
+marker.peaks1 <- cbind(row = rownames(marker.peaks), marker.genes)
+write.table((marker.peaks1),file="marker.peaks.tsv", sep="\t", row.names =F)
+
+head(marker.peaks1)
+```
 
 
 
