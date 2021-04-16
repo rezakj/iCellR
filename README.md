@@ -2825,8 +2825,11 @@ VDJ data dimentions (rows,columns):0,0
 Spatial data dimentions (rows,columns):0,0
 ########### iCellR object ##########
 
-# from here do the regular scRNA-seq as expleind above
+ ```
 
+From here do the regular scRNA-seq as expleind above. See example below
+ 
+ ```r
 # QC
 my.obj <- qc.stats(my.obj,
 	s.phase.genes = s.phase, 
@@ -2866,9 +2869,22 @@ my.obj <- make.gene.model(my.obj, my.out.put = "data",
 
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
 
+# tSNE
+my.obj <- run.pc.tsne(my.obj, dims = 1:10)
+
+# UMAP
 my.obj <- run.umap(my.obj, dims = 1:10)
 
-...
+# KNetL
+my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110, dim.redux = "umap") 
+
+# clustering based on KNetL
+
+my.obj <- iclust(my.obj, sensitivity = 150, data.type = "knetl") 
+
+# clustering based on PCA
+
+# my.obj <- iclust(my.obj, sensitivity = 150, data.type = "pca", dims=1:10) 
  ```
 
 
