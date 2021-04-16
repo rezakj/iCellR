@@ -2992,9 +2992,15 @@ MyGenes <- top.markers(marker.peaks, topde = 10, min.base.mean = 0.2, filt.ambig
 MyGenes <- unique(MyGenes)
 
 png('heatmap_gg_peaks.png', width = 10, height = 10, units = 'in', res = 300)
-heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters",cell.sort = F, conds.to.plot = NULL)
+heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters",cell.sort = F, conds.to.plot = NULL, data.type = "atac")
 dev.off()
 
+my.obj <- run.impute(my.obj,data.type = "knetl", nn = 10, ATAC.data = FALSE)
+
+
+png('heatmap_gg_peaks.png', width = 10, height = 10, units = 'in', res = 300)
+heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters",cell.sort = F, conds.to.plot = NULL, data.type = "atac.imputed")
+dev.off()
 ```
 
 
