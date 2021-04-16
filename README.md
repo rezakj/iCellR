@@ -2876,15 +2876,53 @@ my.obj <- run.pc.tsne(my.obj, dims = 1:10)
 my.obj <- run.umap(my.obj, dims = 1:10)
 
 # KNetL
-my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110, dim.redux = "umap") 
+my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 200, dim.redux = "umap") 
 
 # clustering based on KNetL
 
-my.obj <- iclust(my.obj, sensitivity = 150, data.type = "knetl") 
+my.obj <- iclust(my.obj, sensitivity = 200, data.type = "knetl")
 
 # clustering based on PCA
 
-# my.obj <- iclust(my.obj, sensitivity = 150, data.type = "pca", dims=1:10) 
+# my.obj <- iclust(my.obj, sensitivity = 100, data.type = "pca", dims=1:10) 
+
+# check clusters and adjust if needed (optinal)
+# cluster.plot(my.obj,plot.type = "knetl",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T)
+# my.obj <- change.clust(my.obj, change.clust = 3, to.clust = 4)
+# my.obj <- change.clust(my.obj, change.clust = 3, to.clust = 10)
+
+# order clusters
+my.obj <- clust.ord(my.obj,top.rank = 500, how.to.order = "distance")
+
+
+# plot
+A= cluster.plot(my.obj,plot.type = "pca",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T)
+B= cluster.plot(my.obj,plot.type = "umap",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T)
+C= cluster.plot(my.obj,plot.type = "tsne",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T)
+D= cluster.plot(my.obj,plot.type = "knetl",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T)
+
+library(gridExtra)
+png('AllClusts.png', width = 12, height = 10, units = 'in', res = 300)
+grid.arrange(A,B,C,D)
+dev.off()
+
+# save object
+save(my.obj, file = "my.obj.Robj")
+
+# find markers 
+marker.genes <- findMarkers(my.obj,
+ data.type = "main",
+ fold.change = 2,
+ padjval = 0.1,
+ uniq = F,
+ positive = T)
+
+MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.2, filt.ambig = F)
+MyGenes <- unique(MyGenes)
+
+png('heatmap_gg_genes.png', width = 10, height = 10, units = 'in', res = 300)
+heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters",cell.sort = F, conds.to.plot = NULL)
+dev.off()
  ```
 
 
