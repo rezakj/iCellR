@@ -2916,6 +2916,13 @@ marker.genes <- findMarkers(my.obj,
  padjval = 0.1,
  uniq = F,
  positive = T)
+ 
+ 
+head(marker.genes)
+marker.genes1 <- cbind(row = rownames(marker.genes), marker.genes)
+head(marker.genes1)
+dim(marker.genes1)
+write.table((marker.genes1),file="marker.genes.tsv", sep="\t", row.names =F)
 
 MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.2, filt.ambig = F)
 MyGenes <- unique(MyGenes)
