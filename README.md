@@ -2739,3 +2739,145 @@ dev.off()
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example7_Spatial_Transcriptomic/AllClusts.png" />    
 </p>
  
+# Single cell ATAC sequencing with scRNA-Seq (scATAC-Seq)
+
+```r
+library("iCellR")
+my.data <- load10x("filtered_gene_bc_matrices/")
+
+# see the row names
+row.names(my.data)
+
+# get peak names
+ATAC <- grep("^chr",row.names(my.data),value=T)
+
+# get scATAC data
+MyATAC <- subset(my.data, row.names(my.data) %in% ATAC)
+head(MyATAC)[1:3]
+#                   AAACAGCCAAGTGAAC.1 AAACAGCCACTGACCG.1 AAACAGCCATGATTGT.1
+#chr1.181218.181695                  0                  0                  1
+#chr1.191296.191699                  0                  0                  0
+#chr1.629770.630129                  0                  0                  0
+#chr1.633806.634251                  0                  0                  0
+#chr1.778422.779040                  0                  0                  0
+#chr1.827306.827702                  0                  0                  0
+
+dim(MyATAC)
+# [1] 21923  6326
+
+# get RNA data
+MyRNAs <- subset(my.data, !row.names(my.data) %in% ATAC)
+head(MyRNAs)[1:3]
+#            AAACAGCCAAGTGAAC.1 AAACAGCCACTGACCG.1 AAACAGCCATGATTGT.1
+#MIR1302.2HG                  0                  0                  0
+#FAM138A                      0                  0                  0
+#OR4F5                        0                  0                  0
+#AL627309.1                   0                  0                  0
+#AL627309.3                   0                  0                  0
+#AL627309.2                   0                  0                  0
+
+dim(MyRNAs)
+#[1] 36633  6326
+
+# make iCellR object
+my.obj <- make.obj(MyRNAs)
+
+# add ATAC-Seq data
+my.obj@atac.raw <- MyATAC
+my.obj@atac.main <- MyATAC
+
+# check your object
+my.obj
+
+
+###################################
+,--. ,-----.       ,--.,--.,------.
+`--''  .--./ ,---. |  ||  ||  .--. '
+,--.|  |    | .-. :|  ||  ||  '--'.'
+|  |'  '--'\   --. |  ||  ||  |
+`--' `-----' `----'`--'`--'`--' '--'
+###################################
+An object of class iCellR version: 1.6.2
+Raw/original data dimentions (rows,columns): 24127,6326
+Data conditions: no conditions/single sample
+Row names: MIR1302.2HG,TTLL10.AS1,MRPL20.AS1 ...
+Columns names: AAACAGCCAAGTGAAC.1,AAACAGCCACTGACCG.1,AAACAGCCATGATTGT.1 ...
+###################################
+   QC stats performed:FALSE, PCA performed:FALSE
+   Clustering performed:FALSE, Number of clusters:0
+   tSNE performed:FALSE, UMAP performed:FALSE, DiffMap performed:FALSE
+   Main data dimensions (rows,columns): 0,0
+   Normalization factors:,...
+   Imputed data dimensions (rows,columns):0,0
+############## scVDJ-seq ###########
+VDJ data dimentions (rows,columns):0,0
+############## CITE-seq ############
+   ADT raw data  dimensions (rows,columns):0,0
+   ADT main data  dimensions (rows,columns):0,0
+   ADT columns names:...
+   ADT row names:...
+############## scATAC-seq ############
+   ATAC raw data  dimensions (rows,columns):21923,6326
+   ATAC main data  dimensions (rows,columns):21923,6326
+   ATAC columns names:AAACAGCCAAGTGAAC.1...
+   ATAC row names:chr1.181218.181695...
+############## Spatial ###########
+Spatial data dimentions (rows,columns):0,0
+########### iCellR object ##########
+
+# from here do the regular scRNA-seq as expleind above
+
+# QC
+my.obj <- qc.stats(my.obj,
+	s.phase.genes = s.phase, 
+	g2m.phase.genes = g2m.phase)
+
+# plot as mentioned above
+
+# filter 
+my.obj <- cell.filter(my.obj,
+	min.mito = 0,
+	max.mito = 0.07 ,
+	min.genes = 500,
+	max.genes = 4000,
+	min.umis = 0,
+	max.umis = Inf)
+
+# normalize RNA
+my.obj <- norm.data(my.obj, norm.method = "ranked.glsf", top.rank = 500) 
+
+# normalize ADT
+my.obj <- norm.adt(my.obj)
+
+# gene stats
+my.obj <- gene.stats(my.obj, which.data = "main.data")
+
+# find genes for PCA
+my.obj <- make.gene.model(my.obj, my.out.put = "data",
+	dispersion.limit = 1.5, 
+	base.mean.rank = 500, 
+	no.mito.model = T, 
+	mark.mito = T, 
+	interactive = F,
+	no.cell.cycle = T,
+	out.name = "gene.model")
+
+# run PCA and the rest is as above
+
+my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
+
+my.obj <- run.umap(my.obj, dims = 1:10)
+
+...
+ ```
+
+
+
+
+
+
+
+
+
+
+
