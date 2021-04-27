@@ -10,7 +10,7 @@
 #' @param interactive If TRUE an html interactive file will be made, default = TRUE.
 #' @param out.name Output name for html file if interactive = TRUE, default = "plot".
 #' @param no.key If you want a color legend key, default = FALSE.
-#' @param data.type Choose from "main" and "imputed", default = "main".
+#' @param data.type Choose from "main", "atac", atac.imputed and "imputed", default = "main".
 #' @param min.scale Set a minimum color scale, default = -2.5.
 #' @param max.scale Set a maximum color scale, default = 2.5.
 #' @param cex.col Chhose a size, default = 10.
@@ -60,6 +60,12 @@ heatmap.gg.plot <- function (x = NULL,
   }
   if (data.type == "imputed") {
     DATAmain <- x@imputed.data
+  }
+  if (data.type == "atac") {
+    DATAmain <- x@atac.main
+  }
+  if (data.type == "atac.imputed") {
+    DATAmain <- x@atac.imputed
   }
   AllGenes = row.names(DATAmain)
   absent = which((gene %in% AllGenes) == FALSE)

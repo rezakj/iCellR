@@ -19,7 +19,7 @@ findMarkers(
 \arguments{
 \item{x}{An object of class iCellR.}
 
-\item{data.type}{Choose from "main" and "imputed", default = "main"}
+\item{data.type}{Choose from "main", "atac", "atac.imputed" and "imputed", default = "main"}
 
 \item{pval.test}{Choose from "t.test", "wilcox.test", default = "t.test".}
 

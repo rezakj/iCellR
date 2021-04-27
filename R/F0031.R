@@ -8,7 +8,7 @@
 #' @param plot.data.type Choose between "tsne", "pca", "umap", "knetl", "diffusion", "pseudo.A" and "pseudo.B", default = "tsne".
 #' @param clust.dim 2 for 2D plots and 3 for 3D plots, default = 2.
 #' @param col.by Choose from "clusters" and "conditions", default = "clusters".
-#' @param data.type Choose from "main" or "imputed", default = "main".
+#' @param data.type Choose from "main", "atac, "atac.imputed" and "imputed", default = "main".
 #' @param scaleValue Scale the colors, default = FALSE.
 #' @param min.scale If scaleValue = TRUE, set a number for min, default = -2.5.
 #' @param max.scale If scaleValue = TRUE, set a number for max, default = 2.5.
@@ -87,6 +87,12 @@ gene.plot <- function (x = NULL,
   }
   if (data.type == "imputed") {
     DATAmain <- x@imputed.data
+  }
+  if (data.type == "atac") {
+    DATAmain <- x@atac.main
+  }
+  if (data.type == "atac.imputed") {
+    DATAmain <- x@atac.imputed
   }
   ##########
   #######

@@ -99,7 +99,11 @@ utils::globalVariables(c("%>%",
                          "wilcox.test",
                          "gsva",
                          "V5",
-                         "V6"))
+                         "V6",
+                         "AvExpInOtherClusters",
+                         "X1",
+                         "X2",
+                         "X3"))
 #########
 # F001.load10x.R | F001.R
 # F002.data.aggregation.R | F002.R
@@ -172,4 +176,4 @@ utils::globalVariables(c("%>%",
 # add.10x.image.R | F0069.R
 # spatial.plot.R | F0070.R
 # i.score.R | F0071.R
-
+# make.bed.R | F0072.R

@@ -28,7 +28,7 @@ heatmap.gg.plot(
 
 \item{cell.sort}{If FALSE the cells will not be sorted based on their distance, default = TRUE.}
 
-\item{data.type}{Choose from "main" and "imputed", default = "main".}
+\item{data.type}{Choose from "main", "atac", atac.imputed and "imputed", default = "main".}
 
 \item{cluster.by}{Choose from "clusters" or "none", default = "clusters".}
 

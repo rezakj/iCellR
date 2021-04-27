@@ -15,7 +15,7 @@ clust.avg.exp(
 \arguments{
 \item{x}{An object of class iCellR.}
 
-\item{data.type}{Choose from "main" and "imputed", default = "main"}
+\item{data.type}{Choose from "main", "atac", "atac.imputed" and "imputed", default = "main"}
 
 \item{conds.to.avg}{Choose the conditions you want to average, default = NULL (all conditions).}
 

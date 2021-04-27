@@ -9,7 +9,7 @@ hto.anno(hto.data = "data.frame", cov.thr = 10, assignment.thr = 80)
 \arguments{
 \item{hto.data}{HTO raw data}
 
-\item{cov.thr}{A number which avrage coverage is devided by to set a thershold for low coverage, default = 10.}
+\item{cov.thr}{A number which average coverage is divided by to set a threshold for low coverage. For example 10 means it is 10 time less than the average. default = 10.}
 
 \item{assignment.thr}{A percent above which you decide to set as a good sample assignment/HTO, default = 80.}
 }

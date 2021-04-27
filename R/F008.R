@@ -7,6 +7,10 @@
 #' @param top.rank If the method is set to "ranked.glsf", you need to set top number of genes sorted based on global base mean, default = 500.
 #' @param spike.in.factors A numeric vector of spike-in values with the same cell id order as the main data.
 #' @param rpm.factor If the norm.method is set to "rpm" the library sizes would be divided by this number, default = 1000 (higher numbers recomanded for bulk RNA-Seq).
+#' @param rounding.digits integer indicating the number of decimal places (round) or significant digits (signif) to be used.
+#' @param round.num Rounding of Numbers, default = FALSE.
+#' @param ATAC.data If TURE, it would normalize ATAC-Seq data and not RNA-Seq, default = FALSE.
+#' @param ATAC.filter If TURE, all the cells filtered in RNA-Seq will be filtered in ATAC-Seq. This needs to be done for both data to match,  default = TRUE.
 #' @return An object of class iCellR.
 #' @examples
 #'
@@ -17,11 +21,22 @@ norm.data <- function (x = NULL,
                        norm.method = "ranked.glsf",
                        top.rank = 500,
                        spike.in.factors = NULL,
-                       rpm.factor = 1000) {
+                       rpm.factor = 1000,
+                       rounding.digits = 3,
+                       round.num = TRUE,
+                       ATAC.data = FALSE,
+                       ATAC.filter = TRUE) {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
+#######
+# get data RNA
   DATA <- x@main.data
+# get data ATAC
+  if (ATAC.data == TRUE) {
+    DATA <- x@atac.main
+  }
+#######
   if (norm.method == "global.glsf") {
     libSiz <- colSums(DATA)
     norm.facts <- as.numeric(libSiz) / mean(as.numeric(libSiz))
@@ -56,9 +71,29 @@ norm.data <- function (x = NULL,
     normalized <- as.data.frame(sweep(dataMat, 2, norm.facts, `/`))
   }
 #####
-  normalized <- round(normalized, digits = 3)
-  attributes(x)$main.data <- normalized
-  attributes(x)$norm.factors <- norm.facts
+  if (round.num == TRUE) {
+    normalized <- round(normalized, digits = rounding.digits)
+  }
+######
+  # get data ATAC
+  if (ATAC.data == TRUE) {
+    if (ATAC.filter == TRUE) {
+      dat = normalized
+      MyIDsToKeep <- colnames(x@main.data)
+      normalized <- dat[ , which(names(dat) %in% MyIDsToKeep)]
+      #### order colnames by the original data
+      normalized <- as.matrix(normalized)
+      normalized <- normalized[ , order(match(colnames(normalized),MyIDsToKeep))]
+      normalized <- as.data.frame(normalized)
+    }
+    attributes(x)$atac.main <- normalized
+  }
+  # get data ATAC
+  if (ATAC.data == FALSE) {
+    attributes(x)$main.data <- normalized
+    attributes(x)$norm.factors <- norm.facts
+  }
+############
   return(x)
 }
 

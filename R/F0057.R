@@ -2,7 +2,7 @@
 #'
 #' Demultiplexing HTOs
 #' @param hto.data HTO raw data
-#' @param cov.thr A number which avrage coverage is devided by to set a thershold for low coverage, default = 10.
+#' @param cov.thr A number which average coverage is divided by to set a threshold for low coverage. For example 10 means it is 10 time less than the average. default = 10.
 #' @param assignment.thr A percent above which you decide to set as a good sample assignment/HTO, default = 80.
 #' @return An object of class iCellR
 #' @examples

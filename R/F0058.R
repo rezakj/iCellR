@@ -35,7 +35,21 @@ run.knetl <- function (x = NULL,
                     do.redux = TRUE,
                     run.iclust = FALSE,
                     return.graph = FALSE) {
-  #
+  #####
+  if ("iCellR" != class(x)[1]) {
+    stop("x should be an object of class iCellR")
+  }
+  #####
+  message("################# IMPORTANT NOTE ##################","")
+  message(paste("    Zoom is set to:", zoom,"! Make sure it is good for this data."))
+  message("
+# For data with less than 5000 cells use a zoom of about 100-200.
+# For data with 5000-10000 cells use a zoom of about 100-300.
+# For data with 10000-30000 cells use a zoom of about 200-400.
+# For data with more than 30000 cells use a zoom of about 400-600.
+# A zoom value of 400 and dims = 1:20 is usually good for big data but adjust it for intended resolution.")
+  message("###################################################","")
+  ######
   start_time1 <- Sys.time()
   #  cluster
   if(data.type == "pca") {

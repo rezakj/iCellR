@@ -9,6 +9,9 @@ run.impute(
   imp.method = "iCellR.imp",
   dims = 1:10,
   nn = 10,
+  ATAC.data = FALSE,
+  rounding.digits = 4,
+  round.num = TRUE,
   data.type = "pca",
   genes = "all_genes",
   k = 10,
@@ -31,6 +34,12 @@ run.impute(
 \item{dims}{PC dimentions to be used for the analysis, default = 10.}
 
 \item{nn}{Number of neighboring cells to find, default = 10.}
+
+\item{ATAC.data}{If TURE, it would normalize ATAC-Seq data and not RNA-Seq, default = FALSE.}
+
+\item{rounding.digits}{integer indicating the number of decimal places (round) or significant digits (signif) to be used.}
+
+\item{round.num}{Rounding of Numbers, default = FALSE.}
 
 \item{data.type}{Choose between "tsne", "pca", "umap", "diffusion", "knetl", default = "pca".}
 

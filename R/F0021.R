@@ -2,7 +2,7 @@
 #'
 #' This function takes an object of class iCellR and creates an average gene expression for every cluster.
 #' @param x An object of class iCellR.
-#' @param data.type Choose from "main" and "imputed", default = "main"
+#' @param data.type Choose from "main", "atac", "atac.imputed" and "imputed", default = "main"
 #' @param conds.to.avg Choose the conditions you want to average, default = NULL (all conditions).
 #' @param rounding.digits integer indicating the number of decimal places (round) or significant digits (signif) to be used.
 #' @param round.num Rounding of Numbers, default = FALSE.
@@ -41,6 +41,12 @@ clust.avg.exp <- function (x = NULL,
   }
   if (data.type == "imputed") {
     Table <- x@imputed.data
+  }
+  if (data.type == "atac") {
+    Table <- x@atac.main
+  }
+  if (data.type == "atac.imputed") {
+    Table <- x@atac.imputed
   }
 #  Table = x@main.data
   datalist <- list()

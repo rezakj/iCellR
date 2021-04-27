@@ -9,7 +9,11 @@ norm.data(
   norm.method = "ranked.glsf",
   top.rank = 500,
   spike.in.factors = NULL,
-  rpm.factor = 1000
+  rpm.factor = 1000,
+  rounding.digits = 3,
+  round.num = TRUE,
+  ATAC.data = FALSE,
+  ATAC.filter = TRUE
 )
 }
 \arguments{
@@ -23,6 +27,14 @@ Choose from "global.glsf", "ranked.glsf","spike.in" or no.norm, default = "ranke
 \item{spike.in.factors}{A numeric vector of spike-in values with the same cell id order as the main data.}
 
 \item{rpm.factor}{If the norm.method is set to "rpm" the library sizes would be divided by this number, default = 1000 (higher numbers recomanded for bulk RNA-Seq).}
+
+\item{rounding.digits}{integer indicating the number of decimal places (round) or significant digits (signif) to be used.}
+
+\item{round.num}{Rounding of Numbers, default = FALSE.}
+
+\item{ATAC.data}{If TURE, it would normalize ATAC-Seq data and not RNA-Seq, default = FALSE.}
+
+\item{ATAC.filter}{If TURE, all the cells filtered in RNA-Seq will be filtered in ATAC-Seq. This needs to be done for both data to match,  default = TRUE.}
 }
 \value{
 An object of class iCellR.

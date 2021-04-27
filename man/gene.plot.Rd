@@ -41,7 +41,7 @@ gene.plot(
 
 \item{conds.to.plot}{Choose the conditions you want to see in the plot, default = NULL (all conditions).}
 
-\item{data.type}{Choose from "main" or "imputed", default = "main".}
+\item{data.type}{Choose from "main", "atac, "atac.imputed" and "imputed", default = "main".}
 
 \item{box.to.test}{A cluster number so that all the boxes in the box plot would be compared to. If set to "0" the cluster with the highest avrage would be choosen, default = 0.}
 
