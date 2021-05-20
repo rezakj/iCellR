@@ -428,18 +428,18 @@ my.obj <- run.umap(my.obj, dims = 1:10)
 # Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
 my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110, dim.redux = "umap") # (Important note!) don't forget to set the zoom in the right range  
 
-########################### IMPORTANT NOTE ########################################
-#### For zooming use the zoom option. 
-# For data with less than 5000 cells use a zoom of about 100-200.
+########################## IMPORTANT DISCLAIMER NOTE ###########################
+            *** KNetL map is very dynamic with zoom and dims! ***
+                 *** Therefore it needs to be adjusted! ***
+# For data with less than 1000 cells use a zoom of about 5-50.
+# For data with 1000-5000 cells use a zoom of about 50-200.
 # For data with 5000-10000 cells use a zoom of about 100-300.
 # For data with 10000-30000 cells use a zoom of about 200-500.
 # For data with more than 30000 cells use a zoom of about 400-600.
 # zoom 400 is usually good for big data but adjust for intended resolution.
-# Lower number for zoom in higher for zoom out (its reverse).
+# Lower number for zoom in and higher for zoom out (its reverse).
 # dims = 1:20 is generally good for most data.
 # other parameters are best as default.
-
-          ***KNetL map is very dynamic with zoom and dims***
 
 #### Just like a microscope, you need to zoom to see the intended amount of details. 
 #### Here we use a zoom of 100 or 110 but this might not be ideal for your data.
