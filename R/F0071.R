@@ -5,7 +5,7 @@
 #' @param data.type Choose from "raw.data" or "main.data", "imputed.data", default = "main.data".
 #' @param scoring.List Genes that are used as a marker for phases.
 #' @param return.stats Return the data or object. If FALSE the object would be returned.
-#' @param scoring.method Choose from "sum","mean" or "tirosh" for scoring method. See: https://science.sciencemag.org/content/352/6282/189
+#' @param scoring.method Choose from "tirosh (Tirosh, et. al. 2016), mean, sum, gsva, ssgsea, zscore and plage. , default = "tirosh". See: https://science.sciencemag.org/content/352/6282/189
 #' @return The data frame object
 #' @importFrom Hmisc cut2
 #' @export

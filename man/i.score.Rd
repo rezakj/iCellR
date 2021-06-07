@@ -21,7 +21,7 @@ i.score(
 
 \item{return.stats}{Return the data or object. If FALSE the object would be returned.}
 
-\item{scoring.method}{Choose from "sum","mean" or "tirosh" for scoring method. See: https://science.sciencemag.org/content/352/6282/189}
+\item{scoring.method}{Choose from "tirosh (Tirosh, et. al. 2016), mean, sum, gsva, ssgsea, zscore and plage. , default = "tirosh". See: https://science.sciencemag.org/content/352/6282/189}
 }
 \value{
 The data frame object

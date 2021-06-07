@@ -162,7 +162,7 @@ utils::globalVariables(c("%>%",
 # gg.cor.R | F0055.R
 # globalVariables.R | F0056.R
 # hto.anno.R | F0057.R
-# iNet.R | F0058.R
+# run.knetl.R | F0058.R
 # iba.R | F0059.R
 # iclust.R | F0060.R
 # k.myImp.R | F0061.R

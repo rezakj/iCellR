@@ -40,14 +40,22 @@ run.knetl <- function (x = NULL,
     stop("x should be an object of class iCellR")
   }
   #####
-  message("################# IMPORTANT NOTE ##################","")
+  message("############ IMPORTANT DISCLAIMER NOTE #############","")
   message(paste("    Zoom is set to:", zoom,"! Make sure it is good for this data."))
   message("
-# For data with less than 5000 cells use a zoom of about 100-200.
+            *** KNetL map is very dynamic with zoom and dims! ***
+                 *** Therefore it needs to be adjusted! ***
+# For data with less than 1000 cells use a zoom of about 5-50.
+# For data with 1000-5000 cells use a zoom of about 50-200.
 # For data with 5000-10000 cells use a zoom of about 100-300.
-# For data with 10000-30000 cells use a zoom of about 200-400.
+# For data with 10000-30000 cells use a zoom of about 200-500.
 # For data with more than 30000 cells use a zoom of about 400-600.
-# A zoom value of 400 and dims = 1:20 is usually good for big data but adjust it for intended resolution.")
+# zoom 400 is usually good for big data but adjust for intended resolution.
+# Lower number for zoom in and higher for zoom out (its reverse).
+# dims = 1:20 is generally good for most data.
+# other parameters are best as default.
+
+          ")
   message("###################################################","")
   ######
   start_time1 <- Sys.time()
@@ -167,8 +175,6 @@ run.knetl <- function (x = NULL,
       }
     }
     ##################################
-    #  png('network_1.png',width = 30, height = 30, units = 'in', res = 300)
-    #######
     end_time1 <- Sys.time()
     Time = difftime(end_time1,start_time1,units = "mins")
     Time = round(as.numeric(Time),digits = 2)
@@ -217,3 +223,6 @@ run.knetl <- function (x = NULL,
     return(g)
   }
 }
+
+
+
