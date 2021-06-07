@@ -306,9 +306,7 @@ my.obj <- norm.data(my.obj,
 
 - Scale data (optional)
 
-iCellR dose not need this step as it scales the data when they need to be scaled on the fly; like for plotting or PCA. 
-It is important to use the untansformed data for differential expression analysis to calculate the accurate fold changes.
-If you run this function the scaled data will be saved in different slot for you to download for plotting but will not be use by iCellR.
+iCellR does not need this step as it scales the data when they need to be scaled on the fly; like for plotting or running PCA. This is because, it is important to use the untransformed data for differential expression analysis to calculate the accurate/true fold changes. If you run this function the scaled data will replace the main data for this reason and instead will be saved in different data slot in the object for you to download if you need it for plotting or other reasons.
 
 ```r
 # my.obj <- data.scale(my.obj)
