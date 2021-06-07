@@ -113,7 +113,7 @@ To see the help page for each function use question mark as:
 
 - Aggregate data
      
-## Conditions in iCellR are set or shown in the column names of the data and are separated by an underscore ( "_" ). Let's say you want to merge multiple datasets (data frames/matrices) into one file and run iCellR in aggregate mode (all samples together). You can do so using "data.aggregation" function.  Here’s an example: I divided this sample into four datasets and then aggregated them into one matrix. Here we are assuming you have four samples (e.g. WT,KO,Ctrl,KD). In this way, iCellR will know you have 4 samples for the rest of the analysis (e.g. batch alignment, plots, DE, etc.). 
+## Conditions in iCellR are set or shown in the column names of the data and are separated by an underscore "_" sign. Let's say you want to merge multiple datasets (data frames/matrices) into one file and run iCellR in aggregate mode (all samples together). You can do so using "data.aggregation" function.  Here’s an example: I divided this sample into four datasets and then aggregated them into one matrix. Here we are assuming you have four samples (e.g. WT,KO,Ctrl,KD). In this way, iCellR will know you have 4 samples for the rest of the analysis (e.g. batch alignment, plots, DE, etc.). 
 
 ```r
 dim(my.data)
