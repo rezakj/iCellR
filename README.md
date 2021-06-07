@@ -271,7 +271,7 @@ This step is optional and is for having the same number of cells for each condit
 
 - Normalize data
 
-You have a few options to normalize your data based on your study. You can also normalize your data using tools other than iCellR and import your data to iCellR. We recommend "ranked.glsf" normalization for most single cell studies. This normalization is great for fixing matrixes with lots of zeros and because it's geometric it will reduce some of batch differences in the library sizes, as long as all the data is aggregated into one file (to aggregate your data see "aggregating data" section above). 
+## You have a few options to normalize your data based on your study. You can also normalize your data using tools other than iCellR and import your data to iCellR. We recommend "ranked.glsf" normalization for most single cell studies. This normalization is great for fixing matrixes with lots of zeros and because it's geometric it will reduce some of batch differences in the library sizes, as long as all the data is aggregated into one file (to aggregate your data see "aggregating data" section above). GLSF stands for Geometric Library Size Factor, this is very similar to the normalization done by (DESeq2)[https://bioconductor.org/packages/release/bioc/html/DESeq2.html] and the ranked part would take the sum of the top most expressed genes as your library size instead of the full LB size which is to help resduce some of the drop out effects on normalization. 
 
 ```r
 my.obj <- norm.data(my.obj, 
