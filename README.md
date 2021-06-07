@@ -508,7 +508,7 @@ In this function we provide a variety of many other options for you to explore t
 | ------------- | ------------- | ------------- |
 | ward.D, ward.D2, single, complete, average, mcquitty, median, centroid, kmeans| euclidean, maximum, manhattan, canberra, binary, minkowski or NULL | kl, ch, hartigan, ccc, scott, marriot, trcovw, tracew, friedman, rubin, cindex, db, silhouette, duda, pseudot2, beale, ratkowsky, ball, ptbiserial, gap, frey, mcclain, gamma, gplus, tau, dunn, hubert, sdindex, dindex, sdbw |
 
-### Conventionally people cluster based on PCA data however because KNetL map is more powerful we recommend clustering based on KNetL map.
+### Conventionally people cluster based on PCA data (usually first 10 dimensions) however you have the option of choosing tSNA, UMAP and KNetL map as well. If you have adjusted your KNetL map and are confident about the results we recommend clustering based on KNetL map.
 
 This is one of the harder parts of the analysis and sometimes you need to adjust your clustering based on marker genes. This means you might need to merge some clusters, gate (see our cell gating tools) or try different sensitivities to find more or less communities.
 
