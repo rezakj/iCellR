@@ -3240,8 +3240,8 @@ my.atac.data <- data.aggregation(samples = c("MyATAC1","MyATAC2","MyATAC3"),
 	condition.names = c("WT","KO","Ctrl"))
 	
 # add ATAC-Seq data
-my.obj@atac.raw <- MyATAC
-my.obj@atac.main <- MyATAC	
+my.obj@atac.raw <- my.atac.data
+my.obj@atac.main <- my.atac.data
 ```
 
 
