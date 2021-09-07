@@ -3111,6 +3111,137 @@ head(File1)[1:3]
 #chr1.778422.779040                  0                  0                  0
 #chr1.827306.827702                  0                  0                  0
 
+# get the row names from each file and concatenate them as below:
+
+f1 <- row.names(File1)
+f2 <- row.names(File2)
+f3 <- row.names(File3)
+
+all.peaks <- c(f1,f2,f3)
+head(all.peaks)
+#[1] "chr1.181218.181695" "chr1.191296.191699" "chr1.629770.630129"
+#[4] "chr1.633806.634251" "chr1.778422.779040" "chr1.827306.827702"
+
+chr <- as.character(as.matrix(data.frame(do.call('rbind', strsplit(as.character(all.peaks),'.',fixed=TRUE)))[1]))
+start <- data.frame(do.call('rbind', strsplit(as.character(all.peaks),'.',fixed=TRUE)))[2]
+end <- data.frame(do.call('rbind', strsplit(as.character(all.peaks),'.',fixed=TRUE)))[3]
+
+# make a bed file
+
+DAT <- as.data.frame(chr)
+DAT$start <- as.numeric(as.matrix(start))
+DAT$end <- as.numeric(as.matrix(end))
+head(DAT)
+#   chr  start    end
+#1 chr1 181218 181695
+#2 chr1 191296 191699
+#3 chr1 629770 630129
+#4 chr1 633806 634251
+#5 chr1 778422 779040
+#6 chr1 827306 827702
+
+# make a  GenomicRanges object
+
+library("GenomicRanges")
+
+all.gr <- GRanges(seqnames=DAT$chr,ranges=IRanges(start=DAT$start,end=DAT$end))
+
+all.gr
+#GRanges object with ?? ranges and 0 metadata columns:
+#       seqnames          ranges strand
+#          <Rle>       <IRanges>  <Rle>
+#   [1]     chr1   181218-181695      *
+#   [2]     chr1   191296-191699      *
+#   [3]     chr1   629770-630129      *
+#   [4]     chr1   633806-634251      *
+#   [5]     chr1   778422-779040      *
+#   ...      ...             ...    ...
+#  [52]     chr1 1303892-1306216      *
+#  [53]     chr1 1307242-1309359      *
+#  [54]     chr1 1324425-1325236      *
+#  [55]     chr1 1348940-1349958      *
+#  [56]     chr1 1372031-1372220      *
+#  -------
+#  seqinfo: 1 sequence from an unspecified genome; no seqlengths
+
+# sort and merge the peaks
+
+mrg <- reduce(all.gr)
+
+########################## choose file and give name
+
+MyFile <- f1
+name="f1_new.bed"
+
+########################## cop paste the code here to make a new bed file that has the old and new intervals to be replaced 
+
+chr <- as.character(as.matrix(data.frame(do.call('rbind', strsplit(as.character(MyFile),'.',fixed=TRUE)))[1]))
+start <- data.frame(do.call('rbind', strsplit(as.character(MyFile),'.',fixed=TRUE)))[2]
+end <- data.frame(do.call('rbind', strsplit(as.character(MyFile),'.',fixed=TRUE)))[3]
+# make a bed file
+DAT <- as.data.frame(chr)
+DAT$start <- as.numeric(as.matrix(start))
+DAT$end <- as.numeric(as.matrix(end))
+MyFile <- DAT
+
+# make intrval file to replace to new regions
+MyFile.gr <- GRanges(seqnames=MyFile$chr,ranges=IRanges(start=MyFile$start,end=MyFile$end))
+
+F <- subsetByOverlaps(MyFile.gr,mrg)
+M <- subsetByOverlaps(mrg,MyFile.gr)
+###
+chr <- as.character(F@seqnames)
+DAT <- as.data.frame(chr)
+DAT$start <- F@ranges@start
+DAT$end <- (F@ranges@start + F@ranges@width) - 1
+DAT$new.chr<- as.character(M@seqnames)
+DAT$new.start <- M@ranges@start
+DAT$new.end <- (M@ranges@start + M@ranges@width) - 1
+# diff
+ADD <- setdiff(mrg,MyFile.gr)
+L <- length(as.character(ADD@seqnames))
+chr <-rep("NA",L)
+DAT1 <- as.data.frame(chr)
+DAT1$start <- rep("NA",L)
+DAT1$end <- rep("NA",L)
+DAT1$new.chr<- as.character(ADD@seqnames)
+DAT1$new.start <- ADD@ranges@start
+DAT1$new.end <- (ADD@ranges@start + ADD@ranges@width) - 1
+
+Final.DAT <- rbind(DAT,DAT1)
+
+##### Write
+
+write.table(Final.DAT,name,row.names=FALSE,sep="\t", quote = FALSE)
+
+# example file
+# head(Final.DAT,10)
+#    chr  start    end new.chr new.start new.end
+#1  chr1 181218 181695    chr1    181218  181695
+#2  chr1 191296 191699    chr1    191296  191699
+#3  chr1 629770 630129    chr1    629770  630129
+#4  chr1 633806 634251    chr1    633806  634251
+#5  chr1 778422 779040    chr1    778422  779040
+#6  chr1 827306 827702    chr1    827306  827702
+#7    NA     NA     NA    chr1    904635  904943
+#8    NA     NA     NA    chr1    923684  924085
+#9    NA     NA     NA    chr1    940590  940783
+#10   NA     NA     NA    chr1    959052  959594
+
+# The first 3 columns are the original peaks and the last 3 are the ones that need to be replaced with original one. The NA peaks would also get the new peak ids but in the matrix the cells will have 0 for expressions. To do this use the iCellR function replace.peak.id.
+
+MyATAC1 <- replace.peak.id(atac.data=MyATAC1, bed.file = Final.DAT)
+MyATAC2 <- replace.peak.id(atac.data=MyATAC2, bed.file = Final.DAT)
+MyATAC3 <- replace.peak.id(atac.data=MyATAC3, bed.file = Final.DAT)
+
+# finally aggregate the samples and add to iCellR object
+
+my.atac.data <- data.aggregation(samples = c("MyATAC1","MyATAC2","MyATAC3"),
+	condition.names = c("WT","KO","Ctrl"))
+	
+# add ATAC-Seq data
+my.obj@atac.raw <- MyATAC
+my.obj@atac.main <- MyATAC	
 ```
 
 
