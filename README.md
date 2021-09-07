@@ -2931,7 +2931,7 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters"
 dev.off()
  ```
 
-Work on scATAC data
+Work on scATAC data (normalize and find marker peaks for each cluster)
 
 ```r
 # normalize ACAT
@@ -3004,12 +3004,34 @@ my.obj <- run.impute(my.obj,data.type = "knetl", nn = 10, ATAC.data = FALSE)
 png('heatmap_gg_peaks.png', width = 10, height = 10, units = 'in', res = 300)
 heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "clusters",cell.sort = F, conds.to.plot = NULL, data.type = "atac.imputed")
 dev.off()
+
+## you can also find avarage peak intensity per cluster
+
+my.obj <- clust.avg.exp(my.obj, data.type = "atac")
+head(my.obj@clust.avg)
+
+#gene  cluster_1  cluster_2	...
+#chr1.100037799.100038931 0.38238731 0.36750000	...
+#chr1.100132733.100133298 0.11195725 1.13593827	...
+#chr1.100249637.100250160 0.09851425 0.09511728	...
+#chr1.100265992.100266479 0.06768394 0.17707407	...
+#chr1.10032488.10033387 0.35273705 0.14885802	...
+#chr1.100352150.100352921 0.12006088 0.00000000	...
+
+# find out which cluster has the highest number 
+
+dat <- as.data.frame(t((my.obj@clust.avg)[,-1]))
+dat <- hto.anno(hto.data = dat)
+
+head(dat$assignment.annotatio)
+#[1] cluster_1 cluster_2 cluster_4 cluster_2 cluster_3 cluster_4
+#8 Levels: cluster_1 cluster_2 cluster_3 cluster_4 cluster_5 ... cluster_8
 ```
 
 Peak analysis
 
 ```r
-# make bed file per cluster
+# make a bed file per cluster from the marker.peaks file you made up here
 make.bed(marker.peaks)
 
 # load packages 
@@ -3070,8 +3092,26 @@ lapply(1:length(genes), function(i) write.table(genes[[i]],
 
 ```
 
+Merging scATAC files with different intervals (as dipicted in bedtools website)
 
+<p align="center">
+  <img src="https://bedtools.readthedocs.io/en/latest/_images/merge-glyph.png" />
+</p>
 
+```
+# Let's say you have 3 files that you need to merege
+
+# example file
+head(File1)[1:3]
+#                   AAACAGCCAAGTGAAC.1 AAACAGCCACTGACCG.1 AAACAGCCATGATTGT.1
+#chr1.181218.181695                  0                  0                  1
+#chr1.191296.191699                  0                  0                  0
+#chr1.629770.630129                  0                  0                  0
+#chr1.633806.634251                  0                  0                  0
+#chr1.778422.779040                  0                  0                  0
+#chr1.827306.827702                  0                  0                  0
+
+```
 
 
 
