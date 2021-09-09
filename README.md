@@ -3173,7 +3173,8 @@ mrg <- reduce(all.gr)
 MyFile <- f1
 name="f1_new.bed"
 
-########################## cop paste the code here to make a new bed file that has the old and new intervals to be replaced 
+########################## copy paste the code here to make a new bed file 
+########################## the new bed has the old and new intervals (new intervals to be replaced with old)
 
 chr <- as.character(as.matrix(data.frame(do.call('rbind', strsplit(as.character(MyFile),'.',fixed=TRUE)))[1]))
 start <- data.frame(do.call('rbind', strsplit(as.character(MyFile),'.',fixed=TRUE)))[2]
