@@ -4,9 +4,6 @@
 #' @param x An object of class iCellR.
 #' @param pcs.in.plot Number of PCs to show in plot, defult = 50.
 #' @return An object of class iCellR.
-#' @examples
-#' opt.pcs.plot(demo.obj)
-#'
 #' @export
 opt.pcs.plot <- function (x = NULL, pcs.in.plot = 50) {
   if ("iCellR" != class(x)[1]) {

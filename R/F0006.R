@@ -13,17 +13,6 @@
 #' @param filter.by.gene A character vector of gene names to be filtered by thier expression. If more then one gene is defined it would be OR not AND.
 #' @param filter.by.gene.exp.min Minimum gene expression to be filtered by the genes set in filter.by.gene, default = 1.
 #' @return An object of class iCellR.
-#' @examples
-#' demo.obj <- cell.filter(demo.obj,
-#'                        min.mito = 0,
-#'                        max.mito = 0.05 ,
-#'                        min.genes = 100,
-#'                        max.genes = 2500,
-#'                        min.umis = 0,
-#'                        max.umis = Inf)
-#'
-#' message(demo.obj@my.filters)
-#'
 #' @export
 cell.filter <- function (x = NULL,
                          min.mito = 0,

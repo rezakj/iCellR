@@ -38,9 +38,3 @@ An object of class iCellR
 \description{
 This function takes an object of class iCellR and performs differential expression (DE) analysis for clusters and conditions.
 }
-\examples{
-diff.res <- run.diff.exp(demo.obj, de.by = "clusters", cond.1 = c(1), cond.2 = c(2))
-
-head(diff.res)
-
-}

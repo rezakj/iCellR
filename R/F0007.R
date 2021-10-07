@@ -3,11 +3,6 @@
 #' This function takes an object of class iCellR and down samples the condition to have equal number of cells in each condition.
 #' @param x An object of class iCellR.
 #' @return An object of class iCellR.
-#' @examples
-#'
-#' my.obj <- down.sample(demo.obj)
-#'
-#'
 #' @export
 down.sample <- function (x = NULL) {
   if ("iCellR" != class(x)[1]) {

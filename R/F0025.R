@@ -6,15 +6,6 @@
 #' @param to.clust The new name for the cluster.
 #' @param clust.reset Reset to the original clustering.
 #' @return An object of class iCellR.
-#' @examples
-#' demo.obj <- change.clust(demo.obj, change.clust = 1, to.clust = 3)
-#' cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
-#'
-#' demo.obj <- change.clust(demo.obj, change.clust = 3, to.clust = "B Cell")
-#' cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
-#'
-#' demo.obj <- change.clust(demo.obj, clust.reset = TRUE)
-#' cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
 #' @export
 change.clust <- function (x = NULL,
                           change.clust = 0,

@@ -24,11 +24,6 @@
 #' @param eta numeric; Learning rate (default: 200.0)
 #' @param exaggeration_factor numeric; Exaggeration factor used to multiply the P matrix in the first part of the optimization (default: 12.0)
 #' @return An object of class iCellR.
-#' @examples
-#' demo.obj <- run.tsne(demo.obj, perplexity = 20)
-#'
-#' head(demo.obj@tsne.data)
-#'
 #' @import Rtsne
 #' @export
 run.tsne <- function (x = NULL,

@@ -6,12 +6,6 @@
 #' @param top.pos Number of top positive marker genes to be taken from each PC, default = 15.
 #' @param top.neg Number of top negative marker genes to be taken from each PC, default = 5.
 #' @return An object of class iCellR.
-#' @examples
-#'
-#' demo.obj <- find.dim.genes(demo.obj, dims = 1:10,top.pos = 20, top.neg = 20)
-#'
-#' head(demo.obj@gene.model)
-#'
 #' @export
 find.dim.genes <- function (x = NULL,
                             dims = 1:10,

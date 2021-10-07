@@ -12,16 +12,6 @@
 #' @param interactive If set to TRUE an interactive HTML file will be created, default = TRUE.
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
 #' @return An object of class iCellR.
-#' @examples
-#' stats.plot(demo.obj,
-#'           plot.type = "three.in.one",
-#'           out.name = "UMI-plot",
-#'           interactive = FALSE,
-#'           cell.color = "slategray3",
-#'           cell.size = 1,
-#'           cell.transparency = 0.5,
-#'           box.color = "red",
-#'           box.line.col = "green")
 #' @import gridExtra
 #' @importFrom htmlwidgets saveWidget
 #' @importFrom plotly ggplotly layout plot_ly

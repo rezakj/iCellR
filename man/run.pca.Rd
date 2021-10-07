@@ -35,9 +35,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and runs PCA on the main data.
 }
-\examples{
-demo.obj <- run.pca(demo.obj, method = "gene.model", gene.list = demo.obj@gene.model)
-
-head(demo.obj@pca.data)[1:5]
-
-}

@@ -3,11 +3,6 @@
 #' This function takes an object of class iCellR and scales the normalized data.
 #' @param x An object of class iCellR.
 #' @return An object of class iCellR.
-#' @examples
-#' my.obj <- data.scale(demo.obj)
-#'
-#' head(my.obj@scaled.data)[1:5]
-#'
 #' @export
 data.scale <- function (x = NULL) {
   if ("iCellR" != class(x)[1]) {

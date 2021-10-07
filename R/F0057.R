@@ -5,17 +5,6 @@
 #' @param cov.thr A number which average coverage is divided by to set a threshold for low coverage. For example 10 means it is 10 time less than the average. default = 10.
 #' @param assignment.thr A percent above which you decide to set as a good sample assignment/HTO, default = 80.
 #' @return An object of class iCellR
-#' @examples
-#' my.hto <- read.table(file = system.file('extdata', 'dense_umis.tsv',
-#'          package = 'iCellR'),
-#'          as.is = TRUE)
-#' head(my.hto)[1:5]
-#'
-#' htos <- hto.anno(hto.data = my.hto)
-#' head(htos)
-#'
-#' boxplot(htos$percent.match)
-#'
 #' @export
 hto.anno <- function (hto.data = "data.frame",
                       cov.thr = 10,

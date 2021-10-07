@@ -53,20 +53,3 @@ Plots
 \description{
 This function takes the result of differential expression (DE) analysis and provides MA and volcano plots.
 }
-\examples{
-
-diff.res <- run.diff.exp(demo.obj, de.by = "clusters", cond.1 = c(1), cond.2 = c(2))
-
-volcano.ma.plot(diff.res,
-              sig.value = "pval",
-              sig.line = 0.05,
-              plot.type = "volcano",
-              interactive = FALSE)
-
-volcano.ma.plot(diff.res,
-             sig.value = "pval",
-             sig.line = 0.05,
-             plot.type = "ma",
-             interactive = FALSE)
-
-}

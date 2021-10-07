@@ -19,26 +19,6 @@
 #' @param interactive If set to TRUE an interactive HTML file will be created, default = TRUE.
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
 #' @return An object of class iCellR.
-#' @examples
-#' make.gene.model(demo.obj,
-#'                dispersion.limit = 1.5,
-#'                base.mean.rank = 500,
-#'                no.mito.model = TRUE,
-#'                mark.mito = TRUE,
-#'                interactive = FALSE,
-#'                my.out.put = "plot",
-#'                out.name = "gene.model")
-#'
-#' demo.obj <- make.gene.model(demo.obj,
-#'                            dispersion.limit = 1.5,
-#'                            base.mean.rank = 500,
-#'                            no.mito.model = TRUE,
-#'                            mark.mito = TRUE,
-#'                            interactive = FALSE,
-#'                            out.name = "gene.model")
-#'
-#' head(demo.obj@gene.model)
-#'
 #' @import ggrepel
 #' @export
 make.gene.model <- function (x = NULL,

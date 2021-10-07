@@ -65,24 +65,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and provides a gene list for clustering based on the parameters set in the model.
 }
-\examples{
-make.gene.model(demo.obj,
-               dispersion.limit = 1.5,
-               base.mean.rank = 500,
-               no.mito.model = TRUE,
-               mark.mito = TRUE,
-               interactive = FALSE,
-               my.out.put = "plot",
-               out.name = "gene.model")
-
-demo.obj <- make.gene.model(demo.obj,
-                           dispersion.limit = 1.5,
-                           base.mean.rank = 500,
-                           no.mito.model = TRUE,
-                           mark.mito = TRUE,
-                           interactive = FALSE,
-                           out.name = "gene.model")
-
-head(demo.obj@gene.model)
-
-}

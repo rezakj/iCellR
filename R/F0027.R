@@ -14,11 +14,6 @@
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
 #' @param conds.to.plot Choose the conditions you want to see in the plot, default = NULL (all conditions).
 #' @return An object of class iCellR.
-#' @examples
-#' clust.stats.plot(demo.obj,
-#'                    plot.type = "box.mito",
-#'                    interactive = FALSE,
-#'                    out.name = "box.mito.clusters")
 #' @export
 clust.stats.plot <- function (x = NULL,
                         plot.type = "box.mito",

@@ -156,7 +156,7 @@ utils::globalVariables(c("%>%",
 # cell.cycle.R | F0049.R
 # clust.ord.R | F0050.R
 # data.Sphase.R | F0051.R
-# data.demo.obj.R | F0052.R
+# make.bed.R | F0052.R (Used to be data.demo.obj.R | F0052.R)
 # data.g2m.R | F0053.R
 # findKNN.R | F0054.R
 # gg.cor.R | F0055.R
@@ -176,4 +176,4 @@ utils::globalVariables(c("%>%",
 # add.10x.image.R | F0069.R
 # spatial.plot.R | F0070.R
 # i.score.R | F0071.R
-# make.bed.R | F0072.R
+

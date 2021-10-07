@@ -68,16 +68,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and creates plots to see the clusters.
 }
-\examples{
-cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
-
-cluster.plot(demo.obj,plot.type = "tsne",interactive = FALSE)
-
-cluster.plot(demo.obj,plot.type = "pca",interactive = FALSE)
-
-cluster.plot(demo.obj,plot.type = "pca",col.by = "conditions",interactive = FALSE)
-
-cluster.plot(demo.obj,plot.type = "umap",col.by = "conditions",interactive = FALSE)
-
-cluster.plot(demo.obj,plot.type = "tsne",col.by = "conditions",interactive = FALSE)
-}

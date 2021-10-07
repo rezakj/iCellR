@@ -17,7 +17,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and finds optimal number of PCs for clustering.
 }
-\examples{
-opt.pcs.plot(demo.obj)
-
-}

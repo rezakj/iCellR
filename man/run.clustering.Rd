@@ -35,15 +35,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and finds optimal number of clusters and clusters the data.
 }
-\examples{
-demo.obj <- run.clustering(demo.obj,
-                          clust.method = "kmeans",
-                          dist.method = "euclidean",
-                          index.method = "silhouette",
-                          max.clust = 2,
-                          min.clust = 2,
-                          dims = 1:10)
-
- head(demo.obj@best.clust)
-
-}

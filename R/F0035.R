@@ -15,22 +15,6 @@
 #' @param interactive If set to TRUE an interactive HTML file will be created, default = TRUE.
 #' @param out.name If "interactive" is set to TRUE, the output name for HTML, default = "plot".
 #' @return Plots
-#' @examples
-#'
-#' diff.res <- run.diff.exp(demo.obj, de.by = "clusters", cond.1 = c(1), cond.2 = c(2))
-#'
-#' volcano.ma.plot(diff.res,
-#'               sig.value = "pval",
-#'               sig.line = 0.05,
-#'               plot.type = "volcano",
-#'               interactive = FALSE)
-#'
-#' volcano.ma.plot(diff.res,
-#'              sig.value = "pval",
-#'              sig.line = 0.05,
-#'              plot.type = "ma",
-#'              interactive = FALSE)
-#'
 #' @importFrom grDevices col2rgb colorRampPalette rgb
 #' @importFrom methods new
 #' @importFrom stats aggregate as.dendrogram cor cor.test dist hclust p.adjust prcomp quantile sd t.test

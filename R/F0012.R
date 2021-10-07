@@ -9,11 +9,6 @@
 #' @param gene.list A charactor vector of genes to be used for PCA. If "clust.method" is set to "gene.model", default = "my_model_genes.txt".
 #' @param scale.data If TRUE the data will be scaled (log2 + plus.log.value), default = TRUE.
 #' @return An object of class iCellR.
-#' @examples
-#' demo.obj <- run.pca(demo.obj, method = "gene.model", gene.list = demo.obj@gene.model)
-#'
-#' head(demo.obj@pca.data)[1:5]
-#'
 #' @export
 run.pca <- function (x = NULL,
                           data.type = "main",

@@ -375,8 +375,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and runs UMAP on PCA data.
 }
-\examples{
-demo.obj <- run.umap(demo.obj, dims = 1:10)
-head(demo.obj@umap.data)
-
-}

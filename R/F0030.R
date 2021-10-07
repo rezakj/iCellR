@@ -16,16 +16,6 @@
 #' @param cex.col Chhose a size, default = 10.
 #' @param cex.row Choose a size, default = 10.
 #' @return An object of class iCellR
-#' @examples
-#' marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
-#'
-#' MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
-#'
-#' heatmap.gg.plot(demo.obj,
-#'                gene = MyGenes,
-#'                out.name = "plot",
-#'                cluster.by = "clusters",
-#'                interactive = FALSE)
 #' @import pheatmap
 #' @importFrom reshape melt
 #' @importFrom htmlwidgets saveWidget

@@ -89,19 +89,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and provides plots for genes.
 }
-\examples{
-gene.plot(demo.obj, gene = "CD74",interactive = FALSE)
-
-gene.plot(demo.obj, gene = "CD74",plot.data.type = "umap",interactive = FALSE)
-
-gene.plot(demo.obj, gene = "CD74",
-          plot.data.type = "umap",
-          interactive = FALSE,
-          plot.type = "barplot")
-
-gene.plot(demo.obj, gene = "CD74",
-          plot.data.type = "umap",
-          interactive = FALSE,
-          plot.type = "boxplot")
-
-}

@@ -50,9 +50,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and creates QC plot.
 }
-\examples{
-clust.stats.plot(demo.obj,
-                   plot.type = "box.mito",
-                   interactive = FALSE,
-                   out.name = "box.mito.clusters")
-}

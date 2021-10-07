@@ -7,9 +7,6 @@
 #' @param s.phase.genes A character vector of gene names for S phase, default = s.phase.
 #' @param g2m.phase.genes A character vector of gene names for G2 and M phase, default = g2m.phase.
 #' @return The data frame object
-#' @examples
-#' New.demo.obj <- qc.stats(demo.obj)
-#' head(New.demo.obj@stats)
 #' @export
 qc.stats <- function (x = NULL,
                       which.data = "raw.data",

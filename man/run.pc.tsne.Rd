@@ -77,9 +77,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and runs tSNE on PCA data. Wrapper for the C++ implementation of Barnes-Hut t-Distributed Stochastic Neighbor Embedding. t-SNE is a method for constructing a low dimensional embedding of high-dimensional data, distances or similarities. Exact t-SNE can be computed by setting theta=0.0.
 }
-\examples{
-demo.obj <- run.pc.tsne(demo.obj, dims = 1:10,perplexity = 20)
-
-head(demo.obj@pca.data)[1:5]
-
-}

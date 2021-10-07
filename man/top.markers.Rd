@@ -29,7 +29,3 @@ A set of gene names
 \description{
 This function takes the marker genes info if chooses marker gene names for plots.
 }
-\examples{
-marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
-top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
-}

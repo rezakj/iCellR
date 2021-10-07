@@ -19,15 +19,3 @@ An object of class iCellR
 \description{
 Demultiplexing HTOs
 }
-\examples{
-my.hto <- read.table(file = system.file('extdata', 'dense_umis.tsv',
-         package = 'iCellR'),
-         as.is = TRUE)
-head(my.hto)[1:5]
-
-htos <- hto.anno(hto.data = my.hto)
-head(htos)
-
-boxplot(htos$percent.match)
-
-}

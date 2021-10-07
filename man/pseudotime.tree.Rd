@@ -41,14 +41,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and marker genes for clusters and performs pseudotime for differentiation or time course analysis.
 }
-\examples{
-marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
-
-MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
-
-pseudotime.tree(demo.obj,
-               marker.genes = MyGenes,
-               type = "unrooted",
-               clust.method = "complete")
-
-}

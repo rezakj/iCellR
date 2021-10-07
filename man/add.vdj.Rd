@@ -17,17 +17,3 @@ An object of class iCellR
 \description{
 This function takes a data frame of VDJ information per cell and adds it to the iCellR object.
 }
-\examples{
-my.vdj <- read.csv(file = system.file('extdata', 'all_contig_annotations.csv',
-          package = 'iCellR'),
-          as.is = TRUE)
-head(my.vdj)
-dim(my.vdj)
-
-My.VDJ <- prep.vdj(vdj.data = my.vdj, cond.name = "NULL")
-head(My.VDJ)
-dim(My.VDJ)
-
-my.obj <- add.vdj(demo.obj, vdj.data = My.VDJ)
-
-}

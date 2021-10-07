@@ -286,10 +286,6 @@
 #' @param verbose If \code{TRUE}, log details to the console.
 #'
 #' @return An object of class iCellR.
-#' @examples
-#' demo.obj <- run.umap(demo.obj, dims = 1:10)
-#' head(demo.obj@umap.data)
-#'
 #' @import uwot
 #' @export
 run.umap <- function (x = NULL,

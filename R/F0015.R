@@ -9,17 +9,6 @@
 #' @param min.clust minimum number of clusters, default = 2.
 #' @param dims PCA dimentions to be use for clustering, default = 1:10.
 #' @return An object of class iCellR.
-#' @examples
-#' demo.obj <- run.clustering(demo.obj,
-#'                           clust.method = "kmeans",
-#'                           dist.method = "euclidean",
-#'                           index.method = "silhouette",
-#'                           max.clust = 2,
-#'                           min.clust = 2,
-#'                           dims = 1:10)
-#'
-#'  head(demo.obj@best.clust)
-#'
 #' @import NbClust
 #' @export
 run.clustering <- function (x = NULL,

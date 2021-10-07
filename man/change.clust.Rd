@@ -21,13 +21,3 @@ An object of class iCellR.
 \description{
 This function re-names the clusters in the best.clust slot of the iCellR object.
 }
-\examples{
-demo.obj <- change.clust(demo.obj, change.clust = 1, to.clust = 3)
-cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
-
-demo.obj <- change.clust(demo.obj, change.clust = 3, to.clust = "B Cell")
-cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
-
-demo.obj <- change.clust(demo.obj, clust.reset = TRUE)
-cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
-}

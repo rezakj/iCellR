@@ -19,8 +19,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR and provides some statistical information for the genes.
 }
-\examples{
-demo.obj <- gene.stats(demo.obj, which.data = "main.data")
-head(demo.obj@gene.data)
-
-}

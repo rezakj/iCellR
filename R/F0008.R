@@ -12,10 +12,6 @@
 #' @param ATAC.data If TURE, it would normalize ATAC-Seq data and not RNA-Seq, default = FALSE.
 #' @param ATAC.filter If TURE, all the cells filtered in RNA-Seq will be filtered in ATAC-Seq. This needs to be done for both data to match,  default = TRUE.
 #' @return An object of class iCellR.
-#' @examples
-#'
-#' demo.obj <- norm.data(demo.obj, norm.method = "ranked.glsf", top.rank = 500)
-#'
 #' @export
 norm.data <- function (x = NULL,
                        norm.method = "ranked.glsf",

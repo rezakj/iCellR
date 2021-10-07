@@ -4,17 +4,6 @@
 #' @param vdj.data A data frame containing vdj information.
 #' @param cond.name Conditions.
 #' @return An object of class iCellR
-#' @examples
-#' my.vdj <- read.csv(file = system.file('extdata', 'all_contig_annotations.csv',
-#'           package = 'iCellR'),
-#'           as.is = TRUE)
-#' head(my.vdj)
-#' dim(my.vdj)
-#'
-#' My.VDJ <- prep.vdj(vdj.data = my.vdj, cond.name = "NULL")
-#' head(My.VDJ)
-#' dim(My.VDJ)
-#'
 #' @export
 prep.vdj <- function (vdj.data = "data.frame", cond.name = "NULL") {
 # read VDJ data

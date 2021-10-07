@@ -10,11 +10,6 @@
 #' @param pval.test Choose from "t.test", "wilcox.test", default = "t.test".
 #' @param p.adjust.method Correction method. Choose from "holm", "hochberg", "hommel", "bonferroni", "BH", "BY","fdr", "none", default = "hochberg".
 #' @return An object of class iCellR
-#' @examples
-#' diff.res <- run.diff.exp(demo.obj, de.by = "clusters", cond.1 = c(1), cond.2 = c(2))
-#'
-#' head(diff.res)
-#'
 #' @export
 run.diff.exp <- function (x = NULL,
                       data.type = "main",

@@ -5,10 +5,6 @@
 #' @param which.data Choose from "raw.data" or "main.data", default = "raw.data".
 #' @param each.cond If TRUE each condition will be calculated, default = FALSE.
 #' @return An object of class iCellR.
-#' @examples
-#' demo.obj <- gene.stats(demo.obj, which.data = "main.data")
-#' head(demo.obj@gene.data)
-#'
 #' @export
 gene.stats <- function (x = NULL,
                         which.data = "raw.data",

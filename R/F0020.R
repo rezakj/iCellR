@@ -20,18 +20,6 @@
 #' @param density If TRUE the density plots for PCA/tSNE second dimension will be created, default = FALSE.
 #' @param static3D If TRUE a non-interactive 3D plot will be made.
 #' @return An object of class iCellR.
-#' @examples
-#' cluster.plot(demo.obj,plot.type = "umap",interactive = FALSE)
-#'
-#' cluster.plot(demo.obj,plot.type = "tsne",interactive = FALSE)
-#'
-#' cluster.plot(demo.obj,plot.type = "pca",interactive = FALSE)
-#'
-#' cluster.plot(demo.obj,plot.type = "pca",col.by = "conditions",interactive = FALSE)
-#'
-#' cluster.plot(demo.obj,plot.type = "umap",col.by = "conditions",interactive = FALSE)
-#'
-#' cluster.plot(demo.obj,plot.type = "tsne",col.by = "conditions",interactive = FALSE)
 #' @import RColorBrewer
 #' @import scatterplot3d
 #' @importFrom htmlwidgets saveWidget

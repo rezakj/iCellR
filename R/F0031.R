@@ -27,21 +27,6 @@
 #' @param out.name If "interactive" is set to TRUE, the out put name for HTML, default = "plot".
 #' @param write.data Write export the data used for the plot plot, default = TFALSE.
 #' @return An object of class iCellR.
-#' @examples
-#' gene.plot(demo.obj, gene = "CD74",interactive = FALSE)
-#'
-#' gene.plot(demo.obj, gene = "CD74",plot.data.type = "umap",interactive = FALSE)
-#'
-#' gene.plot(demo.obj, gene = "CD74",
-#'           plot.data.type = "umap",
-#'           interactive = FALSE,
-#'           plot.type = "barplot")
-#'
-#' gene.plot(demo.obj, gene = "CD74",
-#'           plot.data.type = "umap",
-#'           interactive = FALSE,
-#'           plot.type = "boxplot")
-#'
 #' @importFrom ggpubr stat_compare_means
 #' @import plyr
 #' @importFrom htmlwidgets saveWidget

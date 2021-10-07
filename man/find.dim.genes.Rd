@@ -21,10 +21,3 @@ An object of class iCellR.
 \description{
 This function takes an object of class iCellR finds the model genes to run a second round of PCA.
 }
-\examples{
-
-demo.obj <- find.dim.genes(demo.obj, dims = 1:10,top.pos = 20, top.neg = 20)
-
-head(demo.obj@gene.model)
-
-}

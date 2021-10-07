@@ -7,9 +7,6 @@
 #' @param filt.ambig Filter markers that are seen for more than one cluster, default = TRUE.
 #' @param cluster Choose a cluster to find markers for. If 0, it would find markers for all clusters, , default = 0.
 #' @return A set of gene names
-#' @examples
-#' marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
-#' top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
 #' @import Matrix
 #' @export
 top.markers <- function (x = NULL, topde = 10,

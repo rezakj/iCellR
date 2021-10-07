@@ -11,16 +11,6 @@
 #' @param type Choose from "classic", "jitter", "unrooted", "fan", "cladogram", "radial", default = "classic".
 #' @param cex Text size, default = 1.
 #' @return An object of class iCellR.
-#' @examples
-#' marker.genes <- findMarkers(demo.obj,fold.change = 2,padjval = 0.1,uniq = TRUE)
-#'
-#' MyGenes <- top.markers(marker.genes, topde = 10, min.base.mean = 0.8)
-#'
-#' pseudotime.tree(demo.obj,
-#'                marker.genes = MyGenes,
-#'                type = "unrooted",
-#'                clust.method = "complete")
-#'
 #' @import gridExtra
 #' @import ggdendro
 #' @import ape
