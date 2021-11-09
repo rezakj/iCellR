@@ -45,7 +45,7 @@ clust.avg.exp <- function (x = NULL,
     message("########### Warning ###########")
     message("###############################")
     message("###############################")
-    message(paste("#### Filter warning: cluster",warn,"has less than",ncell.filt,"cells (cluster excluded)"))
+    message(paste("#### Filter warning: cluster",warn,"has less than",low.cell.filt,"cells (cluster excluded)"))
     DATA1<- subset(DATA1,!DATA1$clusters %in% warn)
     conditions <- subset(conditions, !conditions %in% warn)
     message("###############################")
