@@ -9,6 +9,7 @@ clust.avg.exp(
   data.type = "main",
   conds.to.avg = NULL,
   rounding.digits = 4,
+  low.cell.filt = 5,
   round.num = FALSE
 )
 }
@@ -20,6 +21,8 @@ clust.avg.exp(
 \item{conds.to.avg}{Choose the conditions you want to average, default = NULL (all conditions).}
 
 \item{rounding.digits}{integer indicating the number of decimal places (round) or significant digits (signif) to be used.}
+
+\item{low.cell.filt}{filter out clusters with low number of cells, default = 5.}
 
 \item{round.num}{Rounding of Numbers, default = FALSE.}
 }

@@ -8,7 +8,7 @@
 A character with 43 genes
 }
 \source{
-\url{https://science.sciencemag.org/content/352/6282/189}
+\url{https://www.science.org/doi/abs/10.1126/science.aad0501}
 }
 \usage{
 s.phase

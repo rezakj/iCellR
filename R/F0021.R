@@ -5,6 +5,7 @@
 #' @param data.type Choose from "main", "atac", "atac.imputed" and "imputed", default = "main"
 #' @param conds.to.avg Choose the conditions you want to average, default = NULL (all conditions).
 #' @param rounding.digits integer indicating the number of decimal places (round) or significant digits (signif) to be used.
+#' @param low.cell.filt filter out clusters with low number of cells, default = 5.
 #' @param round.num Rounding of Numbers, default = FALSE.
 #' @return An object of class iCellR.
 #' @import progress
@@ -13,6 +14,7 @@ clust.avg.exp <- function (x = NULL,
                            data.type = "main",
                            conds.to.avg = NULL,
                            rounding.digits = 4,
+                           low.cell.filt = 5,
                            round.num = FALSE) {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
@@ -35,6 +37,21 @@ clust.avg.exp <- function (x = NULL,
   sampleCondition <- DATA$clusters
   conditions <- sort(unique(sampleCondition))
   DATA1 <- DATA
+#### warn and filter
+  warn <- as.data.frame(table(DATA1$clusters))
+  warn <- subset(warn, warn$Freq < low.cell.filt)
+  warn <- as.numeric(as.matrix(warn$Var1))
+  if(length(warn) != 0) {
+    message("########### Warning ###########")
+    message("###############################")
+    message("###############################")
+    message(paste("#### Filter warning: cluster",warn,"has less than",ncell.filt,"cells (cluster excluded)"))
+    DATA1<- subset(DATA1,!DATA1$clusters %in% warn)
+    conditions <- subset(conditions, !conditions %in% warn)
+    message("###############################")
+    message("###############################")
+    message("###############################")
+  }
   ## get main data
   if (data.type == "main") {
     Table <- x@main.data

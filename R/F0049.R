@@ -4,7 +4,7 @@
 #' @param object A data frame containing gene counts for cells.
 #' @param scoring.List Genes that are used as a marker for phases.
 #' @param return.stats Return the data or object. If FALSE the object would be returned.
-#' @param scoring.method Choose from "coverage" or "tirosh" for scoring method. See: https://science.sciencemag.org/content/352/6282/189
+#' @param scoring.method Choose from "coverage" or "tirosh" for scoring method.
 #' @return The data frame object
 #' @importFrom Hmisc cut2
 #' @export

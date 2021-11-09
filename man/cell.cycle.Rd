@@ -18,7 +18,7 @@ cell.cycle(
 
 \item{return.stats}{Return the data or object. If FALSE the object would be returned.}
 
-\item{scoring.method}{Choose from "coverage" or "tirosh" for scoring method. See: https://science.sciencemag.org/content/352/6282/189}
+\item{scoring.method}{Choose from "coverage" or "tirosh" for scoring method.}
 }
 \value{
 The data frame object
