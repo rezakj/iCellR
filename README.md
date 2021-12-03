@@ -5,7 +5,7 @@
 # iCellR
 iCellR is an interactive R package to work with high-throughput single cell sequencing technologies (i.e scRNA-seq, scVDJ-seq, scATAC-seq, CITE-Seq and Spatial Transcriptomics (ST)).
 
-### News (April 2021): Use iCellR version 1.6.4 for scATAC-seq and Spatial Transcriptomics (ST). Use the i.score function for scoring (scoring cells based on gene signatures) methods (i.e. tirosh, mean, sum, gsva, ssgsea, zscore and plage). 
+### News (April 2021): Use iCellR version 1.6.4 for scATAC-seq and Spatial Transcriptomics (ST). Use the [i.score](https://github.com/rezakj/iCellR/wiki/i.score) function for scoring (scoring cells based on gene signatures) methods (i.e. tirosh, mean, sum, gsva, ssgsea, zscore and plage). 
 
 ### News (July 2020): See iCellR version 1.5.5 with new cell cycle analysis for G0, G1S, G2M, M, G1M and S [phase](https://genome.med.nyu.edu/results/external/iCellR/example1/All_cellcycle.png), Pseudotime Abstract KNetL map [(PAK map)](https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.KNetL.png) and gene-gene [correlations](https://genome.med.nyu.edu/results/external/iCellR/example1/gene-gene.correlation.png). See below for how to. 
 
