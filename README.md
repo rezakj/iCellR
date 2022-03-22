@@ -621,20 +621,23 @@ grid.arrange(A,B,C,D)
 
 ### or 
 
+
+png('AllConds_clusts_knetl.png', width = 16, height = 8, units = 'in', res = 300)
 cluster.plot(my.obj,
-              cell.size = 0.5,
+              cell.size = 0.1,
               plot.type = "knetl",
               cell.color = "black",
               back.col = "white",
-              col.by = "conditions",
               cell.transparency = 1,
               clust.dim = 2,
               interactive = F,cond.facet = T)
-```
+dev.off()
 
+```
+ 
 <p align="center">
       <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Allconds.png"/> 
-	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Allconds_clusts.png"/> 
+	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds_clusts_knetl.png"/> 
 </p>
 
 - Pseudotime Abstract KNetL map (PAK map)
