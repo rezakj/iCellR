@@ -3412,12 +3412,12 @@ Final.DAT <- rbind(DAT,DAT1)
 
 write.table(Final.DAT,name,row.names=FALSE,sep="\t", quote = FALSE)
 
+### reapeat this process for f2 (M) as well
 
 # The first 3 columns are the original peaks and the last 3 are the ones that need to be replaced with original one. The NA peaks would also get the new peak ids but in the matrix the cells will have 0 for expressions. To do this use the iCellR function replace.peak.id.
 
-MyATAC1 <- replace.peak.id(atac.data=MyATAC1, bed.file = Final.DAT)
-MyATAC2 <- replace.peak.id(atac.data=MyATAC2, bed.file = Final.DAT)
-MyATAC3 <- replace.peak.id(atac.data=MyATAC3, bed.file = Final.DAT)
+MyATAC.C <- replace.peak.id(atac.data=MyATAC.C, bed.file = Final.DAT.C)
+MyATAC.M <- replace.peak.id(atac.data=MyATAC.M, bed.file = Final.DAT.M)
 
 # finally aggregate the samples and add to iCellR object
 
