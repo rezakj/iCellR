@@ -3,7 +3,7 @@
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/iCellR)](https://cran.r-project.org/package=iCellR)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
-# iCellR
+# iCellR (some links don't work temporarily and will be fixed next week on June 21st)
 iCellR is an interactive R package to work with high-throughput single cell sequencing technologies (i.e scRNA-seq, scVDJ-seq, scATAC-seq, CITE-Seq and Spatial Transcriptomics (ST)).
 
 ### News (April 2021): Use iCellR version 1.6.4 for scATAC-seq and Spatial Transcriptomics (ST). Use the [i.score](https://github.com/rezakj/iCellR/wiki/i.score) function for scoring (scoring cells based on gene signatures) methods (i.e. tirosh, mean, sum, gsva, ssgsea, zscore and plage). 
