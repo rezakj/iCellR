@@ -3,7 +3,7 @@
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/iCellR)](https://cran.r-project.org/package=iCellR)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
-# iCellR (some links don't work temporarily and will be fixed next week on June 21st)
+# iCellR
 iCellR is an interactive R package to work with high-throughput single cell sequencing technologies (i.e scRNA-seq, scVDJ-seq, scATAC-seq, CITE-Seq and Spatial Transcriptomics (ST)).
 
 ### News (April 2021): Use iCellR version 1.6.4 for scATAC-seq and Spatial Transcriptomics (ST). Use the [i.score](https://github.com/rezakj/iCellR/wiki/i.score) function for scoring (scoring cells based on gene signatures) methods (i.e. tirosh, mean, sum, gsva, ssgsea, zscore and plage). 
@@ -306,7 +306,7 @@ my.obj <- norm.data(my.obj,
 
 - Scale data (optional)
 
-iCellR does not need this step as it scales the data when they need to be scaled on the fly; like for plotting or running PCA. This is because, it is important to use the untransformed data for differential expression analysis to calculate the accurate/true fold changes. If you run this function the scaled data will replace the main data for this reason and instead will be saved in different data slot in the object for you to download if you need it for plotting or other reasons.
+iCellR does not need this step as it scales the data when they need to be scaled on the fly; like for plotting or running PCA. This is because, it is important to use the untransformed data for differential expression analysis to calculate the accurate/true fold changes. If you run this function the scaled data will "not" replace the main data and instead will be saved in different data slot in the object.
 
 ```r
 # my.obj <- data.scale(my.obj)
@@ -342,7 +342,7 @@ This function will help you find a good number of genes to use for running PCA.
 # See model plot 
 make.gene.model(my.obj, my.out.put = "plot",
 	dispersion.limit = 1.5, 
-	base.mean.rank = 500, 
+	base.mean.rank = 1500, 
 	no.mito.model = T, 
 	mark.mito = T, 
 	interactive = F,
@@ -352,7 +352,7 @@ make.gene.model(my.obj, my.out.put = "plot",
 
 my.obj <- make.gene.model(my.obj, my.out.put = "data",
 	dispersion.limit = 1.5, 
-	base.mean.rank = 500, 
+	base.mean.rank = 1500, 
 	no.mito.model = T, 
 	mark.mito = T, 
 	interactive = F,
@@ -364,7 +364,7 @@ head(my.obj@gene.model)
 # get html plot (optional)
 #make.gene.model(my.obj, my.out.put = "plot",
 #	dispersion.limit = 1.5, 
-#	base.mean.rank = 500, 
+#	base.mean.rank = 1500, 
 #	no.mito.model = T, 
 #	mark.mito = T, 
 #	interactive = T,
@@ -424,7 +424,7 @@ my.obj <- run.umap(my.obj, dims = 1:10)
 
 # KNetL (for lager than 5000 cell use a zoom of about 400) 
 # Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
-my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110, dim.redux = "umap") # (Important note!) don't forget to set the zoom in the right range  
+my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110) # (Important note!) don't forget to set the zoom in the right range  
 
 ########################## IMPORTANT DISCLAIMER NOTE ###########################
             *** KNetL map is very dynamic with zoom and dims! ***
