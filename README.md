@@ -67,7 +67,7 @@ install.packages("iCellR")
 setwd("/your/download/directory")
 
 # save the URL as an object
-sample.file.url = "https://genome.med.nyu.edu/results/external/iCellR/data/pbmc3k_filtered_gene_bc_matrices.tar.gz"
+sample.file.url = "https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz"
 
 # download the file
 download.file(url = sample.file.url, 
