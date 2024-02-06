@@ -2408,14 +2408,51 @@ my.obj <- add.vdj(demo.obj, vdj.data = My.VDJ)
 
 Another example with multiple files 
 ```r
-# first prepare the files. 
-# this function would filter the files, calculate clonotype frequencies and proportions and add conditions to the cell ids.
-my.vdj.1 <- prep.vdj(vdj.data = "all_contig_annotations.csv", cond.name = "WT")
-my.vdj.2 <- prep.vdj(vdj.data = "all_contig_annotations.csv", cond.name = "KO")
-my.vdj.3 <- prep.vdj(vdj.data = "all_contig_annotations.csv", cond.name = "Ctrl")
+# First read the vdj data
+
+File="all_contig_annotations.csv"
+my.vdj.data <- read.csv(File)
+
+# then see the conditions
+my.obj
+
+# For each condition (WT,KO, ...) subset from the VDJ data
+
+Get="WT"
+#######
+dat <- colnames(my.obj@main.data)
+name <- paste(Get,".tsv",sep="")
+do <- grep(Get,dat, value=T)
+do <- as.character(as.matrix(data.frame(do.call('rbind', strsplit(as.character(do),'_',fixed=TRUE)))[2]))
+do <- gsub("\\.","-",do)
+do <- subset(my.vdj.data, my.vdj.data$barcode %in% do)
+write.table((do),file=name,sep="\t", row.names =F)
+#######
+
+Get="KO"
+#######
+dat <- colnames(my.obj@main.data)
+name <- paste(Get,".tsv",sep="")
+do <- grep(Get,dat, value=T)
+do <- as.character(as.matrix(data.frame(do.call('rbind', strsplit(as.character(do),'_',fixed=TRUE)))[2]))
+do <- gsub("\\.","-",do)
+do <- subset(my.vdj.data, my.vdj.data$barcode %in% do)
+write.table((do),file=name,sep="\t", row.names =F)
+#######
+
+#### read and prep all conditions
+Get="WT"
+name <- paste(Get,".tsv",sep="")
+do <- read.table(name, header=T)
+WT <- prep.vdj(vdj.data = do, cond.name = Get)
+
+Get="KO"
+name <- paste(Get,".tsv",sep="")
+do <- read.table(name, header=T)
+KO <- prep.vdj(vdj.data = do, cond.name = Get)
 
 # concatenate all the conditions
-my.vdj.data <- rbind(my.vdj.1, my.vdj.2, my.vdj.3)
+my.vdj.data <- rbind(WT, KO)
 
 # see head of the file
 head(my.vdj.data)
