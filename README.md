@@ -942,6 +942,18 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "none", da
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_imputed_sudo.png" width="400"/> 
 </p>
 
+- Bubble heatmap
+
+```r
+png('heatmap_bubble_gg_genes.png', width = 10, height = 20, units = 'in', res = 300)
+bubble.gg.plot(my.obj, gene = MyGenes, interactive = F, conds.to.plot = NULL, size = "Percent.Expressed",colour = "Expression")
+dev.off()
+```
+  <p align="center">
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap.png" width="400"/>
+  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_bubble_gg_genes.png" width="400"/>
+</p>
+
 - Plot genes
 
 ```r
