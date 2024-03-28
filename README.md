@@ -1774,22 +1774,36 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 ```r
 # Read an example file
  
-my.hto <- read.table(file = system.file('extdata', 'dense_umis.tsv', package = 'iCellR'), as.is = TRUE)
- 
-# see the head of the file for the first few columns
-head(my.hto)[1:3]
-#                         TGACAACAGGGCTCTC AAGGAGCGTCATTAGC AGTGAGGAGACTGTAA
-#Hashtag1-GTCAACTCTTTAGCG                3                7                7
-#Hashtag2-TGATGGCCTATTGGG               18               24             1761
-#Hashtag3-TTCCGCCTCTCTTTG                7                8                5
-#Hashtag4-AGTAAGTTCAGCGTA                0                0                0
-#Hashtag5-AAGTATCGTTTCGCA              890                2               11
-#Hashtag7-TGTCTTTCCTGCCAG                5                3                3
+# my.hto <- read.table(file = system.file('extdata', 'dense_umis.tsv', package = 'iCellR'), as.is = TRUE)
+# or 
+my.data <- load10x("filtered_feature_bc_matrix",gene.name = 2)
+
+# tail(row.names(my.data),5)
+# [1] "TotalSeq.C0254_anti.human_Hashtag_4_Antibody"
+# [2] "TotalSeq.C0255_anti.human_Hashtag_5_Antibody"
+# [3] "TotalSeq.C0256_anti.human_Hashtag_6_Antibody"
+# [4] "TotalSeq.C0257_anti.human_Hashtag_7_Antibody"
+# [5] "TotalSeq.C0258_anti.human_Hashtag_8_Antibody" 
+
+# your HTOs
+HTOs <- grep("^TotalSeq",row.names(my.data),value=T)
+
+# your genes
+RNAs <- subset(row.names(my.data), !(row.names(my.data) %in% HTOs))
+
+MyHTOs <- subset(my.data, row.names(my.data) %in% HTOs)
+MyRNAs <- subset(my.data, row.names(my.data) %in% RNAs)
+
+dim(MyHTOs)
+dim(MyRNAs)
+
  
 # run annotation
-htos <- hto.anno(hto.data = my.hto, cov.thr = 10, assignment.thr = 80)
+data <- hto.anno(hto.data = MyHTOs, cov.thr = 3, assignment.thr = 80)
+data <- (cbind(ID = rownames(data),data))
+write.table((data),"HTOs_annotated_HSThigh.tsv",sep="\t", row.names =F)
 
-head(htos)
+head(data)
 #                 Hashtag1-GTCAACTCTTTAGCG Hashtag2-TGATGGCCTATTGGG
 #TGACAACAGGGCTCTC                        3                       18
 #AAGGAGCGTCATTAGC                        7                       24
@@ -1828,20 +1842,21 @@ head(htos)
 
 # plot
 
-A = ggplot(htos, aes(assignment.annotation,percent.match)) +
+A = ggplot(data, aes(assignment.annotation,percent.match)) +
 	geom_jitter(alpha = 0.25, color = "blue") +
 	geom_boxplot(alpha = 0.5) + 
 	theme_bw() + 
 	theme(axis.text.x=element_text(angle=90))
 
-B = ggplot(htos, aes(low.cov,percent.match)) +
+B = ggplot(data, aes(low.cov,percent.match)) +
 	geom_jitter(alpha = 0.25, color = "blue") +
 	geom_boxplot(alpha = 0.5) + 
 	theme_bw() + 
 	theme(axis.text.x=element_text(angle=90))
 
 library(gridExtra)
-png('HTOs.png', width = 8, height = 8, units = 'in', res = 300)
+Name="HTO_stats.png"
+png(Name, width = 8, height = 8, units = 'in', res = 300)
 grid.arrange(A,B,ncol=2)
 dev.off()
 ```
@@ -1853,51 +1868,40 @@ dev.off()
  - Filtering HTOs and merging the samples
  
  ```r
- # let's say you decided filtering based on 80%
- dim(htos)
- # [1] 1500   12
- htos <- subset(htos,htos$percent.match > 80)
- dim(htos)
- # [1] 1073   12 
+dim(data)
+data = subset(data, percent.match > 80)
+#data = subset(data, low.cov == "FALSE")
+dim(data)
  
  # Take the cell IDs from Hashtag1
- sample1 <- row.names(subset(htos,htos$assignment.annotation == "Hashtag1-GTCAACTCTTTAGCG"))
- 
- head(sample1)
-# [1] "ATCCACCCATGTTCCC" "AAACGGGCAGGACCCT" "TTCTACATCCTCATTA" "GGTATTGTCCTATGTT"
-# [5] "GTCGTAATCTTACCTA" "ACAGCCGGTTGGGACA"
+ bestHTOs <- as.character(unique(data$assignment.annotation))
 
-length(sample1)
-# [1] 213
-# in this case you have 213 cells in sample 1 (Hashtag1)
+# create new files
 
-# Take the cell IDs from Hashtag2
-sample2 <- row.names(subset(htos,htos$assignment.annotation == "Hashtag2-TGATGGCCTATTGGG"))
+library(Matrix)
+for(i in bestHTOs){
+	sample <- row.names(subset(data,data$assignment.annotation == i))
+	message(paste(" getting sample",i,"..."))
+	sample <- MyRNAs[ , which(names(MyRNAs) %in% sample)]
+	message(paste(" number of cells",dim(sample)[2]))
+	Name=paste("RNAs",i,dim(sample)[2],sep="_")
+	message(paste(" writing sample",i,"..."))
+dir.create(Name)
+COLs <- colnames(sample)
+ROWs <- row.names(sample)
+colnames(sample) <- NULL
+row.names(sample) <- NULL
+sparse.gbm <- Matrix(as.matrix.data.frame(sample), sparse = T )
+Name1=paste(Name,"matrix.mtx",sep="/")
+writeMM(obj = sparse.gbm, file=Name1)
+Name1=paste(Name,"barcodes.tsv.gz",sep="/")
+write.table((COLs),gzfile(Name1), row.names =FALSE, quote = FALSE, col.names = FALSE)
+MY.ROWs <- cbind(ROWs,ROWs)
+Name1=paste(Name,"genes.tsv.gz",sep="/")
+write.table((MY.ROWs),gzfile(Name1),sep="\t", row.names =F, quote = FALSE, col.names = FALSE)
+}
 
-# now read your RNA data 
-# example:
-RNA.data <- load10x("YOUR/data/filtered_gene_bc_matrices/hg19/")
-
-head(RNA.data)[1:2]
-#         AAACATAAAACCAG CCCCATTGAGCTAA
-#A1BG.AS1                   0                   0
-#BCLA                       0                   0
-#A2M                        0                   0
-#GATA1                      0                   0
-
-# NOTE: the RNA data has the cell IDs in the same format as HTOs 
-# "AAACATAAAACCAG" "CCCCATTGAGCTAA" ... 
-# Not "AAACATAAAACCAG.1" "CCCCATTGAGCTAA.1" ... 
-
-# demultiplex RNA data 
-# Take RNA-Seq data with the cell IDs from Hashtag1
-sample1.rna <- RNA.data[ , which(names(RNA.data) %in% sample1)]
-
-# Take RNA-Seq data with the cell IDs from Hashtag2
-sample2.rna <- RNA.data[ , which(names(RNA.data) %in% sample2)]
-
-# aggregate (merge the 2 or more samples after demultiplexing)
-
+# example
 my.data <- data.aggregation(samples = c("sample1.rna","sample2.rna"), 
 	condition.names = c("S1","S2"))
 	
