@@ -1874,8 +1874,8 @@ dev.off()
 # let's see how many cells are there
 dim(data)
 
-# let's say you want to have the cells that are above 80 % likelihood of belonging to a HTO
-data = subset(data, percent.match > 80)
+# let's say you want to have the cells that are above 80 % likelihood of belonging to an HTO
+data <- subset(data, percent.match > 80)
 
 # let's see how many cells are left
 dim(data)
