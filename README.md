@@ -1778,6 +1778,8 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 # or 
 my.data <- load10x("filtered_feature_bc_matrix",gene.name = 2)
 
+# Your HTOs are usually in the end of all the gene names
+
 # tail(row.names(my.data),5)
 # [1] "TotalSeq.C0254_anti.human_Hashtag_4_Antibody"
 # [2] "TotalSeq.C0255_anti.human_Hashtag_5_Antibody"
@@ -1785,10 +1787,11 @@ my.data <- load10x("filtered_feature_bc_matrix",gene.name = 2)
 # [4] "TotalSeq.C0257_anti.human_Hashtag_7_Antibody"
 # [5] "TotalSeq.C0258_anti.human_Hashtag_8_Antibody" 
 
-# your HTOs
+# your HTOs are usually in the matrix and have names that are different than gene names
+# Your HTO names 
 HTOs <- grep("^TotalSeq",row.names(my.data),value=T)
 
-# your genes
+# your gene names 
 RNAs <- subset(row.names(my.data), !(row.names(my.data) %in% HTOs))
 
 MyHTOs <- subset(my.data, row.names(my.data) %in% HTOs)
@@ -1868,15 +1871,21 @@ dev.off()
  - Filtering HTOs and merging the samples
  
  ```r
+# let's see how many cells are there
 dim(data)
+
+# let's say you want to have the cells that are above 80 % likelihood of belonging to a HTO
 data = subset(data, percent.match > 80)
-#data = subset(data, low.cov == "FALSE")
+
+# let's see how many cells are left
 dim(data)
  
- # Take the cell IDs from Hashtag1
+ # Take the HTO IDs that passed filtering 
  bestHTOs <- as.character(unique(data$assignment.annotation))
 
-# create new files
+####################
+# create new files (matrices) for each HTO (with number of cells added to the folder names)
+####################
 
 library(Matrix)
 for(i in bestHTOs){
@@ -1901,9 +1910,11 @@ Name1=paste(Name,"genes.tsv.gz",sep="/")
 write.table((MY.ROWs),gzfile(Name1),sep="\t", row.names =F, quote = FALSE, col.names = FALSE)
 }
 
-# example
-my.data <- data.aggregation(samples = c("sample1.rna","sample2.rna"), 
-	condition.names = c("S1","S2"))
+####################
+####################
+# example data aggregation for 2 samples/HTOs
+my.data <- data.aggregation(samples = c("HTO1","HTO2"), 
+	condition.names = c("HTO1","HTO2"))
 	
 # make iCellR object	
 my.obj <- make.obj(my.data)
