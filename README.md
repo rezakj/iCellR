@@ -236,7 +236,8 @@ my.obj <- qc.stats(my.obj)
 
 - Plot QC
 
-Default Behavior of Plotting Functions:
+# Default Behavior of Plotting Functions:
+
 In iCellR, all plotting functions generate interactive HTML files by default.
 These interactive plots are useful for exploring data visually in web browsers.
 If you prefer static plots (e.g., for quick visualization or embedding in reports), you can disable interactivity by setting the parameter `interactive = FALSE`.
@@ -269,37 +270,79 @@ stats.plot(my.obj, plot.type = "point.gene.umi", out.name = "gene-umi-plot")
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out6.gif" width="400"/>
 </p>
 
-- Filter cells. 
+# Filtering Options in iCellR
 
-iCellR allows you to filter based on library sizes (UMIs), number of genes per cell, percent mitochondrial content, one or more genes, and cell ids.
+The iCellR package provides flexibility to filter single-cell RNA-seq datasets based on various metrics, helping improve data quality and remove unwanted cells or genes from the analysis. You can filter your data using the following criteria:
+
+Library Sizes (UMIs):
+Filter cells based on the total library size (number of UMIs per cell). This can help exclude cells with very low UMI counts, which might indicate doublets or empty droplets.
+
+Number of Genes per Cell:
+Filter cells by the number of detected genes. For example, you can remove cells with fewer than a certain threshold of expressed genes to exclude low-quality cells.
+
+Percent Mitochondrial Content:
+Filter cells by mitochondrial content. Typically, cells with excessively high mitochondrial expression (e.g., >10% of total expression) may indicate stressed or dying cells.
+
+Based on One or More Genes:
+Select cells whose expression levels meet criteria for one or more specific genes (e.g., filter based on marker gene expression).
+
+Cell IDs:
+Filter cells by specific cell IDs. This allows for targeted removal or selection of cells identified in previous analyses or metadata.
 
 ```r
-my.obj <- cell.filter(my.obj,
-	min.mito = 0,
-	max.mito = 0.05,
-	min.genes = 200,
-	max.genes = 2400,
-	min.umis = 0,
-	max.umis = Inf)
-	
+# Apply multiple filters to the iCellR object
+my.obj <- cell.filter(
+  my.obj,
+  min.mito = 0,   # Minimum fraction of mitochondrial content allowed
+  max.mito = 0.05, # Maximum fraction of mitochondrial content allowed
+  min.genes = 200, # Minimum number of detected genes per cell
+  max.genes = 2400, # Maximum number of detected genes per cell
+  min.umis = 0,    # Minimum UMI count allowed
+  max.umis = Inf   # Maximum UMI count (set to infinite to not limit)
+)
+
+# Example Output:
 #[1] "cells with min mito ratio of 0 and max mito ratio of 0.05 were filtered."
 #[1] "cells with min genes of 200 and max genes of 2400 were filtered."
 #[1] "No UMI number filter"
 #[1] "No cell filter by provided gene/genes"
 #[1] "No cell id filter"
 #[1] "filters_set.txt file has beed generated and includes the filters set for this experiment."	
-
-# more examples 
-# my.obj <- cell.filter(my.obj, filter.by.gene = c("RPL13","RPL10")) # filter our cell having no counts for these genes
-# my.obj <- cell.filter(my.obj, filter.by.cell.id = c("WT_AAACATACAACCAC.1")) # filter our cell cell by their cell ids.
-
-# chack to see how many cells are left.  
-dim(my.obj@main.data)
-#[1] 32738  2637
 ```
-- Down sampling 
+You can add filters for specific genes. For example, the following line filters out cells that do not have counts for the genes "RPL13" or "RPL10":
+```r
+# my.obj <- cell.filter(my.obj, filter.by.gene = c("RPL13","RPL10")) # filter our cell having no counts for these genes
+```
+This removes the cell WT_AAACATACAACCAC.1 from your dataset.
+```r
+# my.obj <- cell.filter(my.obj, filter.by.cell.id = c("WT_AAACATACAACCAC.1")) # filter our cell cell by their cell ids.
+```
+Check the dimensions after filtering 
+```r
+dim(my.obj@main.data)
+# Output: [1] 32738  2637
+```
 
-This step is optional and is for having the same number of cells for each condition. 
+ # Down sampling 
+
+What is Down-Sampling?
+
+Purpose: Down-sampling ensures that each condition (e.g., treatment groups like WT, KO, Ctrl, etc.) has the same number of cells for balanced comparisons.
+
+Why?:
+
+Prevent bias in downstream analyses caused by unequal cell counts across conditions.
+
+# Down-Sampling: Important Considerations
+
+This step is optional and should be used with caution, as it is generally `not recommended`. Down-sampling may result in the loss of important or rare cell populations, which can impact the accuracy of your analysis, especially for heterogeneous datasets with diverse cell types.
+
+However, there are cases where down-sampling can be useful, such as:
+
+When working with datasets containing an extremely large number of cells.
+To speed up computational analysis for complex workflows or resource-limited environments.
+For testing purposes or when uniform cell counts are needed across conditions.
+Ultimately, the decision to down-sample should be made based on your `specific experimental goals` and the nature of your data. This option is available if necessary, but its use should be carefully weighed against the potential impact on downstream analyses.
 
 ```r
 # optional
