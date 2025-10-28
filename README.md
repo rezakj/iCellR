@@ -649,24 +649,27 @@ grid.arrange(A, B, C, D)
 We provide three functions to run the clustering method of your choice:
 
 ### 1- iclust (** recommended): 
-Faster and optimized for iCellR. This function takes PCA, UMAP or tSNE, Destiny (diffusion map), PHATE or KNetL map as input. This function is using Louvain algorithm for clustering a graph made using KNN. Similar to PhenoGraph (Levine et al., Cell, 2015) however instead of Jaccard similarity values we use distance (euclidean by default) values for the weights.
+This function is optimized for iCellR and supports PCA, UMAP, t-SNE, Destiny (diffusion map), PHATE, or KNetL maps as input. It utilizes the `Louvain algorithm` for clustering a graph constructed using k-Nearest Neighbor (KNN), similar to PhenoGraph (Levine et al., Cell, 2015). However, it employs distance values (Euclidean by default) as weights, instead of Jaccard similarity values.
 
 ##### 2- run.phenograph: 
-R implementation of the PhenoGraph algorithm. [Rphenograph](https://github.com/JinmiaoChenLab/Rphenograph) wrapper (Levine et al., Cell, 2015). 
+R implementation of the `PhenoGraph` algorithm. [Rphenograph](https://github.com/JinmiaoChenLab/Rphenograph) wrapper (Levine et al., Cell, 2015). 
 
 ##### 3- run.clustering: 
-In this function we provide a variety of many other options for you to explore the data with different flavours of clustering and indexing methods. Choose any combinations from the table below.
+This function offers a wide range of options to explore your data using various clustering and indexing methods. You can select any combination from the table below to experiment with different approaches and "flavors" of analysis.
 
 | clustering methods | distance methods | indexing methods | 
 | ------------- | ------------- | ------------- |
 | ward.D, ward.D2, single, complete, average, mcquitty, median, centroid, kmeans| euclidean, maximum, manhattan, canberra, binary, minkowski or NULL | kl, ch, hartigan, ccc, scott, marriot, trcovw, tracew, friedman, rubin, cindex, db, silhouette, duda, pseudot2, beale, ratkowsky, ball, ptbiserial, gap, frey, mcclain, gamma, gplus, tau, dunn, hubert, sdindex, dindex, sdbw |
 
-Conventionally people cluster based on PCA data (usually first 10 dimensions) however you have the option of choosing tSNE, UMAP and KNetL map dimensions as well. If you have adjusted your KNetL map and are confident about the results we recommend clustering based on KNetL map.
-
-This is one of the harder parts of the analysis and sometimes you need to adjust your clustering based on marker genes. This means you might need to merge some clusters, gate (see our cell gating tools) or try different sensitivities to find more or less communities.
 
 
-### clustering based on KNetL
+
+### Option 1: Clustering based on KNetL dimentions (or UMAP dimentions)
+
+Conventionally, clustering is performed using PCA data (usually the first 10 dimensions). However, this function allows you to choose t-SNE, UMAP, or KNetL map dimensions as alternatives. If you have fine-tuned your KNetL map and are confident in its results, we recommend clustering based on the KNetL map.
+
+Clustering can be one of the more challenging aspects of data analysis, and adjustments may be necessary based on marker genes. This might involve merging certain clusters, using gating tools (refer to our cell gating tools), or experimenting with different sensitivity values to identify a greater or smaller number of communities.
+
 Notes:
 
 - Adjust sensitivity for more or less clusters. 
@@ -680,7 +683,7 @@ my.obj <- iclust(my.obj, sensitivity = 150, data.type = "knetl")
 # data.type could be umap or tsne, etc. 
 ```
 
-### or conventionally via top pcs
+### Option 2: Clustering conventionally based on top pcs
 
 Adjust sensitivity for more or less clusters. 
 
@@ -734,7 +737,7 @@ Other examples:
 #	dims = 1:10)
 ```
 
-- Visualize data clustering results 
+### Visualize data after clustering results 
 
 ```r
 # plot clusters (in the figures below clustering is done based on KNetL) 
