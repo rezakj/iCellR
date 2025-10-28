@@ -46,17 +46,22 @@ iCellR publications: [PMID: 35660135](https://pubmed.ncbi.nlm.nih.gov/35660135/)
 ## How to install iCellR
         
 ```r
-# Install from CRAN 
+# Install the iCellR package
+
+# Option 1: Install from CRAN (recommended for stable releases)
 install.packages("iCellR")
 
-# Install from github
-#library(devtools)
-#install_github("rezakj/iCellR")
+# Option 2: Install the latest development version from GitHub
+# Uncomment the lines below to use these steps:
+# library(devtools)
+# install_github("rezakj/iCellR")
 
-# or
-#git clone https://github.com/rezakj/iCellR.git
-#R
-#install.packages('iCellR/', repos = NULL, type="source")
+# Option 3: Alternatively, clone the repository and install manually:
+# Run this command in your terminal to clone the GitHub repository:
+# git clone https://github.com/rezakj/iCellR.git
+
+# Then, install the package manually from the cloned directory:
+# install.packages('iCellR/', repos = NULL, type = "source")
 ```
 
 ## Download a sample data
@@ -64,23 +69,23 @@ install.packages("iCellR")
 - Download and unzip a publicly available sample [PBMC](https://en.wikipedia.org/wiki/Peripheral_blood_mononuclear_cell) scRNA-Seq data.
 
 ```r
-# set your working directory 
+# Set your working directory to the location where the file will be downloaded
 setwd("/your/download/directory")
 
-# save the URL as an object
+# Save the URL of the PBMC 3k dataset as an object
 sample.file.url = "https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz"
 
-# download the file
+# Download the file from the URL and save it in the working directory
 download.file(url = sample.file.url, 
      destfile = "pbmc3k_filtered_gene_bc_matrices.tar.gz", 
      method = "auto")  
 
-# unzip the file. 
+# Unzip the downloaded tar.gz file 
 untar("pbmc3k_filtered_gene_bc_matrices.tar.gz")
-```
-more data available here: 
-https://genome.med.nyu.edu/results/external/iCellR/
 
+# Check the contents of the unzipped folder to ensure successful extraction
+list.files()
+```
 ***
 # How to use iCellR for analyzing scRNA-seq data
 
