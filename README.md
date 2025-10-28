@@ -138,7 +138,7 @@ library(hdf5r)
 data <- load.h5(file = "filtered_feature_bc_matrix.h5")
 ```
 
-3. If your data is in S3 or S4 format types like (Seurat or iCellR, etc.)
+3. If your data is in S3 or S4 object format types like (Seurat or iCellR objects, etc.)
 
    Here we use a Seurat object as an exacple: 
 
