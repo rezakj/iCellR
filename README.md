@@ -551,17 +551,29 @@ For finding top genes in the top principal components (PCs) and re-running PCA t
 
 ### Perform tSNE, UMAP, KNetL, PHATE, destiny, diffusion maps and more
 
+Run tSNE
+
 ```r
 # tSNE
 my.obj <- run.pc.tsne(my.obj, dims = 1:10)
+```
 
+Run UMAP
+
+```r
 # UMAP
 my.obj <- run.umap(my.obj, dims = 1:10)
+```
+Run KNetL map
 
+```r
+my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110) # (Important note!) don't forget to set the zoom in the right range
+
+```
+
+```r
 # KNetL (for lager than 5000 cell use a zoom of about 400) 
 # Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
-my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110) # (Important note!) don't forget to set the zoom in the right range  
-
 ########################## IMPORTANT DISCLAIMER NOTE ###########################
             *** KNetL map is very dynamic with zoom and dims! ***
                  *** Therefore it needs to be adjusted! ***
