@@ -884,7 +884,7 @@ head(my.obj@clust.avg)
 #6 0.000000000 0.00000000 0.00000000 0.000000000 0.000000000
 ```
 
-- Cell cycle prediction 
+### Cell cycle prediction (optional)
 
 Tirosh scoring method [Tirosh, et. al. 2016](https://science.sciencemag.org/content/352/6282/189) (default) or coverage is used to calculate G0, G1S, G2M, M, G1M and S phase score. The gene lists for G0, G1S, G2M, M, G1M and S phase are chosen from previously published article [Xue, et.al 2020](https://www.nature.com/articles/s41586-019-1884-x)
 
@@ -949,7 +949,11 @@ dev.off()
 	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster_cellcycle_bar.png" width="400"/>
 </p>
 
-- Cell frequencies and proportions
+### Cell frequencies and proportions
+
+- Cell frequencies refer to the number of cells present in each cluster or category, providing insights into how cells are distributed across the dataset.
+
+- Proportions, on the other hand, represent the relative size of each cluster or category compared to the total number of cells, expressed as a fraction or percentage.
 
 ```r
 clust.cond.info(my.obj, plot.type = "pie", normalize.ncell = TRUE, my.out.put = "plot", normalize.by = "percentage")
@@ -978,7 +982,7 @@ head(my.obj@my.freq)
 </p>
 
 
-- Cluster QC
+### Cluster QC
 
 ```r
 clust.stats.plot(my.obj, plot.type = "box.mito", interactive = F)
@@ -990,19 +994,38 @@ clust.stats.plot(my.obj, plot.type = "box.gene", interactive = F)
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/cluster-gene_cov.png" width="400"/>
 </p>
 
- - Run data imputation
+### Run data imputation
+
+Data imputation is the process of inferring and filling in missing values in your dataset. This process is often used when dealing with single-cell RNA-seq data, where dropout events (zero or missing expression values) are common. Data imputation is generally not recommended to avoid introducing noise into your analysis. However, when applied correctly, proper data imputation can enhance downstream analyses such as clustering, visualization, and differential gene expression by generating a more complete and coherent dataset.
 
 ```r
 my.obj <- run.impute(my.obj, dims = 1:10, nn = 10, data.type = "pca")
 ```
 
-- Save your object
+### Save your iCellR object
+
+Saving your iCellR object allows you to preserve your analysis results and reload them later without having to rerun the pipeline.
+
+- Option 1:
 
 ```r
+# Save the iCellR object to a file
 save(my.obj, file = "my.obj.Robj")
-```        
 
-- gene gene correlation 
+# To load the object later
+load("my.obj.Robj")
+
+```
+- Option 2:
+  
+```r
+# Save the iCellR object to a file
+saveRDS(my.obj, file = "my_iCellR_object.rds")
+
+# To load the object later
+my.obj <- readRDS("my_iCellR_object.rds")
+```        
+### gene gene correlation 
 
 ```r
 # impute more cells by increasing nn for better resulst. 
