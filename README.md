@@ -390,6 +390,7 @@ The ranked component makes it better suited for sparse datasets by focusing on h
 my.obj <- norm.data(my.obj, 
      norm.method = "ranked.glsf",
      top.rank = 500) # best for scRNA-Seq
+# This focuses on the top 500 most highly expressed genes for calculating library size normalization.
 
 # more examples
 #my.obj <- norm.data(my.obj, norm.method = "ranked.deseq", top.rank = 500)
@@ -401,6 +402,7 @@ my.obj <- norm.data(my.obj,
 ```
 
 - Perform second QC (optioal)
+After initial filtering and normalization, a second QC step can be performed to further refine the dataset. 
 
 ```r
 #my.obj <- qc.stats(my.obj,which.data = "main.data")
@@ -417,15 +419,36 @@ my.obj <- norm.data(my.obj,
 #	back.col = "white")
 ``` 
 
-- Scale data (optional)
+# Scale data (optional)
+Why Scaling is Not Required in iCellR
 
-iCellR does not need this step as it scales the data when they need to be scaled on the fly; like for plotting or running PCA. This is because, it is important to use the untransformed data for differential expression analysis to calculate the accurate/true fold changes. If you run this function the scaled data will "not" replace the main data and instead will be saved in different data slot in the object.
+In iCellR, scaling the data is handled dynamically or "on the fly" during tasks such as plotting or running dimensionality reduction methods like PCA. 
+
+Here's why this design is beneficial:
+
+- To `save storage`: this eliminates the need for permanently scaling your main dataset beforehand. If you do choose to scale your data manually, scaling does not overwrite the main dataset. Instead, scaled data is saved into a separate slot in your iCellR object. iCellR automatically scales the data as needed during specific functions like plot.tsne() or run.pca().
+
+- `Untransformed Data for Differential Expression Analysis`: Untransformed data is used for generating accurate fold-change values during Differential Expression (DE) Analysis.
 
 ```r
 # my.obj <- data.scale(my.obj)
 ```
 
-- Gene stats
+## Gene stats
+Gene statistics typically involve summarizing the behavior or characteristics of genes across cells in your scRNA-seq dataset. iCellR provides tools to calculate and explore gene-level info, such as:
+
+`Gene Expression Levels`:
+Aggregate counts or normalized values for specific genes across all cells or conditions.
+
+`Gene Detection Frequency`:
+Proportion of cells in which each gene is expressed (non-zero counts).
+
+`Gene Variance`:
+Variability in expression levels across all cells or conditions to identify highly variable genes.
+
+`Top-Expressed Genes`:
+Identify genes that are most highly expressed across the dataset or within a condition.
+
 
 ```r
 my.obj <- gene.stats(my.obj, which.data = "main.data")
