@@ -274,19 +274,19 @@ stats.plot(my.obj, plot.type = "point.gene.umi", out.name = "gene-umi-plot")
 
 The iCellR package provides flexibility to filter single-cell RNA-seq datasets based on various metrics, helping improve data quality and remove unwanted cells or genes from the analysis. You can filter your data using the following criteria:
 
-Library Sizes (UMIs):
+`Library Sizes (UMIs)`:
 Filter cells based on the total library size (number of UMIs per cell). This can help exclude cells with very low UMI counts, which might indicate doublets or empty droplets.
 
-Number of Genes per Cell:
+`Number of Genes per Cell`:
 Filter cells by the number of detected genes. For example, you can remove cells with fewer than a certain threshold of expressed genes to exclude low-quality cells.
 
-Percent Mitochondrial Content:
+`Percent Mitochondrial Content`:
 Filter cells by mitochondrial content. Typically, cells with excessively high mitochondrial expression (e.g., >10% of total expression) may indicate stressed or dying cells.
 
-Based on One or More Genes:
+`Based on One or More Genes`:
 Select cells whose expression levels meet criteria for one or more specific genes (e.g., filter based on marker gene expression).
 
-Cell IDs:
+`Cell IDs`:
 Filter cells by specific cell IDs. This allows for targeted removal or selection of cells identified in previous analyses or metadata.
 
 ```r
@@ -346,16 +346,45 @@ Ultimately, the decision to down-sample should be made based on your `specific e
 
 ```r
 # optional
+# Perform down-sampling to equalize cells across conditions (optional)
 # my.obj <- down.sample(my.obj)
-#[1] "From"
-#[1] "Data conditions: Ctrl,KO,WT (877,877,883)"
-#[1] "to"
-#[1] "Data conditions: Ctrl,KO,WT (877,877,877)"
+
+#Before Down-Sampling:
+#The dataset initially contains cells as follows:
+#Ctrl: 877 cells
+#KO: 877 cells
+#WT: 883 cells
+#After Down-Sampling:
+#Down-sampling has equalized the number of cells across all conditions at 877 cells each.
 ```
 
-- Normalize data
+## Normalization in iCellR
+Normalization is an essential step in single-cell RNA sequencing analysis. iCellR provides several options for normalization, and you can choose the best approach depending on your study objectives and dataset characteristics.
 
-## You have a few options to normalize your data based on your study. You can also normalize your data using tools other than iCellR and import your data to iCellR. We recommend "ranked.glsf" normalization for most single cell studies. This normalization is great for fixing matrixes with lots of zeros and because it's geometric it will reduce some of batch differences in the library sizes, as long as all the data is aggregated into one file (to aggregate your data see "aggregating data" section above). GLSF stands for Geometric Library Size Factor, this is very similar to the normalization done by [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) and the ranked part would take the sum of the top most expressed genes as your library size instead of the full LB size which is to help resduce some of the drop out effects on normalization. 
+Options for Normalization:
+
+`Use iCellR’s Built-in Normalization Methods`:
+
+iCellR offers multiple normalization techniques tailored to single-cell experiments. One highly recommended method is `ranked.glsf`.
+
+`External Tools for Normalization`:
+
+You can normalize your data using external tools, like:
+
+`DESeq2` (Geometric Normalization): Popular for bulk RNA-seq but adaptable for single-cell studies.
+
+`Scran`: Computes size factors using clustering-based normalization for single-cell datasets.
+
+After normalization, you can import the externally normalized data into iCellR for further analysis.
+
+## "Ranked GLSF" Normalization:
+What is it?
+
+Ranked Geometric Library Size Factor (ranked.glsf) is inspired by DESeq2's Geometric Mean Size Factor normalization, but adapted for single-cell challenges.
+The ranked component makes it better suited for sparse datasets by focusing on highly expressed genes.
+
+- Designed to handle single-cell datasets with lots of zeros (dropouts) in the matrix.
+- Because it uses a geometric approach, this normalization reduces batch-wise differences caused by variable library sizes.
 
 ```r
 my.obj <- norm.data(my.obj, 
