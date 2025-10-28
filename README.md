@@ -530,6 +530,10 @@ my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,d
 opt.pcs.plot(my.obj)
 ```
 
+<p align="center">
+  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/Opt_Number_Of_PCs.png" />
+</p>
+
 2 round PCA (optional)
 
 For finding top genes in the top principal components (PCs) and re-running PCA to achieve better segregation of cell populations. This is optional and not recommended except in certain cases.
@@ -545,11 +549,7 @@ For finding top genes in the top principal components (PCs) and re-running PCA t
 #my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
 ```        
 
-<p align="center">
-  <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/Opt_Number_Of_PCs.png" />
-</p>
-
-# Perform tSNE, UMAP, KNetL, PHATE, destiny, diffusion maps and more
+### Perform tSNE, UMAP, KNetL, PHATE, destiny, diffusion maps and more
 
 ```r
 # tSNE
