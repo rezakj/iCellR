@@ -551,51 +551,43 @@ For finding top genes in the top principal components (PCs) and re-running PCA t
 
 ### Perform tSNE, UMAP, KNetL, PHATE, destiny, diffusion maps and more
 
-Run tSNE
+### Run tSNE
 
 ```r
 # tSNE
 my.obj <- run.pc.tsne(my.obj, dims = 1:10)
 ```
 
-Run UMAP
+### Run UMAP
 
 ```r
 # UMAP
 my.obj <- run.umap(my.obj, dims = 1:10)
 ```
-Run KNetL map
+### Run KNetL map
 
 ```r
 my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110) # (Important note!) don't forget to set the zoom in the right range
 
 ```
 
-```r
-# KNetL (for lager than 5000 cell use a zoom of about 400) 
-# Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
-########################## IMPORTANT DISCLAIMER NOTE ###########################
-            *** KNetL map is very dynamic with zoom and dims! ***
-                 *** Therefore it needs to be adjusted! ***
-# For data with less than 1000 cells use a zoom of about 5-50.
-# For data with 1000-5000 cells use a zoom of about 50-200.
-# For data with 5000-10000 cells use a zoom of about 100-300.
-# For data with 10000-30000 cells use a zoom of about 200-500.
-# For data with more than 30000 cells use a zoom of about 400-600.
-# zoom 400 is usually good for big data but adjust for intended resolution.
-# Lower number for zoom in and higher for zoom out (its reverse).
-# dims = 1:20 is generally good for most data.
-# other parameters are best as default.
+KNetL works with a higher resolution; therfore using `dims = 20` (2 times the number of PCs used for UMAP) usually produces the best results for most datasets.
 
-#### Just like a microscope, you need to zoom to see the intended amount of details. 
-#### Here we use a zoom of 100 or 110 but this might not be ideal for your data.
-#### example: # my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 400)
-#### Because knetl has a very high resolution it's best to use a dim of 20 (this usually works best for most data)
-###################################################################################
-###################################################################################
-###################################################################################
-###################################################################################
+- Recommended `Zoom` Settings:
+< 1,000 cells: Zoom range 5–50
+1,000–5,000 cells: Zoom range 50–200
+5,000–10,000 cells: Zoom range 100–300
+10,000–30,000 cells: Zoom range 200–500
+> 30,000 cells: Zoom range 400–600
+Additional Notes:
+A zoom of 400 generally works well for large datasets, but adjustments might be needed for your desired resolution.
+Remember:
+Lower zoom numbers = zoom in.
+Higher zoom numbers = zoom out (reverse logic).
 
+### Run diffusion map
+
+```r 
 # diffusion map
 # this requires python packge phate or bioconductor R package destiny
 # How to install destiny
@@ -620,7 +612,7 @@ my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110) # (Important note!) don't f
 # my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
 ```
 
-- Visualizing the results of dimensionality reductions before clustering (optional)
+# Visualizing the results of dimensionality reductions before clustering (optional)
 
 ```r
 A= cluster.plot(my.obj,plot.type = "pca",interactive = F)
