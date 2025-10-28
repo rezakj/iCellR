@@ -755,16 +755,21 @@ grid.arrange(A,B,C,D)
 </p>
 
 
-- Re-numbering clusters based on their distances, this is so that the are more in consecutive order (optional)
 
-This is visually helpful to look at your heatmap after finding marker genes and can help you decide which clusters need to be merged and adjusted. 
+### Re-numbering clusters based on their distances (optional): 
+
+This step rearranges clusters so that they appear in a more consecutive order based on gene expression similarities.
+
+This re-ordering can be visually beneficial when analyzing your heatmap after identifying marker genes. Similar cell communities will appear next to each other, making it easier to visually examine and compare them. Additionally, it can help in deciding which clusters may need merging or adjustment.
 
 ```r
-
 my.obj <- clust.ord(my.obj,top.rank = 500, how.to.order = "distance")
 #my.obj <- clust.ord(my.obj,top.rank = 500, how.to.order = "random")
+```
 
+Re-plot
 
+```r 
 A= cluster.plot(my.obj,plot.type = "pca",interactive = F,cell.size = 0.5,cell.transparency = 1, anno.clust=T)
 B= cluster.plot(my.obj,plot.type = "umap",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=T)
 C= cluster.plot(my.obj,plot.type = "tsne",interactive = F,cell.size = 0.5,cell.transparency = 1,anno.clust=T)
@@ -778,7 +783,9 @@ grid.arrange(A,B,C,D)
     <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Allclusts.png"/>    
 </p>
 
-- Look at conditions
+### Visualizing sample conditions
+
+Example 1:
 
 ```r
 # conditions 
@@ -789,9 +796,11 @@ D <- cluster.plot(my.obj,plot.type = "knetl",col.by = "conditions",interactive =
 
 library(gridExtra)
 grid.arrange(A,B,C,D)
+```
 
-### or 
+Example 2:
 
+```r
 
 png('AllConds_clusts_knetl.png', width = 16, height = 8, units = 'in', res = 300)
 cluster.plot(my.obj,
@@ -811,9 +820,12 @@ dev.off()
 	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/AllConds_clusts_knetl.png"/> 
 </p>
 
-- Pseudotime Abstract KNetL map (PAK map)
+### Pseudotime Abstract KNetL map (PAK map)
 
-This is very helpful to see the distances or similarities between different communities. The shorter and thicker the lines/links (rubber bands) are the more similar the communities. The nodes are the clusters and the edges or links are the distance between them. 
+This approach is very useful for visualizing the distances or similarities between different communities. The shorter and thicker the lines or links (rubber bands) are, the more similar the communities. In this visualization:
+
+- Nodes represent clusters, and
+- Edges or links represent the distances between clusters.
 
 ```r
 pseudotime.knetl(my.obj,interactive = F,cluster.membership = F,conds.to.plot = NULL)
@@ -831,18 +843,30 @@ pseudotime.knetl(my.obj,interactive = T)
 	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.KNetL.membered.png" width="400"/>
 </p>
 
-- Average expression per cluster
+### Average expression per cluster
+
+This refers to the calculation of the mean gene expression values for each cluster. By averaging the expression of genes within a cluster, you can summarize the overall expression profile of cell populations, making it easier to compare clusters and identify distinctive marker genes or biological patterns.
+
+- Option 1: all the cells in all the conditions/samples
 
 ```r
 # for all cunditions
 my.obj <- clust.avg.exp(my.obj, conds.to.avg = NULL)
+```
 
+- Option 2: choose condition/condition`s`
+
+```r 
 # for one cundition
 #my.obj <- clust.avg.exp(my.obj, conds.to.avg = "WT")
 
-# for two cundition
+# for two or more cunditions
 #my.obj <- clust.avg.exp(my.obj, conds.to.avg = c("WT","KO"))
+```
 
+To examine the first few rows of the average expression data across clusters use the `head()` function. 
+
+```r
 head(my.obj@clust.avg)
 #      gene cluster_1   cluster_2   cluster_3   cluster_4   cluster_5
 #1     A1BG         0 0.034248447 0.029590643 0.076486590 0.090270833
