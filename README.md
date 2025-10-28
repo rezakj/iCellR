@@ -591,7 +591,9 @@ Additional Notes:
 A zoom of 400 generally works well for large datasets, but adjustments might be needed for your desired resolution.
 
 Remember:
+
 Lower zoom numbers = zoom in.
+
 Higher zoom numbers = zoom out (reverse logic).
 
 ### Run diffusion map
