@@ -665,21 +665,35 @@ In this function we provide a variety of many other options for you to explore t
 
 This is one of the harder parts of the analysis and sometimes you need to adjust your clustering based on marker genes. This means you might need to merge some clusters, gate (see our cell gating tools) or try different sensitivities to find more or less communities.
 
+
+### clustering based on KNetL
+Notes:
+
+- Adjust sensitivity for more or less clusters. 
+- Lower sensitivity numbers = more clusters.
+- Higher sensitivity numbers = less clusters (reverse logic).
+- 100-150 generally works best for most data. 
+
 ```r
-# clustering based on KNetL
+my.obj <- iclust(my.obj, sensitivity = 150, data.type = "knetl")
 
-my.obj <- iclust(my.obj, sensitivity = 150, data.type = "knetl") 
+# data.type could be umap or tsne, etc. 
+```
 
-# clustering based on PCA
+### or conventionally via top pcs
 
-# my.obj <- iclust(my.obj, sensitivity = 150, data.type = "pca", dims=1:10) 
+Adjust sensitivity for more or less clusters. 
 
-# play with k to get the clusters right. Usually 150 is good.
+Top 10 PCs generally works best for most data. 
 
-###### more examples 
+```
+my.obj <- iclust(my.obj, sensitivity = 150, data.type = "pca", dims=1:10)
 
-# clustering based on PCA
+```
 
+Other examples: 
+
+```r 
 # my.obj <- iclust(my.obj,
 #    dist.method = "euclidean",
 #    sensitivity = 100,
