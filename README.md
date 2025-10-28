@@ -1027,6 +1027,8 @@ my.obj <- readRDS("my_iCellR_object.rds")
 ```        
 ### gene gene correlation 
 
+Gene-gene correlation refers to the relationship or association between the expression levels of two genes across cells or samples. It helps identify patterns of co-expression, which can provide insights into cell type identification, biological pathways, regulatory networks, or functional relationships.
+
 ```r
 # impute more cells by increasing nn for better resulst. 
 my.obj <- run.impute(my.obj,dims = 1:10,data.type = "pca", nn = 50)
@@ -1073,13 +1075,18 @@ grid.arrange(A,B,C,D)
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/gene-gene.correlation.png"/>
 </p>
 
-- Find marker genes
+### Find marker genes for clusters
+
+Identifying marker genes for clusters helps define the unique biological characteristics of each cluster. Marker genes are genes whose expression is significantly enriched in a specific cluster compared to others, often showcasing distinct cell populations and functions.
 
 ```r
 marker.genes <- findMarkers(my.obj,
 	fold.change = 2,
 	padjval = 0.1)
 
+```
+Examin the marker genes:
+```r 
 dim(marker.genes)
 # [1] 1070   17
 
@@ -1126,7 +1133,7 @@ head(marker.genes)
 # the rest are the average expression for each cluster
 ```
 
-- Heatmap
+### Heatmap
 
 ```r
 # find top genes
@@ -1156,7 +1163,7 @@ heatmap.gg.plot(my.obj, gene = MyGenes, interactive = F, cluster.by = "none", da
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/heatmap_imputed_sudo.png" width="400"/> 
 </p>
 
-- Bubble heatmap
+### Bubble heatmap
 
 ```r
 png('heatmap_bubble_gg_genes.png', width = 10, height = 20, units = 'in', res = 300)
@@ -1246,9 +1253,9 @@ dev.off()
 	<img src="https://genome.med.nyu.edu/results/external/iCellR/example1/gene_plots_imputed.png" />
 </p>
 
-- Multiple plots
+### Multiple plots
 
-Change the section in between #### signs for different plots (e.g. boxplot, bar, ...). 
+Change the section in between `####` signs for different plots (e.g. boxplot, bar, ...). 
 
 ```r
 genelist = c("MS4A1","GNLY","FCGR3A","NKG7","CD14","CD3E","CD8A","CD4","GZMH","CCR7","CD68")
@@ -1288,7 +1295,7 @@ dev.off()
 	  <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Genes.heatmap.png" />
 </p>
 
-- Make your own customized plots
+### Make your own customized plots
 
 ```r
 # You can export the data using this command (one or multiple genes):
@@ -1308,7 +1315,7 @@ gene.plot(my.obj, gene = "MS4A1", write.data = T, scaleValue = F, data.type = "m
 # you use this to make your own plots in ggplot2 or other visualization packages. 
 ```
 
- - Annotating clusters 
+### Annotating clusters 
  
  ```r
  ###### Labeling the clusters 
@@ -1346,7 +1353,7 @@ grid.arrange(A,B,C,D)
   <img src="https://genome.med.nyu.edu/results/external/iCellR/example1/Allclusts.Annotated.png" />
 </p>
 
- - Plotting conditions and clusters for genes
+### Plotting conditions and clusters for genes
  
  ```r
  A <- gene.plot(my.obj, gene = "MS4A1", 
