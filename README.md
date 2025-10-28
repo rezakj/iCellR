@@ -247,7 +247,7 @@ my.obj <- qc.stats(my.obj)
 
 ### Plot QC
 
-##### Default Behavior of Plotting Functions:
+#### Default Behavior of Plotting Functions:
 
 In iCellR, all plotting functions generate interactive HTML files by default.
 These interactive plots are useful for exploring data visually in web browsers.
