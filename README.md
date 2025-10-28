@@ -621,16 +621,20 @@ Higher zoom numbers = zoom out (reverse logic).
 # my.obj <- run.diffusion.map(my.obj, dims = 1:10, method = "phate")
 ```
 
-# Visualizing the results of dimensionality reductions before clustering (optional)
+### Visualizing the results of dimensionality reductions before clustering (optional)
 
 ```r
-A= cluster.plot(my.obj,plot.type = "pca",interactive = F)
-B= cluster.plot(my.obj,plot.type = "umap",interactive = F)
-C= cluster.plot(my.obj,plot.type = "tsne",interactive = F)
-D= cluster.plot(my.obj,plot.type = "knetl",interactive = F)
+# Generate cluster plots with different methods
+A <- cluster.plot(my.obj, plot.type = "pca", interactive = FALSE)
+B <- cluster.plot(my.obj, plot.type = "umap", interactive = FALSE)
+C <- cluster.plot(my.obj, plot.type = "tsne", interactive = FALSE)
+D <- cluster.plot(my.obj, plot.type = "knetl", interactive = FALSE)
 
+# Load the gridExtra library for arranging multiple plots
 library(gridExtra)
-grid.arrange(A,B,C,D)
+
+# Combine and arrange the plots (PCA, UMAP, t-SNE, and KNetL) in a grid layout
+grid.arrange(A, B, C, D)
 ```
 
 <p align="center">
