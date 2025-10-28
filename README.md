@@ -138,6 +138,17 @@ library(hdf5r)
 data <- load.h5(file = "filtered_feature_bc_matrix.h5")
 ```
 
+3. If your data is in S3 or S4 format types like (Seurat or iCellR, etc.)
+
+   Here we use a Seurat object as an exacple: 
+
+```r
+# objectName is your Seurat 5 object name
+my.data <- as.data.frame(as.matrix(objectName@assays$RNA@layers$counts))
+rownames(my.data) <- rownames(objectName@assays$RNA@features@.Data)
+colnames(my.data) <- rownames(objectName@assays$RNA@cells@.Data)
+```
+
 If you want to see the help page for any function in R, simply use a question mark `(?)` followed by the function name. Here's an example:
 
 ```r
