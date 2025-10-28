@@ -47,7 +47,7 @@ iCellR publications: [PMID: 35660135](https://pubmed.ncbi.nlm.nih.gov/35660135/)
 </p>
 
 ***
-## How to install iCellR
+### How to install iCellR
         
 ```r
 # Install the iCellR package
@@ -68,7 +68,7 @@ install.packages("iCellR")
 # install.packages('iCellR/', repos = NULL, type = "source")
 ```
 
-## Download a sample data
+### Download a sample data
 
 - Download and unzip a publicly available sample [PBMC](https://en.wikipedia.org/wiki/Peripheral_blood_mononuclear_cell) scRNA-Seq data.
 
@@ -91,7 +91,7 @@ untar("pbmc3k_filtered_gene_bc_matrices.tar.gz")
 list.files()
 ```
 ***
-# How to use iCellR for analyzing scRNA-seq data
+### How to use iCellR for analyzing scRNA-seq data
 
 <p align="center">
 	<img src="https://github.com/rezakj/scSeqR/blob/master/doc/Slide8.png"/>
@@ -102,7 +102,7 @@ Open your R environment (R Console or RStudio).
 Load the iCellR package.
 Load the PBMC sample data you downloaded.
 
-## Load from sparse matrix format
+### Load from sparse matrix format
 ```r
 # Step 1: Load the required library
 library("iCellR")
@@ -118,7 +118,7 @@ my.data <- load10x(data.dir = "filtered_gene_bc_matrices/hg19/")
 #   - `matrix.mtx` (sparse expression matrix)
 # - The data can be zipped or unzipped; iCellR handles both.
 ```
-## Alternative Formats for Data Loading:
+### Alternative Formats for Data Loading:
 1. If your data is in .csv or .tsv format
 
 ```r
@@ -144,7 +144,7 @@ If you want to see the help page for any function in R, simply use a question ma
 ?load10x
 ```
 
-## Aggregate data
+### Aggregate data
      
 Conditions in iCellR are defined or displayed in the column names of the data and are separated by an underscore `(_)` sign. If you want to merge multiple datasets (data frames/matrices) into one file and run iCellR in aggregate mode (combining all samples together), you can accomplish this using the `data.aggregation` function. 
 
@@ -236,7 +236,7 @@ my.obj <- qc.stats(my.obj)
 
 - Plot QC
 
-# Default Behavior of Plotting Functions:
+### Default Behavior of Plotting Functions:
 
 In iCellR, all plotting functions generate interactive HTML files by default.
 These interactive plots are useful for exploring data visually in web browsers.
@@ -270,7 +270,7 @@ stats.plot(my.obj, plot.type = "point.gene.umi", out.name = "gene-umi-plot")
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out6.gif" width="400"/>
 </p>
 
-# Filtering Options in iCellR
+### Filtering Options in iCellR
 
 The iCellR package provides flexibility to filter single-cell RNA-seq datasets based on various metrics, helping improve data quality and remove unwanted cells or genes from the analysis. You can filter your data using the following criteria:
 
@@ -323,7 +323,7 @@ dim(my.obj@main.data)
 # Output: [1] 32738  2637
 ```
 
- # Down sampling 
+### Down sampling 
 
 What is Down-Sampling?
 
@@ -333,7 +333,7 @@ Why?:
 
 Prevent bias in downstream analyses caused by unequal cell counts across conditions.
 
-# Down-Sampling: Important Considerations
+### Down-Sampling: Important Considerations
 
 This step is optional and should be used with caution, as it is generally `not recommended`. Down-sampling may result in the loss of important or rare cell populations, which can impact the accuracy of your analysis, especially for heterogeneous datasets with diverse cell types.
 
@@ -358,7 +358,7 @@ Ultimately, the decision to down-sample should be made based on your `specific e
 #Down-sampling has equalized the number of cells across all conditions at 877 cells each.
 ```
 
-## Normalization in iCellR
+### Normalization in iCellR
 Normalization is an essential step in single-cell RNA sequencing analysis. iCellR provides several options for normalization, and you can choose the best approach depending on your study objectives and dataset characteristics.
 
 Options for Normalization:
@@ -377,7 +377,7 @@ You can normalize your data using external tools, like:
 
 After normalization, you can import the externally normalized data into iCellR for further analysis.
 
-## "Ranked GLSF" Normalization:
+### "Ranked GLSF" Normalization:
 What is it?
 
 Ranked Geometric Library Size Factor (ranked.glsf) is inspired by DESeq2's Geometric Mean Size Factor normalization, but adapted for single-cell challenges.
@@ -419,7 +419,7 @@ After initial filtering and normalization, a second QC step can be performed to 
 #	back.col = "white")
 ``` 
 
-# Scale data (optional)
+### Scale data (optional)
 Why Scaling is Not Required in iCellR
 
 In iCellR, scaling the data is handled dynamically or "on the fly" during tasks such as plotting or running dimensionality reduction methods like PCA. 
@@ -434,7 +434,7 @@ Here's why this design is beneficial:
 # my.obj <- data.scale(my.obj)
 ```
 
-## Gene stats
+### Gene stats
 Gene statistics typically involve summarizing the behavior or characteristics of genes across cells in your scRNA-seq dataset. iCellR provides tools to calculate and explore gene-level info, such as:
 
 `Gene Expression Levels`:
