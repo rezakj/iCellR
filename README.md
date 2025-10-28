@@ -648,20 +648,18 @@ grid.arrange(A, B, C, D)
 
 We provide three functions to run the clustering method of your choice:
 
-### 1- iclust (** recommended): 
+#### A- iclust (** recommended): 
 This function is optimized for iCellR and supports PCA, UMAP, t-SNE, Destiny (diffusion map), PHATE, or KNetL maps as input. It utilizes the `Louvain algorithm` for clustering a graph constructed using k-Nearest Neighbor (KNN), similar to PhenoGraph (Levine et al., Cell, 2015). However, it employs distance values (Euclidean by default) as weights, instead of Jaccard similarity values.
 
-##### 2- run.phenograph: 
+##### B- run.phenograph: 
 R implementation of the `PhenoGraph` algorithm. [Rphenograph](https://github.com/JinmiaoChenLab/Rphenograph) wrapper (Levine et al., Cell, 2015). 
 
-##### 3- run.clustering: 
+##### C- run.clustering: 
 This function offers a wide range of options to explore your data using various clustering and indexing methods. You can select any combination from the table below to experiment with different approaches and "flavors" of analysis.
 
 | clustering methods | distance methods | indexing methods | 
 | ------------- | ------------- | ------------- |
 | ward.D, ward.D2, single, complete, average, mcquitty, median, centroid, kmeans| euclidean, maximum, manhattan, canberra, binary, minkowski or NULL | kl, ch, hartigan, ccc, scott, marriot, trcovw, tracew, friedman, rubin, cindex, db, silhouette, duda, pseudot2, beale, ratkowsky, ball, ptbiserial, gap, frey, mcclain, gamma, gplus, tau, dunn, hubert, sdindex, dindex, sdbw |
-
-
 
 
 ### Option 1: Clustering based on KNetL dimentions (or UMAP dimentions)
