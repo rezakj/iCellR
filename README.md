@@ -470,7 +470,8 @@ head(my.obj@gene.data[order(my.obj@gene.data$numberOfCells, decreasing = T),])
 #27190 2.661361e+01       all
 ```
 
-- Make a gene model for clustering
+### Make a gene model for clustering
+Creating a gene model for clustering in single-cell RNA-seq analysis involves selecting a subset of genes (e.g., highly variable genes, marker genes, or genes of interest) that are most informative for identifying cell clusters. This process helps reduce noise and focus on biologically relevant features for unsupervised clustering.
 
 This function will help you find a good number of genes to use for running PCA. 
 
@@ -514,26 +515,28 @@ To view an the html interactive plot click on this links: [Dispersion plot](http
 </p>
 
 
-- Perform Principal component analysis (PCA)
+### Perform Principal component analysis (PCA)
 
-Note: skip this step if you plan to do batch correction. For batch correction (sample alignment/harmonization/integration) see the sections; CPCA, CCCA, MNN or anchor alignment. 
+Principal Component Analysis (PCA) is a fundamental dimensionality reduction technique often used in single-cell RNA-seq analysis to represent high-dimensional gene expression data in a lower-dimensional space. However, PCA does not harmonize or integrate or batch align the data. 
+
+Skip the PCA step if you plan to perform batch correction, which typically realigns data across batches and conditions. For batch correction (sample alignment/harmonization/integration) see the sections; CPCA, CCCA, MNN or anchor alignment. 
 
 ```r
-# If you run PCA (run.pca) there would be no batch alignment but if you run CPCA (using iba function) this would perform batch alignment and PCA after batch alignment. Example for batch alignment using iba function: 
-# my.obj <- iba(my.obj,dims = 1:30, k = 10,ba.method = "CPCA", method = "gene.model", gene.list = my.obj@gene.model)
+# When you run run.pca, iCellR uses raw or normalized data directly without correcting for batch-related artifacts. This results in principal components that may reflect technical variations (batch effects) rather than true biological signals.
 
-# run PCA in case no batch alignment is necessary
+# run PCA 
 my.obj <- run.pca(my.obj, method = "gene.model", gene.list = my.obj@gene.model,data.type = "main")
 
 opt.pcs.plot(my.obj)
+```
 
-# 2 round PCA (optional)
-# This is to find top genes in the first 10 PCs and re-run PCA for better clustering. 
-## This is optional and might not be good in some cases
+2 round PCA (optional)
 
-#length(my.obj@gene.model)
-# 683
-#my.obj <- find.dim.genes(my.obj, dims = 1:10,top.pos = 20, top.neg = 20) # (optional)
+For finding top genes in the top principal components (PCs) and re-running PCA to achieve better segregation of cell populations. This is optional and not recommended except in certain cases.
+
+```r
+
+#my.obj <- find.dim.genes(my.obj, dims = 1:10, top.pos = 20, top.neg = 20) # (optional)
 
 #length(my.obj@gene.model)
 # 211
@@ -546,10 +549,7 @@ opt.pcs.plot(my.obj)
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/Opt_Number_Of_PCs.png" />
 </p>
 
-
-- Perform other dimensionality reductions (tSNE, UMAP, KNetL, PHATE, destiny, diffusion maps)
-
-We recommend tSNE, UMAP and KNetL. KNetL is fundamentally more powerful. 
+# Perform tSNE, UMAP, KNetL, PHATE, destiny, diffusion maps and more
 
 ```r
 # tSNE
