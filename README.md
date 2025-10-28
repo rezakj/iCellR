@@ -163,19 +163,23 @@ my.data <- data.aggregation(samples = c("sample1", "sample2", "sample3", "sample
                             condition.names = c("WT", "KO", "Ctrl", "KD"))
 ```
 
-- Check the head of your file.
+- To check the head (the first few rows) of your file or dataset in R, use the head() function. Here's how you can do it.
+
+  This snippet shows how to inspect the header (column names) and the data for the first two cells in an aggregated data file:
 
 ```r
-# here is how the head of the first 2 cells in the aggregated file looks like.	
-head(my.data)[1:2]
-#         WT_AAACATACAACCAC-1 WT_AAACATTGAGCTAC-1
-#A1BG                       0                   0
-#A1BG.AS1                   0                   0
-#A1CF                       0                   0
-#A2M                        0                   0
-#A2M.AS1                    0                   0
+# Display the head of your aggregated data and extract the first 2 columns (cells)
+head(my.data)[, 1:2]
 
-# as you see the header has the conditions now
+# Example Output:
+#         WT_AAACATACAACCAC-1 WT_AAACATTGAGCTAC-1
+# A1BG                       0                   0
+# A1BG.AS1                   0                   0
+# A1CF                       0                   0
+# A2M                        0                   0
+# A2M.AS1                    0                   0
+
+# as you see the header (column names) have the condition names added to the UMIs
 ```
 
 
@@ -228,7 +232,10 @@ my.obj <- qc.stats(my.obj)
 
 - Plot QC
 
-By default all the plotting functions would create interactive html files unless you set this parameter: interactive = FALSE.
+Default Behavior of Plotting Functions:
+In iCellR, all plotting functions generate interactive HTML files by default.
+These interactive plots are useful for exploring data visually in web browsers.
+If you prefer static plots (e.g., for quick visualization or embedding in reports), you can disable interactivity by setting the parameter `interactive = FALSE`.
 
 ```r
 # plot UMIs, genes and percent mito all at once and in one plot. 
