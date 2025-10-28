@@ -576,13 +576,20 @@ my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110)
 KNetL works with a higher resolution; therfore using `dims = 20` (2 times the number of PCs used for UMAP) usually produces the best results for most datasets.
 
 - Recommended `Zoom` Settings:
-< 1,000 cells: Zoom range 5–50
-1,000–5,000 cells: Zoom range 50–200
-5,000–10,000 cells: Zoom range 100–300
-10,000–30,000 cells: Zoom range 200–500
-> 30,000 cells: Zoom range 400–600
+  
+`< 1,000` cells: Zoom range 5–50
+
+`1,000–5,000` cells: Zoom range 50–200
+
+`5,000–10,000` cells: Zoom range 100–300
+
+`10,000–30,000` cells: Zoom range 200–500
+
+`> 30,000` cells: Zoom range 400–600
+
 Additional Notes:
 A zoom of 400 generally works well for large datasets, but adjustments might be needed for your desired resolution.
+
 Remember:
 Lower zoom numbers = zoom in.
 Higher zoom numbers = zoom out (reverse logic).
