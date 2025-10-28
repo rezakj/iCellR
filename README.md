@@ -115,24 +115,23 @@ To see the help page for each function use question mark as:
 
 - Aggregate data
      
-## Conditions in iCellR are set or shown in the column names of the data and are separated by an underscore "_" sign. Let's say you want to merge multiple datasets (data frames/matrices) into one file and run iCellR in aggregate mode (all samples together). You can do so using "data.aggregation" function.  Here’s an example: I divided this sample into four datasets and then aggregated them into one matrix. Here we are assuming you have four samples (e.g. WT,KO,Ctrl,KD). In this way, iCellR will know you have 4 samples for the rest of the analysis (e.g. batch alignment, plots, DE, etc.). 
+## Conditions in iCellR are defined or displayed in the column names of the data and are separated by an underscore ("_") sign. If you want to merge multiple datasets (data frames/matrices) into one file and run iCellR in aggregate mode (combining all samples together), you can accomplish this using the "data.aggregation" function. Example: Suppose you have divided your sample into four datasets and need to aggregate them into a single matrix. Let's say the samples are WT, KO, Ctrl, and KD. After aggregating these datasets into one matrix, iCellR will recognize the presence of four distinct samples for further analyses, such as batch alignment, plotting, differential expression (DE), and more. Here, I have divided this sample into four datasets for a test run. 
 
 ```r
+
+# Check the dimensions of the dataset
 dim(my.data)
-# [1] 32738  2700
+# Output: [1] 32738  2700
 
-# divide your sample into three samples for this example 
-
+# Divide your dataset into four separate samples for this example
 sample1 <- my.data[1:900]
 sample2 <- my.data[901:1800]
 sample3 <- my.data[1801:2300]
 sample4 <- my.data[2301:2700]
-   
-   
-# merge all of your samples to make a single aggregated file.  
 
-my.data <- data.aggregation(samples = c("sample1","sample2","sample3","sample4"),
-	condition.names = c("WT","KO","Ctrl","KD"))
+# Merge all samples into a single aggregated file
+my.data <- data.aggregation(samples = c("sample1", "sample2", "sample3", "sample4"),
+                            condition.names = c("WT", "KO", "Ctrl", "KD"))
 ```
 
 - Check the head of your file.
