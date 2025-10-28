@@ -566,8 +566,10 @@ my.obj <- run.umap(my.obj, dims = 1:10)
 ```
 ### Run KNetL map
 
+Don't forget to set the zoom in the right range. 
+
 ```r
-my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110) # (Important note!) don't forget to set the zoom in the right range
+my.obj <- run.knetl(my.obj, dims = 1:20, zoom = 110)
 
 ```
 
