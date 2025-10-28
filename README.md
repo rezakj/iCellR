@@ -1488,17 +1488,30 @@ cluster.plot(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/diffiusion3D.gif" width="400"/>
 </p>
 
-- Differential Expression Analysis 
+### Differential Expression (DE) Analysis in iCellR
+The differential expression (DE) analysis function in iCellR provides users with flexibility to choose between various combinations of clusters and experimental conditions. This enables advanced comparisons and detailed insights into gene expression patterns across diverse biological contexts.
 
-The differential expression (DE) analysis function in iCellR allows the users to choose from any combinations of clusters and conditions. For example, a user with two samples (say WT and KO) has four different possible ways of comparisons:
+#### Possible Comparison Scenarios:
 
-a-Comparing a cluster/clusters with different cluster/clusters (e.g. cluster 1 and 2 vs. 4)
+- Cluster vs. Cluster Comparison:
+Compare the gene expression profile of one cluster/clusters against another cluster/clusters.
 
-b-Comparing a cluster/clusters with different cluster/clusters only in one/more condition/conditions (e.g. cluster 1 vs cluster 2 but only the WT sample)
+Example: Comparing cluster 1 and 2 vs. cluster 4.
 
-c-Comparing a condition/conditions with different condition/conditions (e.g. WT vs KO)
+- Cluster Comparisons Within Specific Conditions:
+Compare clusters in one or more specific condition(s).
 
-d-Comparing a condition/conditions with different condition/conditions only in one/more cluster/clusters (e.g. cluster 1 WT vs cluster 1 KO)
+Example: Cluster 1 vs. Cluster 2 only in the "WT" (wild type) sample.
+
+- Condition vs. Condition Comparison:
+Perform differential expression analysis between experimental conditions regardless of cluster assignment.
+
+Example: Comparing samples labeled "WT" vs. "KO" (knockout).
+
+- Condition Comparison Within Specific Clusters:
+Compare experimental conditions within specific cluster(s).
+
+Example: Cluster 1 "WT" vs. Cluster 1 "KO".
 
 ```r
 diff.res <- run.diff.exp(my.obj, de.by = "clusters", cond.1 = c(1,4), cond.2 = c(2))
@@ -1535,7 +1548,7 @@ diff.res <- run.diff.exp(my.obj, de.by = "clustBase.condComp", cond.1 = c("WT"),
 diff.res <- run.diff.exp(my.obj, de.by = "condBase.clustComp", cond.1 = c(1), cond.2 = c(2), base.cond = "WT")
 ```
 
-- Volcano and MA plots 
+### Volcano and MA plots 
 
 ```r
 # Volcano Plot 
@@ -1558,7 +1571,7 @@ volcano.ma.plot(diff.res,
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/MA_plot.png" width="400"/>      
 </p>
 
- - Merging, resetting, renaming and removing clusters 
+### Merging, resetting, renaming and removing clusters 
  
  ```r
 # let's say you  want to merge cluster 3 and 2.
@@ -1599,7 +1612,7 @@ cluster.plot(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/tSNE_2D_f.png" width="400"/>  
 </p>
 
- - Cell gating 
+### Cell gating 
  
   ```r
 my.plot <- gene.plot(my.obj, gene = "GNLY", 
@@ -1630,7 +1643,7 @@ After downloading the cell ids, use the following command to rename their cluste
 my.obj <- gate.to.clust(my.obj, my.gate = "cellGating.txt", to.clust = 10)
  ```
  
-# Batch correction (sample alignment) methods:
+### Batch correction (sample alignment) methods:
 1- CPCA (iCellR)** recommended (faster than CCCA)
 
 2- CCCA (iCellR)* recommended
@@ -1641,7 +1654,7 @@ my.obj <- gate.to.clust(my.obj, my.gate = "cellGating.txt", to.clust = 10)
 
 5- CPCA + <img src="https://github.com/rezakj/scSeqR/blob/master/doc/logo.png" alt="drawing" width="30"/> KNetL based clustering (iCellR)*** recommended for best results!
 
-# 1- How to perform Combined Principal Component Alignment (CPCA)
+### 1- How to perform Combined Principal Component Alignment (CPCA)
 
 We analyzed nine PBMC sample datasets provided by the Broad Institute to detect batch
 differences. These datasets were generated using varying technologies, including 10x
@@ -1744,7 +1757,7 @@ dev.off()
 </p>
 
 
-# 2- How to perform Combined Coverage Correction Alignment (CCCA)
+### 2- How to perform Combined Coverage Correction Alignment (CCCA)
 
 ```r
 # same as above only change the option to CCCA
@@ -1757,7 +1770,7 @@ my.obj <- iba(my.obj,dims = 1:30, k = 10,ba.method = "CCCA", method = "gene.mode
 </p>
 
 
-# 3- How to perform mutual nearest neighbor (MNN) sample alignment 
+### 3- How to perform mutual nearest neighbor (MNN) sample alignment 
 
 ```r
 # same as above only use run.mnn function instead of iba.
@@ -1776,7 +1789,7 @@ detach("package:scran", unload=TRUE)
 </p>
 
 
-# 4- How to perform Seurat's MultiCCA sample alignment 
+### 4- How to perform Seurat's MultiCCA sample alignment 
 
 ```r
 # same as above only use run.anchor function instead of iba.
@@ -1796,7 +1809,7 @@ my.obj <- run.anchor(my.obj,
   <img src="https://github.com/rezakj/scSeqR/blob/master/doc/aSeurat.png" />
 </p>
 
-# 5- How to perform CPCA + KNetL based clustering for sample alignment/integration 
+### 5- How to perform CPCA + KNetL based clustering for sample alignment/integration 
 
 ```r
 ## download an object of 9 PBMC samples 
@@ -1894,7 +1907,7 @@ plot_grid(plotlist=mget(filenames))
 </p>
 
 
- - Pseudotime analysis
+### Pseudotime analysis
  
  ```r
 MyGenes <- top.markers(marker.genes, topde = 50, min.base.mean = 0.2)
@@ -1927,7 +1940,7 @@ pseudotime.tree(my.obj,
 </p>
 
 
- - Pseudotime analysis using monocle
+### Pseudotime analysis using monocle
  
   ```r
 library(monocle)
@@ -1990,7 +2003,7 @@ plot_pseudotime_heatmap(my.monoc.obj[MyGenes,],
 	  <img src="https://github.com/rezakj/scSeqR/blob/master/doc/14_monocol.png" />
 </p>
 
-# How to demultiplex with hashtag oligos (HTOs)
+### How to demultiplex with hashtag oligos (HTOs)
 
 ```r
 # Read an example file
