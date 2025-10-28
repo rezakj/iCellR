@@ -93,34 +93,58 @@ list.files()
 	<img src="https://github.com/rezakj/scSeqR/blob/master/doc/Slide8.png"/>
 </p>
 
-To run a test sample follow these steps:
+Steps to run a test sample:
+Open your R environment (R Console or RStudio).
+Load the iCellR package.
+Load the PBMC sample data you downloaded.
 
-- Go to the R environment load the iCellR package and the PBMC sample data that you downloaded.
+## Load from sparse matrix format
+```r
+# Step 1: Load the required library
+library("iCellR")
+
+# Step 2: Load the PBMC dataset from 10x Genomics processed files
+# Specify the directory containing 10x Genomics files (barcodes.tsv, genes.tsv/features.tsv, and matrix.mtx)
+my.data <- load10x(data.dir = "filtered_gene_bc_matrices/hg19/")
+
+# Notes:
+# - The directory ("filtered_gene_bc_matrices/hg19/") should include the following:
+#   - `barcodes.tsv` (cell barcodes)
+#   - `genes.tsv` or `features.tsv` (gene names or features)
+#   - `matrix.mtx` (sparse expression matrix)
+# - The data can be zipped or unzipped; iCellR handles both.
+```
+## Alternative Formats for Data Loading:
+1. If your data is in .csv or .tsv format
 
 ```r
-library("iCellR")
-my.data <- load10x("filtered_gene_bc_matrices/hg19/")
+# Read the dataset directly from a .tsv.gz file
+my.data <- read.delim("my_sample_RNA.tsv.gz", header = TRUE)
 
-# This directory includes; barcodes.tsv, genes.tsv/features.tsv and matrix.mtx files
-# Data could be zipped or unzipped.
+# For uncompressed .csv or .tsv files:
+# my.data <- read.csv("my_sample_RNA.csv", header = TRUE)
+```
+2. If your data is in .h5 format:
+   
+```r
+# Load the hdf5r library to work with .h5 files
+library(hdf5r)
 
-# if your data is in a csv or tsv format read it like this example
-# my.data <- read.delim("CITE-Seq_sample_RNA.tsv.gz",header=TRUE)
-
-# if your data is in a h5 format read it like this example
-# library(hdf5r)
-# data <- load.h5("filtered_feature_bc_matrix.h5")
+# Load the dataset from an h5 file
+data <- load.h5(file = "filtered_feature_bc_matrix.h5")
 ```
 
-To see the help page for each function use question mark as: 
+If you want to see the help page for any function in R, simply use a question mark (?) followed by the function name. Here's an example:
 
 ```r
 ?load10x
 ```
 
-- Aggregate data
+## Aggregate data
      
-## Conditions in iCellR are defined or displayed in the column names of the data and are separated by an underscore ("_") sign. If you want to merge multiple datasets (data frames/matrices) into one file and run iCellR in aggregate mode (combining all samples together), you can accomplish this using the "data.aggregation" function. Example: Suppose you have divided your sample into four datasets and need to aggregate them into a single matrix. Let's say the samples are WT, KO, Ctrl, and KD. After aggregating these datasets into one matrix, iCellR will recognize the presence of four distinct samples for further analyses, such as batch alignment, plotting, differential expression (DE), and more. Here, I have divided this sample into four datasets for a test run. 
+Conditions in iCellR are defined or displayed in the column names of the data and are separated by an underscore ("_") sign. If you want to merge multiple datasets (data frames/matrices) into one file and run iCellR in aggregate mode (combining all samples together), you can accomplish this using the "data.aggregation" function. 
+
+Example: Suppose you have divided your sample into four datasets and need to aggregate them into a single matrix. Let's say the samples are WT, KO, Ctrl, and KD. After aggregating these datasets into one matrix, iCellR will recognize the presence of four distinct samples for further analyses, such as batch alignment, plotting, differential expression (DE), and more. Here, I have divided this sample into four datasets for a test run. 
 
 ```r
 
