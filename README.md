@@ -30,7 +30,7 @@ Introducing `imputation and coverage correction (CC)` methods for improved gene-
 
 iCellR Viewer (web GUI app): https://compbio.nyumc.org/icellr/
 
-If you are using FlowJo or SeqGeq, they have made plugins for iCellR and other single cell tools: https://www.flowjo.com/exchange/#/ (list of all plugins) and https://www.flowjo.com/exchange/#/plugin/profile?id=34 (iCellR plugin). [SeqGeq DE tutorial](https://www.youtube.com/watch?v=gXFmWRpdwow)
+If you are using FlowJo or SeqGeq, they offer plugins for iCellR and other single-cell analysis tools. You can find the list of all plugins here: https://www.flowjo.com/exchange/#/ . Specifically, the iCellR plugin can be found here: https://www.flowjo.com/exchange/#/plugin/profile?id=34. Additionally, a SeqGeq Differential Expression (DE) tutorial is available to guide you through the process: [SeqGeq DE tutorial](https://www.youtube.com/watch?v=gXFmWRpdwow)
 
 For citing iCellR use this [PMID: 34353854](https://cancerdiscovery.aacrjournals.org/content/early/2021/07/28/2159-8290.CD-21-0369)
 
