@@ -8,7 +8,7 @@ iCellR is an interactive R package designed to facilitate the analysis and visua
 Maintainer: [Alireza Khodadadi-Jamayran](https://scholar.google.com/scholar?q=author:%22Khodadadi-Jamayran%20A%22)
 
 ### News (April 2021)
-Use the latest version of iCellR (v1.6.4) for scATAC-seq and Spatial Transcriptomics (ST) analyses. Leverage the [i.score](https://github.com/rezakj/iCellR/wiki/i.score) function for scoring cells based on gene signatures using methods such as Tirosh, Mean, Sum, GSVA, ssgsea, Zscore, and Plage.
+Use the latest version of iCellR (v1.6.4) for scATAC-seq and Spatial Transcriptomics (ST) analyses. Leverage the [i.score](https://github.com/rezakj/iCellR/wiki/i.score) function for `scoring cells based on gene signatures` using methods such as `Tirosh, Mean, Sum, GSVA, ssgsea, Zscore, and Plage`.
 
 ### News (July 2020)
 Explore iCellR version 1.5.5, now featuring tools for cell cycle analysis `(phases G0, G1S, G2M, M, G1M, and S)`. See example [phase](https://genome.med.nyu.edu/results/external/iCellR/example1/All_cellcycle.png), New Pseudotime Abstract KNetL (PAK map) functionality added – visualize pseudotime progression [(PAK map)](https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.KNetL.png). Perform gene-gene correlation analysis using updated visualization tools. [correlations](https://genome.med.nyu.edu/results/external/iCellR/example1/gene-gene.correlation.png). 
