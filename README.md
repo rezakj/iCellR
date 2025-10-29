@@ -97,11 +97,6 @@ list.files()
 	<img src="https://github.com/rezakj/scSeqR/blob/master/doc/Slide8.png"/>
 </p>
 
-Steps to run a test sample:
-Open your R environment (R Console or RStudio).
-Load the iCellR package.
-Load the PBMC sample data you downloaded.
-
 ### Load from sparse matrix format
 ```r
 # Step 1: Load the required library
@@ -135,7 +130,7 @@ my.data <- read.delim("my_sample_RNA.tsv.gz", header = TRUE)
 library(hdf5r)
 
 # Load the dataset from an h5 file
-data <- load.h5(file = "filtered_feature_bc_matrix.h5")
+my.data <- load.h5(file = "filtered_feature_bc_matrix.h5")
 ```
 
 3. If your data is in S3 or S4 object format types like (Seurat or iCellR objects, etc.)
@@ -143,10 +138,13 @@ data <- load.h5(file = "filtered_feature_bc_matrix.h5")
    Here we use a Seurat object as an exacple: 
 
 ```r
-# objectName is your Seurat 5 object name
-my.data <- as.data.frame(as.matrix(objectName@assays$RNA@layers$counts))
-rownames(my.data) <- rownames(objectName@assays$RNA@features@.Data)
-colnames(my.data) <- rownames(objectName@assays$RNA@cells@.Data)
+# my.Seurat.object is your Seurat 5 object name
+
+# get the raw data from your Seurat object slots 
+
+my.data <- as.data.frame(as.matrix(my.Seurat.object@assays$RNA@layers$counts))
+rownames(my.data) <- rownames(my.Seurat.object@assays$RNA@features@.Data)
+colnames(my.data) <- rownames(my.Seurat.object@assays$RNA@cells@.Data)
 ```
 
 If you want to see the help page for any function in R, simply use a question mark `(?)` followed by the function name. Here's an example:
