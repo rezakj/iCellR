@@ -2,7 +2,7 @@
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/iCellR)](https://cran.r-project.org/package=iCellR)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
-# iCellR
+# Single (i) Cell R package (iCellR)
 iCellR is an interactive R package designed to facilitate the analysis and visualization of high-throughput single-cell sequencing data. It supports a variety of single-cell technologies, including `scRNA-Seq`, `scVDJ-Seq`, `scATAC-Seq`, `CITE-Seq`, and `Spatial Transcriptomics` (ST).
 
 Maintainer: [Alireza Khodadadi-Jamayran](https://scholar.google.com/scholar?q=author:%22Khodadadi-Jamayran%20A%22)
@@ -37,7 +37,6 @@ iCellR publications: [PMID: 35660135](https://pubmed.ncbi.nlm.nih.gov/35660135/)
 Single (i) Cell R package (iCellR)
 
 <p align="center">
-	- Intractive plots
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/first.gif" width="400"/>
   <img src="https://github.com/rezakj/scSeqR/blob/dev/doc/out2.gif" width="400"/>
 		 <img src="https://github.com/rezakj/scSeqR/blob/master/doc/Slide1_1.png"/>
