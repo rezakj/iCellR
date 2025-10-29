@@ -3,7 +3,7 @@
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
 # iCellR
-iCellR is an interactive R package designed to facilitate the analysis and visualization of high-throughput single-cell sequencing data. It supports a variety of single-cell technologies, including scRNA-seq, scVDJ-seq, scATAC-seq, CITE-Seq, and Spatial Transcriptomics (ST).
+iCellR is an interactive R package designed to facilitate the analysis and visualization of high-throughput single-cell sequencing data. It supports a variety of single-cell technologies, including `scRNA-Seq`, `scVDJ-Seq`, `scATAC-Seq`, `CITE-Seq`, and `Spatial Transcriptomics` (ST).
 
 Maintainer: [Alireza Khodadadi-Jamayran](https://scholar.google.com/scholar?q=author:%22Khodadadi-Jamayran%20A%22)
 
@@ -11,13 +11,13 @@ Maintainer: [Alireza Khodadadi-Jamayran](https://scholar.google.com/scholar?q=au
 Use the latest version of iCellR (v1.6.4) for scATAC-seq and Spatial Transcriptomics (ST) analyses. Leverage the [i.score](https://github.com/rezakj/iCellR/wiki/i.score) function for scoring cells based on gene signatures using methods such as Tirosh, Mean, Sum, GSVA, ssgsea, Zscore, and Plage.
 
 ### News (July 2020)
-Explore iCellR version 1.5.5, now featuring tools for cell cycle analysis (phases G0, G1S, G2M, M, G1M, and S). See example [phase](https://genome.med.nyu.edu/results/external/iCellR/example1/All_cellcycle.png), New Pseudotime Abstract KNetL (PAK map) functionality added – visualize pseudotime progression [(PAK map)](https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.KNetL.png). Perform gene-gene correlation analysis using updated visualization tools. [correlations](https://genome.med.nyu.edu/results/external/iCellR/example1/gene-gene.correlation.png). 
+Explore iCellR version 1.5.5, now featuring tools for cell cycle analysis `(phases G0, G1S, G2M, M, G1M, and S)`. See example [phase](https://genome.med.nyu.edu/results/external/iCellR/example1/All_cellcycle.png), New Pseudotime Abstract KNetL (PAK map) functionality added – visualize pseudotime progression [(PAK map)](https://genome.med.nyu.edu/results/external/iCellR/example1/pseudotime.KNetL.png). Perform gene-gene correlation analysis using updated visualization tools. [correlations](https://genome.med.nyu.edu/results/external/iCellR/example1/gene-gene.correlation.png). 
 
 ### News (May 2020)
-Explore the KNetL map, an advanced adjustable and dynamic dimensionality reduction method [KNetL map](https://genome.med.nyu.edu/results/external/iCellR/example1/Allclusts.Annotated.png) <img src="https://github.com/rezakj/scSeqR/blob/master/doc/logo.png" alt="drawing" width="30"/> KNetL (pronounced “nettle”) offers enhanced zooming capabilities [KNetL](https://www.biorxiv.org/content/10.1101/2020.05.05.078550v1.full) to show significantly more detail compared to tSNE and UMAP.
+Explore the `KNetL map`, an advanced adjustable and dynamic dimensionality reduction method [KNetL map](https://genome.med.nyu.edu/results/external/iCellR/example1/Allclusts.Annotated.png) <img src="https://github.com/rezakj/scSeqR/blob/master/doc/logo.png" alt="drawing" width="30"/> KNetL (pronounced “nettle”) offers enhanced zooming capabilities [KNetL](https://www.biorxiv.org/content/10.1101/2020.05.05.078550v1.full) to show significantly more detail compared to tSNE and UMAP.
 
 ### News (April 2020)
-Introducing imputation and coverage correction (CC) methods for improved gene-gene correlation analysis. ([CC](https://genome.med.nyu.edu/results/external/iCellR/example1/gene-gene.correlation.png)). Perform batch alignment using CCCA and CPCA tools (CCCA and [CPCA](https://genome.med.nyu.edu/results/external/iCellR/example2/AllCondsClusts.png)) [methods](https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1.full). Expanded databases for cell type prediction now include ImmGen and MCA. 
+Introducing `imputation and coverage correction (CC)` methods for improved gene-gene correlation analysis. ([CC](https://genome.med.nyu.edu/results/external/iCellR/example1/gene-gene.correlation.png)). Perform `batch alignment using iCellR's CPCA` and CCCA tools (CCCA and [CPCA](https://genome.med.nyu.edu/results/external/iCellR/example2/AllCondsClusts.png)) [methods](https://www.biorxiv.org/content/10.1101/2020.03.31.019109v1.full). Expanded databases for cell type prediction now include ImmGen and MCA. 
 
 ### News (Sep. 2018)
 `scSeqR` has been renamed to `iCellR`, and scSeqR has been discontinued. Please use iCellR moving forward, as scSeqR is no longer supported.
