@@ -9,9 +9,6 @@ add.adt <- function (x = NULL, adt.data = "data.frame") {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
-  if (class(adt.data) != "data.frame") {
-    stop("ADT data should be a data frame object")
-  }
   # Add ADT to gene names
   row.names(adt.data) <- paste("ADT", row.names(adt.data), sep = "_")
   row.names(adt.data) <- gsub("-",".",row.names(adt.data))

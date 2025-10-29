@@ -224,6 +224,10 @@ heatmap.gg.plot <- function (x = NULL,
   }
   ### plot
   data$expression <- as.numeric(as.character(data$expression))
+
+  ######### cluster order (this makes cluster numeric factors)
+  CL=as.numeric(data$clusters)
+  data$clusters=factor(CL, levels=sort(unique(CL)))
   #############
   heatmap <- ggplot(data, aes(x = cell, y = gene, fill = expression, text=clusters)) + geom_tile() +
     scale_fill_gradient2(low = col.low, mid = col.mid, high = col.high, name = "",

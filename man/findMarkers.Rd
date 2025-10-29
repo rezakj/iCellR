@@ -11,6 +11,7 @@ findMarkers(
   p.adjust.method = "hochberg",
   fold.change = 2,
   padjval = 0.1,
+  low.cell.filt = 5,
   Inf.FCs = FALSE,
   uniq = FALSE,
   positive = TRUE
@@ -28,6 +29,8 @@ findMarkers(
 \item{fold.change}{A number that designates the minimum fold change for out put, default = 2.}
 
 \item{padjval}{Minimum adjusted p value for out put, default = 0.1.}
+
+\item{low.cell.filt}{filter out clusters with low number of cells, default = 5.}
 
 \item{Inf.FCs}{If set to FALSE the infinite fold changes would be filtered from out put, default = FALSE.}
 

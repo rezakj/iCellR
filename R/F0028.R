@@ -7,6 +7,7 @@
 #' @param pval.test Choose from "t.test", "wilcox.test", default = "t.test".
 #' @param p.adjust.method Correction method. Choose from "holm", "hochberg", "hommel", "bonferroni", "BH", "BY","fdr", "none", default = "hochberg".
 #' @param padjval Minimum adjusted p value for out put, default = 0.1.
+#' @param low.cell.filt filter out clusters with low number of cells, default = 5.
 #' @param Inf.FCs If set to FALSE the infinite fold changes would be filtered from out put, default = FALSE.
 #' @param uniq If set to TRUE only genes that are a marker for only one cluster would be in the out put, default = FALSE.
 #' @param positive If set to FALSE both the up regulated (positive) and down regulated (negative) markers would be in the out put, default = TRUE.
@@ -18,6 +19,7 @@ findMarkers <- function (x = NULL,
           p.adjust.method = "hochberg",
           fold.change = 2,
           padjval = 0.1,
+          low.cell.filt = 5,
           Inf.FCs = FALSE,
           uniq = FALSE,
           positive = TRUE) {
@@ -42,7 +44,7 @@ findMarkers <- function (x = NULL,
   }
   # get cluster data
   # get avrages
-    x <- clust.avg.exp(x, data.type = data.type)
+    x <- clust.avg.exp(x, data.type = data.type, low.cell.filt = low.cell.filt)
 ##########
   DATA <- x@best.clust
   if(!is.numeric(DATA$clusters)){

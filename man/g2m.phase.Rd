@@ -8,7 +8,7 @@
 A character with 54 genes
 }
 \source{
-\url{https://www.science.org/doi/abs/10.1126/science.aad0501}
+Paper: Dissecting the multicellular ecosystem of metastatic melanoma by single-cell RNA-seq.
 }
 \usage{
 g2m.phase

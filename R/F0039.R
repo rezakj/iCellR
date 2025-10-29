@@ -8,7 +8,7 @@
 prep.vdj <- function (vdj.data = "data.frame", cond.name = "NULL") {
 # read VDJ data
   my.vdj <- vdj.data
-  my.vdj <- subset(my.vdj, productive == "True")
+  # my.vdj <- subset(my.vdj, productive == "True")
   my.vdj <- subset(my.vdj, raw_clonotype_id != "None")
   cell.barcodes <- my.vdj$barcode
   cell.barcodes <- gsub("-",".",cell.barcodes)

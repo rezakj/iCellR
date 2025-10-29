@@ -1,14 +1,16 @@
 citHeader("To cite iCellR in publications, please use:")
 
-citEntry(entry = "article",
-  author = personList(as.person("Alireza Khodadadi-Jamayran"),
+bibentry(bibtype = "article",
+  author = c(
+                      as.person("Alireza Khodadadi-Jamayran"),
                       as.person("Joseph Pucella"),
                       as.person("Hua Zhou"),
                       as.person("Nicole Doudican"),
                       as.person("John Carucci"),
                       as.person("Adriana Heguy"),
                       as.person("Boris Reizis"),
-                      as.person("Aristotelis Tsirigos")),
+                      as.person("Aristotelis Tsirigos")
+                      ),
   title = "iCellR: Combined Coverage Correction and Principal Component Alignment for Batch Alignment in Single-Cell Sequencing Analysis",
   journal = "bioRxiv",
   year = "2020",

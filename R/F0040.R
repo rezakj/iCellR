@@ -9,9 +9,6 @@ add.vdj <- function (x = NULL, vdj.data = "data.frame") {
   if ("iCellR" != class(x)[1]) {
     stop("x should be an object of class iCellR")
   }
-  if (class(vdj.data) != "data.frame") {
-    stop("VDJ data should be a data frame object")
-  }
   attributes(x)$vdj.data <- vdj.data
   return(x)
 }

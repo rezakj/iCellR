@@ -11,9 +11,15 @@
 #' @export
 load.h5 <- function (filename, feature.names = TRUE, uniq.rows = TRUE)
 {
+###########
+#  if(!"hdf5r" %in% (.packages())){
+#    stop("Please load hdf5r package: library(hdf5r)")
+#  }
+##########
   if (!file.exists(filename)) {
     stop("Input file not found")
   }
+##########
   infile <- hdf5r::H5File$new(filename = filename, mode = "r")
   genomes <- names(x = infile)
   output <- list()
@@ -62,6 +68,8 @@ load.h5 <- function (filename, feature.names = TRUE, uniq.rows = TRUE)
   }
 ######
 #####
+
+######
   infile$close_all()
   if (length(x = output) == 1) {
 #    genome <- as.data.frame(as.matrix(genome))
