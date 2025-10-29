@@ -22,7 +22,7 @@ Introducing `imputation and coverage correction (CC)` methods for improved gene-
 ### News (Sep. 2018)
 `scSeqR` has been renamed to `iCellR`, and scSeqR has been discontinued. Please use iCellR moving forward, as scSeqR is no longer supported.
 
-### tutorials and manual
+### Tutorials and manual
 - Link to `manual` [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.pdf) and Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/packages/iCellR/index.html).
 - Gor `getting started` and `tutorial` go to our [Wiki page](https://github.com/rezakj/iCellR/wiki).
 - Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
