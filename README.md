@@ -48,4 +48,4 @@ Single (i) Cell R package (iCellR)
 
 ***
 
-## Gor `getting started` and `tutorial` go to our [Wiki page](https://github.com/rezakj/iCellR/wiki).
+## For `getting started` and `tutorial` go to our [Wiki page](https://github.com/rezakj/iCellR/wiki).
