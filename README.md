@@ -24,7 +24,7 @@ Introducing `imputation and coverage correction (CC)` methods for improved gene-
 
 ### Tutorials and manual
 - Link to `manual` [Manual](https://cran.r-project.org/web/packages/iCellR/iCellR.pdf) and Comprehensive R Archive Network [(CRAN)](https://cran.r-project.org/web/packages/iCellR/index.html).
-- Gor `getting started` and `tutorial` go to our [Wiki page](https://github.com/rezakj/iCellR/wiki).
+- Gor `getting started` and `tutorials` go to our [Wiki page](https://github.com/rezakj/iCellR/wiki).
 - Link to a video tutorial for CITE-Seq and scRNA-Seq analysis: [Video](https://vimeo.com/337822487)
 - All you need to know about KNetL map: [Video](https://youtu.be/tkoPTVciQm0) 
 - If you are using `FlowJo` or `SeqGeq`, they offer plugins for iCellR and other single-cell analysis tools. You can find the list of all plugins here: https://www.flowjo.com/exchange/#/ . Specifically, the iCellR plugin can be found here: https://www.flowjo.com/exchange/#/plugin/profile?id=34. Additionally, a SeqGeq Differential Expression (DE) tutorial is available to guide you through the process: [SeqGeq DE tutorial](https://www.youtube.com/watch?v=gXFmWRpdwow)
@@ -48,4 +48,4 @@ Single (i) Cell R package (iCellR)
 
 ***
 
-## For `getting started` and `tutorial` go to our [Wiki page](https://github.com/rezakj/iCellR/wiki).
+## For `getting started` and `tutorials` go to our [Wiki page](https://github.com/rezakj/iCellR/wiki).
