@@ -47,3 +47,5 @@ Single (i) Cell R package (iCellR)
 </p>
 
 ***
+
+## Gor `getting started` and `tutorial` go to our [Wiki page](https://github.com/rezakj/iCellR/wiki).
